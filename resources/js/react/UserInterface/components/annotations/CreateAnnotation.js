@@ -1,13 +1,17 @@
 import React from 'react';
 import Toast from "../../utils/Toast";
-import { Redirect } from 'react-router';
+import {Redirect} from 'react-router';
 
 import HttpClient from '../../utils/HttpClient';
 import ErrorAlert from '../../utils/ErrorAlert';
 import GoogleAnalyticsPropertySelect from "../../utils/GoogleAnalyticsPropertySelect";
 import AnnotationCategorySelect from '../../utils/AnnotationCategorySelect';
 
-import { loadStateFromLocalStorage, saveStateToLocalStorage, removeStateFromLocalStorage } from '../../helpers/CommonFunctions';
+import {
+    loadStateFromLocalStorage,
+    saveStateToLocalStorage,
+    removeStateFromLocalStorage
+} from '../../helpers/CommonFunctions';
 import ModalHeader from '../AppsMarket/common/ModalHeader';
 
 export default class CreateAnnotation extends React.Component {
@@ -20,7 +24,7 @@ export default class CreateAnnotation extends React.Component {
                 event_name: '',
                 url: '',
                 description: '',
-                show_at: '',
+                show_at: new Date().toISOString().substring(0, 10),
                 google_analytics_property_id: [""]
             },
             categories: [],
@@ -77,17 +81,17 @@ export default class CreateAnnotation extends React.Component {
 
     loadUserAnnotationColors() {
         HttpClient.get(`/data-source/user-annotation-color`).then(resp => {
-            this.setState({ isLoading: false, userAnnotationColors: resp.data.user_annotation_color });
+            this.setState({isLoading: false, userAnnotationColors: resp.data.user_annotation_color});
         }, (err) => {
-            this.setState({ isLoading: false, errors: (err.response).data });
+            this.setState({isLoading: false, errors: (err.response).data});
         }).catch(err => {
-            this.setState({ isLoading: false, errors: err });
+            this.setState({isLoading: false, errors: err});
         })
 
     }
 
     loadCategoriesList() {
-        this.setState({ isBusy: true })
+        this.setState({isBusy: true})
         HttpClient.get(`/annotation-categories`)
             .then(response => {
                 this.setState({ isBusy: false, categories: response.data.categories.map(c => { return { label: c.category, value: c.category } }) });
@@ -121,10 +125,10 @@ export default class CreateAnnotation extends React.Component {
 
     changeHandler(e) {
         if (e.target.name) {
-            this.setState({ isDirty: true, annotation: { ...this.state.annotation, [e.target.name]: e.target.value } },
+            this.setState({isDirty: true, annotation: {...this.state.annotation, [e.target.name]: e.target.value}},
                 () => {
                     setTimeout(() => {
-                        saveStateToLocalStorage("CreateAnnotation", { annotation: this.state.annotation });
+                        saveStateToLocalStorage("CreateAnnotation", {annotation: this.state.annotation});
                     }, 500);
                 });
         }
@@ -134,14 +138,16 @@ export default class CreateAnnotation extends React.Component {
         e.preventDefault();
 
         if (this.validate() && !this.state.isBusy) {
-            this.setState({ isBusy: true });
+            this.setState({isBusy: true});
             let fd = new FormData;
             for (var key in this.state.annotation) {
                 if (key !== 'google_analytics_property_id') {
                     fd.append(key, this.state.annotation[key])
                 }
             }
-            this.state.annotation.google_analytics_property_id.forEach((gAA) => { fd.append('google_analytics_property_id[]', gAA) })
+            this.state.annotation.google_analytics_property_id.forEach((gAA) => {
+                fd.append('google_analytics_property_id[]', gAA)
+            })
 
             HttpClient.post('/annotation', fd)
                 .then(response => {
@@ -151,7 +157,7 @@ export default class CreateAnnotation extends React.Component {
                         title: "Annotation added."
                     });
                     this.props.togglePopup('');
-                    this.setState({ redirectTo: "/annotation" });
+                    this.setState({redirectTo: "/annotation"});
 
                     // this.setDefaultState();
                     // this.loadCategoriesList();
@@ -166,11 +172,11 @@ export default class CreateAnnotation extends React.Component {
 
                     }
                     this.loadCategoriesList();
-                    this.setState({ isBusy: false, errors: (err.response).data });
+                    this.setState({isBusy: false, errors: (err.response).data});
                 }).catch(err => {
 
-                    this.setState({ isBusy: false, errors: err });
-                });
+                this.setState({isBusy: false, errors: err});
+            });
         }
 
     }
@@ -210,11 +216,11 @@ export default class CreateAnnotation extends React.Component {
     }
 
     updateUserAnnotationColors(userAnnotationColors) {
-        this.setState({ userAnnotationColors: userAnnotationColors });
+        this.setState({userAnnotationColors: userAnnotationColors});
     }
 
     render() {
-        if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
+        if (this.state.redirectTo) return <Redirect to={this.state.redirectTo}/>
 
         const validation = this.state.validation;
         return (
@@ -222,8 +228,10 @@ export default class CreateAnnotation extends React.Component {
                 <ModalHeader
                     userAnnotationColors={this.state.userAnnotationColors}
                     updateUserAnnotationColors={this.updateUserAnnotationColors}
-                    userServices={() => { }}
-                    serviceStatusHandler={() => { }}
+                    userServices={() => {
+                    }}
+                    serviceStatusHandler={() => {
+                    }}
                     closeModal={() => this.props.togglePopup('')}
                     serviceName={'Add annotation manually'}
                     colorKeyName={"manual"}
@@ -232,38 +240,61 @@ export default class CreateAnnotation extends React.Component {
                 />
                 <div className="apps-bodyContent">
                     <form onSubmit={this.submitHandler} id="annotation-create-form">
-                        <ErrorAlert errors={this.state.errors} />
+                        <ErrorAlert errors={this.state.errors}/>
                         <div className='grid2layout'>
                             <div className="themeNewInputStyle">
-                                <input type="text" className="form-control" value={this.state.annotation.event_name} onChange={this.changeHandler} id="event_name" name="event_name" placeholder='Event name *' />
-                                {validation.event_name ? <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.event_name}</span> : ''}
+                                <input type="text" className="form-control" value={this.state.annotation.event_name}
+                                       onChange={this.changeHandler} id="event_name" name="event_name"
+                                       placeholder='Event name *'/>
+                                {validation.event_name ? <span
+                                    className="bmd-help text-danger"> &nbsp; &nbsp;{validation.event_name}</span> : ''}
                             </div>
                             <div className="themeNewInputStyle">
-                                <AnnotationCategorySelect className="gray_clr" name="category" id="category" value={this.state.annotation.category} categories={this.state.categories} onChangeCallback={this.changeHandler} placeholder="Category *" />
-                                {validation.category ? <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.category}</span> : ''}
+                                <AnnotationCategorySelect className="gray_clr" name="category" id="category"
+                                                          value={this.state.annotation.category}
+                                                          categories={this.state.categories}
+                                                          onChangeCallback={this.changeHandler}
+                                                          placeholder="Category *"/>
+                                {validation.category ? <span
+                                    className="bmd-help text-danger"> &nbsp; &nbsp;{validation.category}</span> : ''}
                             </div>
                         </div>
 
                         <div className="themeNewInputStyle has-danger mb-3">
-                            <input type="text" value={this.state.annotation.description} onChange={this.changeHandler} className="form-control" id="description" name="description" placeholder='Description' />
-                            {validation.description ? <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.description}</span> : ''}
+                            <input type="text" value={this.state.annotation.description} onChange={this.changeHandler}
+                                   className="form-control" id="description" name="description"
+                                   placeholder='Description'/>
+                            {validation.description ? <span
+                                className="bmd-help text-danger"> &nbsp; &nbsp;{validation.description}</span> : ''}
                         </div>
 
                         <div className='grid2layout'>
                             <div className="themeNewInputStyle position-relative inputWithIcon">
-                                <i className="icon fa"><img src='/icon-chain-gray.svg' /></i>
-                                <input type="text" value={this.state.annotation.url} onChange={this.changeHandler} className="form-control" id="url" name="url" placeholder='https://' />
-                                {validation.url ? <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.url}</span> : ''}
+                                <i className="icon fa"><img src='/icon-chain-gray.svg'/></i>
+                                <input type="text" value={this.state.annotation.url} onChange={this.changeHandler}
+                                       className="form-control" id="url" name="url" placeholder='https://'/>
+                                {validation.url ?
+                                    <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.url}</span> : ''}
                             </div>
 
                             <div className="themeNewInputStyle">
-                                <input type="date" onChange={this.changeHandler} value={this.state.annotation.show_at} className="form-control" placeholder='Show on this date' id="show_at" name="show_at" />
-                                {validation.show_at ? <span className="bmd-help text-danger"> &nbsp; &nbsp;{validation.show_at}</span> : ''}
+                                <input type="date" onChange={this.changeHandler} value={this.state.annotation.show_at}
+                                       className="form-control" placeholder='Show on this date' id="show_at"
+                                       name="show_at"/>
+                                {validation.show_at ? <span
+                                    className="bmd-help text-danger"> &nbsp; &nbsp;{validation.show_at}</span> : ''}
                             </div>
                         </div>
                         <div className='grid2layout'>
                             <div className="themeNewInputStyle">
-                                <GoogleAnalyticsPropertySelect name="google_analytics_property_id" id="google_analytics_property_id" className="gray_clr" value={this.state.annotation.google_analytics_property_id} onChangeCallback={this.changeHandler} placeholder="Assign annotation to" components={{ DropdownIndicator: () => null, IndicatorSeparator: () => null }} multiple currentPricePlan={this.props.currentPricePlan} />
+                                <GoogleAnalyticsPropertySelect name="google_analytics_property_id"
+                                                               id="google_analytics_property_id" className="gray_clr"
+                                                               value={this.state.annotation.google_analytics_property_id}
+                                                               onChangeCallback={this.changeHandler}
+                                                               placeholder="Assign annotation to" components={{
+                                    DropdownIndicator: () => null,
+                                    IndicatorSeparator: () => null
+                                }} multiple currentPricePlan={this.props.currentPricePlan}/>
                             </div>
                         </div>
 

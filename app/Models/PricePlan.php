@@ -21,6 +21,7 @@ class PricePlan extends Model
     const ENTERPRISE = 'Enterprise';
 
     const CODE_FREE_NEW = 'free new';
+    const CODE_TRIAL_ENDED = 'Trial Ended';
 
     const APPSUMO_TIER_1 = 'AppSumo Tier 1';
     const APPSUMO_TIER_2 = 'AppSumo Tier 2';

@@ -109,11 +109,11 @@ class IndexAnnotations extends React.Component {
                     pageNumber: 0,
                     isLoading: false,
                     hideInfiniteScroll: true
-                }, () => { 
-                    this.setState({ hideInfiniteScroll: false }, () => { 
+                }, () => {
+                    this.setState({ hideInfiniteScroll: false }, () => {
                         this.loadMoreAnnotations()
                         this.loadAnnotationColors()
-                    }) 
+                    })
                 });
             }
 
@@ -129,7 +129,7 @@ class IndexAnnotations extends React.Component {
             }, this.loadInitAnnotations)
         }
     }
-    
+
     loadAnnotationColors () {
 
         HttpClient.get(`/data-source/user-annotation-color`)
@@ -735,9 +735,12 @@ class IndexAnnotations extends React.Component {
                                                                     <img src={`icon-edit.svg`}/>
                                                                 </span>
                                                             </li>
+                                                            <li>
+                                                                <span className="text-danger" onClick={(e) => { e.stopPropagation(); this.deleteAnnotation(tableId, tableName); }}><img src={`icon-trash.svg`} /></span>
+                                                            </li>
                                                         </> : null}
                                                         <li>
-                                                            <span className="text-danger" onClick={(e) => { e.stopPropagation(); this.deleteAnnotation(tableId, tableName); }}><img src={`icon-trash.svg`} /></span>
+                                                            {/*<span className="text-danger" onClick={(e) => { e.stopPropagation(); this.deleteAnnotation(tableId, tableName); }}><img src={`icon-trash.svg`} /></span>*/}
                                                         </li>
                                                         {/* </> : null} */}
                                                     </ul>
@@ -767,10 +770,10 @@ class IndexAnnotations extends React.Component {
                             pageNumber: 0,
                             isLoading: false,
                             hideInfiniteScroll: true
-                        }, () => { this.setState({ hideInfiniteScroll: false }, () => { 
+                        }, () => { this.setState({ hideInfiniteScroll: false }, () => {
                                 this.loadMoreAnnotations()
                                 this.loadAnnotationColors()
-                            }) 
+                            })
                         });
                     }} editAnnotationId={this.state.editAnnotationId} currentPricePlan={this.props.user.price_plan} />
                 </AppsModal>
@@ -828,7 +831,6 @@ class IndexAnnotations extends React.Component {
     }
     sortByCategory(catName) {
         this.setState({
-            isLoading: true,
             category: catName,
             annotations: [],
             pageNumber: 0,

@@ -39,11 +39,11 @@
                             <input type="number" min="-1" name="annotations_count" id="annotationsCount" class="form-control" value="0" />
                         </div>
                         <div class="form-group">
-                            <label>Ga Account Count <sub>(0 means unlimited, -1 means not allowed)</sub></label>
+                            <label>Google Accounts <sub>(0 means unlimited, -1 means not allowed)</sub></label>
                             <input type="number" min="-1" name="ga_account_count" id="ga_account_count" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label>User per ga-account count? <sub>(0 means unlimited, -1 means not allowed)</sub></label>
+                            <label>Users-Teamwork <sub>(0 means unlimited, -1 means not allowed)</sub></label>
                             <input type="number" min="-1" name="user_per_ga_account_count" id="user_per_ga_account_count" class="form-control" />
                         </div>
                         <div class="form-group">
@@ -149,12 +149,12 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Available? <sub>( if this plan can be purchased by a user from the price plan page )</sub></label>
+                            <label>Available? <sub>( Plan can be purchased, otherwise coming soon )</sub></label>
                             <input type="checkbox" name="is_available" id="isAvailable" class="form-control" />
                         </div>
 
                         <div class="form-group">
-                            <label>Enabled? <sub>( if the users can stay and show on this price plan page)</sub></label>
+                            <label>Enabled? <sub>( Show on pricing page, otherwise not display )</sub></label>
                             <input type="checkbox" name="is_enabled" id="isEnabled" class="form-control" />
                         </div>
 
