@@ -52,7 +52,7 @@ class AnnotationController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
 
@@ -74,13 +74,13 @@ class AnnotationController extends Controller
         $userId = $user->id;
 
         DB::beginTransaction();
-        $annotation = new Annotation;
-        $annotation->fill($request->validated());
-        $annotation->show_at = $request->show_at ? Carbon::parse($request->show_at) : Carbon::now();
-        $annotation->user_id = $userId;
-        $annotation->is_enabled = true;
-        $annotation->added_by = 'manual';
-        $annotation->save();
+        // $annotation = new Annotation;
+        // $annotation->fill($request->validated());
+        // $annotation->show_at = $request->show_at ? Carbon::parse($request->show_at) : Carbon::now();
+        // $annotation->user_id = $userId;
+        // $annotation->is_enabled = true;
+        // $annotation->added_by = 'manual';
+        // $annotation->save();
 
         // Check if google analytics property ids are provided in the request
         if ($request->google_analytics_property_id !== null && !in_array("", $request->google_analytics_property_id)) {
@@ -101,7 +101,14 @@ class AnnotationController extends Controller
                     }
                     $googleAnalyticsProperty->is_in_use = true;
                     $googleAnalyticsProperty->save();
-
+                    
+                    $annotation = new Annotation;
+                    $annotation->fill($request->validated());
+                    $annotation->show_at = $request->show_at ? Carbon::parse($request->show_at) : Carbon::now();
+                    $annotation->user_id = $userId;
+                    $annotation->is_enabled = true;
+                    $annotation->added_by = 'manual';
+                    $annotation->save();
                     $aGAP = new AnnotationGaProperty;
                     $aGAP->annotation_id = $annotation->id;
                     $aGAP->google_analytics_property_id = $gAPId;
@@ -110,6 +117,14 @@ class AnnotationController extends Controller
                 }
             }
         } else {
+            
+            $annotation = new Annotation;
+            $annotation->fill($request->validated());
+            $annotation->show_at = $request->show_at ? Carbon::parse($request->show_at) : Carbon::now();
+            $annotation->user_id = $userId;
+            $annotation->is_enabled = true;
+            $annotation->added_by = 'manual';
+            $annotation->save();
             $aGAP = new AnnotationGaProperty;
             $aGAP->annotation_id = $annotation->id;
             $aGAP->google_analytics_property_id = null;
@@ -135,8 +150,8 @@ class AnnotationController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Annotation  $annotation
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Annotation $annotation
      * @return \Illuminate\Http\Response
      */
     public function update(AnnotationRequest $request, Annotation $annotation)
@@ -220,7 +235,7 @@ class AnnotationController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Annotation  $annotation
+     * @param \App\Annotation $annotation
      * @return \Illuminate\Http\Response
      */
     public function destroy(Annotation $annotation)
@@ -318,6 +333,7 @@ class AnnotationController extends Controller
 
         return ['annotations' => $annotations, 'query' => $annotationsQuery];
     }
+
     public function uiShow(Annotation $annotation)
     {
         $this->authorize('view', $annotation);
@@ -332,7 +348,8 @@ class AnnotationController extends Controller
         return ['annotation' => $annotation];
     }
 
-    public function saveCSV (Request $request) {
+    public function saveCSV(Request $request)
+    {
 
         $user_id = Auth::id();
         $fieldErrors = json_decode($request->fieldErrors, true);
@@ -343,67 +360,69 @@ class AnnotationController extends Controller
         $dateF = $request->date_format;
         $dateFormat = '';
         switch ($dateF) {
-        case 'MMM D, YYYY':
-            $dateFormat = 'M j, Y';
-            break;
-        case 'D/MM/YYYY':
-            $dateFormat = "j/n/Y";
-            break;
-        case 'M-D-YYYY':
-            $dateFormat = "n-j-Y";
-            break;
-        case "M-D-YY":
-            $dateFormat = "n-j-y";
-            break;
-        case "MM-D-YY":
-            $dateFormat = "m-j-y";
-            break;
-        case "MM-D-YYYY":
-            $dateFormat = "m-j-Y";
-            break;
-        case "YY-MM-D":
-            $dateFormat = "y-m-j";
-            break;
-        case "YYYY-MM-D":
-            $dateFormat = "Y-m-j";
-            break;
-        case "D-MMM-YY":
-            $dateFormat = "j-M-y";
-            break;
-        case "M/D/YYYY":
-            $dateFormat = "n/j/Y";
-            break;
-        case "M/D/YY":
-            $dateFormat = "n/j/y";
-            break;
-        case "MM/D/YY":
-            $dateFormat = "m/j/y";
-            break;
-        case "MM/D/YYYY":
-            $dateFormat = "m/j/Y";
-            break;
-        case "YY/MM/D":
-            $dateFormat = "y/m/j";
-            break;
-        case "YYYY/MM/D":
-            $dateFormat = "Y/m/j";
-            break;
-        case "D/MMM/YY":
-            $dateFormat = "j/M/y";
-            break;
+            case 'MMM D, YYYY':
+                $dateFormat = 'M j, Y';
+                break;
+            case 'D/MM/YYYY':
+                $dateFormat = "j/n/Y";
+                break;
+            case 'M-D-YYYY':
+                $dateFormat = "n-j-Y";
+                break;
+            case "M-D-YY":
+                $dateFormat = "n-j-y";
+                break;
+            case "MM-D-YY":
+                $dateFormat = "m-j-y";
+                break;
+            case "MM-D-YYYY":
+                $dateFormat = "m-j-Y";
+                break;
+            case "YY-MM-D":
+                $dateFormat = "y-m-j";
+                break;
+            case "YYYY-MM-D":
+                $dateFormat = "Y-m-j";
+                break;
+            case "D-MMM-YY":
+                $dateFormat = "j-M-y";
+                break;
+            case "M/D/YYYY":
+                $dateFormat = "n/j/Y";
+                break;
+            case "M/D/YY":
+                $dateFormat = "n/j/y";
+                break;
+            case "MM/D/YY":
+                $dateFormat = "m/j/y";
+                break;
+            case "MM/D/YYYY":
+                $dateFormat = "m/j/Y";
+                break;
+            case "YY/MM/D":
+                $dateFormat = "y/m/j";
+                break;
+            case "YYYY/MM/D":
+                $dateFormat = "Y/m/j";
+                break;
+            case "D/MMM/YY":
+                $dateFormat = "j/M/y";
+                break;
 
-        default:
-            $dateFormat = '';
+            default:
+                $dateFormat = '';
         }
 
         $e = [];
         $fieldErrorsCount = 0;
+
+        // Remove in future
         foreach ($fieldErrors as &$fe) {
             try {
                 $showAt = Carbon::createFromFormat($dateFormat, $fe['show_at']);
                 unset($fe['show_at_error']);
-            } catch(\Exception $e) {
-                if($fe['show_at']) {
+            } catch (\Exception $e) {
+                if ($fe['show_at']) {
                     $error = true;
                     $fieldErrorsCount++;
                     $fe['show_at_error'] = "Date format is incorrect, use format [" . Carbon::createFromDate(2021, 01, 15)->format($dateFormat) . "]";
@@ -412,7 +431,7 @@ class AnnotationController extends Controller
                 }
             }
 
-            if(!$fe['category']) {
+            if (!$fe['category']) {
                 $error = true;
                 $fieldErrorsCount++;
                 $fe['category_error'] = "Category can't be empty";
@@ -420,7 +439,7 @@ class AnnotationController extends Controller
                 unset($fe['category_error']);
             }
 
-            if($fe['url'] && !filter_var($fe['url'], FILTER_VALIDATE_URL)) {
+            if ($fe['url'] && !filter_var($fe['url'], FILTER_VALIDATE_URL)) {
                 $error = true;
                 $fieldErrorsCount++;
                 $fe['url_error'] = "Enter a valid URL";
@@ -428,7 +447,7 @@ class AnnotationController extends Controller
                 unset($fe['url_error']);
             }
 
-            if(!$fe['event_name']) {
+            if (!$fe['event_name']) {
                 $error = true;
                 $fieldErrorsCount++;
                 $fe['event_name_error'] = "Event Name can't be empty";
@@ -457,13 +476,13 @@ class AnnotationController extends Controller
             $fe['added_by'] = 'csv-upload';
             $fe['created_at'] = Carbon::now();
 
-            if(!$exists) {
-                foreach($data as $dt) {
+            if (!$exists) {
+                foreach ($data as $dt) {
                     $exists = $dt['description'] === $fe['description'] && $dt['event_name'] === $fe['event_name'] && $dt['category'] === $fe['category'] && $dt['url'] === $fe['url'];
                 }
             }
 
-            if(!$exists) {
+            if (!$exists) {
                 $data[] = $fe;
             }
         }
@@ -554,17 +573,23 @@ class AnnotationController extends Controller
             abort(422, "Error occured while processing your CSV. Please contact support for more information.");
         }
 
+        if ($importReviewErrorCount === 5){
+            Log::error("Incomplete CSV file headers");
+            return response()->json(['message' => 'Incomplete CSV file headers'], 422);
+        }
+
         return [
-            'fieldErrors'=> $rows,
+            'fieldErrors' => $rows,
             'fileName' => $request->file('csv')->getClientOriginalName(),
             'sampleDate' => $sampleDate,
-            'importReview'=> $importReview,
+            'importReview' => $importReview,
             'importReviewErrorCount' => $importReviewErrorCount,
             'fileHeaders' => $headers
         ];
     }
 
-    public function insertRows ($rows, $request) {
+    public function insertRows($rows, $request)
+    {
         try {
             Annotation::insert($rows);
             $firstInsertId = DB::getPdo()->lastInsertId(); // it returns first generated ID in bulk insert
@@ -672,8 +697,17 @@ class AnnotationController extends Controller
 
         } else if ($request->table_name == 'open_weather_map_alerts') {
             // working fine
-            $annotation = OpenWeatherMapAlert::find($request->annotation_id);
-            $annotation->delete();
+//            $annotation = OpenWeatherMapAlert::find($request->annotation_id);
+//            $annotation->delete();
+            $owma = UserDataSource::find($request->annotation_id);
+            if (!$owma) {
+                abort(404, "Unable to find annotation with the given id.");
+            }
+
+            if (!in_array($owma->user_id, $userIdsArray)) {
+                abort(404, "Unable to find annotation with the given id.");
+            }
+            $owma->delete();
         } else if ($request->table_name == 'google_alerts') {
             $annotation = GoogleAlert::find($request->annotation_id);
             $annotation->delete();
@@ -734,6 +768,7 @@ class AnnotationController extends Controller
 
         return ["success" => true];
     }
+
     public function bulk_delete(Request $request)
     {
         $request->validate([

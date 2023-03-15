@@ -18,6 +18,7 @@
                                     <tr>
                                         <th scope="col">User Name</th>
                                         <th scope="col">Email</th>
+                                        <th scope="col">Child / Parent User</th>
                                         <th scope="col">User Annotations</th>
                                         <th scope="col">Registration Date</th>
                                         <th scope="col">Plan</th>
@@ -48,10 +49,12 @@
                                             <td>{{ $user->name }}</td>
                                             <td>
                                                 {{ $user->email }}
+                                            </td>
+                                            <td>
                                                 @if ($user->user)
                                                     <span class="badge badge-primary">{{ $user->user->email }}</span>
                                                 @else
-                                                    (Child Users: {{ $user->users_count }})
+                                                    {{ @$user->users_count }}
                                                 @endif
                                             </td>
                                             <td class="text-center">
@@ -114,7 +117,7 @@
                                                 {{ $user->last90_days_api_annotation_created_logs_count }}
                                                 <a class="btn btn-default btn-sm"
                                                     href="{{ route('admin.api-log.index', ['user_id' => $user->id]) }}"
-                                                    target="_blank">More info</a>
+                                                    >More info</a>
                                             </td>
                                             <td>{{ $user->email_notification_logs_count }} time(s).</td>
                                             <td>
@@ -160,7 +163,7 @@
                                                         <div class="mt-2 text-center">
                                                             <small><a
                                                                     href="{{ route('admin.reports.user-ga-info.show', ['user' => $user->id]) }}"
-                                                                    class="text-primary">More info</a></small>
+                                                                    target="_blank" class="text-primary">More info</a></small>
                                                         </div>
                                                     @endif
                                                 </div>

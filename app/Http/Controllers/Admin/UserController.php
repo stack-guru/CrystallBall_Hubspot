@@ -52,7 +52,7 @@ class UserController extends Controller
                     return $html;
                 })
                 ->editColumn('price_plan.name', function ($row) {
-                    $html = $row->pricePlan->name;
+                    $html = $row->pricePlan? $row->pricePlan->name: '';
                     if($row->price_plan_expiry_date){
                         $html .= ' (' . ($row->price_plan_expiry_date->format(config('app.format.date'))) . ')';
                     }
@@ -190,8 +190,10 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy($id)
     {
+        $user = User::find($id);
+        $user->bitbucket_annotations()->delete();
         $user->delete();
         return redirect()->route('admin.user.index')->with('success', true);
     }

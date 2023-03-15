@@ -29,7 +29,7 @@ class AnnotationRequest extends FormRequest
                     'category' => 'required|string|max:100',
                     'event_name' => 'required|string|max:100',
                     'url' => 'nullable|string',
-                    'description' => 'nullable|string',
+                    'description' => 'nullable|string|max:250',
                     'show_at' => 'nullable|date',
                     'google_analytics_property_id' => 'nullable|array',
                     'google_analytics_property_id.*' => 'nullable|exists:google_analytics_properties,id',

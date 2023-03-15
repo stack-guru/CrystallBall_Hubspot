@@ -278,6 +278,14 @@ class SendGridService
                 "self" => "https://api.sendgrid.com/v3/marketing/lists/59c621fe-58a0-4ffe-8236-5b152f8eb0b3"
             ]
         ],
+		[
+			"name" => "Extra Trial ends Today",
+			"id" => "766a0619-9df6-49fb-925f-4d5399a86766",
+			"contact_count" => 0,
+			"_metadata" => [
+				"self" => "https://api.sendgrid.com/v3/marketing/lists/766a0619-9df6-49fb-925f-4d5399a86766"
+            ]
+		],
     ];
 
     public function addUserToContactList(User $user, $listName, $customFields = [])

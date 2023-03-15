@@ -20,3 +20,4 @@ yarn-error.log
 /.phpintel/index
 node_app/node_modules
 node_app/api.rest
+/public/temp_email_domains.txt

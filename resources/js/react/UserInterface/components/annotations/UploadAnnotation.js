@@ -82,19 +82,19 @@ export default class UploadAnnotation extends React.Component {
                     fieldErrorsCount++;
                     obj.url_error = 'Enter a valid URL';
                 }
-
-                if (obj.show_at && !(moment(obj.show_at || "", date_format, true).isValid())) {
+                const date = this.validDate(obj.show_at, date_format);
+                if (obj.show_at && !date.isValid) {
                     fieldErrorsCount++;
-                    obj.show_at_error = `Date format is incorrect, use format [${moment("2021-01-15").format(date_format)}]`;
+                    obj.show_at_error = date.message ? date.message : `Date format is incorrect, use format [${moment("2021-01-15").format(date_format)}]`;
                 }
                 if (!obj.category || itm.category_error) {
                     fieldErrorsCount++;
                     obj.category_error = itm.category_error ? itm.category_error : `Category can't be empty`;
                 }
 
-                if(obj.category && obj.category.length > 70) {
+                if(obj.category && obj.category.length > 100) {
                     fieldErrorsCount++;
-                    obj.category_error = `Category can be up to 70 characters`;
+                    obj.category_error = `Category can be up to 100 characters`;
                 }
 
                 if (!obj.event_name || itm.event_name_error) {
@@ -102,9 +102,9 @@ export default class UploadAnnotation extends React.Component {
                     obj.event_name_error = itm.event_name_error ? itm.event_name_error : `Event Name can't be empty`;
                 }
 
-                if(obj.event_name && obj.event_name.length > 70) {
+                if(obj.event_name && obj.event_name.length > 100) {
                     fieldErrorsCount++;
-                    obj.event_name_error = `Event Name can be up to 70 characters`;
+                    obj.event_name_error = `Event Name can be up to 100 characters`;
                 }
 
                 if (itm.description_error) {
@@ -112,9 +112,9 @@ export default class UploadAnnotation extends React.Component {
                     obj.description_error = itm.description_error;
                 }
 
-                if(obj.description && obj.description.length > 70) {
+                if(obj.description && obj.description.length > 250) {
                     fieldErrorsCount++;
-                    obj.description_error = `Description can be up to 70 characters`;
+                    obj.description_error = `Description can be up to 250 characters`;
                 }
 
                 return obj;
@@ -149,16 +149,17 @@ export default class UploadAnnotation extends React.Component {
             if (this.isValidURL(list.url)) {
                 delete list.url_error
             }
-            if ((moment(list.show_at || "", this.state.date_format, true).isValid())) {
+            const date = this.validDate(list.show_at, this.state.date_format);
+            if (date.isValid) {
                 delete list.show_at_error
             }
-            if (list.category && list.category.length < 70) {
+            if (list.category && list.category.length < 100) {
                 delete list.category_error
             }
-            if (list.event_name && list.event_name.length < 70) {
+            if (list.event_name && list.event_name.length < 100) {
                 delete list.event_name_error
             }
-            if (list.description && list.description.length < 70) {
+            if (list.description && list.description.length < 250) {
                 delete list.description_error
             }
 
@@ -199,6 +200,7 @@ export default class UploadAnnotation extends React.Component {
                 });
 
                 const { fieldErrors, fieldErrorsCount } = response.data;
+
                 this.setState({ fieldErrors, fieldErrorsCount }, () => {
                     const target = document.querySelector('.is-invalid');
                     target?.parentElement?.parentElement?.previousElementSibling?.scrollIntoViewIfNeeded()
@@ -329,11 +331,13 @@ export default class UploadAnnotation extends React.Component {
 
                 const errors = (err.response).data;
                 
-                this.setState({ csvError: errors.errors.csv ? "File type must be CSV" : '' }, () => {
-                    if (errors.errors.csv) {
-                        delete errors.errors.csv;
-                    }
-                })
+                if (errors.errors) {
+                    this.setState({ csvError: errors.errors.csv ? "File type must be CSV" : '' }, () => {
+                        if (errors.errors.csv) {
+                            delete errors.errors.csv;
+                        }
+                    })
+                }
                 this.setState({ isBusy: false, errors });
             }).catch(err => {
                 this.setState({ isBusy: false, errors: err });
@@ -364,19 +368,20 @@ export default class UploadAnnotation extends React.Component {
                     fieldErrorsCount = fieldErrorsCount - 1;
                     delete list.url_error
                 }
-                if (name === 'category' && list.category_error && list.category && list.category.length < 70) {
+                if (name === 'category' && list.category_error && list.category && list.category.length < 100) {
                     fieldErrorsCount = fieldErrorsCount - 1;
                     delete list.category_error
                 }
-                if (name === 'event_name' && list.event_name_error && list.event_name && list.event_name.length < 70) {
+                if (name === 'event_name' && list.event_name_error && list.event_name && list.event_name.length < 100) {
                     fieldErrorsCount = fieldErrorsCount - 1;
                     delete list.event_name_error
                 }
-                if (name === 'description' && list.description_error && list.description && list.description.length < 70) {
+                if (name === 'description' && (!list.description || (list.description_error && list.description && list.description.length < 250))) {
                     fieldErrorsCount = fieldErrorsCount - 1;
                     delete list.description_error
                 }
-                if (name === 'show_at' && list.show_at_error && (!list.show_at || (moment(list.show_at || "", this.state.date_format, true).isValid()))) {
+                const date = this.validDate(list.show_at, this.state.date_format);
+                if (name === 'show_at' && list.show_at_error && date.isValid) {
                     fieldErrorsCount = fieldErrorsCount - 1;
                     delete list.show_at_error
                 }
@@ -390,6 +395,20 @@ export default class UploadAnnotation extends React.Component {
                 target?.parentElement?.parentElement?.previousElementSibling?.scrollIntoViewIfNeeded()
             }
         })
+    }
+
+    validDate (showAt, dateFormat) {
+
+        let isValid = true;
+        let message;
+        if (showAt) { 
+            isValid = moment(showAt, dateFormat, true).isValid();
+            if (isValid && moment(showAt, dateFormat).year() > 2037) {
+                message = 'Year allowed until 2037';
+                isValid = false;
+            }
+        }
+        return {isValid, message}
     }
 
     loadUserAnnotationColors() {
