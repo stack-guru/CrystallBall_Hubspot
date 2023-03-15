@@ -226,11 +226,14 @@ class RegisterController extends Controller
 
     public function requestInvitation(Request $request)
     {
-        $email = explode('@', $request->email)[1];
-        $admin = User::where('role', 'admin')->where('email', 'LIKE', '%' . $email . '%')->first();
+        $userDetail = explode('@', $request->email);
+        $name = $userDetail[0];
+        $domain = $userDetail[1];
+        $admin = User::where('user_level', 'admin')->where('email', 'LIKE', '%' . $domain . '%')->first();
 
         $user = new User();
         $user->email = $request->email;
+        $user->name = $name;
         Mail::to($admin->email)->send(new RequestInvitationMail($user, $admin));
         return response(['status' => true, 'message' => 'Success']);
     }

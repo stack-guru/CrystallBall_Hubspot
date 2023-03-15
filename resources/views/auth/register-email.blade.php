@@ -78,7 +78,7 @@
                                  data-expired-callback="gRecaptchaExpireCallBack"></div>
                         </div>
                         <div class="mb-3">
-                            <button class="btn-theme" type="submit" id="registerButton">Register</button>
+                            <button class="btn-theme" type="submit" id="registerButton" disabled>Register</button>
                         </div>
                         <div class="or text-center mb-3">
                             <span>or</span>

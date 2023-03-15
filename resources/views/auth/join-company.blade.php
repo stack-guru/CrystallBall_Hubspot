@@ -34,7 +34,7 @@
             const inviteURL = "{{ route('request.invite') }}";
 
             $.ajax(inviteURL, {
-                type: 'POST',
+                type: 'GET',
                 data: {email: "{{ request('email') }}"},
                 dataType: 'JSON',
                 cache: false,
@@ -42,7 +42,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function (data) {
-                    alert(data.success);
+                    location.href = 'invite-sent';
                 }
             });
 
