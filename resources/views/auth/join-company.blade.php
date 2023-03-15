@@ -7,7 +7,7 @@
     <!-- Uh, oh... screen Code -->
     <div class="container d-flex justify-content-center">
         <div class="confirmationContent d-flex flex-column text-center">
-            <h1>Uh, oh...</h1>
+            <h1>Join your team!</h1>
             <p>
                 It appears that your company already has an active account,
                 <a onclick="event.preventDefault();sendInvitation();" href='#'>
