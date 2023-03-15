@@ -34,7 +34,7 @@
             const inviteURL = "{{ route('request.invite') }}";
 
             $.ajax(inviteURL, {
-                type: 'POST',
+                type: 'GET',
                 data: {email: "{{ request('email') }}"},
                 dataType: 'JSON',
                 cache: false,

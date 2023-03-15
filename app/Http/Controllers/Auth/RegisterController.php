@@ -227,7 +227,7 @@ class RegisterController extends Controller
     public function requestInvitation(Request $request)
     {
         $email = explode('@', $request->email)[1];
-        $admin = User::where('role', 'admin')->where('email', 'LIKE', '%' . $email . '%')->first();
+        $admin = User::where('user_level', 'admin')->where('email', 'LIKE', '%' . $email . '%')->first();
 
         $user = new User();
         $user->email = $request->email;
