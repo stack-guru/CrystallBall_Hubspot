@@ -95,6 +95,10 @@
                             <input type="number" min="-1" name="twitter_credits_count" id="twitter_credits_count" class="form-control" />
                         </div>
                         <div class="form-group">
+                            <label for="holiday_credits_count">Holiday Credits count <sub>(0 means unlimited, -1 means not allowed)</sub></label>
+                            <input type="number" min="-1" name="holiday_credits_count" value="{{old('holiday_credits_count')}}" id="holiday_credits_count" class="form-control" />
+                        </div>
+                        <div class="form-group">
                             <label>Yearly discount percent? <sub>(minimum 0, maximum 100)</sub></label>
                             <input type="number" name="yearly_discount_percent" id="yearly_discount_percent" class="form-control" />
                         </div>
