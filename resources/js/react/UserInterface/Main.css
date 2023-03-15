@@ -3123,7 +3123,7 @@ body {
 .btn-bestplan {
     top: -13px;
     right: 50%;
-    width: 100px;
+    width: 150px;
     height: 26px;
     color: #fff;
     font-size: 14px;
@@ -3132,7 +3132,7 @@ body {
     padding: 4px 16px;
     position: absolute;
     border-radius: 100px;
-    left: calc(50% - 50px);
+    left: calc(50% - 70px);
     border-color: #ff630c;
     background: linear-gradient(90deg, #ff8534 33.33%, #ff630c 100%);
 }
