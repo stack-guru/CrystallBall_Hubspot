@@ -9,8 +9,6 @@ class CheckUserUsageHelper
     public static function checkAppsInUse($user,$pricePlan)
     {
         $names = [];
-        if($user->is_ds_holidays_enabled)
-            $names[] = "Holiday";
         if($user->is_ds_wordpress_updates_enabled)
             $names[] = "Wordpress";
         if($user->is_ds_google_algorithm_updates_enabled)
@@ -29,6 +27,11 @@ class CheckUserUsageHelper
         {
             if($user->is_ds_twitter_tracking_enabled)
                 $names[] = "Twitter";
+        }
+        if($pricePlan->holiday_credits_count == -1 || $pricePlan->holiday_credits_count == null)
+        {
+            if($user->is_ds_holidays_enabled)
+                $names[] = "Holiday";
         }
         if($pricePlan->keyword_tracking_count == -1 || $pricePlan->keyword_tracking_count == null)
         {

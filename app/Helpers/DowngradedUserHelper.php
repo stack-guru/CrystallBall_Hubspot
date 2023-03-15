@@ -32,7 +32,6 @@ class DowngradedUserHelper
     }
     public static function disableDataSources($user,$pricePlan)
     {
-        $user->is_ds_holidays_enabled = false;
         $user->is_ds_wordpress_updates_enabled = false;
         $user->is_ds_google_algorithm_updates_enabled = false;
         $user->is_ds_retail_marketing_enabled = false;
@@ -47,6 +46,10 @@ class DowngradedUserHelper
         if($pricePlan->twitter_credits_count == -1 || $pricePlan->twitter_credits_count == null)
         {
             $user->is_ds_twitter_tracking_enabled = false;
+        }
+        if($pricePlan->holiday_credits_count == -1 || $pricePlan->holiday_credits_count == null)
+        {
+            $user->is_ds_holidays_enabled = false;
         }
         if($pricePlan->keyword_tracking_count == -1 || $pricePlan->keyword_tracking_count == null)
             $user->is_ds_keyword_tracking_enabled = false;
