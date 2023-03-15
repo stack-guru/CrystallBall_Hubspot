@@ -5,6 +5,7 @@ import HttpClient from '../utils/HttpClient';
 
 import './UserStartupConfigurationModal.css';
 import AppsMarket from "../components/AppsMarket/AppsMarket";
+import CreateUser from "../components/settings/user/CreateUser";
 
 
 // // background.js (in your Chrome extension)
@@ -443,7 +444,7 @@ export default class UserStartupConfigurationModal extends Component {
                                     this.incrementStep(1)
                                 }} className="btn-cancel">Skip this</Button>
                                 <Button onClick={() => {
-                                    if(stepNumber === 4) {
+                                    if (stepNumber === 4) {
                                         this.recordStepResponse('IMPORT_OLD_ANNOTATIONS', false);
                                         this.incrementStep(1)
                                     }
@@ -469,81 +470,19 @@ export default class UserStartupConfigurationModal extends Component {
                                     </svg>
                                 </span>
                             </div>
-                            <div className='inviteCoWorkers d-flex justify-content-center align-items-center'>
-                                <form className='inviteForm'>
-                                    <legend>Enter details</legend>
-
-                                    <fieldset className='grid2layout'>
-                                        <div className="themeNewInputStyle">
-                                            <input type='text' className='form-control' placeholder='Full name' value=''
-                                                   id='' name=''/>
-                                        </div>
-                                        <div className="themeNewInputStyle">
-                                            <input type='email' className='form-control' placeholder='Email' value=''
-                                                   id='' name=''/>
-                                        </div>
-                                        <div className="themeNewInputStyle position-relative inputWithIcon">
-                                            <span className="cursor-pointer fa"><img
-                                                src={"/icon-eye-close.svg"}/></span>
-                                            <input type='password' className='form-control' placeholder='Password'
-                                                   value='' id='' name=''/>
-                                        </div>
-                                        <div className="themeNewInputStyle position-relative inputWithIcon">
-                                            <span className="cursor-pointer fa"><img src={"/icon-eye-blue.svg"}/></span>
-                                            <input type='password' className='form-control'
-                                                   placeholder='Confirm password' value='' id='' name=''/>
-                                        </div>
-                                        <div className="themeNewInputStyle">
-                                            <select name='user_level' className='form-control' placeholder='User level'
-                                                    onChange='' value=''>
-                                                <option value="admin">Admin</option>
-                                                <option value="team">Read & Write</option>
-                                                <option value="viewer">Read</option>
-                                            </select>
-                                        </div>
-                                        <div className="themeNewInputStyle">
-                                            <input type='text' className='form-control' placeholder='Department'
-                                                   value='' id='' name=''/>
-                                        </div>
-                                        <div className="themeNewInputStyle position-relative inputWithIcon">
-                                            <span className="cursor-pointer fa"><img src={"/icon-plus.svg"}/></span>
-                                            <input type='text' className='form-control' placeholder='Google accounts'
-                                                   value='' id='' name=''/>
-                                        </div>
-                                        <div className="themeNewInputStyle">
-                                            <select name='user_level' className='form-control' placeholder='Team'
-                                                    onChange='' value=''>
-                                                <option value="admin">Admin</option>
-                                                <option value="team">Read & Write</option>
-                                                <option value="viewer">Read</option>
-                                            </select>
-                                        </div>
-                                    </fieldset>
-
-                                    <fieldset className="tags">
-                                        <span className="tag">All accounts</span>
-                                        <span className="tag">Crystal account</span>
-                                    </fieldset>
-
-                                    <fieldset>
-                                        <div className="themeNewInputStyle position-relative inputWithIcon">
-                                            <span className="textPlusIcon cursor-pointer">
-                                                <img src={"/icon-email.svg"}/>
-                                                <em>Invitations sent to</em>
-                                            </span>
-                                            <div className='invitationEmail'>
-                                                <div className="tags">
-                                                    <span className="tag">{this.state.user.email}</span>
-                                                    <span className="tag">wowmail@yahoo.com</span>
-                                                    <span className="tag">Adnie@hotmail.com</span>
-                                                    <span className="tag">Oswald_Ledner73@gmail.com</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </fieldset>
-                                </form>
+                            <div className='inviteCoWorkers'>
+                                <CreateUser
+                                    skipInvite={() => {
+                                        this.recordStepResponse('IMPORT_OLD_ANNOTATIONS', false);
+                                        this.incrementStep(1);
+                                    }}
+                                    userStartupConfig={true}
+                                    getUsers={() => {
+                                    }}
+                                    user={this.props.user}
+                                />
                             </div>
-                            <div className='popupBtnBox d-flex justify-content-between align-items-center'>
+                           {/* <div className='popupBtnBox d-flex justify-content-between align-items-center'>
                                 <Button onClick={() => {
                                     this.recordStepResponse('IMPORT_OLD_ANNOTATIONS', false);
                                     this.incrementStep(1)
@@ -552,7 +491,7 @@ export default class UserStartupConfigurationModal extends Component {
                                     <Button className="btn-theme mr-3">Send another</Button>
                                     <Button className="btn-theme">Continue</Button>
                                 </div>
-                            </div>
+                            </div>*/}
                         </ModalBody>
                     </div>
                 ];
