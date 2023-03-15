@@ -74,13 +74,13 @@ class AnnotationController extends Controller
         $userId = $user->id;
 
         DB::beginTransaction();
-        $annotation = new Annotation;
-        $annotation->fill($request->validated());
-        $annotation->show_at = $request->show_at ? Carbon::parse($request->show_at) : Carbon::now();
-        $annotation->user_id = $userId;
-        $annotation->is_enabled = true;
-        $annotation->added_by = 'manual';
-        $annotation->save();
+        // $annotation = new Annotation;
+        // $annotation->fill($request->validated());
+        // $annotation->show_at = $request->show_at ? Carbon::parse($request->show_at) : Carbon::now();
+        // $annotation->user_id = $userId;
+        // $annotation->is_enabled = true;
+        // $annotation->added_by = 'manual';
+        // $annotation->save();
 
         // Check if google analytics property ids are provided in the request
         if ($request->google_analytics_property_id !== null && !in_array("", $request->google_analytics_property_id)) {
@@ -101,7 +101,14 @@ class AnnotationController extends Controller
                     }
                     $googleAnalyticsProperty->is_in_use = true;
                     $googleAnalyticsProperty->save();
-
+                    
+                    $annotation = new Annotation;
+                    $annotation->fill($request->validated());
+                    $annotation->show_at = $request->show_at ? Carbon::parse($request->show_at) : Carbon::now();
+                    $annotation->user_id = $userId;
+                    $annotation->is_enabled = true;
+                    $annotation->added_by = 'manual';
+                    $annotation->save();
                     $aGAP = new AnnotationGaProperty;
                     $aGAP->annotation_id = $annotation->id;
                     $aGAP->google_analytics_property_id = $gAPId;
@@ -110,6 +117,14 @@ class AnnotationController extends Controller
                 }
             }
         } else {
+            
+            $annotation = new Annotation;
+            $annotation->fill($request->validated());
+            $annotation->show_at = $request->show_at ? Carbon::parse($request->show_at) : Carbon::now();
+            $annotation->user_id = $userId;
+            $annotation->is_enabled = true;
+            $annotation->added_by = 'manual';
+            $annotation->save();
             $aGAP = new AnnotationGaProperty;
             $aGAP->annotation_id = $annotation->id;
             $aGAP->google_analytics_property_id = null;
@@ -400,6 +415,8 @@ class AnnotationController extends Controller
 
         $e = [];
         $fieldErrorsCount = 0;
+
+        // Remove in future
         foreach ($fieldErrors as &$fe) {
             try {
                 $showAt = Carbon::createFromFormat($dateFormat, $fe['show_at']);

@@ -46,6 +46,7 @@ class PricePlan extends Model
         'linkedin_credits_count',
         'twitter_credits_count',
         'reference_text',
+        'holiday_credits_count',
     ];
 
     protected $hidden = [

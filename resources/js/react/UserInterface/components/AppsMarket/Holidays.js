@@ -44,7 +44,7 @@ class Holidays extends React.Component {
                     serviceName={"Holidays"}
                     colorKeyName={"holidays"}
                     dsKeyName={"is_ds_holidays_enabled"}
-                    creditString={null}
+                    creditString={`${ this.props.userDataSources.holidays?.length } / ${ this.props.user.price_plan.holiday_credits_count == -1 ? 0 : this.props.user.price_plan.holiday_credits_count }`}
                 />
 
 
