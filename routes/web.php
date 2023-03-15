@@ -46,6 +46,8 @@ Route::post('facebookAdsWebhook', [FacebookAutomationController::class, 'faceboo
 // });
 
 Route::get('requestInvitation', [App\Http\Controllers\Auth\RegisterController::class, 'requestInvitation'])->name('request.invite');
+Route::view('invite-sent', 'auth.invite-sent');
+
 Route::get('logs4727299@oolkidd9929', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
