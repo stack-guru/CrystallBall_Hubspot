@@ -42,7 +42,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function (data) {
-                    alert(data.success);
+                    alert("Request is submitted to join the Company");
                 }
             });
 
