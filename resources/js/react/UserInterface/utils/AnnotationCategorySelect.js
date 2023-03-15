@@ -1,5 +1,5 @@
 import React from "react";
-import Creatable, { makeCreatableSelect } from 'react-select/creatable';
+import Creatable, {makeCreatableSelect} from 'react-select/creatable';
 import CreatableSelect from 'react-select/creatable';
 
 import HttpClient from "./HttpClient";
@@ -24,23 +24,29 @@ export default class AnnotationCategorySelect extends React.Component {
     }
 
     onChangeHandler(sOption) {
-        this.props.onChangeCallback({ target: { name: this.props.name, value: sOption.value } });
+        this.props.onChangeCallback({target: {name: this.props.name, value: sOption.value}});
     }
 
     handleCreateOption() {
-        this.props.onChangeCallback({ target: { name: this.props.name, value: this.state.creatableValue } });
+        if (this.state.creatableValue) {
+            this.props.onChangeCallback({target: {name: this.props.name, value: this.state.creatableValue}});
+        }
     }
+
     render() {
         return (
             <CreatableSelect
                 name={this.props.name}
                 disabled={this.props.disabled}
-                value={this.props.value ? { label: this.props.value, value: this.props.value }: []}
+                value={this.props.value ? {label: this.props.value, value: this.props.value} : []}
                 id={this.props.id}
                 isMulti={this.props.multiple}
                 onChange={this.onChangeHandler}
                 className="gray_clr"
-                options={[...this.props.categories, ...(this.state.creatableValue ? [{ label: `${this.state.creatableValue}`, value: this.state.creatableValue }]: [])]}
+                options={[...this.props.categories, ...(this.state.creatableValue ? [{
+                    label: `${this.state.creatableValue}`,
+                    value: this.state.creatableValue
+                }] : [])]}
                 placeholder={this.props.placeholder || 'Category *'}
                 onInputChange={(newValue) => this.setState({creatableValue: newValue})}
                 onBlur={this.handleCreateOption}
