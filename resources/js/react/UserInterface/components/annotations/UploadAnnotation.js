@@ -201,7 +201,6 @@ export default class UploadAnnotation extends React.Component {
 
                 const { fieldErrors, fieldErrorsCount } = response.data;
 
-                console.log(fieldErrors);
                 this.setState({ fieldErrors, fieldErrorsCount }, () => {
                     const target = document.querySelector('.is-invalid');
                     target?.parentElement?.parentElement?.previousElementSibling?.scrollIntoViewIfNeeded()
