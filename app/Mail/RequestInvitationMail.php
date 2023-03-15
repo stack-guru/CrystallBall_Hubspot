@@ -33,7 +33,7 @@ class RequestInvitationMail extends Mailable
         return $this->subject("$userEmail wants to join Crystal Ball (GAannotations)")->markdown('mails.auth.request-invite', [
             'user' => $this->user,
             'admin' => $this->admin,
-            'addMemberLink' => 'https://app.crystalballinsight.com/settings/user'
+            'addMemberLink' => config('app.url') . '/settings/user'
         ]);
     }
 }

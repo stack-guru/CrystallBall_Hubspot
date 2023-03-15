@@ -31,7 +31,7 @@ Route::get('test_fb', function () {
 | contains the "web" middleware group. Now create something great!
 |
  */
-Route::view('join_company', 'auth.join_company');
+Route::view('join-company', 'auth.join-company');
 Route::view('success-message', 'auth.success');
 
 Route::get('facebookAdsWebhook', [FacebookAutomationController::class, 'facebookAdsWebhookGet']);
@@ -45,7 +45,9 @@ Route::post('facebookAdsWebhook', [FacebookAutomationController::class, 'faceboo
 //     }
 // });
 
-Route::post('requestInvitation', [App\Http\Controllers\Auth\RegisterController::class, 'requestInvitation'])->name('request.invite');
+Route::get('requestInvitation', [App\Http\Controllers\Auth\RegisterController::class, 'requestInvitation'])->name('request.invite');
+Route::view('invite-sent', 'auth.invite-sent');
+
 Route::get('logs4727299@oolkidd9929', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
@@ -96,7 +98,6 @@ Route::get('socialite/github', [GithubAutomationController::class, 'redirectGith
 Route::get('socialite/github/redirect', [GithubAutomationController::class, 'callbackGithub'])->name('github.callback');
 
 Route::view('documentation', 'documentation');
-Route::view('join-company', 'auth/join_company');
 Route::view('upgrade-plan', 'upgrade-plan')->name('upgrade-plan');
 Route::view('upgrade-plan-team', 'upgrade-plan-team')->name('upgrade-plan-team');
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, Redirect } from "react-router-dom";
+import {Switch, Route, Redirect} from "react-router-dom";
 import * as PusherPushNotifications from "@pusher/push-notifications-web";
 
 import HttpClient from "./utils/HttpClient";
@@ -46,7 +46,7 @@ import CustomPricePlan from './components/settings/pricingPlans/CustomPricePlan'
 import AppsMarket from './components/AppsMarket/AppsMarket'
 import AppsModal from './components/AppsMarket/AppsModal';
 import ModalHeader from './components/AppsMarket/common/ModalHeader';
-import { Modal, ModalBody } from 'reactstrap';
+import {Modal, ModalBody} from 'reactstrap';
 
 class Main extends React.Component {
 
@@ -76,18 +76,39 @@ class Main extends React.Component {
         this.extendTrial = this.extendTrial.bind(this);
     }
 
-    toggleStartupConfiguration() { this.setState({ showStartupConfiguration: !this.state.showStartupConfiguration, showInterfaceTour: !this.state.showInterfaceTour }); }
+    toggleStartupConfiguration() {
+        this.setState({
+            showStartupConfiguration: !this.state.showStartupConfiguration,
+            showInterfaceTour: !this.state.showInterfaceTour
+        });
+    }
+
     toggleInterfaceTour(keepInterfaceTour = false) {
         // If the user has alive registration offers and interface tour is showing
         if (this.state.user.user_registration_offers.length && this.state.showInterfaceTour) {
-            setTimeout(() => { this.setState({ showTimerPromotionPopup: true }); }, 60000);
+            setTimeout(() => {
+                this.setState({showTimerPromotionPopup: true});
+            }, 60000);
         }
-        this.setState({ showInterfaceTour: !this.state.showInterfaceTour, showDataSourceTour: !this.state.showDataSourceTour });
+        this.setState({
+            showInterfaceTour: !this.state.showInterfaceTour,
+            showDataSourceTour: !this.state.showDataSourceTour
+        });
         this.loadUser(false, keepInterfaceTour, false);
     }
-    toggleDataSourceTour() { this.setState({ showDataSourceTour: !this.state.showDataSourceTour }); this.loadUser(false, false, false); }
-    togglePromotionPopup() { this.setState({ showPromotionPopup: !this.state.showPromotionPopup }); }
-    toggleTimerPromotionPopup() { this.setState({ showTimerPromotionPopup: !this.state.showTimerPromotionPopup }); }
+
+    toggleDataSourceTour() {
+        this.setState({showDataSourceTour: !this.state.showDataSourceTour});
+        this.loadUser(false, false, false);
+    }
+
+    togglePromotionPopup() {
+        this.setState({showPromotionPopup: !this.state.showPromotionPopup});
+    }
+
+    toggleTimerPromotionPopup() {
+        this.setState({showTimerPromotionPopup: !this.state.showTimerPromotionPopup});
+    }
 
     extendTrial() {
         HttpClient.post('extend-trial')
@@ -111,147 +132,278 @@ class Main extends React.Component {
             "/settings/payment-history",
             "/settings/payment-detail/create",
         ].indexOf(this.props.location.pathname) == -1 && this.state.user.price_plan.name == "Trial Ended") {
-            return <Redirect to={"/settings/price-plans"} />
+            return <Redirect to={"/settings/price-plans"}/>
         }
 
         if (["/settings/change-password"].indexOf(this.props.location.pathname) == -1 && this.state.user.do_require_password_change == true) {
-            return <Redirect to={"/settings/change-password"} />
+            return <Redirect to={"/settings/change-password"}/>
         }
         return (
 
             <React.Fragment>
                 <div className="sidebar">
                     {/* <UserStartupConfigurationModal isOpen={this.state.showStartupConfiguration} toggleShowTour={this.toggleStartupConfiguration} /> */}
-                    <AddNewPasswordModal show={this.state.showPasswordPopup} user={this.state.user} />
+                    <AddNewPasswordModal show={this.state.showPasswordPopup} user={this.state.user}/>
 
                     {/* <InterfaceTour isOpen={this.state.showInterfaceTour} toggleShowTour={this.toggleInterfaceTour} /> */}
 
-                    {/*<UserStartupConfigurationModal closeModal={() => this.setState({showStartupConfiguration: false})} isOpen={this.state.showStartupConfiguration} user={this.state.user} />*/}
+                    <UserStartupConfigurationModal
+                        upgradePopup={(popupType) => this.setState({
+                            showUpgradePopup: true,
+                            upgradePopupType: popupType
+                        })}
+                        user={this.state.user} reloadUser={this.loadUser}
+                        showDataSourceTour={this.state.showDataSourceTour}
+                        toggleDataSourceTour={this.toggleDataSourceTour}
+                        closeModal={() => this.setState({showStartupConfiguration: false})}
+                        isOpen={this.state.showStartupConfiguration} user={this.state.user}/>
 
-                    <Sidebar openAnnotationPopup={(mka) => { this.setState({ mKeyAnnotation: mka }); }} user={this.state.user} reloadUser={this.loadUser} toggleInterfaceTour={this.toggleInterfaceTour} />
+                    <Sidebar openAnnotationPopup={(mka) => {
+                        this.setState({mKeyAnnotation: mka});
+                    }} user={this.state.user} reloadUser={this.loadUser}
+                             toggleInterfaceTour={this.toggleInterfaceTour}/>
                 </div>
                 {/* <PromotionPopup show={this.state.showPromotionPopup} togglePopupCallback={this.togglePromotionPopup} promotionLink="https://appsumo.8odi.net/crystal-ball" promotionImage="/images/crystal-ball-promotion.jpg" /> */}
                 <div className="page-container">
-                    <SiteRenamedTopNotice show={true} />
+                    <SiteRenamedTopNotice show={true}/>
                     {this.state.user.user_registration_offers.map(uRO => <React.Fragment key={uRO.id}>
-                        <TimerPromotionPopup show={this.state.showTimerPromotionPopup} togglePopupCallback={this.toggleTimerPromotionPopup} promotionLink="/settings/price-plans" promotionImage="/images/50-off-24-hours.jpg" userRegistrationOffer={uRO} />
-                        <UserRegistrationOffer userRegistrationOffer={uRO} show={!!uRO} />
+                        <TimerPromotionPopup show={this.state.showTimerPromotionPopup}
+                                             togglePopupCallback={this.toggleTimerPromotionPopup}
+                                             promotionLink="/settings/price-plans"
+                                             promotionImage="/images/50-off-24-hours.jpg" userRegistrationOffer={uRO}/>
+                        <UserRegistrationOffer userRegistrationOffer={uRO} show={!!uRO}/>
                     </React.Fragment>)}
                     <div className="header navbar">
-                        <Header user={this.state.user} extendTrial={this.extendTrial} />
+                        <Header user={this.state.user} extendTrial={this.extendTrial}/>
                     </div>
                     <main className="main-content bgc-grey-100">
                         <Switch>
                             <Route exact path="/ga-accounts" refresh={true}>
-                                <IndexDashboard upgradePopup={(popupType) => this.setState({ showUpgradePopup: true, upgradePopupType: popupType })} user={this.state.user} />
+                                <IndexDashboard upgradePopup={(popupType) => this.setState({
+                                    showUpgradePopup: true,
+                                    upgradePopupType: popupType
+                                })} user={this.state.user}/>
                             </Route>
                             <Route exact path="/settings/analytics-accounts" refresh={true}>
-                                <IndexDashboard upgradePopup={(popupType) => this.setState({ showUpgradePopup: true, upgradePopupType: popupType })} user={this.state.user} />
+                                <IndexDashboard upgradePopup={(popupType) => this.setState({
+                                    showUpgradePopup: true,
+                                    upgradePopupType: popupType
+                                })} user={this.state.user}/>
                             </Route>
                             <Route exact path="/dashboard/analytics" refresh={true}>
-                                <IndexAnalytics upgradePopup={(popupType) => this.setState({ showUpgradePopup: true, upgradePopupType: popupType })} user={this.state.user} />
+                                <IndexAnalytics upgradePopup={(popupType) => this.setState({
+                                    showUpgradePopup: true,
+                                    upgradePopupType: popupType
+                                })} user={this.state.user}/>
                             </Route>
                             <Route exact path="/dashboard/search-console" refresh={true}>
-                                <IndexSearchConsole upgradePopup={(popupType) => this.setState({ showUpgradePopup: true, upgradePopupType: popupType })} user={this.state.user} />
+                                <IndexSearchConsole upgradePopup={(popupType) => this.setState({
+                                    showUpgradePopup: true,
+                                    upgradePopupType: popupType
+                                })} user={this.state.user}/>
                             </Route>
 
                             <Route exact path="/annotation" refresh={true}>
-                                <IndexAnnotations upgradePopup={(popupType) => this.setState({ showUpgradePopup: true, upgradePopupType: popupType })} openAnnotationPopup={(mka) => { this.setState({ mKeyAnnotation: mka }); }} user={this.state.user} mKeyAnnotation={this.state.mKeyAnnotation} />
+                                <IndexAnnotations upgradePopup={(popupType) => this.setState({
+                                    showUpgradePopup: true,
+                                    upgradePopupType: popupType
+                                })} openAnnotationPopup={(mka) => {
+                                    this.setState({mKeyAnnotation: mka});
+                                }} user={this.state.user} mKeyAnnotation={this.state.mKeyAnnotation}/>
                             </Route>
                             <Route exact path="/annotation/create" refresh={true}>
-                                <AnnotationsCreate upgradePopup={(popupType) => this.setState({ showUpgradePopup: true, upgradePopupType: popupType })} currentPricePlan={this.state.user.price_plan} />
+                                <AnnotationsCreate upgradePopup={(popupType) => this.setState({
+                                    showUpgradePopup: true,
+                                    upgradePopupType: popupType
+                                })} currentPricePlan={this.state.user.price_plan}/>
                             </Route>
                             <Route exact path="/annotation/:id?/edit" refresh={true} render={(routeParams) =>
-                                <AnnotationsUpdate upgradePopup={(popupType) => this.setState({ showUpgradePopup: true, upgradePopupType: popupType })} routeParams={routeParams} currentPricePlan={this.state.user.price_plan} />}
+                                <AnnotationsUpdate upgradePopup={(popupType) => this.setState({
+                                    showUpgradePopup: true,
+                                    upgradePopupType: popupType
+                                })} routeParams={routeParams} currentPricePlan={this.state.user.price_plan}/>}
                             >
                             </Route>
                             <Route exact path="/api-key" refresh={true}>
-                                <IndexAPIKey upgradePopup={(popupType) => this.setState({ showUpgradePopup: true, upgradePopupType: popupType })} currentPricePlan={this.state.user.price_plan} />
+                                <IndexAPIKey upgradePopup={(popupType) => this.setState({
+                                    showUpgradePopup: true,
+                                    upgradePopupType: popupType
+                                })} currentPricePlan={this.state.user.price_plan}/>
                             </Route>
                             <Route exact path="/annotation/upload" refresh={true}>
-                                <AnnotationsUpload upgradePopup={(popupType) => this.setState({ showUpgradePopup: true, upgradePopupType: popupType })} currentPricePlan={this.state.user.price_plan} />
+                                <AnnotationsUpload upgradePopup={(popupType) => this.setState({
+                                    showUpgradePopup: true,
+                                    upgradePopupType: popupType
+                                })} currentPricePlan={this.state.user.price_plan}/>
                             </Route>
                             <Route exact path="/data-source" refresh={true}>
-                                <AppsMarket upgradePopup={(popupType) => this.setState({ showUpgradePopup: true, upgradePopupType: popupType })} user={this.state.user} reloadUser={this.loadUser} showDataSourceTour={this.state.showDataSourceTour} toggleDataSourceTour={this.toggleDataSourceTour} />
+                                <AppsMarket upgradePopup={(popupType) => this.setState({
+                                    showUpgradePopup: true,
+                                    upgradePopupType: popupType
+                                })} user={this.state.user} reloadUser={this.loadUser}
+                                            showDataSourceTour={this.state.showDataSourceTour}
+                                            toggleDataSourceTour={this.toggleDataSourceTour}/>
                                 {/* <DataSourceIndex user={this.state.user} reloadUser={this.loadUser} showDataSourceTour={this.state.showDataSourceTour} toggleDataSourceTour={this.toggleDataSourceTour} /> */}
                             </Route>
                             <Route exact path="/data-source-old" refresh={true}>
-                                <DataSourceIndex upgradePopup={(popupType) => this.setState({ showUpgradePopup: true, upgradePopupType: popupType })} user={this.state.user} reloadUser={this.loadUser} showDataSourceTour={this.state.showDataSourceTour} toggleDataSourceTour={this.toggleDataSourceTour} />
+                                <DataSourceIndex upgradePopup={(popupType) => this.setState({
+                                    showUpgradePopup: true,
+                                    upgradePopupType: popupType
+                                })} user={this.state.user} reloadUser={this.loadUser}
+                                                 showDataSourceTour={this.state.showDataSourceTour}
+                                                 toggleDataSourceTour={this.toggleDataSourceTour}/>
                             </Route>
                             <Route exact path="/integrations" refresh={true}>
-                                <IntegrationsIndex upgradePopup={(popupType) => this.setState({ showUpgradePopup: true, upgradePopupType: popupType })} user={this.state.user} />
+                                <IntegrationsIndex upgradePopup={(popupType) => this.setState({
+                                    showUpgradePopup: true,
+                                    upgradePopupType: popupType
+                                })} user={this.state.user}/>
                             </Route>
                             <Route exact path="/my-integrations" refresh={true}>
-                                <MyIntegrationsIndex upgradePopup={(popupType) => this.setState({ showUpgradePopup: true, upgradePopupType: popupType })} user={this.state.user} />
+                                <MyIntegrationsIndex upgradePopup={(popupType) => this.setState({
+                                    showUpgradePopup: true,
+                                    upgradePopupType: popupType
+                                })} user={this.state.user}/>
                             </Route>
                             <Route exact path="/analytics-and-business-intelligence" refresh={true}>
-                                <AnalyticsAndBusinessIntelligenceIndex upgradePopup={(popupType) => this.setState({ showUpgradePopup: true, upgradePopupType: popupType })} user={this.state.user} />
+                                <AnalyticsAndBusinessIntelligenceIndex upgradePopup={(popupType) => this.setState({
+                                    showUpgradePopup: true,
+                                    upgradePopupType: popupType
+                                })} user={this.state.user}/>
                             </Route>
                             <Route exact path="/notifications" refresh={true}>
-                                <IndexNotificationSettings upgradePopup={(popupType) => this.setState({ showUpgradePopup: true, upgradePopupType: popupType })} user={this.state.user} reloadUser={this.loadUser} />
+                                <IndexNotificationSettings upgradePopup={(popupType) => this.setState({
+                                    showUpgradePopup: true,
+                                    upgradePopupType: popupType
+                                })} user={this.state.user} reloadUser={this.loadUser}/>
                             </Route>
                             <Route exact path="/settings" refresh={true}>
-                                <Settings upgradePopup={(popupType) => this.setState({ showUpgradePopup: true, upgradePopupType: popupType })} user={this.state.user} />
+                                <Settings upgradePopup={(popupType) => this.setState({
+                                    showUpgradePopup: true,
+                                    upgradePopupType: popupType
+                                })} user={this.state.user}/>
                             </Route>
                             <Route exact path="/settings/profile" refresh={true}>
-                                <Profile upgradePopup={(popupType) => this.setState({ showUpgradePopup: true, upgradePopupType: popupType })} user={this.state.user} reloadUser={this.loadUser} />
+                                <Profile upgradePopup={(popupType) => this.setState({
+                                    showUpgradePopup: true,
+                                    upgradePopupType: popupType
+                                })} user={this.state.user} reloadUser={this.loadUser}/>
                             </Route>
                             <Route exact path="/settings/price-plans" refresh={true}>
-                                <IndexPricingPlans upgradePopup={(popupType) => this.setState({ showUpgradePopup: true, upgradePopupType: popupType })} user={this.state.user} />
+                                <IndexPricingPlans upgradePopup={(popupType) => this.setState({
+                                    showUpgradePopup: true,
+                                    upgradePopupType: popupType
+                                })} user={this.state.user}/>
                             </Route>
                             <Route exact path="/settings/price-plans/payment" refresh={true}>
-                                <CreatePayment upgradePopup={(popupType) => this.setState({ showUpgradePopup: true, upgradePopupType: popupType })} user={this.state.user} />
+                                <CreatePayment upgradePopup={(popupType) => this.setState({
+                                    showUpgradePopup: true,
+                                    upgradePopupType: popupType
+                                })} user={this.state.user}/>
                             </Route>
                             <Route exact path="/settings/payment-history" refresh={true}>
-                                <PaymentHistory upgradePopup={(popupType) => this.setState({ showUpgradePopup: true, upgradePopupType: popupType })} user={this.state.user} />
+                                <PaymentHistory upgradePopup={(popupType) => this.setState({
+                                    showUpgradePopup: true,
+                                    upgradePopupType: popupType
+                                })} user={this.state.user}/>
                             </Route>
                             <Route exact path="/settings/payment-detail/create" refresh={true}>
-                                <CreatePaymentDetail upgradePopup={(popupType) => this.setState({ showUpgradePopup: true, upgradePopupType: popupType })} user={this.state.user} />
+                                <CreatePaymentDetail upgradePopup={(popupType) => this.setState({
+                                    showUpgradePopup: true,
+                                    upgradePopupType: popupType
+                                })} user={this.state.user}/>
                             </Route>
                             <Route exact path="/accounts" refresh={true}>
-                                <Accounts upgradePopup={(popupType) => this.setState({ showUpgradePopup: true, upgradePopupType: popupType })} user={this.state.user} reloadUser={this.loadUser} />
+                                <Accounts upgradePopup={(popupType) => this.setState({
+                                    showUpgradePopup: true,
+                                    upgradePopupType: popupType
+                                })} user={this.state.user} reloadUser={this.loadUser}/>
                             </Route>
                             <Route exact path="/settings/facebook-accounts" refresh={true}>
-                                <FacebookAccounts upgradePopup={(popupType) => this.setState({ showUpgradePopup: true, upgradePopupType: popupType })} user={this.state.user} reloadUser={this.loadUser} />
+                                <FacebookAccounts upgradePopup={(popupType) => this.setState({
+                                    showUpgradePopup: true,
+                                    upgradePopupType: popupType
+                                })} user={this.state.user} reloadUser={this.loadUser}/>
                             </Route>
                             <Route exact path="/settings/devices" refresh={true}>
-                                <UserDevices upgradePopup={(popupType) => this.setState({ showUpgradePopup: true, upgradePopupType: popupType })} user={this.state.user} reloadUser={this.loadUser} />
+                                <UserDevices upgradePopup={(popupType) => this.setState({
+                                    showUpgradePopup: true,
+                                    upgradePopupType: popupType
+                                })} user={this.state.user} reloadUser={this.loadUser}/>
                             </Route>
                             <Route exact path="/settings/support" refresh={true}>
-                                <SupportIndex upgradePopup={(popupType) => this.setState({ showUpgradePopup: true, upgradePopupType: popupType })} user={this.state.user} />
+                                <SupportIndex upgradePopup={(popupType) => this.setState({
+                                    showUpgradePopup: true,
+                                    upgradePopupType: popupType
+                                })} user={this.state.user}/>
                             </Route>
                             <Route exact path="/settings/user" refresh={true}>
-                                <IndexUsers upgradePopup={(popupType) => this.setState({ showUpgradePopup: true, upgradePopupType: popupType })} user={this.state.user} />
+                                <IndexUsers upgradePopup={(popupType) => this.setState({
+                                    showUpgradePopup: true,
+                                    upgradePopupType: popupType
+                                })} user={this.state.user}/>
                             </Route>
                             <Route exact path="/settings/user/create" refresh={true}>
-                                <CreateUser upgradePopup={(popupType) => this.setState({ showUpgradePopup: true, upgradePopupType: popupType })} user={this.state.user} />
+                                <CreateUser upgradePopup={(popupType) => this.setState({
+                                    showUpgradePopup: true,
+                                    upgradePopupType: popupType
+                                })} user={this.state.user}/>
                             </Route>
                             <Route exact path="/settings/user/:id?/edit" refresh={true}
-                                render={(routeParams) => <EditUser upgradePopup={(popupType) => this.setState({ showUpgradePopup: true, upgradePopupType: popupType })} routeParams={routeParams} />}
+                                   render={(routeParams) => <EditUser upgradePopup={(popupType) => this.setState({
+                                       showUpgradePopup: true,
+                                       upgradePopupType: popupType
+                                   })} routeParams={routeParams}/>}
                             />
-                            <Route exact path="/settings/custom-price-plan/:code?" refresh={true} render={(routeParams) =>
-                                <CustomPricePlan upgradePopup={(popupType) => this.setState({ showUpgradePopup: true, upgradePopupType: popupType })} routeParams={routeParams} currentPricePlan={this.state.user.price_plan} user={this.state.user} />}
+                            <Route exact path="/settings/custom-price-plan/:code?" refresh={true}
+                                   render={(routeParams) =>
+                                       <CustomPricePlan upgradePopup={(popupType) => this.setState({
+                                           showUpgradePopup: true,
+                                           upgradePopupType: popupType
+                                       })} routeParams={routeParams} currentPricePlan={this.state.user.price_plan}
+                                                        user={this.state.user}/>}
                             ></Route>
                         </Switch>
                         {/* <CreatePayment upgradePopup={(popupType) => this.setState({showUpgradePopup: true, upgradePopupType: popupType})} user={this.state.user} /> */}
                     </main>
-                    <Footer />
+                    <Footer/>
                 </div>
 
                 {this.state.mKeyAnnotation === 'manual' ?
-                    <AppsModal isOpen={this.state.mKeyAnnotation === 'manual' || this.state.mKeyAnnotation === 'upload'} popupSize={'md'} toggle={(mka = '') => { this.setState({ mKeyAnnotation: mka, }); }}>
-                        <AnnotationsCreate upgradePopup={(popupType) => this.setState({ showUpgradePopup: true, upgradePopupType: popupType })} togglePopup={(mka) => { this.setState({ mKeyAnnotation: mka, }); }} currentPricePlan={this.state.user.price_plan} />
+                    <AppsModal isOpen={this.state.mKeyAnnotation === 'manual' || this.state.mKeyAnnotation === 'upload'}
+                               popupSize={'md'} toggle={(mka = '') => {
+                        this.setState({mKeyAnnotation: mka,});
+                    }}>
+                        <AnnotationsCreate upgradePopup={(popupType) => this.setState({
+                            showUpgradePopup: true,
+                            upgradePopupType: popupType
+                        })} togglePopup={(mka) => {
+                            this.setState({mKeyAnnotation: mka,});
+                        }} currentPricePlan={this.state.user.price_plan}/>
                     </AppsModal>
                     :
                     this.state.mKeyAnnotation === 'upload' ?
-                        <AppsModal popupSize={this.state.csvUploadPopupSize} isOpen={this.state.mKeyAnnotation === 'manual' || this.state.mKeyAnnotation === 'upload'} toggle={(mka = '') => { this.setState({ mKeyAnnotation: mka, csvUploadPopupSize: 'md upload-csv'}); }}>
-                            <AnnotationsUpload updateCSVUploadStep={(csvUploadPopupSize) => this.setState({csvUploadPopupSize})} upgradePopup={(popupType) => this.setState({ showUpgradePopup: true, upgradePopupType: popupType })} togglePopup={(mka) => { this.setState({ mKeyAnnotation: mka, csvUploadPopupSize: 'md upload-csv' }); }} currentPricePlan={this.state.user.price_plan} />
+                        <AppsModal popupSize={this.state.csvUploadPopupSize}
+                                   isOpen={this.state.mKeyAnnotation === 'manual' || this.state.mKeyAnnotation === 'upload'}
+                                   toggle={(mka = '') => {
+                                       this.setState({mKeyAnnotation: mka, csvUploadPopupSize: 'md upload-csv'});
+                                   }}>
+                            <AnnotationsUpload
+                                updateCSVUploadStep={(csvUploadPopupSize) => this.setState({csvUploadPopupSize})}
+                                upgradePopup={(popupType) => this.setState({
+                                    showUpgradePopup: true,
+                                    upgradePopupType: popupType
+                                })} togglePopup={(mka) => {
+                                this.setState({mKeyAnnotation: mka, csvUploadPopupSize: 'md upload-csv'});
+                            }} currentPricePlan={this.state.user.price_plan}/>
                         </AppsModal>
                         :
                         null}
 
-                <Modal isOpen={this.state.showUpgradePopup} centered className="gaUpgradePopup" toggle={() => this.setState({ showUpgradePopup: false, upgradePopupType: '' })}>
-                    <button onClick={() => this.setState({ showUpgradePopup: false, upgradePopupType: '' })} class="btn-closeUpgradePopup"><img src="/images/close.svg" alt="close icon" /></button>
+                <Modal isOpen={this.state.showUpgradePopup} centered className="gaUpgradePopup"
+                       toggle={() => this.setState({showUpgradePopup: false, upgradePopupType: ''})}>
+                    <button onClick={() => this.setState({showUpgradePopup: false, upgradePopupType: ''})}
+                            class="btn-closeUpgradePopup"><img src="/images/close.svg" alt="close icon"/></button>
                     {this.state.upgradePopupType === 'api-upgrade' ? <ga-upgrade-popup
                         heading={`<h1>Upgrade to access <span>API Functionality</span></h1>`}
                         subHeading={`<p>and get access to all amazing features</p>`}
@@ -375,7 +527,7 @@ class Main extends React.Component {
                             heading={`<h1>Trial Ended > <span>Upgrade Today</span></h1>`}
                             subHeading={`<p>and get access to all amazing features</p>`}
                             bannerImg="/images/more-property-upgrade.svg"
-                    ></ga-extend-trail-popup> : null}
+                        ></ga-extend-trail-popup> : null}
                 </Modal>
                 {/* <Modal isOpen={true} centered className="gaUpgradePopup" toggle={() => {}}>
                     <button onClick={() => {}} class="btn-closeUpgradePopup"></button>
@@ -391,7 +543,7 @@ class Main extends React.Component {
     }
 
     componentDidMount() {
-        const { SVGInjector } = window.SVGInjector
+        const {SVGInjector} = window.SVGInjector
         SVGInjector(document.getElementsByClassName('inject-me'), {
             cacheRequests: false,
             evalScripts: 'once',
@@ -433,7 +585,7 @@ class Main extends React.Component {
                 loader.classList.add("fadeOut");
 
                 if (response.data.user.last_login_at == null) {
-                    gtag('event', 'conversion', { 'send_to': 'AW-645973826/wQD3CJnzvugBEMKOg7QC' });
+                    gtag('event', 'conversion', {'send_to': 'AW-645973826/wQD3CJnzvugBEMKOg7QC'});
                     ga('send', {
                         hitType: 'event',
                         eventCategory: 'SignUp',
@@ -444,34 +596,35 @@ class Main extends React.Component {
                         uid: "{{ Auth::user()->id }}"
                     })
                 }
-                if(response.data.user.trail_plan_status == true)
-                {
-                    this.setState({ showUpgradePopup: true });
-                    this.setState({ upgradePopupType: 'trial-ended' });
+                if (response.data.user.trail_plan_status == true) {
+                    this.setState({showUpgradePopup: true});
+                    this.setState({upgradePopupType: 'trial-ended'});
                 }
                 if (response.data.user.price_plan.name == 'Free') {
-                    setTimeout(() => { this.setState({ showPromotionPopup: true }); }, 5000);
+                    setTimeout(() => {
+                        this.setState({showPromotionPopup: true});
+                    }, 5000);
                 }
-                
+
                 HttpClient.post(`/settings/price-plan/check-extra-apps`, {
                     '_token': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                     'price_plan_id': response.data.user.price_plan.id,
                 })
-                .then(response => {
-                    this.setState({ isBusy: false, errors: undefined });
-                    response.data.alertText.forEach(text => {
-                        // swal.fire('Oops...', text, 'info');
-                    });
-                }, (err) => {
-                    this.setState({ isBusy: false, errors: (err.response).data });
-                }).catch(err => {
-                    this.setState({ isBusy: false, errors: err });
+                    .then(response => {
+                        this.setState({isBusy: false, errors: undefined});
+                        response.data.alertText.forEach(text => {
+                            // swal.fire('Oops...', text, 'info');
+                        });
+                    }, (err) => {
+                        this.setState({isBusy: false, errors: (err.response).data});
+                    }).catch(err => {
+                    this.setState({isBusy: false, errors: err});
                 });
-                }, (err) => {
-                    this.setState({ isBusy: false, errors: (err.response).data });
-                }).catch(err => {
-                    this.setState({ isBusy: false, errors: err });
-                });
+            }, (err) => {
+                this.setState({isBusy: false, errors: (err.response).data});
+            }).catch(err => {
+            this.setState({isBusy: false, errors: err});
+        });
     }
 
     componentDidUpdate(prevProps) {
@@ -503,4 +656,5 @@ class Main extends React.Component {
         }
     }
 }
+
 export default Main;
