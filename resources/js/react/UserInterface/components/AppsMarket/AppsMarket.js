@@ -1,8 +1,8 @@
 import React from "react";
-import { Redirect } from "react-router-dom";
+import {Redirect} from "react-router-dom";
 import HttpClient from "../../utils/HttpClient";
 
-import { Container, Row, Col, FormGroup, Input, Label } from "reactstrap";
+import {Container, Row, Col, FormGroup, Input, Label} from "reactstrap";
 import AppsModal from "./AppsModal";
 import WebsiteMonitoring from "./WebsiteMonitoring";
 import NewsAlerts from "./NewsAlerts";
@@ -150,13 +150,13 @@ class AppsMarket extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps.user.toString() !== this.props.user.toString()) {
-            this.setState({ userServices: this.props.user });
+            this.setState({userServices: this.props.user});
         }
     }
 
     loadUserDataSources(gaPropertyId) {
         if (!this.state.isLoading) {
-            this.setState({ isLoading: true });
+            this.setState({isLoading: true});
             HttpClient.get(
                 `/data-source/user-data-source?ga_property_id=${gaPropertyId}`
             )
@@ -175,13 +175,13 @@ class AppsMarket extends React.Component {
                     }
                 )
                 .catch((err) => {
-                    this.setState({ isLoading: false, errors: err });
+                    this.setState({isLoading: false, errors: err});
                 });
         }
     }
 
     loadKeywordTrackingKeywords() {
-        this.setState({ isBusy: true, errors: "" });
+        this.setState({isBusy: true, errors: ""});
         HttpClient.get(`/data-source/get-keyword-tracking-keywords`)
             .then(
                 (resp) => {
@@ -214,20 +214,20 @@ class AppsMarket extends React.Component {
                 }
             )
             .catch((err) => {
-                this.setState({ isLoading: false, errors: err });
+                this.setState({isLoading: false, errors: err});
             });
     }
 
     loadUserAnnotationColors() {
         if (!this.state.isLoading) {
-            this.setState({ isLoading: true });
+            this.setState({isLoading: true});
             HttpClient.get(`/data-source/user-annotation-color`)
                 .then(
                     (resp) => {
                         this.setState({
                             isLoading: false,
                             userAnnotationColors:
-                                resp.data.user_annotation_color,
+                            resp.data.user_annotation_color,
                         });
                     },
                     (err) => {
@@ -238,13 +238,13 @@ class AppsMarket extends React.Component {
                     }
                 )
                 .catch((err) => {
-                    this.setState({ isLoading: false, errors: err });
+                    this.setState({isLoading: false, errors: err});
                 });
         }
     }
 
     updateUserAnnotationColors(userAnnotationColors) {
-        this.setState({ userAnnotationColors: userAnnotationColors });
+        this.setState({userAnnotationColors: userAnnotationColors});
     }
 
     reloadWebMonitors(gaPropertyId) {
@@ -259,11 +259,11 @@ class AppsMarket extends React.Component {
                     });
                 },
                 (err) => {
-                    this.setState({ isBusy: false });
+                    this.setState({isBusy: false});
                 }
             )
             .catch((err) => {
-                this.setState({ isBusy: false });
+                this.setState({isBusy: false});
             });
     }
 
@@ -320,28 +320,30 @@ class AppsMarket extends React.Component {
                 width: 136,
                 height: 26,
             },
-            {
-                id: "02",
-                background: "#00749a",
-                dsKey: "is_ds_wordpress_enabled",
-                connected: this.state.userServices["is_ds_wordpress_enabled"],
-                premium: false,
-                brandName: "Wordpress",
-                brandLogo: "/wordpress.svg",
-                width: 146,
-                height: 42,
-            },
-            {
-                id: "30",
-                background: null,
-                dsKey: "is_ds_wordpress_updates_enabled",
-                connected: this.state.userServices["is_ds_wordpress_updates_enabled"],
-                premium: false,
-                brandName: "Wordpress System Core Updates",
-                brandLogo: "/wordpressSCU.svg",
-                width: 148,
-                height: 40,
-            },
+            ...(this.props.userStartupConfig ? [] : [
+                {
+                    id: "02",
+                    background: "#00749a",
+                    dsKey: "is_ds_wordpress_enabled",
+                    connected: this.state.userServices["is_ds_wordpress_enabled"],
+                    premium: false,
+                    brandName: "Wordpress",
+                    brandLogo: "/wordpress.svg",
+                    width: 146,
+                    height: 42,
+                },
+                {
+                    id: "30",
+                    background: null,
+                    dsKey: "is_ds_wordpress_updates_enabled",
+                    connected: this.state.userServices["is_ds_wordpress_updates_enabled"],
+                    premium: false,
+                    brandName: "Wordpress System Core Updates",
+                    brandLogo: "/wordpressSCU.svg",
+                    width: 148,
+                    height: 40,
+                }
+            ]),
 
 
             {
@@ -356,7 +358,7 @@ class AppsMarket extends React.Component {
                 height: 26,
             },
 
-            {
+            ...(this.props.userStartupConfig ? [] : [{
                 id: "17",
                 background: null,
                 dsKey: "is_ds_apple_podcast_annotation_enabled",
@@ -366,9 +368,9 @@ class AppsMarket extends React.Component {
                 brandLogo: "/applePodcast.svg",
                 width: 114,
                 height: 30,
-            },
+            }]),
 
-            {
+            ...(this.props.userStartupConfig ? [] : [{
                 id: "20",
                 background: null,
                 dsKey: "is_ds_shopify_annotation_enabled",
@@ -379,7 +381,7 @@ class AppsMarket extends React.Component {
                 brandLogo: "/shopify.svg",
                 width: 114,
                 height: 32,
-            },
+            }]),
 
 
             {
@@ -394,7 +396,7 @@ class AppsMarket extends React.Component {
                 height: 26,
             },
 
-            {
+            ...(this.props.userStartupConfig ? [] : [{
                 id: "27",
                 background: null,
                 dsKey: "is_ds_holidays_enabled",
@@ -404,7 +406,7 @@ class AppsMarket extends React.Component {
                 brandLogo: "/holidays_full.svg",
                 width: 106,
                 height: 26,
-            },
+            }]),
             {
                 id: "28",
                 background: null,
@@ -416,7 +418,7 @@ class AppsMarket extends React.Component {
                 width: 194,
                 height: 26,
             },
-            {
+            ...(this.props.userStartupConfig ? [] : [{
                 id: "19",
                 background: "#24292F",
                 dsKey: "is_ds_github_tracking_enabled",
@@ -426,7 +428,7 @@ class AppsMarket extends React.Component {
                 brandLogo: "/github.svg",
                 width: 116,
                 height: 34,
-            },
+            }]),
             {
                 id: "03",
                 background: null,
@@ -438,7 +440,7 @@ class AppsMarket extends React.Component {
                 width: 160,
                 height: 56,
             },
-            {
+            ...(this.props.userStartupConfig ? [] : [{
                 id: "25",
                 background: "#253858",
                 dsKey: "is_ds_bitbucket_tracking_enabled",
@@ -448,8 +450,8 @@ class AppsMarket extends React.Component {
                 brandLogo: "/bitbucket.svg",
                 width: 142,
                 height: 40,
-            },
-            {
+            }]),
+            ...(this.props.userStartupConfig ? [] : [{
                 id: "04",
                 background: null,
                 dsKey: "is_ds_weather_alerts_enabled",
@@ -459,7 +461,7 @@ class AppsMarket extends React.Component {
                 brandLogo: "/weatherAlerts.svg",
                 width: 160,
                 height: 56,
-            },
+            }]),
         ];
     }
 
@@ -488,24 +490,25 @@ class AppsMarket extends React.Component {
             sortedData = this.state.recommendedApps.sort(sort_by(column, order !== "asc", (a) => (column === 'brandName' ? a.toUpperCase() : !!a)))
         }
 
-        this.setState({ recommendedApps: sortedData });
+        this.setState({recommendedApps: sortedData});
     }
 
     onChangeSortHandler(data) {
-        this.setState({ sortBy: data.target.value })
+        this.setState({sortBy: data.target.value})
         this.getRecommendedApps(data.target.value);
     }
+
     onChangeFilterHandler(data) {
-        this.setState({ filter: data.target.value })
+        this.setState({filter: data.target.value})
 
         let sortedData = this.getRecommendedAppsData();
         sortedData = sortedData.filter(x => x.brandName.toLowerCase().includes(data.target.value.toLowerCase()))
-        this.setState({ recommendedApps: sortedData });
+        this.setState({recommendedApps: sortedData});
     }
 
     render() {
         function SampleNextArrow(props) {
-            const { className, style, onClick } = props;
+            const {className, style, onClick} = props;
             return (
                 <div className={className} onClick={onClick}>
                     <i className="fa fa-angle-right"></i>
@@ -514,7 +517,7 @@ class AppsMarket extends React.Component {
         }
 
         function SamplePrevArrow(props) {
-            const { className, style, onClick } = props;
+            const {className, style, onClick} = props;
             return (
                 <div className={className} onClick={onClick}>
                     <i className="fa fa-angle-left"></i>
@@ -532,274 +535,288 @@ class AppsMarket extends React.Component {
             slidesToScroll: 1,
             adaptiveHeight: true,
             className: "themeTextSlider",
-            nextArrow: <SampleNextArrow />,
-            prevArrow: <SamplePrevArrow />
+            nextArrow: <SampleNextArrow/>,
+            prevArrow: <SamplePrevArrow/>
         };
 
         if (this.state.redirectTo)
-            return <Redirect to={this.state.redirectTo} />;
+            return <Redirect to={this.state.redirectTo}/>;
 
         return (
-            <div id="appMarket" className="appMarket">
+            <div id="appMarket" className={this.props.userStartupConfig ? "" : "appMarket"}>
                 <Container>
-                    <div className="pageHeader">
-                        <h2 className="pageTitle">Apps Market</h2>
+                    {this.props.userStartupConfig ? null : <>
+                        <div className="pageHeader">
+                            <h2 className="pageTitle">Apps Market</h2>
 
-                        <div className="pageNote position-relative">
-                            <Slider {...settings}>
-                                {[
-                                    {
-                                        id: "01a",
-                                        background: "null",
-                                        text: "Create annotations directly from Slack or Asana",
-                                        logo: "/zapier-small.svg",
-                                        url: '/integrations',
-                                    },
+                            <div className="pageNote position-relative">
+                                <Slider {...settings}>
+                                    {[
+                                        {
+                                            id: "01a",
+                                            background: "null",
+                                            text: "Create annotations directly from Slack or Asana",
+                                            logo: "/zapier-small.svg",
+                                            url: '/integrations',
+                                        },
 
-                                    {
-                                        id: "02a",
-                                        background: "null",
-                                        dsKey: "is_ds_google_algorithm_updates_enabled",
-                                        text: "Get the latest updates from Google and harness new SEO opportunities.",
-                                        logo: "/google-small.svg",
-                                    },
+                                        {
+                                            id: "02a",
+                                            background: "null",
+                                            dsKey: "is_ds_google_algorithm_updates_enabled",
+                                            text: "Get the latest updates from Google and harness new SEO opportunities.",
+                                            logo: "/google-small.svg",
+                                        },
 
-                                    {
-                                        id: "03a",
-                                        background: "null",
-                                        dsKey: "is_ds_web_monitors_enabled",
-                                        text: "Be the first to know that your website is down!",
-                                        logo: "/web-monitoring-small.svg",
-                                    },
+                                        {
+                                            id: "03a",
+                                            background: "null",
+                                            dsKey: "is_ds_web_monitors_enabled",
+                                            text: "Be the first to know that your website is down!",
+                                            logo: "/web-monitoring-small.svg",
+                                        },
 
-                                    {
-                                        id: "04a",
-                                        background: "null",
-                                        dsKey: "is_ds_keyword_tracking_enabled",
-                                        text: "Automate your rank tracking to win the SERP game.",
-                                        logo: "/SERP-small.svg",
-                                    },
+                                        {
+                                            id: "04a",
+                                            background: "null",
+                                            dsKey: "is_ds_keyword_tracking_enabled",
+                                            text: "Automate your rank tracking to win the SERP game.",
+                                            logo: "/SERP-small.svg",
+                                        },
 
-                                    {
-                                        id: "05a",
-                                        background: "null",
-                                        dsKey: "is_ds_google_alerts_enabled",
-                                        text: "Stay on top! Keep track of mentions of your brand and products.",
-                                        logo: "/news-alert-small.svg",
-                                    },
+                                        {
+                                            id: "05a",
+                                            background: "null",
+                                            dsKey: "is_ds_google_alerts_enabled",
+                                            text: "Stay on top! Keep track of mentions of your brand and products.",
+                                            logo: "/news-alert-small.svg",
+                                        },
 
-                                    {
-                                        id: "06a",
-                                        background: "null",
-                                        dsKey: "is_ds_weather_alerts_enabled",
-                                        text: "Explore weather-driven patterns of demand and consumer behavior.",
-                                        logo: "/weather-small.svg",
-                                    },
+                                        {
+                                            id: "06a",
+                                            background: "null",
+                                            dsKey: "is_ds_weather_alerts_enabled",
+                                            text: "Explore weather-driven patterns of demand and consumer behavior.",
+                                            logo: "/weather-small.svg",
+                                        },
 
-                                    {
-                                        id: "07a",
-                                        background: "null",
-                                        dsKey: "is_ds_bitbucket_tracking_enabled",
-                                        text: "See the changes your R&D makes and how they affect your sales.",
-                                        logo: "/bitbucket-small.svg",
-                                    },
+                                        {
+                                            id: "07a",
+                                            background: "null",
+                                            dsKey: "is_ds_bitbucket_tracking_enabled",
+                                            text: "See the changes your R&D makes and how they affect your sales.",
+                                            logo: "/bitbucket-small.svg",
+                                        },
 
-                                    {
-                                        id: "08a",
-                                        background: "null",
-                                        dsKey: "is_ds_github_tracking_enabled",
-                                        text: "How is the new UI change affect the traffic?",
-                                        logo: "/github-small.svg",
-                                    },
+                                        {
+                                            id: "08a",
+                                            background: "null",
+                                            dsKey: "is_ds_github_tracking_enabled",
+                                            text: "How is the new UI change affect the traffic?",
+                                            logo: "/github-small.svg",
+                                        },
 
-                                    {
-                                        id: "09a",
-                                        background: "null",
-                                        commingSoon: true,
-                                        text: "Are your TikTok ads entertaining? Has it become a trend?",
-                                        logo: "/tiktok-small.svg",
-                                    },
-                                    {
-                                        id: "010a",
-                                        background: "null",
-                                        dsKey: "is_ds_twitter_tracking_enabled",
-                                        text: "Find the campaign that's right for your goals.",
-                                        logo: "/twitter-small.svg",
-                                    },
-                                    {
-                                        id: "011a",
-                                        background: "null",
-                                        commingSoon: true,
-                                        text: "See Facebook ads performance and optimize your SM marketing scheme",
-                                        logo: "/facebook-small.svg",
-                                    },
-                                    {
-                                        id: "012a",
-                                        background: "null",
-                                        commingSoon: true,
-                                        text: "Get heads-ups on your Insta stats and work to improve the clicks.",
-                                        logo: "/instagram-small.svg",
-                                    },
-                                    {
-                                        id: "013a",
-                                        background: "null",
-                                        dsKey: "is_ds_wordpress_updates_enabled",
-                                        text: "Get context, display new products, and design updates over your GA4 charts.",
-                                        logo: "/wordPress-small.svg",
-                                    },
-                                    {
-                                        id: "014a",
-                                        background: "null",
-                                        dsKey: "is_ds_shopify_annotation_enabled",
-                                        text: "See new product data over GA4 metrics.",
-                                        logo: "/shopify-small.svg",
-                                    },
-                                    {
-                                        id: "015a",
-                                        background: "null",
-                                        dsKey: "is_ds_holidays_enabled",
-                                        text: "Targeting a specific location? Don't miss any local holidays.",
-                                        logo: "/holidays-small.svg",
-                                    },
-                                    {
-                                        id: "015a",
-                                        background: "null",
-                                        dsKey: "is_ds_retail_marketing_enabled",
-                                        text: "Get upfront reminders and advertise on retail marketing dates.",
-                                        logo: "/retails-marketing-dates-small.svg",
-                                    },
-                                ].map((item, i) => (<div key={i} className="noteSlideerContent d-flex align-items-center justify-content-center">
-                                    <span className="githubIcon flex-shrink-0"><img src={item.logo} alt={item.logo} className="svg-inject" /></span>
-                                    <p className="noteText mb-0">{item.text}</p>
-                                    <button data-dsKey={item.dsKey} onClick={(ev) => {
-                                        ev.stopPropagation();
-                                        if (item.url) {
-                                            window.location.href = item.url;
-                                        } else if (item.commingSoon) {
-                                            swal.fire("This feature is coming soon. Stay tuned!", "", "info");
-                                        } else {
-                                            this.setState({ dsKey: item.dsKey, dsKeySkip: item.dsKey });
-                                        }
-                                    }} className="btn btn-sm btn-primary flex-shrink-0">Add</button>
-                                    <a onClick={() => {this.setState({ dsKey: item.dsKey, dsKeySkip: '' });}} href="javascript:void(0);" className="btn-learnmore">Learn more</a>
-                                </div>))}
-                            </Slider>
-                            {/* <span>See the changes your </span><strong>R&D</strong>{" "}<span>makes and how they affect your</span>{" "}<strong>sales</strong> */}
+                                        {
+                                            id: "09a",
+                                            background: "null",
+                                            commingSoon: true,
+                                            text: "Are your TikTok ads entertaining? Has it become a trend?",
+                                            logo: "/tiktok-small.svg",
+                                        },
+                                        {
+                                            id: "010a",
+                                            background: "null",
+                                            dsKey: "is_ds_twitter_tracking_enabled",
+                                            text: "Find the campaign that's right for your goals.",
+                                            logo: "/twitter-small.svg",
+                                        },
+                                        {
+                                            id: "011a",
+                                            background: "null",
+                                            commingSoon: true,
+                                            text: "See Facebook ads performance and optimize your SM marketing scheme",
+                                            logo: "/facebook-small.svg",
+                                        },
+                                        {
+                                            id: "012a",
+                                            background: "null",
+                                            commingSoon: true,
+                                            text: "Get heads-ups on your Insta stats and work to improve the clicks.",
+                                            logo: "/instagram-small.svg",
+                                        },
+                                        {
+                                            id: "013a",
+                                            background: "null",
+                                            dsKey: "is_ds_wordpress_updates_enabled",
+                                            text: "Get context, display new products, and design updates over your GA4 charts.",
+                                            logo: "/wordPress-small.svg",
+                                        },
+                                        {
+                                            id: "014a",
+                                            background: "null",
+                                            dsKey: "is_ds_shopify_annotation_enabled",
+                                            text: "See new product data over GA4 metrics.",
+                                            logo: "/shopify-small.svg",
+                                        },
+                                        {
+                                            id: "015a",
+                                            background: "null",
+                                            dsKey: "is_ds_holidays_enabled",
+                                            text: "Targeting a specific location? Don't miss any local holidays.",
+                                            logo: "/holidays-small.svg",
+                                        },
+                                        {
+                                            id: "015a",
+                                            background: "null",
+                                            dsKey: "is_ds_retail_marketing_enabled",
+                                            text: "Get upfront reminders and advertise on retail marketing dates.",
+                                            logo: "/retails-marketing-dates-small.svg",
+                                        },
+                                    ].map((item, i) => (<div key={i}
+                                                             className="noteSlideerContent d-flex align-items-center justify-content-center">
+                                        <span className="githubIcon flex-shrink-0"><img src={item.logo} alt={item.logo}
+                                                                                        className="svg-inject"/></span>
+                                        <p className="noteText mb-0">{item.text}</p>
+                                        <button data-dsKey={item.dsKey} onClick={(ev) => {
+                                            ev.stopPropagation();
+                                            if (item.url) {
+                                                window.location.href = item.url;
+                                            } else if (item.commingSoon) {
+                                                swal.fire("This feature is coming soon. Stay tuned!", "", "info");
+                                            } else {
+                                                this.setState({dsKey: item.dsKey, dsKeySkip: item.dsKey});
+                                            }
+                                        }} className="btn btn-sm btn-primary flex-shrink-0">Add
+                                        </button>
+                                        <a onClick={() => {
+                                            this.setState({dsKey: item.dsKey, dsKeySkip: ''});
+                                        }} href="javascript:void(0);" className="btn-learnmore">Learn more</a>
+                                    </div>))}
+                                </Slider>
+                                {/* <span>See the changes your </span><strong>R&D</strong>{" "}<span>makes and how they affect your</span>{" "}<strong>sales</strong> */}
+                            </div>
+
+                            <form className="pageFilters d-flex justify-content-between align-items-center">
+                                <FormGroup className="filter-sort position-relative">
+                                    <Label className="sr-only" for="dropdownFilters">sort by filter</Label>
+                                    <i className="btn-searchIcon left-0">
+                                        <svg width="12" height="10" viewBox="0 0 12 10" fill="none"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M0 10V8.33333H4V10H0ZM0 5.83333V4.16667H8V5.83333H0ZM0 1.66667V0H12V1.66667H0Z"
+                                                fill="#666666"/>
+                                        </svg>
+                                    </i>
+                                    <i className="btn-searchIcon right-0 fa fa-angle-down"></i>
+                                    <Input type="select" name="select" id="dropdownFilters"
+                                           onChange={this.onChangeSortHandler}>
+                                        <option>Sort by</option>
+                                        <option value="brandName:asc">By Name</option>
+                                        {/* <option value="brandName:desc">By Name: DESC</option> */}
+                                        <option value="connected:desc">By Connected</option>
+                                        {/* <option value="enabled:desc">By Not Connected</option> */}
+                                    </Input>
+                                </FormGroup>
+                                <FormGroup className="filter-search position-relative">
+                                    <Label className="sr-only" for="search">search</Label>
+                                    <Input type="text" name="search" id="search" placeholder="Search App to Connect"
+                                           onChange={this.onChangeFilterHandler}/>
+                                    <button className="btn-searchIcon">
+                                        <img className="d-block" src="/search-new.svg" width="16" height="16"
+                                             alt="Search"/>
+                                    </button>
+                                </FormGroup>
+                            </form>
+
+                            <h3 className="h3-title">Display Insights and Annotations on Analytics and BI Tools</h3>
                         </div>
 
-                        <form className="pageFilters d-flex justify-content-between align-items-center">
-                            <FormGroup className="filter-sort position-relative">
-                                <Label className="sr-only" for="dropdownFilters">sort by filter</Label>
-                                <i className="btn-searchIcon left-0">
-                                    <svg width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M0 10V8.33333H4V10H0ZM0 5.83333V4.16667H8V5.83333H0ZM0 1.66667V0H12V1.66667H0Z" fill="#666666" />
-                                    </svg>
-                                </i>
-                                <i className="btn-searchIcon right-0 fa fa-angle-down"></i>
-                                <Input type="select" name="select" id="dropdownFilters" onChange={this.onChangeSortHandler}>
-                                    <option>Sort by</option>
-                                    <option value="brandName:asc">By Name</option>
-                                    {/* <option value="brandName:desc">By Name: DESC</option> */}
-                                    <option value="connected:desc">By Connected</option>
-                                    {/* <option value="enabled:desc">By Not Connected</option> */}
-                                </Input>
-                            </FormGroup>
-                            <FormGroup className="filter-search position-relative">
-                                <Label className="sr-only" for="search">search</Label>
-                                <Input type="text" name="search" id="search" placeholder="Search App to Connect" onChange={this.onChangeFilterHandler} />
-                                <button className="btn-searchIcon">
-                                    <img className="d-block" src="/search-new.svg" width="16" height="16" alt="Search" />
-                                </button>
-                            </FormGroup>
-                        </form>
-
-                        <h3 className="h3-title">Display Insights and Annotations on Analytics and BI Tools</h3>
-                    </div>
-
-                    <div className="items analyticsAndBITools">
-                        {[
-                            {
-                                id: "06",
-                                background: "null",
-                                dsKey: "",
-                                enabled: false,
-                                premium: false,
-                                brandName: "Google Analytics",
-                                brandLogo: "/googleAnalytics.svg",
-                                url: 'https://chrome.google.com/webstore/detail/automated-google-analytic/jfkimpgkmamkdhamnhabohpeaplbpmom?hl=en',
-                                width: 178,
-                                height: 28,
-                            },
-                            {
-                                id: "12",
-                                background: "null",
-                                dsKey: "",
-                                enabled: false,
-                                premium: false,
-                                brandName: "Data Studio",
-                                brandLogo: "/dataStudio.svg",
-                                url: 'https://lookerstudio.google.com/data?search=gaannotations',
-                                width: 142,
-                                height: 32,
-                            },
-                            {
-                                id: "06",
-                                background: "null",
-                                dsKey: "",
-                                enabled: false,
-                                premium: false,
-                                brandName: "Google Ads",
-                                brandLogo: "/googleAds.svg",
-                                url: 'https://chrome.google.com/webstore/detail/automated-google-analytic/jfkimpgkmamkdhamnhabohpeaplbpmom?hl=en',
-                                width: 108,
-                                height: 40,
-                            },
-                            {
-                                id: "12",
-                                background: "#FF4A00",
-                                dsKey: "",
-                                enabled: false,
-                                premium: false,
-                                brandName: "Zapier",
-                                brandLogo: "/zapier.svg",
-                                url: '/integrations',
-                                width: 88,
-                                height: 40,
-                                openInSameTab: true
-                            }
-                        ].map((item, itemKey) => (
-                            <a target={`${!item.openInSameTab ? '_blank' : ''}`} href={item.url}
-                                onClick={() => {
-                                    this.setState({
-                                        dsKey: item.dsKey,
-                                        dsKeySkip: ""
-                                    });
-                                }}
-                                className="item"
-                                key={itemKey}
-                                style={{
-                                    background: item.background || "#fff",
-                                    "border-color":
-                                        item.background || "#e0e0e0",
-                                }}
-                            >
-                                {item.enabled ? (
-                                    <i className="active fa fa-check-circle"></i>
-                                ) : null}
-                                <img src={item.brandLogo} alt={item.brandName} className="svg-inject" width={item.width} height={item.height} />
-                                {item.premium ? (
-                                    <span className="btn-premium">
+                        <div className="items analyticsAndBITools">
+                            {[
+                                {
+                                    id: "06",
+                                    background: "null",
+                                    dsKey: "",
+                                    enabled: false,
+                                    premium: false,
+                                    brandName: "Google Analytics",
+                                    brandLogo: "/googleAnalytics.svg",
+                                    url: 'https://chrome.google.com/webstore/detail/automated-google-analytic/jfkimpgkmamkdhamnhabohpeaplbpmom?hl=en',
+                                    width: 178,
+                                    height: 28,
+                                },
+                                {
+                                    id: "12",
+                                    background: "null",
+                                    dsKey: "",
+                                    enabled: false,
+                                    premium: false,
+                                    brandName: "Data Studio",
+                                    brandLogo: "/dataStudio.svg",
+                                    url: 'https://lookerstudio.google.com/data?search=gaannotations',
+                                    width: 142,
+                                    height: 32,
+                                },
+                                {
+                                    id: "06",
+                                    background: "null",
+                                    dsKey: "",
+                                    enabled: false,
+                                    premium: false,
+                                    brandName: "Google Ads",
+                                    brandLogo: "/googleAds.svg",
+                                    url: 'https://chrome.google.com/webstore/detail/automated-google-analytic/jfkimpgkmamkdhamnhabohpeaplbpmom?hl=en',
+                                    width: 108,
+                                    height: 40,
+                                },
+                                {
+                                    id: "12",
+                                    background: "#FF4A00",
+                                    dsKey: "",
+                                    enabled: false,
+                                    premium: false,
+                                    brandName: "Zapier",
+                                    brandLogo: "/zapier.svg",
+                                    url: '/integrations',
+                                    width: 88,
+                                    height: 40,
+                                    openInSameTab: true
+                                }
+                            ].map((item, itemKey) => (
+                                <a target={`${!item.openInSameTab ? '_blank' : ''}`} href={item.url}
+                                   onClick={() => {
+                                       this.setState({
+                                           dsKey: item.dsKey,
+                                           dsKeySkip: ""
+                                       });
+                                   }}
+                                   className="item"
+                                   key={itemKey}
+                                   style={{
+                                       background: item.background || "#fff",
+                                       "border-color":
+                                           item.background || "#e0e0e0",
+                                   }}
+                                >
+                                    {item.enabled ? (
+                                        <i className="active fa fa-check-circle"></i>
+                                    ) : null}
+                                    <img src={item.brandLogo} alt={item.brandName} className="svg-inject"
+                                         width={item.width} height={item.height}/>
+                                    {item.premium ? (
+                                        <span className="btn-premium">
                                         <i className="fa fa-diamond"></i>
                                         <span>Premium</span>
                                     </span>
-                                ) : null}
-                            </a>
-                        ))}
-                    </div>
+                                    ) : null}
+                                </a>
+                            ))}
+                        </div>
 
-                    <div className="pageHeader">
-                        <h3 className="h3-title">Connect Apps to Automate Insights</h3>
-                    </div>
+                        <div className="pageHeader">
+                            <h3 className="h3-title">Connect Apps to Automate Insights</h3>
+                        </div>
+                    </>}
                     <div className="items recommendedForYou">
                         {this.state.recommendedApps.map((item, itemKey) => (
                             <div
@@ -828,7 +845,8 @@ class AppsMarket extends React.Component {
                                 {this.state.userServices[item.dsKey] || this.state.userServices?.user?.[item.dsKey] ? (
                                     <i className="active fa fa-check-circle"></i>
                                 ) : null}
-                                <img src={item.brandLogo} alt={item.brandName} className="svg-inject" width={item.width} height={item.height} />
+                                <img src={item.brandLogo} alt={item.brandName} className="svg-inject" width={item.width}
+                                     height={item.height}/>
                                 {item.premium ? (
                                     <span className="btn-premium">
                                         <i className="fa fa-diamond"></i>
@@ -839,7 +857,7 @@ class AppsMarket extends React.Component {
                         ))}
                     </div>
 
-                    <div className="boxWhite comingSoon">
+                    {this.props.userStartupConfig ? null : <div className="boxWhite comingSoon">
                         <h4>Coming Soon</h4>
                         <div className="items">
                             {[
@@ -1035,14 +1053,19 @@ class AppsMarket extends React.Component {
                                     height: 26,
                                 },
                             ].map((item, itemKey) => (
-                                <div className="item" key={itemKey} style={{ background: item.background || "#fff", "border-color": item.background || "#e0e0e0", }}>
+                                <div className="item" key={itemKey} style={{
+                                    background: item.background || "#fff",
+                                    "border-color": item.background || "#e0e0e0",
+                                }}>
                                     {item.enabled ? (<i className="active fa fa-check-circle"></i>) : null}
-                                    <img src={item.brandLogo} alt={item.brandName} className="svg-inject" width={item.width} height={item.height} />
-                                    {item.premium ? (<span className="btn-premium"><i className="fa fa-diamond"></i><span>Premium</span></span>) : null}
+                                    <img src={item.brandLogo} alt={item.brandName} className="svg-inject"
+                                         width={item.width} height={item.height}/>
+                                    {item.premium ? (<span className="btn-premium"><i
+                                        className="fa fa-diamond"></i><span>Premium</span></span>) : null}
                                 </div>
                             ))}
                         </div>
-                    </div>
+                    </div>}
 
 
                     <AppsModal
@@ -1086,7 +1109,7 @@ class AppsMarket extends React.Component {
                                 }}
                             />
                         ) : this.state.dsKey ===
-                            "is_ds_google_alerts_enabled" ? (
+                        "is_ds_google_alerts_enabled" ? (
                             <NewsAlerts
                                 {...this.state}
                                 {...this.props}
@@ -1117,7 +1140,7 @@ class AppsMarket extends React.Component {
                                 }}
                             />
                         ) : this.state.dsKey ===
-                            "is_ds_shopify_annotation_enabled" ? (
+                        "is_ds_shopify_annotation_enabled" ? (
                             <Shopify
                                 {...this.state}
                                 {...this.props}
@@ -1148,7 +1171,7 @@ class AppsMarket extends React.Component {
                                 }}
                             />
                         ) : this.state.dsKey ===
-                            "is_ds_google_algorithm_updates_enabled" ? (
+                        "is_ds_google_algorithm_updates_enabled" ? (
                             <GoogleUpdates
                                 {...this.state}
                                 {...this.props}
@@ -1179,7 +1202,7 @@ class AppsMarket extends React.Component {
                                 }}
                             />
                         ) : this.state.dsKey ===
-                            "is_ds_retail_marketing_enabled" ? (
+                        "is_ds_retail_marketing_enabled" ? (
                             <RetailMarketingDates
                                 {...this.state}
                                 {...this.props}
@@ -1241,7 +1264,7 @@ class AppsMarket extends React.Component {
                                 }}
                             />
                         ) : this.state.dsKey ===
-                            "is_ds_weather_alerts_enabled" ? (
+                        "is_ds_weather_alerts_enabled" ? (
                             <WeatherAlerts
                                 {...this.state}
                                 {...this.props}
@@ -1273,7 +1296,7 @@ class AppsMarket extends React.Component {
                                 }}
                             />
                         ) : this.state.dsKey ===
-                            "is_ds_wordpress_updates_enabled" ? (
+                        "is_ds_wordpress_updates_enabled" ? (
                             <WordpressUpdates
                                 {...this.state}
                                 {...this.props}
@@ -1304,7 +1327,7 @@ class AppsMarket extends React.Component {
                                 }}
                             />
                         ) : this.state.dsKey ===
-                            "is_ds_wordpress_enabled" ? (
+                        "is_ds_wordpress_enabled" ? (
                             <Wordpress
                                 {...this.state}
                                 {...this.props}
@@ -1336,7 +1359,7 @@ class AppsMarket extends React.Component {
                                 currentPricePlan={this.props.user.price_plan}
                             />
                         ) : this.state.dsKey ===
-                            "is_ds_keyword_tracking_enabled" ? (
+                        "is_ds_keyword_tracking_enabled" ? (
                             <RankTracking
                                 {...this.state}
                                 {...this.props}
@@ -1378,7 +1401,7 @@ class AppsMarket extends React.Component {
                                 }}
                             />
                         ) : this.state.dsKey ===
-                            "is_ds_bitbucket_tracking_enabled" ? (
+                        "is_ds_bitbucket_tracking_enabled" ? (
                             <Bitbucket
                                 {...this.state}
                                 {...this.props}
@@ -1411,7 +1434,7 @@ class AppsMarket extends React.Component {
                                 }}
                             />
                         ) : this.state.dsKey ===
-                            "is_ds_github_tracking_enabled" ? (
+                        "is_ds_github_tracking_enabled" ? (
                             <Github
                                 {...this.state}
                                 {...this.props}
@@ -1444,7 +1467,7 @@ class AppsMarket extends React.Component {
                                 }}
                             />
                         ) : this.state.dsKey ===
-                            "is_ds_apple_podcast_annotation_enabled" ? (
+                        "is_ds_apple_podcast_annotation_enabled" ? (
                             <Apple
                                 {...this.state}
                                 {...this.props}
@@ -1476,7 +1499,7 @@ class AppsMarket extends React.Component {
                                 }}
                             />
                         ) : this.state.dsKey ===
-                            "is_ds_twitter_tracking_enabled" ? (
+                        "is_ds_twitter_tracking_enabled" ? (
                             <Twitter
                                 {...this.state}
                                 {...this.props}
@@ -1507,7 +1530,7 @@ class AppsMarket extends React.Component {
                                 }}
                             />
                         ) : this.state.dsKey ===
-                            "is_ds_create_annotation_enabled" ? (
+                        "is_ds_create_annotation_enabled" ? (
                             <Twitter
                                 {...this.state}
                                 {...this.props}
@@ -1546,7 +1569,7 @@ class AppsMarket extends React.Component {
 
     checkUserFacebookAccount() {
         // userFacebookAccountsExists
-        this.setState({ isBusy: true });
+        this.setState({isBusy: true});
         HttpClient.get("/data-source/user-facebook-accounts-exists", {})
             .then(
                 (resp) => {
@@ -1559,18 +1582,18 @@ class AppsMarket extends React.Component {
                     }
                 },
                 (err) => {
-                    this.setState({ isBusy: false, errors: err.response.data });
+                    this.setState({isBusy: false, errors: err.response.data});
                     status = false;
                 },
                 this
             )
             .catch((err) => {
-                this.setState({ isBusy: false, errors: err });
+                this.setState({isBusy: false, errors: err});
                 status = false;
             });
 
         // userInstagramAccountsExists
-        this.setState({ isBusy: true });
+        this.setState({isBusy: true});
         HttpClient.get("/data-source/user-instagram-accounts-exists", {})
             .then(
                 (resp) => {
@@ -1583,20 +1606,20 @@ class AppsMarket extends React.Component {
                     }
                 },
                 (err) => {
-                    this.setState({ isBusy: false, errors: err.response.data });
+                    this.setState({isBusy: false, errors: err.response.data});
                     status = false;
                 },
                 this
             )
             .catch((err) => {
-                this.setState({ isBusy: false, errors: err });
+                this.setState({isBusy: false, errors: err});
                 status = false;
             });
     }
 
     checkUserBitbucketAccount() {
         // userBitbucketAccountsExists
-        this.setState({ isBusy: true });
+        this.setState({isBusy: true});
         HttpClient.get("/data-source/user-bitbucket-accounts-exists", {})
             .then(
                 (resp) => {
@@ -1621,20 +1644,20 @@ class AppsMarket extends React.Component {
                     }
                 },
                 (err) => {
-                    this.setState({ isBusy: false, errors: err.response.data });
+                    this.setState({isBusy: false, errors: err.response.data});
                     status = false;
                 },
                 this
             )
             .catch((err) => {
-                this.setState({ isBusy: false, errors: err });
+                this.setState({isBusy: false, errors: err});
                 status = false;
             });
     }
 
     checkUserGithubAccount() {
         // userGithubAccountsExists
-        this.setState({ isBusy: true });
+        this.setState({isBusy: true});
         HttpClient.get("/data-source/user-github-accounts-exists", {})
             .then(
                 (resp) => {
@@ -1659,13 +1682,13 @@ class AppsMarket extends React.Component {
                     }
                 },
                 (err) => {
-                    this.setState({ isBusy: false, errors: err.response.data });
+                    this.setState({isBusy: false, errors: err.response.data});
                     status = false;
                 },
                 this
             )
             .catch((err) => {
-                this.setState({ isBusy: false, errors: err });
+                this.setState({isBusy: false, errors: err});
                 status = false;
             });
     }
@@ -1737,7 +1760,7 @@ class AppsMarket extends React.Component {
                     this.props.reloadUser();
                 },
                 (err) => {
-                    this.setState({ isBusy: false, errors: err.response.data });
+                    this.setState({isBusy: false, errors: err.response.data});
                     if (err.response.status == 402) {
                         if (e.target.name === 'is_ds_google_alerts_enabled') {
                             this.props.upgradePopup('news-alert')
@@ -1778,15 +1801,17 @@ class AppsMarket extends React.Component {
                 }
             )
             .catch((err) => {
-                this.setState({ isBusy: false, errors: err });
+                this.setState({isBusy: false, errors: err});
             });
     }
-    upgradePopupForRankTracking(){
+
+    upgradePopupForRankTracking() {
         this.props.upgradePopup('rank-tracking')
     }
+
     serviceStatusHandler(e) {
         if (this.props.user.price_plan.has_data_sources) {
-            if(e.persist) {
+            if (e.persist) {
                 e.persist();
             }
 
@@ -2106,7 +2131,7 @@ class AppsMarket extends React.Component {
     }
 
     userDataSourceAddHandler(dataSource) {
-        this.setState({ isBusy: true });
+        this.setState({isBusy: true});
         let formData = {
             ds_code: dataSource.code,
             ds_name: dataSource.name,
@@ -2149,7 +2174,7 @@ class AppsMarket extends React.Component {
                     });
                 },
                 (err) => {
-                    this.setState({ isBusy: false, errors: err.response.data });
+                    this.setState({isBusy: false, errors: err.response.data});
 
                     if (err.response.status === 422) {
                         if (this.state.dsKey === 'is_ds_google_alerts_enabled') {
@@ -2191,12 +2216,12 @@ class AppsMarket extends React.Component {
                 }
             )
             .catch((err) => {
-                this.setState({ isBusy: false, errors: err });
+                this.setState({isBusy: false, errors: err});
             });
     }
 
     userDataSourceDeleteHandler(userDataSourceId, dsCode) {
-        this.setState({ isBusy: true });
+        this.setState({isBusy: true});
         HttpClient.delete(`/data-source/user-data-source/${userDataSourceId}`)
             .then(
                 (resp) => {
@@ -2220,27 +2245,27 @@ class AppsMarket extends React.Component {
                     });
                 },
                 (err) => {
-                    this.setState({ isBusy: false, errors: err.response.data });
+                    this.setState({isBusy: false, errors: err.response.data});
                 }
             )
             .catch((err) => {
-                this.setState({ isBusy: false, errors: err });
+                this.setState({isBusy: false, errors: err});
             });
     }
 
     changeShownHint(obj) {
-        this.setState({ showHintFor: obj });
+        this.setState({showHintFor: obj});
     }
 
     sectionToggler(sectionName) {
         if (null == sectionName) {
-            this.setState({ sectionName: null });
+            this.setState({sectionName: null});
         } else if (this.state.sectionName == sectionName) {
-            this.setState({ sectionName: null });
-            window.scrollTo({ top: 0, behavior: "smooth" });
+            this.setState({sectionName: null});
+            window.scrollTo({top: 0, behavior: "smooth"});
         } else {
-            this.setState({ sectionName: sectionName });
-            window.scrollTo({ top: 0, behavior: "smooth" });
+            this.setState({sectionName: sectionName});
+            window.scrollTo({top: 0, behavior: "smooth"});
         }
     }
 }

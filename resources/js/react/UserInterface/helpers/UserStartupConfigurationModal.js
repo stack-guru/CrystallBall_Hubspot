@@ -4,7 +4,7 @@ import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import HttpClient from '../utils/HttpClient';
 
 import './UserStartupConfigurationModal.css';
-
+import AppsMarket from "../components/AppsMarket/AppsMarket";
 
 
 // // background.js (in your Chrome extension)
@@ -428,76 +428,26 @@ export default class UserStartupConfigurationModal extends Component {
                                 </span>
                             </div>
                             <div className='connectRecommendedApp d-flex justify-content-center align-items-center'>
-                                <div className="items">
-                                    {[
-                                        {
-                                            id: "02",
-                                            background: "#00749a",
-                                            dsKey: "",
-                                            enabled: true,
-                                            premium: false,
-                                            brandName: "Wordpress",
-                                            brandLogo: "/wordpress.svg",
-                                        },
-                                        {
-                                            id: "03",
-                                            background: "null",
-                                            dsKey: "",
-                                            enabled: false,
-                                            premium: false,
-                                            brandName: "Rank Tracking SERP",
-                                            brandLogo: "/serp.svg",
-                                        },
-                                        {
-                                            id: "10",
-                                            background: "#411442",
-                                            dsKey: "",
-                                            enabled: false,
-                                            premium: false,
-                                            commingSoon: true,
-                                            brandName: "slack",
-                                            brandLogo: "/slack.svg",
-                                        },
-                                        {
-                                            id: "11",
-                                            background: "#F8761F",
-                                            dsKey: "",
-                                            enabled: false,
-                                            premium: false,
-                                            commingSoon: true,
-                                            brandName: "Hubspot",
-                                            brandLogo: "/hubspot.svg",
-                                        },
-                                        {
-                                            id: "07",
-                                            background: "#004F9D",
-                                            dsKey: "",
-                                            enabled: false,
-                                            premium: false,
-                                            commingSoon: true,
-                                            brandName: "Facebook Ads",
-                                            brandLogo: "/facebookAds.svg",
-                                        },
-                                    ].map((item, itemKey) => (
-                                        <div className="item" key={itemKey} style={{
-                                            background: item.background || "#fff",
-                                            "border-color": item.background || "#e0e0e0",
-                                        }}>
-                                            {item.enabled ? (<i className="active fa fa-check-circle"></i>) : null}
-                                            <img src={item.brandLogo} alt={item.brandName} className="svg-inject"
-                                                 width='140'/>
-                                            {item.premium ? (<span className="btn-premium"><i
-                                                className="fa fa-diamond"></i><span>Premium</span></span>) : null}
-                                        </div>
-                                    ))}
-                                </div>
+                                <AppsMarket
+                                    userStartupConfig={true}
+                                    upgradePopup={this.props.upgradePopup}
+                                    user={this.props.user}
+                                    reloadUser={this.props.reloadUser}
+                                    showDataSourceTour={this.props.showDataSourceTour}
+                                    toggleDataSourceTour={this.props.toggleDataSourceTour}
+                                />
                             </div>
                             <div className='popupBtnBox d-flex justify-content-between align-items-center'>
                                 <Button onClick={() => {
                                     this.recordStepResponse('IMPORT_OLD_ANNOTATIONS', false);
                                     this.incrementStep(1)
                                 }} className="btn-cancel">Skip this</Button>
-                                <Button className="btn-theme">Continue</Button>
+                                <Button onClick={() => {
+                                    if(stepNumber === 4) {
+                                        this.recordStepResponse('IMPORT_OLD_ANNOTATIONS', false);
+                                        this.incrementStep(1)
+                                    }
+                                }} className="btn-theme">Continue</Button>
                             </div>
                         </ModalBody>
                     </div>
