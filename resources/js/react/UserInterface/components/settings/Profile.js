@@ -492,19 +492,19 @@ export default class Profile extends React.Component {
                                                 {this.props.user.price_plan.keyword_tracking_count == -1 ? null :
                                                     <li><i
                                                         className='pr-2'><img src='/icon-listTick.svg'/></i>Rank
-                                                        Tracking: <span>/{this.props.user.price_plan.keyword_tracking_count == 0 ? 'Unlimited' : this.props.user.price_plan.keyword_tracking_count}</span>
+                                                        Tracking: <span>{this.props.user.price_plan.keyword_tracking_count == 0 ? 'Unlimited' : this.props.user.price_plan.keyword_tracking_count} API Calls/m</span>
                                                     </li>}
                                                 <li><i
                                                     className='pr-2'><img src='/icon-listTick.svg'/></i>Website
-                                                    Monitoring: <span>/{this.props.user.price_plan.web_monitor_count}</span>
+                                                    Monitoring: <span>{this.props.user.price_plan.web_monitor_count} Credits</span>
                                                 </li>
                                                 <li><i
                                                     className='pr-2'><img src='/icon-listTick.svg'/></i>Weather
-                                                    Alerts: <span>/{this.props.user.price_plan.owm_city_count == 0 ? 'Unlimited' : (this.props.user.price_plan.owm_city_count > 0 ? this.props.user.price_plan.owm_city_count : 0)}</span>
+                                                    Alerts: <span>{this.props.user.price_plan.owm_city_count == 0 ? 'Unlimited' : (this.props.user.price_plan.owm_city_count > 0 ? this.props.user.price_plan.owm_city_count : 0)} Credits</span>
                                                 </li>
                                                 <li><i
                                                     className='pr-2'><img src='/icon-listTick.svg'/></i>News
-                                                    Alerts: <span>/{this.props.user.price_plan.google_alert_keyword_count == 0 ? 'Unlimited' : (this.props.user.price_plan.google_alert_keyword_count > 0 ? this.props.user.price_plan.google_alert_keyword_count : 0)}</span>
+                                                    Alerts: <span>{this.props.user.price_plan.google_alert_keyword_count == 0 ? 'Unlimited' : (this.props.user.price_plan.google_alert_keyword_count > 0 ? this.props.user.price_plan.google_alert_keyword_count : 0)} Credits</span>
                                                 </li>
                                                 <li><i
                                                     className='pr-2'><img src='/icon-listTick.svg'/></i>Retail Marketing Dates <span></span></li>
