@@ -201,7 +201,7 @@ class RegisterController extends Controller
                         }
                     }
 
-                    $count = User::where('email', 'like', '%@' . $domain)->count();
+                    $count = User::where('email', 'like', '%@' . $domain)->where('user_level', 'admin')->count();
 
                     if ($count > 0) {
                         $fail('COMPANY_ALREADY_EXIST');
