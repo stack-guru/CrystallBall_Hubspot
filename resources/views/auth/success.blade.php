@@ -9,7 +9,7 @@
         <div class="confirmationContent success d-flex flex-column text-center">
             <figure><img src='./icon-confirmation-email.svg'/></figure>
             <h1>Success!</h1>
-            <p>.Your email verification has been completed.
+            <p>Your email verification has been completed.
                 <a href='https://www.crystalball.pro/'>Contact Us</a> if you have any query.</p>
         </div>
     </div>
