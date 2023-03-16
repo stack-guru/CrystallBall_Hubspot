@@ -60,21 +60,20 @@ class RegisterController extends Controller
 
     private function isTemporaryEmail(string $email): bool
     {
-        // $filename = public_path('temp_email_domains.txt');
+        $filename = public_path('temp_email_domains.txt');
         $tempEmailDomains = [];
 
         // check if file is older than 6 hours
-        // if (file_exists($filename) && time() - filemtime($filename) < 6 * 60 * 60) {
-        //     $tempEmailDomains = file($filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-        // } else {
+        if (file_exists($filename) && time() - filemtime($filename) < 6 * 60 * 60) {
+            $tempEmailDomains = file($filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        } else {
             // download new list from GitHub
-            // $url = 'https://raw.githubusercontent.com/andreis/disposable-email-domains/master/domains.txt';
-            // $tempEmailDomains = file($url, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-
+            $url = 'https://raw.githubusercontent.com/andreis/disposable-email-domains/master/domains.txt';
+            $tempEmailDomains = file($url, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
             // save list to file
-            // file_put_contents($filename, implode("\n", $tempEmailDomains));
-        // }
-
+            file_put_contents($filename, implode("\n", $tempEmailDomains));
+        }
+        array_splice($tempEmailDomains, array_search('mailinator.com', $tempEmailDomains ), 1);
         $domain = explode('@', $email)[1];
         return in_array($domain, $tempEmailDomains);
     }
@@ -183,7 +182,6 @@ class RegisterController extends Controller
                         $fail('The ' . $attribute . ' is null.');
                         return false;
                     }
-
                     if ($this->isTemporaryEmail($value) || $this->isFreeEmail($value)) {
                         $fail('The ' . $attribute . ' must be a business email address!.');
                         return false;
