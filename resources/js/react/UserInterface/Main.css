@@ -2321,6 +2321,7 @@ body {
 .annotionRow .description p.annotationDesc {
     color: #333;
     line-height: 20px;
+    line-break: anywhere;
 }
 
 .annotionRow .description p.annotationDesc a {
@@ -3123,7 +3124,7 @@ body {
 .btn-bestplan {
     top: -13px;
     right: 50%;
-    width: 130px;
+    width: 150px;
     height: 26px;
     color: #fff;
     font-size: 14px;
@@ -3132,7 +3133,7 @@ body {
     padding: 4px 16px;
     position: absolute;
     border-radius: 100px;
-    left: calc(50% - 60px);
+    left: calc(50% - 75px);
     border-color: #ff630c;
     background: linear-gradient(90deg, #ff8534 33.33%, #ff630c 100%);
 }
@@ -3200,6 +3201,7 @@ body {
 
 .modal-csvUpload table td div {
     padding: 4px;
+    line-break: anywhere;
 }
 
 .field-table {
@@ -3749,7 +3751,7 @@ div[data-tour-elem="controls"]
 .gridBox {
     gap: 100px;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
 }
 
 .gridBox h2 {
