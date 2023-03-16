@@ -507,13 +507,13 @@ export default class Profile extends React.Component {
                                                     Alerts: <span>/{this.props.user.price_plan.google_alert_keyword_count == 0 ? 'Unlimited' : (this.props.user.price_plan.google_alert_keyword_count > 0 ? this.props.user.price_plan.google_alert_keyword_count : 0)}</span>
                                                 </li>
                                                 <li><i
-                                                    className='pr-2'><img src='/icon-listTick.svg'/></i>Retail Marketing Dates: <span></span></li>
+                                                    className='pr-2'><img src='/icon-listTick.svg'/></i>Retail Marketing Dates <span></span></li>
                                                 <li><i
-                                                    className='pr-2'><img src='/icon-listTick.svg'/></i>Google Updates: <span></span></li>
+                                                    className='pr-2'><img src='/icon-listTick.svg'/></i>Google Updates <span></span></li>
                                                 <li><i
-                                                    className='pr-2'><img src='/icon-listTick.svg'/></i>WordPress Updates: <span></span></li>
+                                                    className='pr-2'><img src='/icon-listTick.svg'/></i>WordPress Updates <span></span></li>
                                                 <li><i
-                                                    className='pr-2'><img src='/icon-listTick.svg'/></i>Holidays: <span></span></li>
+                                                    className='pr-2'><img src='/icon-listTick.svg'/></i>Holidays <span></span></li>
                                             </ul>
                                         </div>
                                     </div>
