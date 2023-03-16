@@ -68,11 +68,11 @@ class RegisterController extends Controller
             $tempEmailDomains = file($filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
         } else {
             // download new list from GitHub
-            $url = 'https://raw.githubusercontent.com/andreis/disposable-email-domains/master/domains.txt';
-            $tempEmailDomains = file($url, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+            // $url = 'https://raw.githubusercontent.com/andreis/disposable-email-domains/master/domains.txt';
+            // $tempEmailDomains = file($url, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 
             // save list to file
-            file_put_contents($filename, implode("\n", $tempEmailDomains));
+            // file_put_contents($filename, implode("\n", $tempEmailDomains));
         }
 
         $domain = explode('@', $email)[1];
@@ -134,7 +134,7 @@ class RegisterController extends Controller
             'zoho.com/workplace',
             //  extra that were in the array
             '10minutemail.com',
-            // 'mailnator.com',
+            'mailnator.com',
             'temp-mail.org',
             'e4ward.com',
             'guerrillamail.com',
