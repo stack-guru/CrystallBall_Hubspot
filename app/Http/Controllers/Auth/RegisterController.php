@@ -75,7 +75,7 @@ class RegisterController extends Controller
             // file_put_contents($filename, implode("\n", $tempEmailDomains));
         // }
 
-        // $domain = explode('@', $email)[1];
+        $domain = explode('@', $email)[1];
         return in_array($domain, $tempEmailDomains);
     }
 
