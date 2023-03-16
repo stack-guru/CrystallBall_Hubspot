@@ -14,7 +14,6 @@ class ApiLogController extends Controller
         $this->validate($request, [
             'user_id' => 'bail|required|numeric|exists:users,id'
         ]);
-
         $user = User::find($request->query('user_id'));
         $apiLogs = ApiLog::where('user_id', $user->id)->orderBy('created_at', 'DESC')->get();
 
