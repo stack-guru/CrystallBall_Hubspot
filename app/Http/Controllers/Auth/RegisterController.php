@@ -204,7 +204,8 @@ class RegisterController extends Controller
                    $count = User::where('email', 'like', '%@' . $domain)->count();
 
                    if ($count > 0) {
-                       $fail('COMPANY_ALREADY_EXIST');
+                       $fail('This user already exist with same company email.');
+                    //    $fail('COMPANY_ALREADY_EXIST');
                        return false;
                    }
                     $userExist = User::where('email', $value)->first();
