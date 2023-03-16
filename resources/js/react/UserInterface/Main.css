@@ -2321,6 +2321,7 @@ body {
 .annotionRow .description p.annotationDesc {
     color: #333;
     line-height: 20px;
+    line-break: anywhere;
 }
 
 .annotionRow .description p.annotationDesc a {
