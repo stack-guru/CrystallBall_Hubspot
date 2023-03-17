@@ -35,7 +35,7 @@
 
         <div class='container formAndSlider'>
             <div class='row align-items-center m-0'>
-                <div class='col-6 p-0'>
+                <div class='col-12 col-sm-6 p-0'>
                     <form class="form-signin" method="POST" action="{{ route('register') }}">
                         @csrf
                         <h2>Get started for Free</h2>
@@ -93,7 +93,7 @@
                         {{-- <p>Already have an account? <a href="{{ route('login') }}">Login</a></p> --}}
                     </form>
                 </div>
-                <div class='col-6 p-0'>
+                <div class='d-none d-sm-block col-sm-6 p-0'>
                     <div class='sliderHolder'>
                         <div class="signup-slider">
                             <div class='slide'>
