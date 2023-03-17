@@ -35,7 +35,7 @@
 
         <div class='container formAndSlider'>
             <div class='row align-items-center m-0'>
-                <div class='col-6 p-0'>
+                <div class='col-12 col-sm-6 p-0'>
                     <form class="form-signin" method="POST" action="{{ route('register') }}">
                         @csrf
                         <h2>Get started for Free</h2>
@@ -93,22 +93,23 @@
                         {{-- <p>Already have an account? <a href="{{ route('login') }}">Login</a></p> --}}
                     </form>
                 </div>
-                <div class='col-6 p-0'>
+                <div class='d-none d-sm-block col-sm-6 p-0'>
                     <div class='sliderHolder'>
                         <div class="signup-slider">
                             <div class='slide'>
-                                <h4>Create annotations for essential workspaces</h4>
-                                <img src="/images/signup-slider-01.svg"/>
+                                <h4>Annotations for GA4, Google Ads,
+                                    Data Studio/Looker</h4>
+                                <img src="/images/signup-slide-1.svg"/>
                             </div>
                             <div class='slide'>
-                                <h4>Insights - predictions</h4>
-                                <img src="/images/signup-slider-02.svg"/>
+                                <h4>Automate annotations over analytics</h4>
+                                <img src="/images/signup-slide-2.svg"/>
                             </div>
-                            <div class='slide'>
+                            {{--<div class='slide'>
                                 <h4>Use AI and Google Analytics annotations to make more accurate predictions about your
                                     website's future performance</h4>
                                 <img src="/images/signup-slider-03.svg"/>
-                            </div>
+                            </div>--}}
                         </div>
                     </div>
                 </div>
