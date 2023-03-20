@@ -51,7 +51,7 @@
                             <input type="number" min="-1" name="web_monitor_count" id="web_monitor_count" value="{{old('web_monitor_count',$pricePlan->web_monitor_count)}}" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <label>Keyword Tracking count? <sub>(0 means unlimited, -1 means not allowed)</sub></label>
+                            <label>Rank Tracking count? <sub>(0 means unlimited, -1 means not allowed)</sub></label>
                             <input type="number" min="-1" name="keyword_tracking_count" id="keyword_tracking_count" value="{{old('keyword_tracking_count',$pricePlan->keyword_tracking_count)}}" class="form-control" />
                         </div>
                         <div class="form-group">
