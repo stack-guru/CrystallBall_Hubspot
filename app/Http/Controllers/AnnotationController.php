@@ -110,8 +110,9 @@ class AnnotationController extends Controller
                     $aGAP->save();
                 }
             }
-        } else {
-            
+        } 
+        if(!$is_annotation_create)
+        {
             $annotation = new Annotation;
             $annotation->fill($request->validated());
             $annotation->show_at = $request->show_at ? Carbon::parse($request->show_at) : Carbon::now();
@@ -125,17 +126,6 @@ class AnnotationController extends Controller
             $aGAP->google_analytics_property_id = null;
             $aGAP->user_id = $userId;
             $aGAP->save();
-        }
-        if(!$is_annotation_create)
-        {
-            $annotation = new Annotation;
-            $annotation->fill($request->validated());
-            $annotation->show_at = $request->show_at ? Carbon::parse($request->show_at) : Carbon::now();
-            $annotation->user_id = $userId;
-            $annotation->is_enabled = true;
-            $annotation->added_by = 'manual';
-            $annotation->save();
-            $is_annotation_create = true;
         }
         DB::commit();
         event(new \App\Events\AnnotationCreated($annotation));
