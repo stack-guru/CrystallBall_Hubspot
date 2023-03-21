@@ -124,7 +124,6 @@ class AnnotationController extends Controller
             $aGAP->user_id = $userId;
             $aGAP->save();
         }
-        DB::commit();
         if(!$annotation)
         {
             $annotation = new Annotation;
@@ -135,6 +134,7 @@ class AnnotationController extends Controller
             $annotation->added_by = 'manual';
             $annotation->save();
         }
+        DB::commit();
         event(new \App\Events\AnnotationCreated($annotation));
         return ['annotation' => $annotation];
     }
