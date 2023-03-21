@@ -24,7 +24,7 @@
   </div>
   <p class="text-center"><a href="{{ route('register', ['email' => true]) }}">Register</a> with Company Email</p>
   <p class="text-center">Already have an account? <a href="{{ route('login') }}">Login</a></p>
-  <p class="text-center">Check out our <a href="https://www.gaannotations.com/pricing" target="_blank">Plans and Pricing</a></p>
+  <!-- <p class="text-center">Check out our <a href="https://www.gaannotations.com/pricing" target="_blank">Plans and Pricing</a></p> -->
 </form>
 @endsection
 

@@ -289,3 +289,16 @@
     margin: 0 auto;
   }
 }
+
+@media only screen and (max-width: 600px) {
+  .auth-header {
+    padding: 18px 0px;
+  }
+  .auth-header .auth-nav li:nth-child(2) {
+    padding: 0;
+  }
+  .auth-header .btn-theme{
+    padding: 12px;
+    white-space: nowrap;
+  }
+}

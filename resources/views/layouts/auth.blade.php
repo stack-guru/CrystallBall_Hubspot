@@ -41,11 +41,12 @@
                 <h5 class="m-0 pl-2">{{config('app.name')}}</h5>
             </div>
         </a></strong>
-        <ul class='auth-nav'>
-          {{-- <li><a href='https://www.gaannotations.com/pricing' target="_blank">Pricing</a></li> --}}
+          @if(Request::path() !== 'success-message')
+          <ul class='auth-nav'>
           <li><a href='/login'>Login</a></li>
           <li><a class='btn-theme' href='/register?email=1'>Sign up</a></li>
         </ul>
+          @endif
       </div>
     </header>
     <main class='auth-main'>

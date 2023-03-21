@@ -201,12 +201,12 @@ class RegisterController extends Controller
                         }
                     }
 
-                    $count = User::where('email', 'like', '%@' . $domain)->count();
-
-                    if ($count > 0) {
-                        $fail('COMPANY_ALREADY_EXIST');
-                        return false;
-                    }
+//                    $count = User::where('email', 'like', '%@' . $domain)->where('user_level', 'admin')->count();
+//
+//                    if ($count > 0) {
+//                        $fail('COMPANY_ALREADY_EXIST');
+//                        return false;
+//                    }
                     $userExist = User::where('email', $value)->first();
                     // $userExist = User::where('email','LIKE','%'.$domainPart)->first();
                     if ($userExist) {

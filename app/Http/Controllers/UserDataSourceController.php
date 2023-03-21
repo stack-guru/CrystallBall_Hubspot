@@ -103,6 +103,13 @@ class UserDataSourceController extends Controller
                 return response(['message' => "You have reached this plan's limit. Please upgrade your plan."], 422);
             }
         }
+        if ($request->ds_code == 'holidays') {
+            $holidays = UserDataSource::where('ds_code', 'holidays')->where('user_id', $user->id)->count();
+            $pricePlan = $user->pricePlan;
+            if (($pricePlan->holiday_credits_count < $holidays || $pricePlan->holiday_credits_count == $holidays) && $pricePlan->holiday_credits_count != 0) {
+                return response(['message' => "You have reached this plan's limit. Please upgrade your plan."], 422);
+            }
+        }
 
         $userDataSource = new UserDataSource;
         $userDataSource->fill($request->validated());

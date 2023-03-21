@@ -59,6 +59,7 @@ class PricePlanRequest extends FormRequest
             'aws_credits_count' => 'required',
             'linkedin_credits_count' => 'required',
             'twitter_credits_count' => 'required',
+            'holiday_credits_count' => 'required',
         ];
     }
 }
