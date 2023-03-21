@@ -72,7 +72,7 @@ class AnnotationController extends Controller
             abort(402, "Please upgrade your plan to add more annotations");
         }
         $userId = $user->id;
-
+        $is_annotation_create = false;
         DB::beginTransaction();
 
         // Check if google analytics property ids are provided in the request
@@ -102,6 +102,7 @@ class AnnotationController extends Controller
                     $annotation->is_enabled = true;
                     $annotation->added_by = 'manual';
                     $annotation->save();
+                    $is_annotation_create = true;
                     $aGAP = new AnnotationGaProperty;
                     $aGAP->annotation_id = $annotation->id;
                     $aGAP->google_analytics_property_id = $gAPId;
@@ -118,13 +119,14 @@ class AnnotationController extends Controller
             $annotation->is_enabled = true;
             $annotation->added_by = 'manual';
             $annotation->save();
+            $is_annotation_create = true;
             $aGAP = new AnnotationGaProperty;
             $aGAP->annotation_id = $annotation->id;
             $aGAP->google_analytics_property_id = null;
             $aGAP->user_id = $userId;
             $aGAP->save();
         }
-        if(!$annotation)
+        if(!$is_annotation_create)
         {
             $annotation = new Annotation;
             $annotation->fill($request->validated());
@@ -133,6 +135,7 @@ class AnnotationController extends Controller
             $annotation->is_enabled = true;
             $annotation->added_by = 'manual';
             $annotation->save();
+            $is_annotation_create = true;
         }
         DB::commit();
         event(new \App\Events\AnnotationCreated($annotation));
