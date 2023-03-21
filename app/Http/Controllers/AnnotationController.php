@@ -72,6 +72,7 @@ class AnnotationController extends Controller
             abort(402, "Please upgrade your plan to add more annotations");
         }
         $userId = $user->id;
+        $is_annotation_create = false;
         DB::beginTransaction();
 
         // Check if google analytics property ids are provided in the request
@@ -101,33 +102,16 @@ class AnnotationController extends Controller
                     $annotation->is_enabled = true;
                     $annotation->added_by = 'manual';
                     $annotation->save();
+                    $is_annotation_create = true;
                     $aGAP = new AnnotationGaProperty;
                     $aGAP->annotation_id = $annotation->id;
                     $aGAP->google_analytics_property_id = $gAPId;
                     $aGAP->user_id = $userId;
                     $aGAP->save();
-                    event(new \App\Events\AnnotationCreated($annotation));
-
                 }
             }
-        } else {
-            
-            $annotation = new Annotation;
-            $annotation->fill($request->validated());
-            $annotation->show_at = $request->show_at ? Carbon::parse($request->show_at) : Carbon::now();
-            $annotation->user_id = $userId;
-            $annotation->is_enabled = true;
-            $annotation->added_by = 'manual';
-            $annotation->save();
-            $aGAP = new AnnotationGaProperty;
-            $aGAP->annotation_id = $annotation->id;
-            $aGAP->google_analytics_property_id = null;
-            $aGAP->user_id = $userId;
-            $aGAP->save();
-            event(new \App\Events\AnnotationCreated($annotation));
-        }
-        DB::commit();
-        if(!$annotation)
+        } 
+        if(!$is_annotation_create)
         {
             $annotation = new Annotation;
             $annotation->fill($request->validated());
@@ -136,10 +120,17 @@ class AnnotationController extends Controller
             $annotation->is_enabled = true;
             $annotation->added_by = 'manual';
             $annotation->save();
-            event(new \App\Events\AnnotationCreated($annotation));
+            $is_annotation_create = true;
+            $aGAP = new AnnotationGaProperty;
+            $aGAP->annotation_id = $annotation->id;
+            $aGAP->google_analytics_property_id = null;
+            $aGAP->user_id = $userId;
+            $aGAP->save();
         }
+        DB::commit();
+        event(new \App\Events\AnnotationCreated($annotation));
         return ['annotation' => $annotation];
-  }
+    }
 
     public function show($id)
     {
