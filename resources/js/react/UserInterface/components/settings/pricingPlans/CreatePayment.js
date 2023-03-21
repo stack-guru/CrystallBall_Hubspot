@@ -73,9 +73,7 @@ export default class CreatePayment extends Component {
             response.data.alertText.forEach(text => {
                 // swal.fire('Oops...', text, 'info');
                 swal.fire({
-                    html: `<ga-error-popup heading="<h1>Warning</h1>"
-                        subHeading="<p>`+text+`</p>"
-                        bannerImg="/images/error-popup-image.svg"></ga-error-popup>`,
+                    html: `<ga-error-popup subHeading="<p>`+text+`</p>"ga-error-popup>`,
                     width: 600,
                     showCancelButton: true,
                     showCloseButton: false,
@@ -84,7 +82,7 @@ export default class CreatePayment extends Component {
                         popup: "gaErrorPopup",
                     },
                     cancelButtonClass: "btn-close",
-                    cancelButtonText: "Close",
+                    cancelButtonText: "Got it",
                 })
             });
         }, (err) => {

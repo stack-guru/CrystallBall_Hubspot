@@ -72,15 +72,7 @@ class AnnotationController extends Controller
             abort(402, "Please upgrade your plan to add more annotations");
         }
         $userId = $user->id;
-
         DB::beginTransaction();
-        // $annotation = new Annotation;
-        // $annotation->fill($request->validated());
-        // $annotation->show_at = $request->show_at ? Carbon::parse($request->show_at) : Carbon::now();
-        // $annotation->user_id = $userId;
-        // $annotation->is_enabled = true;
-        // $annotation->added_by = 'manual';
-        // $annotation->save();
 
         // Check if google analytics property ids are provided in the request
         if ($request->google_analytics_property_id !== null && !in_array("", $request->google_analytics_property_id)) {
@@ -114,6 +106,8 @@ class AnnotationController extends Controller
                     $aGAP->google_analytics_property_id = $gAPId;
                     $aGAP->user_id = $userId;
                     $aGAP->save();
+                    event(new \App\Events\AnnotationCreated($annotation));
+
                 }
             }
         } else {
@@ -130,12 +124,22 @@ class AnnotationController extends Controller
             $aGAP->google_analytics_property_id = null;
             $aGAP->user_id = $userId;
             $aGAP->save();
+            event(new \App\Events\AnnotationCreated($annotation));
         }
         DB::commit();
-
-        event(new \App\Events\AnnotationCreated($annotation));
+        if(!$annotation)
+        {
+            $annotation = new Annotation;
+            $annotation->fill($request->validated());
+            $annotation->show_at = $request->show_at ? Carbon::parse($request->show_at) : Carbon::now();
+            $annotation->user_id = $userId;
+            $annotation->is_enabled = true;
+            $annotation->added_by = 'manual';
+            $annotation->save();
+            event(new \App\Events\AnnotationCreated($annotation));
+        }
         return ['annotation' => $annotation];
-    }
+  }
 
     public function show($id)
     {
