@@ -4,6 +4,7 @@ import SearchEngineSelect from "./SearchEngineSelect";
 import LocationSelect from "./LocationSelect";
 import AnnotationCategorySelect from "./AnnotationCategorySelect";
 import { saveStateToLocalStorage } from "../helpers/CommonFunctions";
+import GoogleAnalyticsPropertySelect from "../utils/GoogleAnalyticsPropertySelect";
 
 export default class AddKeyword extends React.Component {
     constructor(props) {
@@ -22,6 +23,7 @@ export default class AddKeyword extends React.Component {
             is_url_competitors: "",
             available_credits: 0,
             total_credits: 0,
+            gaPropertyId: this.props.gaPropertyId,
         };
 
         this.addKeyword = this.addKeyword.bind(this);
@@ -133,6 +135,7 @@ export default class AddKeyword extends React.Component {
             ranking_direction: this.state.ranking_direction,
             ranking_places: this.state.ranking_places,
             is_url_competitors: this.state.is_url_competitors,
+            gaPropertyId: this.state.gaPropertyId,
         };
         HttpClient.post("/data-source/save-keyword-tracking-keywords", params)
             .then(
@@ -254,6 +257,23 @@ export default class AddKeyword extends React.Component {
                             <option value="false">My website</option>
                             <option value="true">Competitor's website</option>
                         </select>
+                    </div>
+
+                    <div className="d-flex align-items-center w-100 justify-content-end tracker-content">
+                        <span className="betweentext">for</span>
+                        <GoogleAnalyticsPropertySelect
+                            className="themeNewselect hide-icon"
+                            name="ga_property_id"
+                            id="ga_property_id"
+                            currentPricePlan={this.props.user.price_plan}
+                            value={this.state.gaPropertyId}
+                            onChangeCallback={(gAP) => {
+                                this.setState( { gaPropertyId: gAP.target.value || null } )
+                            }}
+                            placeholder="Select GA Properties"
+                            isClearable={true}
+                            onDeleteCallback={this.props.onUncheckCallback}
+                        />
                     </div>
 
                     <div className="themeNewInputGroup inputWithIcon position-relative">
