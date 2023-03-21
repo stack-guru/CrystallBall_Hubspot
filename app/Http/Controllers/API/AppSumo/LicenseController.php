@@ -75,13 +75,13 @@ class LicenseController extends Controller
                         $sGS->addUserToMarketingList($user, "9 GAa Upgraded to Basic");
                         WebMonitor::addAllowedWebMonitors($user, $pricePlan->web_monitor_count);
                         $admin = Admin::first();
-                        Mail::to($admin)->send(new AdminPlanUpgradedMail($admin, $user));
+                        Mail::to($admin)->cc('ron@crystalballinsight.com')->send(new AdminPlanUpgradedMail($admin, $user));
                         break;
                     case PricePlan::PRO:
                         $sGS->addUserToMarketingList($user, "10 GAa Upgraded to PRO");
                         WebMonitor::addAllowedWebMonitors($user, $pricePlan->web_monitor_count);
                         $admin = Admin::first();
-                        Mail::to($admin)->send(new AdminPlanUpgradedMail($admin, $user));
+                        Mail::to($admin)->cc('ron@crystalballinsight.com')->send(new AdminPlanUpgradedMail($admin, $user));
                         break;
                 }
 

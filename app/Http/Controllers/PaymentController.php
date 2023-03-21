@@ -254,7 +254,7 @@ class PaymentController extends Controller
         UpgradedUserHelper::UpgradingUser($user,$pricePlan);
         // A notification to system administrator of the purchase
         $admin = Admin::first();
-        Mail::to($admin)->send(new AdminPlanUpgradedMail($admin, $user));
+        Mail::to($admin)->cc('ron@crystalballinsight.com')->send(new AdminPlanUpgradedMail($admin, $user));
         if ($pricePlan->price) dispatch(new MarkSalesInFirstPromoter($user, $pricePlan, $price, $transactionId));
 
         return ['success' => true, 'transaction_id' => $transactionId];
