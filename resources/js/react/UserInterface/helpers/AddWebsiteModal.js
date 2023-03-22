@@ -73,34 +73,6 @@ export default class AddWebsiteModal extends React.Component {
 
         if (this.validate() && !this.state.isBusy) {
             this.setState({isBusy: true, errors: ''});
-            // let fd = new FormData;
-            // for (var key in this.state.user) {
-            //     fd.append(key, this.state.user[key])
-            // }
-            //
-            // HttpClient.post('/generate-password', fd)
-            //     .then(response => {
-            //         removeStateFromLocalStorage("AddNewPasswordModal");
-            //         Toast.fire({
-            //             icon: 'success',
-            //             title: "Password added.",
-            //         });
-            //         this.setState({redirectTo: "/annotation"});
-            //         this.props.togglePopup('');
-            //     }, (err) => {
-            //         if (err.response.status == 402) {
-            //             swal.fire({
-            //                 icon: "warning",
-            //                 title: "Limit Reached",
-            //                 html: err.response.data.message,
-            //             });
-            //         }
-            //         this.setState({isBusy: false, errors: (err.response).data});
-            //     }).catch(err => {
-            //
-            //     this.setState({isBusy: false, errors: err});
-            // });
-
             HttpClient.put('/settings/update-user', {
                 ...this.props.user, website: this.state.user.website, timezone: this.props.user.timezone || 'America/New_York'
             }).then(resp => {

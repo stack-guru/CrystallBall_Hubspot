@@ -6,6 +6,7 @@ import HttpClient from '../utils/HttpClient';
 import './UserStartupConfigurationModal.css';
 import AppsMarket from "../components/AppsMarket/AppsMarket";
 import CreateUser from "../components/settings/user/CreateUser";
+import GooglePermissionPopup from "../utils/GooglePermissionPopup";
 
 
 // // background.js (in your Chrome extension)
@@ -30,6 +31,7 @@ export default class UserStartupConfigurationModal extends Component {
             feedback: '',
             user: props.user,
             extensionInstalled: false,
+            isPermissionPopupOpened: false,
         };
         this.toggleModal = this.toggleModal.bind(this);
         this.incrementStep = this.incrementStep.bind(this);
@@ -52,13 +54,15 @@ export default class UserStartupConfigurationModal extends Component {
 
     handleSubmit() {
         let formData = new FormData;
-        Object.keys(this.state.stepResponses).forEach(k => {
-            const stepResponse = this.state.stepResponses[k];
-            formData.append('step_number[]', k);
-            formData.append('data_label[]', stepResponse.data_label);
-            formData.append('data_value[]', stepResponse.data_value);
-        });
+        // Object.keys(this.state.stepResponses).forEach(k => {
+        //     const stepResponse = this.state.stepResponses[k];
+        //     formData.append('step_number[]', k);
+        //     formData.append('data_label[]', stepResponse.data_label);
+        //     formData.append('data_value[]', stepResponse.data_value);
+        // });
+        formData.append('show_config_steps', false);
         HttpClient.post('/user-startup-configuration', formData).then(resp => {
+            this.props.closeModal();
         }, (err) => {
             this.setState({isBusy: false, errors: (err.response).data});
         }).catch(err => {
@@ -164,7 +168,7 @@ export default class UserStartupConfigurationModal extends Component {
                     </li>
                     <li>
                         <span
-                            className={`status-icon ${stepNumber === 2 ? 'current' : stepNumber > 2 ? 'checked' : 'icon-list'}`}>
+                            className={`status-icon ${stepNumber === 2 ? 'current' : stepNumber > 2 ? 'checked' : 'icon-list'} ${this.props.user.google_accounts_count ? 'checked' : ''}`}>
                             {stepNumber === 2 ?
                                 <img alt="Connect Google Analytics" className='loader' src="./icon-current.svg"/>
                                 : stepNumber > 2 ?
@@ -172,7 +176,7 @@ export default class UserStartupConfigurationModal extends Component {
                         </span>
                         <span className='pl-2'>Connect Google Analytics</span>
                     </li>
-                    <li>
+                    {/*<li>
                         <span
                             className={`status-icon ${stepNumber === 3 ? 'current' : stepNumber > 3 ? 'checked' : 'icon-list'}`}>
                             {stepNumber === 3 ?
@@ -181,7 +185,7 @@ export default class UserStartupConfigurationModal extends Component {
                                     <img alt="Connect GA & Search Console" src="./icon-checked-green.svg"/> : null}
                         </span>
                         <span className='pl-2'>GA & Search Console</span>
-                    </li>
+                    </li>*/}
                     <li>
                         <span
                             className={`status-icon ${stepNumber === 4 ? 'current' : stepNumber > 4 ? 'checked' : 'icon-list'}`}>
@@ -204,7 +208,7 @@ export default class UserStartupConfigurationModal extends Component {
                     </li>
                 </ul>
             </div>
-            <button className='btn-bookADemo'>
+            <a href={"https://calendly.com/crystal-ball/30min"} target={"_blank"} className='btn-bookADemo'>
                 <span>Book a Demo</span>
                 <span className='ml-2'>
                     <svg width="14" height="9" viewBox="0 0 14 9" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -213,7 +217,7 @@ export default class UserStartupConfigurationModal extends Component {
                             fill="#096DB7"/>
                     </svg>
                 </span>
-            </button>
+            </a>
         </aside>
         // if (!this.props.isOpen) return null;
 
@@ -267,7 +271,10 @@ export default class UserStartupConfigurationModal extends Component {
                             <div className='chromeExtensionContent d-flex flex-row-reverse align-items-center'>
                                 <div className='pl-4 flex-shrink-0'><img src="./chrome-01.svg"/></div>
                                 <div className='flex-grow-1 d-flex flex-column'>
-                                    <strong><img src="./chromeExtension.svg"/></strong>
+                                    <a href="https://chrome.google.com/webstore/detail/automated-google-analytic/jfkimpgkmamkdhamnhabohpeaplbpmom?hl=en"
+                                       target="_blank">
+                                        <strong><img src="./chromeExtension.svg"/></strong>
+                                    </a>
                                     <p>Install our extension, It's like a sticky note on your data charts.</p>
                                     <ul>
                                         <li>
@@ -290,7 +297,10 @@ export default class UserStartupConfigurationModal extends Component {
                                     this.recordStepResponse('IMPORT_OLD_ANNOTATIONS', false);
                                     this.incrementStep(1)
                                 }} className="btn-cancel">Skip this</Button>
-                                <Button className="btn-theme">Continue</Button>
+                                <Button onClick={() => {
+                                    this.recordStepResponse('IMPORT_OLD_ANNOTATIONS', false);
+                                    this.incrementStep(1)
+                                }} className="btn-theme">Continue</Button>
                             </div>
                         </ModalBody>
                     </div>
@@ -313,14 +323,19 @@ export default class UserStartupConfigurationModal extends Component {
                                 </span>
                             </div>
                             <div className='connectGoogleAnalytics d-flex justify-content-center align-items-center'>
-                                <a href="#"><img src="/images/connect_with_google.svg"/></a>
+                                <a onClick={() => {
+                                    this.setState({isPermissionPopupOpened: true})
+                                }} href="#"><img alt={"connect_with_google"} src="/images/connect_with_google.svg"/></a>
                             </div>
                             <div className='popupBtnBox d-flex justify-content-between align-items-center'>
                                 <Button onClick={() => {
                                     this.recordStepResponse('IMPORT_OLD_ANNOTATIONS', false);
-                                    this.incrementStep(1)
+                                    this.incrementStep(2)
                                 }} className="btn-cancel">Skip this</Button>
-                                <Button className="btn-theme">Continue</Button>
+                                <Button onClick={() => {
+                                    this.recordStepResponse('IMPORT_OLD_ANNOTATIONS', false);
+                                    this.incrementStep(2)
+                                }} className="btn-theme">Continue</Button>
                             </div>
                         </ModalBody>
                     </div>
@@ -482,7 +497,7 @@ export default class UserStartupConfigurationModal extends Component {
                                     user={this.props.user}
                                 />
                             </div>
-                           {/* <div className='popupBtnBox d-flex justify-content-between align-items-center'>
+                            {/* <div className='popupBtnBox d-flex justify-content-between align-items-center'>
                                 <Button onClick={() => {
                                     this.recordStepResponse('IMPORT_OLD_ANNOTATIONS', false);
                                     this.incrementStep(1)
@@ -506,7 +521,8 @@ export default class UserStartupConfigurationModal extends Component {
                             <p>Now you can go to your dashboard and do some productive work. Hooray 🎉</p>
                             <div className='popupBtnBox d-flex justify-content-center'>
                                 <Button className='btn-theme' onClick={() => {
-                                    this.props.closeModal()
+                                    // this.props.closeModal()
+                                    this.handleSubmit();
                                 }}>Go to Dashboard</Button>
                             </div>
                         </ModalBody>
@@ -517,7 +533,9 @@ export default class UserStartupConfigurationModal extends Component {
         return (
             <Modal isOpen={this.props.isOpen} className='accountSetUpPopup' toggle={this.props.toggleShowTour} size="lg"
                    centered={true} id="scw-modal" backdrop="static">
+                {this.state.isPermissionPopupOpened ? <GooglePermissionPopup/> : ''}
                 {modalBodyFooter}
+
             </Modal>
         )
     }
