@@ -102,7 +102,7 @@ export default class AddWebsiteModal extends React.Component {
             // });
 
             HttpClient.put('/settings/update-user', {
-                ...this.props.user, website: this.state.user.website
+                ...this.props.user, website: this.state.user.website, timezone: this.props.user.timezone || 'America/New_York'
             }).then(resp => {
                 this.props.reloadUser();
             }, (err) => {
