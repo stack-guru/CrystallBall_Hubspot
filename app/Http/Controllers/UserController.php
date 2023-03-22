@@ -366,6 +366,7 @@ class UserController extends Controller
                     'galchet@gmail.com',
                     'meglash@upstartideas.com',
                     'ron@crystalball.pro',
+                    'ron@crystalballinsight.com'
                 ]
             )->send(new DailyUserStatsMail($data));
 
