@@ -51,7 +51,6 @@ export default class GoogleAnalyticsPropertySelect extends Component {
         // this.onChangeHandler(null);
         const filteredProperty = this.state.selectedProperties.filter(itm => itm.value != propertyId);
         this.setState({ selectedProperties: filteredProperty });
-
         if (filteredProperty.length === 0) {
             if (this.props.multiple) {
                 this.props.onChangeCallback({
@@ -75,6 +74,29 @@ export default class GoogleAnalyticsPropertySelect extends Component {
 
             if (this.props.onChangeCallback2) {
                 this.props.onChangeCallback2([]);
+            }
+        }else{
+            if (this.props.multiple) {
+                this.props.onChangeCallback({
+                    target: {
+                        name: this.props.name,
+                        value: filteredProperty.map(sO => sO.value),
+                        wasLastDataFetchingSuccessful: true
+                    }
+                });
+            }
+
+            if (this.props.multiple) {
+                this.props.onChangeCallback({
+                    target: {
+                        name: this.props.name,
+                        value: filteredProperty.map(sO => sO.value),
+                        wasLastDataFetchingSuccessful: true
+                    }
+                });
+            }
+            if (this.props.onChangeCallback2) {
+                this.props.onChangeCallback2(filteredProperty);
             }
         }
     }
