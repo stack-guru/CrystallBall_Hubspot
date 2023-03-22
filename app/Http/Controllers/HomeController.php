@@ -383,6 +383,7 @@ class HomeController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255',
             'phone' => 'nullable|string',
+            'website' => 'nullable|string',
             'timezone' => 'required',
         ]);
 
@@ -395,7 +396,8 @@ class HomeController extends Controller
         }
 
         $user->name = $request->name;
-        $user->email = $request->email;
+        $user->name = $request->name;
+        $user->website = $request->website;
         $user->phone_number = $request->phone;
         $user->timezone = $request->timezone;
         $user->save();

@@ -34,6 +34,7 @@ import CreatePaymentDetail from './components/settings/CreatePaymentDetail';
 import StartupChecklist from './helpers/StartupChecklist';
 import UserStartupConfigurationModal from './helpers/UserStartupConfigurationModal';
 import AddNewPasswordModal from './helpers/AddNewPasswordModal';
+import AddWebsiteModal from './helpers/AddWebsiteModal';
 import InterfaceTour from './helpers/InterfaceTour';
 import IndexDashboard from './components/dashboard/IndexDashboard';
 import IndexAnalytics from './components/dashboard/analytics/IndexAnalytics';
@@ -48,6 +49,14 @@ import AppsModal from './components/AppsMarket/AppsModal';
 import ModalHeader from './components/AppsMarket/common/ModalHeader';
 import {Modal, ModalBody} from 'reactstrap';
 
+function isFreeEmail(email = "") {
+    const parts = email.split('@');
+    const domain =  parts.length > 1 ? parts[1] : null;
+    if(!domain || domain === 'gmail.com' || domain === 'yahoo.com' || domain === 'hotmail.com' || domain === 'outlook.com' || domain === 'aol.com') {
+        return true;
+    }
+    return false;
+}
 class Main extends React.Component {
 
     constructor(props) {
@@ -144,6 +153,9 @@ class Main extends React.Component {
                 <div className="sidebar">
                     {/* <UserStartupConfigurationModal isOpen={this.state.showStartupConfiguration} toggleShowTour={this.toggleStartupConfiguration} /> */}
                     <AddNewPasswordModal show={this.state.showPasswordPopup} user={this.state.user}/>
+                    <AddWebsiteModal reloadUser={this.loadUser}
+                                     show={!this.state.showPasswordPopup && !this.state.user.website && isFreeEmail(this.state.user.email)}
+                                     user={this.state.user}/>
 
                     {/* <InterfaceTour isOpen={this.state.showInterfaceTour} toggleShowTour={this.toggleInterfaceTour} /> */}
 
