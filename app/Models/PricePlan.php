@@ -47,6 +47,7 @@ class PricePlan extends Model
         'twitter_credits_count',
         'reference_text',
         'holiday_credits_count',
+        'is_hidden'
     ];
 
     protected $hidden = [
@@ -70,5 +71,6 @@ class PricePlan extends Model
         'has_microsoft_power_bi' => 'boolean',
 
         'is_available' => 'boolean',
+        'is_hidden' => 'boolean',
     ];
 }
