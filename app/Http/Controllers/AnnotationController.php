@@ -276,7 +276,7 @@ class AnnotationController extends Controller
         // LEFT JOIN to load all properties selected in annotations
         $annotationsQuery .= " LEFT JOIN annotation_ga_properties ON TempTable.id = annotation_ga_properties.annotation_id";
         // LEFT JOINs to load all property details which are loaded from above statement
-        $annotationsQuery .= " LEFT JOIN google_analytics_properties ON annotation_ga_properties.google_analytics_property_id = google_analytics_properties.id";
+        $annotationsQuery .= " LEFT JOIN google_analytics_properties ON IF(annotation_ga_properties.google_analytics_property_id, annotation_ga_properties.google_analytics_property_id, table_ga_property_id) = google_analytics_properties.id";
         // All where clauses should reside here
         $whereClauses = [];
         // Apply category filter if it is added in GET request query parameter
