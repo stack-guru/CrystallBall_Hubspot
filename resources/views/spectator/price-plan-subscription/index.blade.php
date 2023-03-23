@@ -19,7 +19,8 @@
                                 <th scope="col">Amount</th>
                                 <th scope="col">Paid at</th>
                                 <th scope="col">Card end with</th>
-                                <th scope="col">Next Billing At (Duration)</th>
+                                <th scope="col">Next Billing At</th>
+                                <th scope="col">Monthly / Yearly</th>
                                 <th scope="col">Plan Price</th>
                                 <th scope="col">Actions</th>
                             </tr>
@@ -46,7 +47,8 @@
                                 <td>{{$pricePlanSubscription->created_at->todateString()}}</td>
                                 <td>{{@$pricePlanSubscription->paymentDetail->card_number}}</td>
 
-                                <td>{{$pricePlanSubscription->expires_at}} ({{$pricePlanSubscription->plan_duration}})</td>
+                                <td>{{$pricePlanSubscription->expires_at}}</td>
+                                <td>@if($pricePlanSubscription->plan_duration == 12)Yearly @else Monthly @endif</td>
                                 <td>${{@$pricePlanSubscription->pricePlan->price}}</td>
                                 <td>
                                     <a href="{{ route('spectator.price-plan-subscription.show', $pricePlanSubscription->id) }}" class="btn btn-sm btn-primary">Show</a>
