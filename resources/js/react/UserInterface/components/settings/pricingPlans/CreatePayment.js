@@ -8,6 +8,7 @@ import CountryCodeSelect from "../../../utils/CountryCodeSelect";
 import { Link } from 'react-router-dom';
 import { Col, Container, Row } from 'reactstrap';
 import PhoneInput from 'react-phone-input-2';
+import LoaderAnimation from "../../../utils/LoaderAnimation";
 
 export default class CreatePayment extends Component {
 
@@ -37,6 +38,7 @@ export default class CreatePayment extends Component {
                 securityCode: '',
             },
             isBusy: false,
+            isLoading: false,
             isDirty: false,
             redirectTo: null,
             validation: {},
@@ -137,7 +139,7 @@ export default class CreatePayment extends Component {
         // e.preventDefault();
 
 
-        this.setState({ isBusy: true });
+        this.setState({ isBusy: true ,isLoading: true });
         var urlSearchParams = new URLSearchParams(window.location.search);
         let _token = urlSearchParams.get('_token')
         HttpClient.post(`/settings/price-plan/payment`, {
@@ -163,7 +165,7 @@ export default class CreatePayment extends Component {
             plan_duration: this.state.planDuration,
         })
             .then(response => {
-                this.setState({ isBusy: false, errors: undefined });
+                this.setState({ isBusy: false, errors: undefined,isLoading: false });
 
                 // gtag('event', 'conversion', {
                 //     'send_to': 'AW-645973826/pJ_PCIrI0egBEMKOg7QC',
@@ -187,7 +189,7 @@ export default class CreatePayment extends Component {
                 this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
 
-                this.setState({ isBusy: false, errors: err });
+                this.setState({ isBusy: false, errors: err,isLoading: false });
             });
     }
 
@@ -248,6 +250,7 @@ export default class CreatePayment extends Component {
             },
             validation: {},
             isBusy: false,
+            isLoading: false,
             isDirty: false,
             errors: undefined
         });
@@ -343,6 +346,7 @@ export default class CreatePayment extends Component {
             <>
                 <div id="checkoutPage" className="checkoutPage pageWrapper">
                     <Container>
+                        <LoaderAnimation show={this.state.isLoading} />
                         <div className="pageHeader checkoutPageHead">
                             <h2 className="pageTitle">Checkout</h2>
                         </div>
@@ -502,7 +506,7 @@ export default class CreatePayment extends Component {
                                             <button className="btn-apply" type="button" onClick={this.applyCoupon}>Apply</button>
                                         </div>
 
-                                        <button type="submit" data-bluesnap="submitButton" className={`btn-payNow ${this.state.isBusy ? "disabled" : ''}`}>Pay now</button>
+                                        <button type="submit" data-bluesnap="submitButton" className={`btn-payNow ${this.state.isBusy ? "disabled" : ''}`}>{this.state.isBusy ? 'Please Wait !! ' : 'Pay now'}</button>
                                         <div className='d-flex justify-content-center'>
                                             {/* <img className='d-block' src='/images/blueSnap.svg'/> */}
                                             <a target="_blank" href="https://home.bluesnap.com/"><img className='d-block' style={{width: 200}} src="/images/blueSnap.png" /></a>
@@ -523,7 +527,7 @@ export default class CreatePayment extends Component {
         if (this.state.isBusy) {
             return;
         }
-        this.setState({ isBusy: true })
+        this.setState({ isBusy: true ,isLoading: true})
 
         bluesnap.hostedPaymentFieldsSubmitData((callback) => {
             if (null != callback.cardData) {
@@ -542,7 +546,7 @@ export default class CreatePayment extends Component {
                 this.submitHandler(e);
 
             } else {
-                this.setState({ isBusy: false })
+                this.setState({ isBusy: false , isLoading: false})
                 var errorArray = callback.error;
                 let formattedErrors = {};
                 errorArray.forEach(e => { formattedErrors[e.tagId ?? e.eventType] = [e.errorDescription] })
