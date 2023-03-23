@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import { Col, Container, Row } from 'reactstrap';
 import PhoneInput from 'react-phone-input-2';
 import LoaderAnimation from "../../../utils/LoaderAnimation";
+import DowngradedPopup from "../../../utils/DowngradedPopup";
 
 export default class CreatePayment extends Component {
 
@@ -46,7 +47,7 @@ export default class CreatePayment extends Component {
             couponCode: '',
             taxPercent: 0,
             cardType: 'Card',
-
+            alerts: [],
             planDuration: 12
         }
         this.changeHandler = this.changeHandler.bind(this)
@@ -71,21 +72,9 @@ export default class CreatePayment extends Component {
             'price_plan_id': urlSearchParams.get('price_plan_id'),
         })
         .then(response => {
-            this.setState({ isBusy: false, errors: undefined });
+            this.setState({ isBusy: false, errors: undefined ,alerts: response.data.alertText});     
             response.data.alertText.forEach(text => {
                 swal.fire('', text, '');
-                // swal.fire({
-                //     html: `<ga-warning-popup subHeading="<p>`+text+`</p>"ga-warning-popup>`,
-                //     width: 700,
-                //     showCancelButton: true,
-                //     showCloseButton: false,
-                //     showConfirmButton: false,
-                //     customClass: {
-                //         popup: "gaErrorPopup",
-                //     },
-                //     cancelButtonClass: "btn-close",
-                //     cancelButtonText: "Got it",
-                // })
             });
         }, (err) => {
             this.setState({ isBusy: false, errors: (err.response).data });
@@ -299,7 +288,7 @@ export default class CreatePayment extends Component {
     render() {
         if (!this.state.pricePlan) return <h5>Loading...</h5>;
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
-
+        const extra_alerts = this.state.alerts;
         const validation = this.state.validation;
         let totalPrice = 0.00, discountPrice = 0.00, userRegistrationOfferDiscountAmount = 0.00, annualDiscountAmount = 0.00, taxAmount = 0.00, actualPrice = 0.00;
 
@@ -345,6 +334,10 @@ export default class CreatePayment extends Component {
         return (
             <>
                 <div id="checkoutPage" className="checkoutPage pageWrapper">
+                    
+                    {/* {extra_alerts.map((extra_alert) => (
+                       <DowngradedPopup show={true} text={extra_alert} />
+                    ))} */}
                     <Container>
                         <LoaderAnimation show={this.state.isLoading} />
                         <div className="pageHeader checkoutPageHead">
