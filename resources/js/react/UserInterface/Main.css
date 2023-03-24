@@ -3065,12 +3065,10 @@ body {
 }
 
 .plan ul li span {
-    font-size: 12px;
 }
-
 .planfoot h4 {
     color: #666;
-    font-size: 13px;
+    font-size: 16px;
     font-weight: 600;
     line-height: 20px;
     margin-bottom: 24px;
