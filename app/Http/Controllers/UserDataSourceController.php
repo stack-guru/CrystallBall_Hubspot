@@ -173,9 +173,6 @@ class UserDataSourceController extends Controller
             $user_data_source->save();
         }
 
-        $user_data_source->ga_property_id = $request->gaPropertyId;
-        $user_data_source->save();
-
         // loop through data for each keyword
         foreach ($request->keywords as $keyword_loop) {
             // save keyword

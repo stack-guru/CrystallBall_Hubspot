@@ -229,7 +229,7 @@ export default class UserStartupConfigurationModal extends Component {
                         <ModalBody className='p-6 contentArea helloContent flex-grow-1'>
                             <h1>Hello {this.state.user.name} 👋</h1>
                             <strong>Let's get you started.</strong>
-                            <p>Our AI analysis of your website suggests steps to enhance your experience.</p>
+                            <p>Our AI analysis of your website suggests steps <br/> to enhance your experience.</p>
                             <div className='d-flex justify-content-center'>
                                 <Button className='btn-theme' onClick={() => {
                                     this.recordStepResponse('START', true);
@@ -431,7 +431,7 @@ export default class UserStartupConfigurationModal extends Component {
                                 </span>
 
                         </div>
-                        <p>Automated annotations ensure that critical events are captured and logged.</p>
+                        <p>Automated annotations ensure that critical events<br/> are captured and logged.</p>
                         <div className='connectRecommendedApp d-flex justify-content-center align-items-center'>
                             <AppsMarket
                                 userStartupConfig={true}
@@ -472,7 +472,7 @@ export default class UserStartupConfigurationModal extends Component {
                                     </svg>
                                 </span>
                         </div>
-                        <p>Add co-workers or customers for easier sharing and collaboration</p>
+                        <p>Add co-workers or customers for easier<br/> sharing and collaboration</p>
                         <div className='inviteCoWorkers'>
                             <CreateUser
                                 skipInvite={() => {
@@ -507,9 +507,9 @@ export default class UserStartupConfigurationModal extends Component {
                         <p>It's time to see how it works; the best way to check around is:</p>
                         <ul className="mt-5">
                             <li>Create a manual annotation by clicking the <img className='inject-me' src='/images/plus-icon.svg' onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/images/plus-icon.svg"; }} width='16' height='16' alt='menu icon' /> button</li>
-                            <li>Try Bulk Upload <img className='inject-me' src='/csvUploadd.svg' onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/csvUploadd.svg"; }} width='16' height='16' alt='menu icon' /> to <a href="https://www.crystalball.pro/post/2023-csv-upload-feature-transfer-data-from-universal-analytics-to-google-analytics-4" target={"_blank"}>migrate annotations</a> from Universal to GA4</li>
-                            <li>Go to the Apps Market <img className='inject-me' src='/appMarket.svg' onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/appMarket.svg"; }} width='16' height='16' alt='menu icon' /> to automate annotations from tools you work with</li>
-                            <li>See how looks the annotations over GA4/Google Ads/Looker Studio</li>
+                            <li className="mt-3">Try Bulk Upload <img className='inject-me' src='/csvUploadd.svg' onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/csvUploadd.svg"; }} width='16' height='16' alt='menu icon' /> to <a href="https://www.crystalball.pro/post/2023-csv-upload-feature-transfer-data-from-universal-analytics-to-google-analytics-4" target={"_blank"}>migrate annotations</a> from Universal to GA4</li>
+                            <li className="mt-3">Go to the Apps Market <img className='inject-me' src='/appMarket.svg' onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/appMarket.svg"; }} width='16' height='16' alt='menu icon' /> to automate annotations from tools you work with</li>
+                            <li className="mt-3">See how looks the annotations over GA4/Google Ads/Looker Studio</li>
                         </ul>
                         <div className='popupBtnBox d-flex justify-content-center'>
                             <Button className='btn-theme' onClick={() => {
