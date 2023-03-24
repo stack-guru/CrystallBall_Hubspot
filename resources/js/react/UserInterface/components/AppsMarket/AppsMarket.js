@@ -395,8 +395,7 @@ class AppsMarket extends React.Component {
                 width: 218,
                 height: 26,
             },
-
-            ...(this.props.userStartupConfig ? [] : [{
+            {
                 id: "27",
                 background: null,
                 dsKey: "is_ds_holidays_enabled",
@@ -406,7 +405,7 @@ class AppsMarket extends React.Component {
                 brandLogo: "/holidays_full.svg",
                 width: 106,
                 height: 26,
-            }]),
+            },
             {
                 id: "28",
                 background: null,
