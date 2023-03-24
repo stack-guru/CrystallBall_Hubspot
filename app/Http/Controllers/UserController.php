@@ -361,7 +361,7 @@ class UserController extends Controller
             Mail::to(
                 [
                     'fernando@app2you.co.il',
-                    'eric@crystalballinsight.com',
+                    'eric@upstartideas.com',
                     'shechter@gmail.com',
                     'galchet@gmail.com',
                     'meglash@upstartideas.com',
