@@ -2273,7 +2273,6 @@ body {
     margin-bottom: 20px;
     border-left: 4px solid #ffc514;
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.16);
-    overflow-x: auto;
 }
 
 .annotionRowIcon {
@@ -5754,18 +5753,6 @@ div[data-tour-elem="controls"]
 
 .cursor-pointer {
     cursor: pointer;
-}
-
-.tracker-content > div {
-    width: 100%;
-}
-
-.tracker-content .ga-account-select-holder {
-    width: 100%;
-}
-
-.hide-icon .css-tlfecz-indicatorContainer {
-    display: none;
 }
 
 @media screen and (max-width: 1439px) {

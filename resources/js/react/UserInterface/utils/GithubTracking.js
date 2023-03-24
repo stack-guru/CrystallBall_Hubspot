@@ -3,7 +3,6 @@ import Select from 'react-select'
 import HttpClient from "./HttpClient";
 import SearchEngineSelect from "./SearchEngineSelect";
 import FacebookPagesSelect from "./FacebookPagesSelect";
-import GoogleAnalyticsPropertySelect from "../utils/GoogleAnalyticsPropertySelect";
 
 export default class GithubTracking extends React.Component {
     constructor(props) {
@@ -79,21 +78,6 @@ export default class GithubTracking extends React.Component {
 
         return (
             <div className="apps-bodyContent">
-                <label for="ga_property_id">Select Property</label>
-                <div className="d-flex align-items-center w-100">
-                    <GoogleAnalyticsPropertySelect
-                        className="themeNewselect hide-icon"
-                        name="ga_property_id"
-                        id="ga_property_id"
-                        currentPricePlan={this.props.user.price_plan}
-                        value={this.props.gaPropertyId}
-                        onChangeCallback={(gAP) => {
-                            this.props.updateGAPropertyId(gAP.target.value || null)
-                        }}
-                        placeholder="Select GA Properties"
-                        isClearable={true}
-                    />
-                </div>
                 <div className='white-box'>
                     {/* <h5 className="textblue mb-4">Github Commits Tracking</h5>
                     <strong className='d-block'>Credits: {this.state.used_credits}/{this.state.total_credits}</strong> */}
