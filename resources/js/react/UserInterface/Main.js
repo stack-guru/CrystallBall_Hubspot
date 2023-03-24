@@ -151,7 +151,6 @@ class Main extends React.Component {
 
             <React.Fragment>
                 <div className="sidebar">
-                    {/* <UserStartupConfigurationModal isOpen={this.state.showStartupConfiguration} toggleShowTour={this.toggleStartupConfiguration} /> */}
                     <AddNewPasswordModal show={this.state.showPasswordPopup} user={this.state.user}/>
                     <AddWebsiteModal reloadUser={this.loadUser}
                                      show={!this.state.showPasswordPopup && !this.state.user.website && isFreeEmail(this.state.user.email)}
@@ -159,16 +158,18 @@ class Main extends React.Component {
 
                     {/* <InterfaceTour isOpen={this.state.showInterfaceTour} toggleShowTour={this.toggleInterfaceTour} /> */}
 
-                    {/*<UserStartupConfigurationModal
+                    <UserStartupConfigurationModal
                         upgradePopup={(popupType) => this.setState({
                             showUpgradePopup: true,
                             upgradePopupType: popupType
                         })}
-                        user={this.state.user} reloadUser={this.loadUser}
+                        reloadUser={this.loadUser}
                         showDataSourceTour={this.state.showDataSourceTour}
                         toggleDataSourceTour={this.toggleDataSourceTour}
                         closeModal={() => this.setState({showStartupConfiguration: false})}
-                        isOpen={this.state.showStartupConfiguration} user={this.state.user}/>*/}
+                        isOpen={!this.state.showPasswordPopup && this.state.user.website && this.state.showStartupConfiguration}
+                        user={this.state.user}
+                    />
 
                     <Sidebar openAnnotationPopup={(mka) => {
                         this.setState({mKeyAnnotation: mka});
@@ -587,7 +588,7 @@ class Main extends React.Component {
                 this.setState({
                     user: response.data.user,
                     // These states were in use when user startup configuration wizard was enabled
-                    showStartupConfiguration: response.data.user.show_configuration_message,
+                    showStartupConfiguration: response.data.user.show_config_steps,
                     showPasswordPopup: response.data.user.show_password_message,
                     // showInterfaceTour: keepInterfaceTour ? true : (response.data.user.startup_configuration_showed_at !== null && response.data.user.last_login_at == null),
                     // showDataSourceTour: keepDataSourceTour ? true : (response.data.user.startup_configuration_showed_at !== null && response.data.user.last_login_at !== null && response.data.user.data_source_tour_showed_at == null),
