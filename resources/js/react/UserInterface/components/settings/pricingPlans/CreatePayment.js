@@ -72,10 +72,15 @@ export default class CreatePayment extends Component {
             'price_plan_id': urlSearchParams.get('price_plan_id'),
         })
         .then(response => {
-            this.setState({ isBusy: false, errors: undefined ,alerts: response.data.alertText});     
-            response.data.alertText.forEach(text => {
-                swal.fire('', text, '');
-            });
+            this.setState({ isBusy: false, errors: undefined }, async () => {
+                let arr = response.data.alertText;
+                for (let i = 0; i < arr.length; i++) {
+                    let r = await swal.fire({
+                        text: arr[i],
+                        confirmButtonText : 'Got It'
+                    });
+                }
+            });  
         }, (err) => {
             this.setState({ isBusy: false, errors: (err.response).data });
         }).catch(err => {

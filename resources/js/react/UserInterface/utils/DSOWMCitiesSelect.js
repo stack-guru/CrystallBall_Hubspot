@@ -2,7 +2,6 @@ import React from "react";
 import HttpClient from "../utils/HttpClient";
 import ErrorAlert from "../utils/ErrorAlert";
 import Select from "react-select";
-import GoogleAnalyticsPropertySelect from "../utils/GoogleAnalyticsPropertySelect";
 
 export default class DSOWMCitiesSelect extends React.Component {
     constructor(props) {
@@ -215,21 +214,6 @@ export default class DSOWMCitiesSelect extends React.Component {
                                         );
                                     })}
                             </select> */}
-                        </div>
-                        <div className="input-group search-input-box mb-3 d-flex justify-content-between">
-                            <div className="betweentext align-self-center">for</div>
-                            <GoogleAnalyticsPropertySelect
-                                className="themeNewselect hide-icon"
-                                name="ga_property_id"
-                                id="ga_property_id"
-                                currentPricePlan={this.props.user.price_plan}
-                                value={this.props.gaPropertyId}
-                                onChangeCallback={(gAP) => {
-                                    this.props.updateGAPropertyId(gAP.target.value || null)
-                                }}
-                                placeholder="Select GA Properties"
-                                isClearable={true}
-                            />
                         </div>
                         <div className="input-group search-input-box mb-3">
                             <input

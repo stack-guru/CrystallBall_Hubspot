@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import Toast from "../../utils/Toast";
 import HttpClient from "../HttpClient";
 import "./ApplePodcastConfig.css";
-import GoogleAnalyticsPropertySelect from "../GoogleAnalyticsPropertySelect";
 
 import {
     Button,
@@ -23,7 +22,6 @@ import Slider from "react-slick";
 const ApplePodcastConfig = (props) => {
     const [searchResult, setSearchResult] = useState([]);
     const [noResult, setNoResult] = useState("");
-    const [gaPropertyId, setGaPropertyId] = useState("");
     const [inputVale, setInputVale] = useState("");
     const [activeDeletePopover, setActiveDeletePopover] = useState("");
 
@@ -90,8 +88,6 @@ const ApplePodcastConfig = (props) => {
     };
 
     const addAnnotation = async (formData) => {
-
-        formData.gaPropertyId = gaPropertyId;
         if (props.limitReached) {
             props.upgradePopup('podcast-trackers')
         } else {
@@ -164,29 +160,12 @@ const ApplePodcastConfig = (props) => {
             <div className="white-box">
                 <h4 className='textblue'>Add new podcast</h4>
 
-                <div className="d-flex align-items-center mb-3">
-                    <div className="input-group">
-                        <input type="text" className="form-control search-input" placeholder="Search or Enter the Podcast URL" value={inputVale} id="applePodcastURL" name="applePodcastURL" onChange={(e) => setInputVale(e.target.value.toLowerCase())} onKeyUp={(e) => { if (e.keyCode === 13) { e.persist(); getMetaData(e); } }} />
-                        <div className="input-group-append">
-                            <i className="ti-plus"></i>
-                        </div>
+
+                <div className="input-group mb-3">
+                    <input type="text" className="form-control search-input" placeholder="Search or Enter the Podcast URL" value={inputVale} id="applePodcastURL" name="applePodcastURL" onChange={(e) => setInputVale(e.target.value.toLowerCase())} onKeyUp={(e) => { if (e.keyCode === 13) { e.persist(); getMetaData(e); } }} />
+                    <div className="input-group-append">
+                        <i className="ti-plus"></i>
                     </div>
-
-                    <span className="betweentext">for</span>
-                    <GoogleAnalyticsPropertySelect
-                        className="themeNewselect hide-icon"
-                        name="ga_property_id"
-                        id="ga_property_id"
-                        currentPricePlan={props.user.price_plan}
-                        value={props.gaPropertyId}
-                        onChangeCallback={(gAP) => {
-                            setGaPropertyId(gAP.target.value || null)
-                        }}
-                        placeholder="Select GA Properties"
-                        isClearable={true}
-                        onDeleteCallback={props.onUncheckCallback}
-                    />
-
                 </div>
 
                 {noResult && <p className='pt-3 mb-0'>{noResult}</p>}
