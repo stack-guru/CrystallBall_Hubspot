@@ -139,7 +139,7 @@ export default class CreateUser extends Component {
                                                           id="google_analytics_account_id"
                                                           value={this.state.user.google_analytics_account_id}
                                                           onChangeCallback={this.changeHandler}
-                                                          placeholder="Google account"
+                                                          placeholder="Select Properties"
                                                           multiple></GoogleAnalyticsAccountSelect>
                         </div>
 
