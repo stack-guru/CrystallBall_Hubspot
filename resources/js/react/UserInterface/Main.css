@@ -2291,6 +2291,7 @@ body {
 
 .annotionRow .description {
     width: 42%;
+    min-width: 200px;
     color: #333;
     font-size: 16px;
     padding: 0 24px;
