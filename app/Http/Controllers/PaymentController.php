@@ -12,6 +12,7 @@ use App\Models\Admin;
 use App\Models\Coupon;
 use App\Models\GoogleAnalyticsProperty;
 use App\Models\PaymentDetail;
+use App\Models\PlanNotification;
 use App\Models\PricePlan;
 use App\Models\WebMonitor;
 use App\Models\PricePlanSubscription;
@@ -256,10 +257,18 @@ class PaymentController extends Controller
         // A notification to system administrator of the purchase
         $downgrade_check = $this->checkExtraApps($request);
         $admin = Admin::first();
+        $notification = new PlanNotification();
+        $notification->user_id = $user->id;
         if($downgrade_check && count($downgrade_check['showAlerts']) > 0)
         {
+            $notification->type = 'Package Downgraded';
+            $notification->text = $user->name.' package downgraded to '.$pricePlan->name;
+            $notification->save();
             Mail::to($admin)->cc('ron@crystalballinsight.com')->send(new AdminPlanDowngradedMail($admin, $user));    
         }else{
+            $notification->type = 'Package Upgraded';
+            $notification->text = $user->name.' package upgraded to '.$pricePlan->name;
+            $notification->save();
             Mail::to($admin)->cc('ron@crystalballinsight.com')->send(new AdminPlanUpgradedMail($admin, $user));
         } 
         if ($pricePlan->price) dispatch(new MarkSalesInFirstPromoter($user, $pricePlan, $price, $transactionId));

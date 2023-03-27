@@ -98,6 +98,9 @@
                             <a class="nav-link" href="{{ route('admin.auto-payment-log.index') }}">Payment Log</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="{{ route('admin.plan-notifications.index') }}">Plan Notification</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="{{ route('admin.reports.user-active-report.show') }}">Active User Report</a>
                         </li>
                         @endguest
