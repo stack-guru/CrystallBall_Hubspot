@@ -432,7 +432,7 @@ class IndexAnnotations extends React.Component {
                                     <img className='inject-me' src='/appMarket.svg' onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/appMarket.svg"; }} width='16' height='16' alt='menu icon' />
                                 </a>
                                 {this.props.user.user_level == "admin" || this.props.user.user_level == "team" ? (
-                                    <a data-toggle="tooltip" data-placement="top" title="CSV Upload" onClick={() => this.props.openAnnotationPopup('upload')} href="javascript:void(0);">
+                                    <a className="d-none d-sm-block" data-toggle="tooltip" data-placement="top" title="CSV Upload" onClick={() => this.props.openAnnotationPopup('upload')} href="javascript:void(0);">
                                         <img className='inject-me' src='/csvUploadd.svg' onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/csvUploadd.svg"; }} width='16' height='16' alt='menu icon' />
                                     </a>)
                                     :

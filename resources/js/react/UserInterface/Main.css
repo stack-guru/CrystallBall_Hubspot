@@ -5825,10 +5825,11 @@ div[data-tour-elem="controls"]
         flex-flow: wrap;
     }
     .pageFilters .d-flex {
-        flex-flow: wrap-reverse;
         width: 100%;
     }
-
+    .pageFilters .d-flex:nth-child(2) {
+        flex-flow: wrap-reverse;
+    }
     .pageFilters .filter-sort, .pageFilters .filter-search {
         width: 100%;
         margin-right: 0 !important;
