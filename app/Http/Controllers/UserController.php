@@ -11,6 +11,7 @@ use App\Models\PricePlanSubscription;
 use App\Models\User;
 use App\Models\UserActiveDevice;
 use App\Models\UserGaAccount;
+use App\Models\Annotation;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Auth;
@@ -263,6 +264,9 @@ class UserController extends Controller
     {
         $this->authorize('delete', $user);
 
+        if($user->user_id) {
+            Annotation::where('user_id', $user->id)->update(['user_id' => $user->user_id]);
+        }
         $user->delete();
 
         return ['success' => true];
