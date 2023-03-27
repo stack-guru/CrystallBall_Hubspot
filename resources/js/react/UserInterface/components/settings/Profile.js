@@ -27,7 +27,8 @@ export default class Profile extends React.Component {
             errors: '',
             validation: '',
             pricePlanSubscriptions: [],
-            showPaymentPopup: false
+            showPaymentPopup: false,
+            website: '',
 
         }
         this.changeHandler = this.changeHandler.bind(this);
@@ -43,8 +44,8 @@ export default class Profile extends React.Component {
         document.title = 'Profile';
 
         if (this.props.user) {
-            const {name, phone, email, timezone, profile_image} = this.props.user
-            this.setState({name, phone, email, timezone, profile_image});
+            const {name, phone, email, timezone, profile_image, website} = this.props.user;
+            this.setState({name, phone, email, timezone, profile_image, website});
         }
 
         var searchParams = new URLSearchParams(window.location.search);
@@ -180,8 +181,8 @@ export default class Profile extends React.Component {
         if (!this.state.isBusy) {
             this.setState({isBusy: true});
 
-            const {name, email, phone, timezone} = this.state;
-            HttpClient.put('/settings/update-user', {name, email, phone, timezone}).then(resp => {
+            const {name, email, phone, timezone, website} = this.state;
+            HttpClient.put('/settings/update-user', {name, email, phone, timezone, website}).then(resp => {
                 Toast.fire({
                     icon: 'success',
                     title: "User updated successfully.",
@@ -324,8 +325,10 @@ export default class Profile extends React.Component {
                                 </div>
                                 <div className="themeNewInputStyle position-relative inputWithIcon mb-3">
                                     <i className='fa'><img src='/icon-chain-gray.svg'/></i>
-                                    <Input type='url' className="form-control" name=''
-                                           placeholder='https://your-company.com' value=''/>
+                                    <Input type='url' className="form-control" name='website'
+                                           placeholder='https://your-company.com' onChange={(e) => {
+                                        this.setState({[e.target.name]: e.target.value});
+                                    }} value={this.state.website}/>
                                 </div>
                                 <div className="themeNewInputStyle mb-3 position-relative">
                                     <a className='btn-update' onClick={this.handlePhoneSubmit}
@@ -507,13 +510,17 @@ export default class Profile extends React.Component {
                                                     Alerts: <span>{this.props.user.price_plan.google_alert_keyword_count == 0 ? 'Unlimited' : (this.props.user.price_plan.google_alert_keyword_count > 0 ? this.props.user.price_plan.google_alert_keyword_count : 0)} Credits</span>
                                                 </li>
                                                 <li><i
-                                                    className='pr-2'><img src='/icon-listTick.svg'/></i>Retail Marketing Dates <span></span></li>
+                                                    className='pr-2'><img src='/icon-listTick.svg'/></i>Retail Marketing
+                                                    Dates <span></span></li>
                                                 <li><i
-                                                    className='pr-2'><img src='/icon-listTick.svg'/></i>Google Updates <span></span></li>
+                                                    className='pr-2'><img src='/icon-listTick.svg'/></i>Google
+                                                    Updates <span></span></li>
                                                 <li><i
-                                                    className='pr-2'><img src='/icon-listTick.svg'/></i>WordPress Updates <span></span></li>
+                                                    className='pr-2'><img src='/icon-listTick.svg'/></i>WordPress
+                                                    Updates <span></span></li>
                                                 <li><i
-                                                    className='pr-2'><img src='/icon-listTick.svg'/></i>Holidays <span></span></li>
+                                                    className='pr-2'><img
+                                                    src='/icon-listTick.svg'/></i>Holidays <span></span></li>
                                             </ul>
                                         </div>
                                     </div>
