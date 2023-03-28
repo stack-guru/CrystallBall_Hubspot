@@ -157,10 +157,13 @@
                         </div>
 
                         <div class="form-group">
+                            <label>Hidden? <sub>( Don't show on price plans page )</sub></label>
+                            <input type="checkbox" name="is_hidden" id="isHidden" class="form-control" />
+                        </div>
+                        <div class="form-group">
                             <label>Available? <sub>( Plan can be purchased, otherwise coming soon )</sub></label>
                             <input type="checkbox" name="is_available" id="isAvailable" class="form-control" />
                         </div>
-
                         <div class="form-group">
                             <label>Enabled? <sub>( Show on pricing page, otherwise not display )</sub></label>
                             <input type="checkbox" name="is_enabled" id="isEnabled" class="form-control" />
