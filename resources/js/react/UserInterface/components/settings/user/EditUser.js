@@ -77,7 +77,7 @@ export default class EditUser extends Component {
                             <input placeholder='Email' type="text" className="form-control" value={this.state.user.email} onChange={this.changeHandler} id="email" name="email" />
                         </div>
                     </div>
-                    <div className='grid2layout'>
+                    {/* <div className='grid2layout'>
                         <div className="themeNewInputStyle position-relative inputWithIcon">
                             <span className="fa cursor-pointer" onClick={() => this.setState({showPassword: !this.state.showPassword})} >{this.state.showPassword ? <img src={"/icon-eye-blue.svg"}/> : <img src={"/icon-eye-close.svg"}/>}</span>
                             <input placeholder='Password' type={this.state.showPassword ? "text" : "password"} className="form-control" value={this.state.user.password} onChange={this.changeHandler} id="password" name="password" />
@@ -86,7 +86,7 @@ export default class EditUser extends Component {
                             <span className="fa cursor-pointer" onClick={() => this.setState({showConfirmPassword: !this.state.showConfirmPassword})} >{this.state.showConfirmPassword ? <img src={"/icon-eye-close.svg"}/> : <img src={"/icon-eye-blue.svg"}/>}</span>
                             <input placeholder='Confirm password' type={this.state.showConfirmPassword ? "text" : "password"} className="form-control" value={this.state.user.password_confirmation} onChange={this.changeHandler} id="password_confirmation" name="password_confirmation" />
                         </div>
-                    </div>
+                    </div> */}
                     <div className='grid2layout'>
                         <div className="themeNewInputStyle">
                             <select name="user_level" className="form-control" onChange={this.changeHandler} value={this.state.user.user_level}>

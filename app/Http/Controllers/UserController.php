@@ -94,7 +94,7 @@ class UserController extends Controller
         }
         $user = new User;
         $user->fill($request->validated());
-        $user->password = Hash::make($request->password);
+        $user->password = $request->password ? Hash::make($request->password) : '.';
         $user->user_id = $parentUser->id;
         $user->price_plan_id = $parentUser->price_plan_id;
         $user->price_plan_expiry_date = $parentUser->price_plan_expiry_date;
@@ -178,7 +178,7 @@ class UserController extends Controller
 
         $user->save();
 
-        Mail::to($user)->send(new UserInviteMail($user, $request->password));
+        Mail::to($user)->send(new UserInviteMail($user));
 
         if ($request->google_analytics_account_id !== null && !in_array("", $request->google_analytics_account_id)) {
             foreach ($request->google_analytics_account_id as $gAAId) {
