@@ -153,7 +153,7 @@ class Main extends React.Component {
                 <div className="sidebar">
                     <AddNewPasswordModal show={this.state.showPasswordPopup} user={this.state.user}/>
                     <AddWebsiteModal reloadUser={this.loadUser}
-                                     show={!this.state.showPasswordPopup && !this.state.user.website && isFreeEmail(this.state.user.email)}
+                                     show={!this.state.showPasswordPopup && !this.state.user.website && (isFreeEmail(this.state.user.email) || this.state.user.is_login_with_google)}
                                      user={this.state.user}/>
 
                     {/* <InterfaceTour isOpen={this.state.showInterfaceTour} toggleShowTour={this.toggleInterfaceTour} /> */}
@@ -167,7 +167,7 @@ class Main extends React.Component {
                         showDataSourceTour={this.state.showDataSourceTour}
                         toggleDataSourceTour={this.toggleDataSourceTour}
                         closeModal={() => this.setState({showStartupConfiguration: false})}
-                        isOpen={!this.state.showPasswordPopup && this.state.user.website && this.state.showStartupConfiguration}
+                        isOpen={!this.state.showPasswordPopup && !(!this.state.user.website && (isFreeEmail(this.state.user.email) || this.state.user.is_login_with_google)) && this.state.showStartupConfiguration}
                         user={this.state.user}
                     />
 
