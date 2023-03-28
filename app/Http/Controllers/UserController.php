@@ -265,7 +265,7 @@ class UserController extends Controller
         $this->authorize('delete', $user);
 
         if($user->user_id) {
-            Annotation::where('user_id', $user->id)->update(['user_id' => $user->user_id]);
+            Annotation::where('user_id', $user->id)->update(['user_id' => $user->user_id, 'added_by_name' => $user->name]);
         }
         $user->delete();
 

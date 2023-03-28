@@ -133,7 +133,7 @@ class AnnotationQueryHelper
     public static function userAnnotationsQuery(User $user, array $userIdsArray, $showDisabled = false, string $googleAnalyticsPropertyId = null, string $userId = '*', string $showWebMonitoring = 'false', string $showManualAnnotations = 'false', string  $showCSVAnnotations = 'false', string $showAPIAnnotations = 'false')
     {
         $annotationsQuery = "";
-        $annotationsQuery .= "SELECT DISTINCT `annotations`.`is_enabled`, DATE(`show_at`) AS show_at, `annotations`.`id`, `category`, `event_name`, `url`, CONCAT('annotations', '~~~~', `annotations`.`id`,  '~~~~', `users`.`name`, '~~~~', `annotations`.`added_by`) AS `added_by`, `description`, `users`.`name` AS `user_name`, `annotations`.`created_at` FROM `annotations`";
+        $annotationsQuery .= "SELECT DISTINCT `annotations`.`is_enabled`, DATE(`show_at`) AS show_at, `annotations`.`id`, `category`, `event_name`, `url`, CONCAT('annotations', '~~~~', `annotations`.`id`,  '~~~~', CASE WHEN IFNULL(`annotations`.`added_by_name`, '') > '' THEN `annotations`.`added_by_name` ELSE `users`.`name` END, '~~~~', `annotations`.`added_by`) AS `added_by`, `description`, `users`.`name` AS `user_name`, `annotations`.`created_at` FROM `annotations`";
         $annotationsQuery .= " LEFT JOIN `users` ON `annotations`.`user_id` = `users`.`id`";
         if ($googleAnalyticsPropertyId && $googleAnalyticsPropertyId !== '*') {
             $annotationsQuery .= " LEFT JOIN `annotation_ga_properties` ON `annotation_ga_properties`.`annotation_id` = `annotations`.`id`";
