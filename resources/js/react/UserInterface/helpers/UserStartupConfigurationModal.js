@@ -46,6 +46,14 @@ export default class UserStartupConfigurationModal extends Component {
 
     componentDidMount() {
         setInterval(this.checkExtensionInstalled, 5000);
+        setTimeout(() => {
+            const userStartupConfig_property_connect = localStorage.getItem('userStartupConfig_property_connect');
+            if (userStartupConfig_property_connect === 'yes') {
+                this.setState({stepNumber: 4}, () => {
+                    localStorage.removeItem('userStartupConfig_property_connect');
+                })
+            }
+        }, 1000);
     }
 
     handleChange(e) {
@@ -506,9 +514,30 @@ export default class UserStartupConfigurationModal extends Component {
                         <h1>Good work, {this.state.user.name}!</h1>
                         <p>It's time to see how it works; the best way to check around is:</p>
                         <ul className="mt-5">
-                            <li>Create a manual annotation by clicking the <img className='inject-me' src='/images/plus-icon.svg' onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/images/plus-icon.svg"; }} width='16' height='16' alt='menu icon' /> button</li>
-                            <li className="mt-3">Try Bulk Upload <img className='inject-me' src='/csvUploadd.svg' onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/csvUploadd.svg"; }} width='16' height='16' alt='menu icon' /> to <a href="https://www.crystalball.pro/post/2023-csv-upload-feature-transfer-data-from-universal-analytics-to-google-analytics-4" target={"_blank"}>migrate annotations</a> from Universal to GA4</li>
-                            <li className="mt-3">Go to the Apps Market <img className='inject-me' src='/appMarket.svg' onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/appMarket.svg"; }} width='16' height='16' alt='menu icon' /> to automate annotations from tools you work with</li>
+                            <li>Create a manual annotation by clicking the <img className='inject-me'
+                                                                                src='/images/plus-icon.svg'
+                                                                                onError={({currentTarget}) => {
+                                                                                    currentTarget.onerror = null;
+                                                                                    currentTarget.src = "/images/plus-icon.svg";
+                                                                                }} width='16' height='16'
+                                                                                alt='menu icon'/> button
+                            </li>
+                            <li className="mt-3">Try Bulk Upload <img className='inject-me' src='/csvUploadd.svg'
+                                                                      onError={({currentTarget}) => {
+                                                                          currentTarget.onerror = null;
+                                                                          currentTarget.src = "/csvUploadd.svg";
+                                                                      }} width='16' height='16' alt='menu icon'/> to <a
+                                href="https://www.crystalball.pro/post/2023-csv-upload-feature-transfer-data-from-universal-analytics-to-google-analytics-4"
+                                target={"_blank"}>migrate annotations</a> from Universal to GA4
+                            </li>
+                            <li className="mt-3">Go to the Apps Market <img className='inject-me' src='/appMarket.svg'
+                                                                            onError={({currentTarget}) => {
+                                                                                currentTarget.onerror = null;
+                                                                                currentTarget.src = "/appMarket.svg";
+                                                                            }} width='16' height='16'
+                                                                            alt='menu icon'/> to automate annotations
+                                from tools you work with
+                            </li>
                             <li className="mt-3">See how looks the annotations over GA4/Google Ads/Looker Studio</li>
                         </ul>
                         <div className='popupBtnBox d-flex justify-content-center'>
@@ -524,7 +553,7 @@ export default class UserStartupConfigurationModal extends Component {
         return (
             <Modal isOpen={this.props.isOpen} className='accountSetUpPopup' toggle={this.props.toggleShowTour} size="lg"
                    centered={true} id="scw-modal" backdrop="static">
-                {this.state.isPermissionPopupOpened ? <GooglePermissionPopup/> : ''}
+                {this.state.isPermissionPopupOpened ? <GooglePermissionPopup userStartupConfig={true}/> : ''}
                 {modalBodyFooter}
 
             </Modal>)
