@@ -94,11 +94,11 @@ class UserController extends Controller
         }
         $user = new User;
         $user->fill($request->validated());
-        $user->password = Hash::make($request->password);
+        $user->password = $request->password ? Hash::make($request->password) : '.';
         $user->user_id = $parentUser->id;
         $user->price_plan_id = $parentUser->price_plan_id;
         $user->price_plan_expiry_date = $parentUser->price_plan_expiry_date;
-        $user->email_verified_at = now();
+        // $user->email_verified_at = now();
 
         if ($parentUser->is_ds_holidays_enabled) {
             $user->is_ds_holidays_enabled = 1;
@@ -178,7 +178,7 @@ class UserController extends Controller
 
         $user->save();
 
-        Mail::to($user)->send(new UserInviteMail($user, $request->password));
+        Mail::to($user)->send(new UserInviteMail($user));
 
         if ($request->google_analytics_account_id !== null && !in_array("", $request->google_analytics_account_id)) {
             foreach ($request->google_analytics_account_id as $gAAId) {
@@ -196,6 +196,17 @@ class UserController extends Controller
 
         event(new \App\Events\UserInvitedTeamMember($parentUser));
         return ['user' => $user];
+    }
+
+    public function reInviteUser (Request $request) {
+        $user = User::find($request->userId);
+        Mail::to($user)->send(new UserInviteMail($user));
+        $user->created_at = Carbon::now();
+        $user->save();
+
+        $user = Auth::user();
+        $users = $user->user_id ? $user->user->users : $user->users;
+        return ['users' => $users];
     }
 
     /**
