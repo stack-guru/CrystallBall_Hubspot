@@ -189,6 +189,7 @@ class UserStartupConfigurationController extends Controller
         }
 
         $user->show_config_steps = !($request->show_config_steps === 'false');
+        $user->startup_configuration_showed_at = Carbon::now();
         $user->save();
         return ['success' => true, $request->validated()];
     }
