@@ -47,6 +47,10 @@ export default class Accounts extends React.Component {
 
     componentDidMount() {
         document.title = 'Accounts';
+        const redirectTo = localStorage.getItem('frontend_redirect_to');
+        if (redirectTo && redirectTo === "/annotation") {
+            window.location.href = '/annotation';
+        }
 
         let autoRedirectDelay = 3000;
         let searchParams = new URLSearchParams(document.location.search);
@@ -59,7 +63,6 @@ export default class Accounts extends React.Component {
             }
         }
 
-        const redirectTo = localStorage.getItem('frontend_redirect_to');
         if (redirectTo && redirectTo !== "/accounts") {
             localStorage.removeItem('frontend_redirect_to');
             Toast.fire({
