@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Container, FormGroup, Input, Label } from "reactstrap";
-import { capitalizeFirstLetter } from "../../../helpers/CommonFunctions";
 import HttpClient from "../../../utils/HttpClient";
 import AppsModal from "../../AppsMarket/AppsModal";
 import CreateUser from "./CreateUser";
@@ -51,13 +50,8 @@ export default class IndexUsers extends Component {
 
     checkSearchText(user) {
         if (this.state.searchText.length) {
-            if (
-                user.email.toLowerCase().indexOf(this.state.searchText) > -1 ||
-                user.name.toLowerCase().indexOf(this.state.searchText) > -1
-            ) {
-                return true;
-            }
-            return false;
+            return user.email.toLowerCase().indexOf(this.state.searchText) > -1 ||
+                user.name.toLowerCase().indexOf(this.state.searchText) > -1;
         }
         return true;
     }
@@ -65,7 +59,7 @@ export default class IndexUsers extends Component {
     saveRole(user_level, user) {
         user.user_level = user_level
         HttpClient.put(`/settings/user/${user.id}`, user)
-            .then(response => {
+            .then(() => {
                 Toast.fire({
                     icon: 'success',
                     title: "User updated.",
@@ -81,7 +75,7 @@ export default class IndexUsers extends Component {
     handleDelete(id) {
         HttpClient.delete(`/settings/user/${id}`)
             .then(
-                (response) => {
+                () => {
                     this.setState({
                         users: this.state.users.filter((u) => u.id !== id),
                     });
@@ -98,6 +92,7 @@ export default class IndexUsers extends Component {
     }
 
     render() {
+        console.log("-> editUserId", this.state.editUserId);
         return (
             <>
                 <div className="usersPage">
@@ -167,8 +162,8 @@ export default class IndexUsers extends Component {
                                     <div className="singleCol text-right">Actions</div>
                                 </div>
                                 <div className="tableBody">
-                                    
-                                    {this.props.user.user ? 
+
+                                    {this.props.user.user ?
                                         (
                                             <>
                                                 <div key={this.props.user.user.id} className="singleRow justify-content-between align-items-center">
@@ -184,7 +179,7 @@ export default class IndexUsers extends Component {
                                                     </div>
                                                 </div>
                                             </>
-                                        ) : 
+                                        ) :
                                         <>
                                             <div key={this.props.user.id} className="singleRow justify-content-between align-items-center">
                                                 <div className="singleCol text-left"><span>{this.props.user.email}</span></div>
@@ -194,7 +189,7 @@ export default class IndexUsers extends Component {
                                                 <div className="singleCol text-left"><span>{this.props.user.team_name}</span></div>
                                                 <div className="singleCol text-right">
                                                     <span>
-                                                            <Link  to="/settings/profile"><img src={`/icon-edit.svg`} /></Link>
+                                                            <Link  to="/settings/profile"><img alt="icon-edit" src={`/icon-edit.svg`} /></Link>
                                                     </span>
                                                 </div>
                                             </div>
@@ -223,10 +218,10 @@ export default class IndexUsers extends Component {
                                                 <div className="singleCol text-left"><span>{user.team_name}</span></div>
                                                 <div className="singleCol text-right">
                                                     <span>{this.props.user.user_level == "admin" ? (
-                                                        <>
-                                                            <Link onClick={() => this.setState({ editUserId: user.id })}><img src={`/icon-edit.svg`} /></Link>
-                                                            <Link onClick={() => this.handleDelete(user.id)}><img src={`/icon-trash.svg`} /></Link>
-                                                        </>
+                                                        <div className="d-flex">
+                                                            <div className="cursor-pointer" onClick={() => this.setState({ editUserId: user.id })}><img alt={"icon-edit"} src={`/icon-edit.svg`} /></div>
+                                                            <Link onClick={() => this.handleDelete(user.id)}><img alt={"icon-trash"} src={`/icon-trash.svg`} /></Link>
+                                                        </div>
                                                     ) : null}
                                                     </span>
                                                 </div>
@@ -234,7 +229,7 @@ export default class IndexUsers extends Component {
                                         );
                                     })}
                                 </div>
-                            </div> 
+                            </div>
                              {/* : null} */}
 
                             {/* {!this.state.users.length ?

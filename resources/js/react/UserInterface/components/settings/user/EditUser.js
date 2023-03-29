@@ -24,7 +24,6 @@ export default class EditUser extends Component {
     }
 
     componentDidMount() {
-        document.title = 'Edit User Account';
 
         if (this.props.editUserId) {
             let userId = this.props.editUserId;
@@ -34,7 +33,6 @@ export default class EditUser extends Component {
                     if (uGAAIds[0] == null) uGAAIds = [""];
                     this.setState({ user: { ...response.data.user, google_analytics_account_id: uGAAIds } });
                     this.props.getUsers();
-                    this.props.toggle();
                 }, (err) => {
                     this.setState({ errors: (err.response).data });
                 }).catch(err => {
@@ -52,11 +50,12 @@ export default class EditUser extends Component {
         e.preventDefault();
 
         HttpClient.put(`/settings/user/${this.state.user.id}`, this.state.user)
-            .then(response => {
+            .then(() => {
                 Toast.fire({
                     icon: 'success',
                     title: "User updated.",
                 });
+                this.props.toggle();
             }, (err) => {
                 this.setState({ errors: (err.response).data });
             }).catch(err => {
