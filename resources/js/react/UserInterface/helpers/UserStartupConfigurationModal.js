@@ -439,7 +439,7 @@ export default class UserStartupConfigurationModal extends Component {
                                 </span>*/}
 
                         </div>
-                        <p>Automated annotations ensure that critical events<br/> are captured and logged.</p>
+                        <p>Automated annotations ensure that critical events <br />are captured and logged. You can edit and add <br /> more from the Apps Market easily.</p>
                         <div className='connectRecommendedApp d-flex justify-content-center align-items-center'>
                             <AppsMarket
                                 userStartupConfig={true}
