@@ -89,6 +89,14 @@ export default class GoogleAnalyticsAccountSelect extends React.Component {
         }
     }
 
+    componentDidUpdate(prevProps) {
+        if (this.props != prevProps) {
+            if (this.props.value) {
+                const filteredProperty =  this.state.aAccounts.filter(itm => this.props.value.indexOf(itm.id) > -1 );
+                this.setState({ selectedProperties: filteredProperty });
+            }
+        }
+    }
     render() {
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo} />
         let aAccounts = this.state.aAccounts;
@@ -108,7 +116,7 @@ export default class GoogleAnalyticsAccountSelect extends React.Component {
         return (
             <>
                 <div className="selectGoogleAccount themeNewInputStyle position-relative inputWithIcon">
-                    <i className="icon fa fa-ga"><img src='/icon-plus.svg' /></i>
+                    <i className="icon fa fa-ga"><img alt={"icon-plus"} src='/icon-plus.svg' /></i>
                     <Select
                         menuPosition={'fixed'}
                         name={this.props.name}
@@ -131,7 +139,7 @@ export default class GoogleAnalyticsAccountSelect extends React.Component {
                         Selected accounts: <span>(Click to remove)</span>
                     </h4> : null}
                     <div className="d-flex keywordTags mt-3">
-                        {this.state.selectedProperties.map((itm, index) => {
+                        {this.state.selectedProperties.map((itm) => {
                             return (<>
                                 <button
                                     onClick={() =>
