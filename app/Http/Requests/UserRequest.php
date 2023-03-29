@@ -31,7 +31,7 @@ class UserRequest extends FormRequest
                 return [
                     'name' => ['required', 'string', 'max:255'],
                     'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                    'password' => ['required', 'string', 'min:8', 'confirmed', new HasSymbol, new HasLettersNumbers],
+                    'password' => ['nullable', 'string', 'min:8', 'confirmed', new HasSymbol, new HasLettersNumbers],
                     'user_level' => ['required', 'in:admin,team,viewer'],
                     'department' => 'nullable|string|max:100',
                     'google_analytics_account_id' => 'nullable|array',
