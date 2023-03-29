@@ -45,6 +45,7 @@ class PricePlanController extends Controller
         $pricePlan->has_api = $request->has_api == 'on';
         $pricePlan->is_enabled = $request->is_enabled == 'on';
         $pricePlan->is_available = $request->is_available == 'on';
+        $pricePlan->is_hidden = $request->is_hidden == 'on';
         $pricePlan->has_integrations = $request->has_integrations == 'on';
         $pricePlan->has_data_sources = $request->has_data_sources == 'on';
         $pricePlan->has_notifications = $request->has_notifications == 'on';
@@ -93,6 +94,7 @@ class PricePlanController extends Controller
         $pricePlan->has_api = $request->has_api == 'on';
         $pricePlan->is_enabled = $request->is_enabled == 'on';
         $pricePlan->is_available = $request->is_available == 'on';
+        $pricePlan->is_hidden = $request->is_hidden == 'on';
         $pricePlan->has_integrations = $request->has_integrations == 'on';
         $pricePlan->has_data_sources = $request->has_data_sources == 'on';
         $pricePlan->has_notifications = $request->has_notifications == 'on';

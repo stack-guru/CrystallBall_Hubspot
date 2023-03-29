@@ -23,7 +23,7 @@ class PricePlanController extends Controller
 
     public function uiIndex()
     {
-        $pricePlans = PricePlan::where('is_enabled', true)->orderBy('sort_rank')->get();
+        $pricePlans = PricePlan::where('is_enabled', true)->where('is_hidden', false)->orderBy('sort_rank')->get();
 
         return ['price_plans' => $pricePlans];
     }
@@ -118,7 +118,7 @@ class PricePlanController extends Controller
                 ],
             ]);
         } catch (\Exception $e) {
-            Log::critical(__METHOD__.":".$e->getMessage(),$e->getTrace());
+            Log::critical(__METHOD__ . ":" . $e->getMessage(), $e->getTrace());
             return response()->json([
                 'status' => false,
                 'message' => 'Something Went Wrong'

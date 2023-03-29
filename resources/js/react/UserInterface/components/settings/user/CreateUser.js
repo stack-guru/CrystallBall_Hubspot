@@ -96,7 +96,7 @@ export default class CreateUser extends Component {
                         </div>
                     </div>
 
-                    <div className='grid2layout'>
+                    {/* <div className='grid2layout'>
                         <div className="themeNewInputStyle position-relative inputWithIcon">
                             <span className="fa cursor-pointer"
                                   onClick={() => this.setState({showPassword: !this.state.showPassword})}>{this.state.showPassword ?
@@ -115,7 +115,7 @@ export default class CreateUser extends Component {
                                    onChange={this.changeHandler} id="password_confirmation"
                                    name="password_confirmation"/>
                         </div>
-                    </div>
+                    </div> */}
 
                     <div className='grid2layout'>
                         <div className="themeNewInputStyle">

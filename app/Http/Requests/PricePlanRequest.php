@@ -40,6 +40,7 @@ class PricePlanRequest extends FormRequest
             'has_microsoft_power_bi' => "nullable",
             'is_enabled' => "nullable",
             'is_available' => "nullable",
+            'is_hidden' => "nullable",
             'ga_account_count' => 'nullable|numeric',
             'shopify_monitor_count' => 'nullable|numeric',
             'user_per_ga_account_count' => 'nullable|numeric',
