@@ -214,6 +214,7 @@
                     'csv'
                 ],
                 order: [],
+                responsive: true,
                 "paging": true
             });
         });

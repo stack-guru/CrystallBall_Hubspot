@@ -5129,6 +5129,9 @@ div[data-tour-elem="controls"]
     line-height: 1.25;
 }
 
+.align-left {
+    text-align: left;
+}
 .confirmConnectionTo {
     overflow: hidden;
     max-width: 1000px;

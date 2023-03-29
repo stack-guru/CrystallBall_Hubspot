@@ -11,6 +11,7 @@ use App\Mail\AdminPlanUpgradedMail;
 use App\Models\Admin;
 use App\Models\Coupon;
 use App\Models\GoogleAnalyticsProperty;
+use App\Models\NotificationSetting;
 use App\Models\PaymentDetail;
 use App\Models\PlanNotification;
 use App\Models\PricePlan;
@@ -321,6 +322,18 @@ class PaymentController extends Controller
             }
         }
         //Alert for Co-worker Invite End
+        //Alert for Notifcation Start
+        if(!$pricePlan->has_notifications)
+        {
+           $notifications =  NotificationSetting::where('user_id', $user->id)->where('is_enabled',1)->get()->pluck('label')->toArray();
+           if(count($notifications) > 0)
+           {
+                $text = "During the ".$user->pricePlan->name." ".count($notifications)." notifications are enabled. Note that if you continue with ".$user->pricePlan->name." ".implode(",",$notifications)." will be disabled.";
+                $showAlerts[] =  'notification-alert';
+                $alertText[] =  $text;
+           }
+        }
+        //Alert For Notification End
         return ['success' => true, 'showAlerts' => $showAlerts, 'alertText' => $alertText];
     }
 }
