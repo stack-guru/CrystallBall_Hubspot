@@ -177,7 +177,7 @@ export default class IndexDashboard extends Component {
                                         <div className="singleCol text-left">
                                             <span className='d-flex justify-content-between w-100'>
                                                 <span>{gAP.name}</span>
-                                                {gAP.google_search_console_site_id ? <i><img src={'/icon-link-green.svg'} /></i> : null}
+                                                {/*{gAP.google_search_console_site_id ? <i><img src={'/icon-link-green.svg'} /></i> : null}*/}
                                             </span>
                                         </div>
                                         {/* <div className="singleCol text-left d-flex flex-column">
