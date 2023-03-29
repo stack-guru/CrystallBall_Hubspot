@@ -5757,6 +5757,12 @@ div[data-tour-elem="controls"]
     cursor: pointer;
 }
 
+.selectGoogleAccount .fa-ga {
+    background: #FFFFFF !important;
+    height: 25px !important;
+    top: 6px !important;
+    right: 3px !important;
+}
 @media screen and (max-width: 1439px) {
     .is-collapsed .sidebar {
         width: 110px;

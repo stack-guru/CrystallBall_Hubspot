@@ -7,6 +7,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use App\Models\User;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Carbon;
 
 class UserInviteMail extends Mailable
 {
@@ -19,10 +21,9 @@ class UserInviteMail extends Mailable
      *
      * @return void
      */
-    public function __construct(User $user, $password)
+    public function __construct(User $user)
     {
         $this->user = $user;
-        $this->password = $password;
     }
 
     /**
@@ -32,9 +33,15 @@ class UserInviteMail extends Mailable
      */
     public function build()
     {
+
+        $data = [
+            'id'   => $this->user->getKey(),
+            'hash' => sha1($this->user->getEmailForVerification()),
+        ];
+        $link = URL::temporarySignedRoute('verification.verify', Carbon::now()->addMonth(1), $data);
         return $this->view('mails/user/userInvite')
             ->subject($this->user->user->name . " has invited you to join them in " . config('app.name'))
             ->with('user', $this->user)
-            ->with('password', $this->password);
+            ->with('verificationLink', $link);
     }
 }

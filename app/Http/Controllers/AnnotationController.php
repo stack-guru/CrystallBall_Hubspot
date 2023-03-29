@@ -78,7 +78,7 @@ class AnnotationController extends Controller
         // Check if google analytics property ids are provided in the request
         if ($request->google_analytics_property_id !== null && !in_array("", $request->google_analytics_property_id)) {
             // Fetch current user google analytics property ids in an array for validation
-            $googleAnalyticsPropertyIds = GoogleAnalyticsProperty::ofCurrentUser()->get()->pluck('id')->toArray();
+            $googleAnalyticsPropertyIds = GoogleAnalyticsProperty::whereIn('user_id', $user->getAllGroupUserIdsArray())->get()->pluck('id')->toArray();
 
             foreach ($request->google_analytics_property_id as $gAPId) {
                 // Add record only if the mentioned google analytics property id belongs to current user
@@ -183,7 +183,7 @@ class AnnotationController extends Controller
             // Check if google analytics property ids are provided in the request
             if ($request->google_analytics_property_id !== null && !in_array("", $request->google_analytics_property_id)) {
                 // Fetch current user google analytics property ids in an array for validation
-                $googleAnalyticsPropertyIds = GoogleAnalyticsProperty::ofCurrentUser()->get()->pluck('id')->toArray();
+                $googleAnalyticsPropertyIds = GoogleAnalyticsProperty::whereIn('user_id', $user->getAllGroupUserIdsArray())->get()->pluck('id')->toArray();
 
                 foreach ($newGAPIds as $gAPId) {
                     // Add record only if the mentioned google analytics property id belongs to current user
