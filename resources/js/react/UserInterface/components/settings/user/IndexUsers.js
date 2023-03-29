@@ -62,7 +62,7 @@ export default class IndexUsers extends Component {
             ).asDays();
 
         let status = 'Invited';
-        let btnStyle = 'text-warning';
+        let btnStyle = 'text-orange';
         if (!user.email_verified_at && diff <= -10) {
             status = "Re-Invite";
             btnStyle = 'text-danger';
