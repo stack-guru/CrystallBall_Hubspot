@@ -148,7 +148,7 @@ export default class IndexDashboard extends Component {
                     <div className="dataTable dataTableAnalyticsAccount d-flex flex-column">
                         <div className="dataTableHolder">
                             <div className="tableHead singleRow justify-content-between align-items-center">
-                                <div className="singleCol text-left">ID for API</div>
+                                <div className="singleCol text-left">ID for API-Zapier</div>
                                 <div className="singleCol text-left">Analytics Accounts</div>
                                 <div className="singleCol text-left">Properties &amp; Apps</div>
                                 {/* <div className="singleCol text-left">Search Console <i className='fa fa-exclamation-circle ml-2' data-toggle="tooltip" data-placement="top" title="Please remove and reconnect account"></i></div> */}
@@ -177,7 +177,7 @@ export default class IndexDashboard extends Component {
                                         <div className="singleCol text-left">
                                             <span className='d-flex justify-content-between w-100'>
                                                 <span>{gAP.name}</span>
-                                                {gAP.google_search_console_site_id ? <i><img src={'/icon-link-green.svg'} /></i> : <i><img src={'/icon-unlink-red.svg'} /></i>}
+                                                {/*{gAP.google_search_console_site_id ? <i><img src={'/icon-link-green.svg'} /></i> : null}*/}
                                             </span>
                                         </div>
                                         {/* <div className="singleCol text-left d-flex flex-column">
@@ -599,7 +599,7 @@ export default class IndexDashboard extends Component {
             .catch((err) => {
                 this.setState({ isBusy: false, errors: err });
             });
-            
+
         }
     }
 
