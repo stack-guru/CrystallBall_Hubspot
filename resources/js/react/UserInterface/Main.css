@@ -5764,6 +5764,10 @@ div[data-tour-elem="controls"]
 .text-decoration-underline {
     text-decoration: underline;
 }
+.text-orange {
+    color: #F7751E;
+}
+
 @media screen and (max-width: 1439px) {
     .is-collapsed .sidebar {
         width: 110px;
