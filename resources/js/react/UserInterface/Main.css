@@ -5761,6 +5761,9 @@ div[data-tour-elem="controls"]
     top: 6px !important;
     right: 3px !important;
 }
+.text-decoration-underline {
+    text-decoration: underline;
+}
 @media screen and (max-width: 1439px) {
     .is-collapsed .sidebar {
         width: 110px;
