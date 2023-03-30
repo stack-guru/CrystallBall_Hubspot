@@ -9,25 +9,27 @@
         @csrf
         <!-- <div class="text-center mb-4">
             {{-- <img class="mb-1" src="{{ config('app.logo') }}" alt="" width="72" height="72"> --}}
-            <img class="mb-1" src="{{ asset('images/company_logo_cbi_login.png') }}" alt="" width="72" height="72">
+        <img class="mb-1" src="{{ asset('images/company_logo_cbi_login.png') }}" alt="" width="72" height="72">
             <h1 class="h3 mb-3 font-weight-normal">{{ config('app.name') }}</h1>
             {{-- <p>Google Analytics Annotations Amplified</p> --}}
         </div> -->
         <h2>Login</h2>
 
         <div class="themeNewInputStyle mb-3">
-            <input type="email" id="inputEmail" class="form-control @error('email') is-invalid @enderror" placeholder="Email address" required="" autofocus="" name="email" value="{{ old('email') }}">
+            <input type="email" id="inputEmail" class="form-control @error('email') is-invalid @enderror"
+                   placeholder="Email address" required="" autofocus="" name="email" value="{{ old('email') }}">
             @error('email')
-                <span class="invalid-feedback" role="alert">
+            <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
             @enderror
         </div>
 
         <div class="themeNewInputStyle mb-3">
-            <input type="password" id="inputPassword" class="form-control @error('password') is-invalid @enderror" placeholder="Password" required="" name="password" value="{{ old('password') }}">
+            <input type="password" id="inputPassword" class="form-control @error('password') is-invalid @enderror"
+                   placeholder="Password" required="" name="password" value="{{ old('password') }}">
             @error('password')
-                <span class="invalid-feedback" role="alert">
+            <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
             @enderror
@@ -35,7 +37,8 @@
 
         <div class="py-2 mb-3 d-flex justify-content-between">
             <label for='1' class='d-flex align-items justify-content-end serviceCheckBox m-0'>
-                <input id='1' name="remember" type="checkbox" value="remember-me" {{ old('remember') ? 'checked' : '' }}>
+                <input id='1' name="remember" type="checkbox"
+                       value="remember-me" {{ old('remember') ? 'checked' : '' }}>
                 <span>Remember me</span>
             </label>
             <a href="{{ route('password.request') }}">Forgot password?</a>
@@ -64,4 +67,8 @@
         {{-- <a class="btn btn-lg btn-primary btn-block" href="{{ route('register') }}">Register</a> --}}
         <p>Don’t have an account? <a href="{{ route('register') }}?email=1">Sign up</a></p>
     </form>
+
+    <script>
+        localStorage.removeItem('frontend_redirect_to');
+    </script>
 @endsection
