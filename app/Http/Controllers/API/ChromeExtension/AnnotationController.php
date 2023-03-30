@@ -82,79 +82,7 @@ class AnnotationController extends Controller
             return ['annotations' => [[[]]]];
         }
 
-        $fAnnotations = [];
-
-        // If start date is not same as first annotation show date
-        // then add blank records to reach the starting point of annotation show date
-        $showDate = Carbon::parse($annotations[0]->show_at);
-        if ($showDate !== $startDate) {
-            $nextShowDate = $startDate;
-            $blankCount = $startDate->diffInDays($showDate);
-            for ($i = 0; $i < $blankCount; $i++) {
-                array_push($fAnnotations, [[]]);
-            }
-        }
-
-        $combineAnnotations = [];
-        // Iterating through all annotations and generate an array
-        for ($i = 0; $i < count($annotations); $i++) {
-            $showDate = Carbon::parse($annotations[$i]->show_at);
-
-            // If current annotation is not last annotation
-            if ($i != count($annotations) - 1) {
-                // If current and next annotation is of same date
-                if ($annotations[$i]->show_at == $annotations[$i + 1]->show_at) {
-                    // Add only 1 annotation to a date if user is not allowed to use chrome extension api
-                    if (!$user->pricePlan->has_chrome_extension && count($combineAnnotations)) {
-                    } else {
-                        array_push($combineAnnotations, $this->formatAnnotation($annotations[$i], $showDate, $user));
-                    }
-                    // keep adding annotations in combinedAnnotations array if next annotation
-                    // is of same date
-                    continue;
-                } else {
-                    // If current and next annotation is of different date
-
-                    // Add only 1 annotation to a date if user is not allowed to use chrome extension api
-                    if (!$user->pricePlan->has_chrome_extension && count($combineAnnotations)) {
-                    } else {
-                        array_push($combineAnnotations, $this->formatAnnotation($annotations[$i], $showDate, $user));
-                    }
-                }
-            } else {
-                // If current annotation is last annotation
-
-                // Add only 1 annotation to a date if user is not allowed to use chrome extension api
-                if (!$user->pricePlan->has_chrome_extension && count($combineAnnotations)) {
-                } else {
-                    array_push($combineAnnotations, $this->formatAnnotation($annotations[$i], $showDate, $user));
-                }
-            }
-            array_push($fAnnotations, [$combineAnnotations]);
-            $combineAnnotations = [];
-
-            // Check if last record or not
-            if (($i + 1) !== count($annotations)) {
-                $nextShowDate = Carbon::parse($annotations[$i + 1]->show_at);
-
-                // Fill with blank records according to the difference of days between two consecutive annotations
-                $blankCount = $showDate->diffInDays($nextShowDate) - 1;
-                for ($j = 0; $j < $blankCount; $j++) {
-                    array_push($fAnnotations, [[]]);
-                }
-            }
-        }
-
-        $showDate = Carbon::parse($annotations[count($annotations) - 1]->show_at);
-        // If annotations are not ending on the request end date then add blank records for
-        // each date till end date
-        if ($showDate !== $endDate) {
-            $nextShowDate = $endDate;
-            $blankCount = $showDate->diffInDays($nextShowDate);
-            for ($i = 0; $i < $blankCount; $i++) {
-                array_push($fAnnotations, [[]]);
-            }
-        }
+        $fAnnotations = $this->generateExtensionResponse($user, $annotations,  $startDate, $endDate);
 
         return [
             'annotations' => $fAnnotations,
@@ -327,6 +255,85 @@ class AnnotationController extends Controller
 
         if (isset($annotation->user)) unset($annotation->user);
         return ['annotation' => $annotation];
+    }
+
+    private function generateExtensionResponse($user, $annotations, $startDate, $endDate)
+    {
+        $fAnnotations = [];
+
+        // If start date is not same as first annotation show date
+        // then add blank records to reach the starting point of annotation show date
+        $showDate = Carbon::parse($annotations[0]->show_at);
+        if ($showDate !== $startDate) {
+            $nextShowDate = $startDate;
+            $blankCount = $startDate->diffInDays($showDate);
+            for ($i = 0; $i < $blankCount; $i++) {
+                array_push($fAnnotations, [[]]);
+            }
+        }
+
+        $combineAnnotations = [];
+        // Iterating through all annotations and generate an array
+        for ($i = 0; $i < count($annotations); $i++) {
+            $showDate = Carbon::parse($annotations[$i]->show_at);
+
+            // If current annotation is not last annotation
+            if ($i != count($annotations) - 1) {
+                // If current and next annotation is of same date
+                if ($annotations[$i]->show_at == $annotations[$i + 1]->show_at) {
+                    // Add only 1 annotation to a date if user is not allowed to use chrome extension api
+                    if (!$user->pricePlan->has_chrome_extension && count($combineAnnotations)) {
+                    } else {
+                        array_push($combineAnnotations, $this->formatAnnotation($annotations[$i], $showDate, $user));
+                    }
+                    // keep adding annotations in combinedAnnotations array if next annotation
+                    // is of same date
+                    continue;
+                } else {
+                    // If current and next annotation is of different date
+
+                    // Add only 1 annotation to a date if user is not allowed to use chrome extension api
+                    if (!$user->pricePlan->has_chrome_extension && count($combineAnnotations)) {
+                    } else {
+                        array_push($combineAnnotations, $this->formatAnnotation($annotations[$i], $showDate, $user));
+                    }
+                }
+            } else {
+                // If current annotation is last annotation
+
+                // Add only 1 annotation to a date if user is not allowed to use chrome extension api
+                if (!$user->pricePlan->has_chrome_extension && count($combineAnnotations)) {
+                } else {
+                    array_push($combineAnnotations, $this->formatAnnotation($annotations[$i], $showDate, $user));
+                }
+            }
+            array_push($fAnnotations, [$combineAnnotations]);
+            $combineAnnotations = [];
+
+            // Check if last record or not
+            if (($i + 1) !== count($annotations)) {
+                $nextShowDate = Carbon::parse($annotations[$i + 1]->show_at);
+
+                // Fill with blank records according to the difference of days between two consecutive annotations
+                $blankCount = $showDate->diffInDays($nextShowDate) - 1;
+                for ($j = 0; $j < $blankCount; $j++) {
+                    array_push($fAnnotations, [[]]);
+                }
+            }
+        }
+
+        $showDate = Carbon::parse($annotations[count($annotations) - 1]->show_at);
+        // If annotations are not ending on the request end date then add blank records for
+        // each date till end date
+        if ($showDate !== $endDate) {
+            $nextShowDate = $endDate;
+            $blankCount = $showDate->diffInDays($nextShowDate);
+            for ($i = 0; $i < $blankCount; $i++) {
+                array_push($fAnnotations, [[]]);
+            }
+        }
+
+        return $fAnnotations;
     }
 
     private function formatAnnotation($annotation, $publishDate, $user): array

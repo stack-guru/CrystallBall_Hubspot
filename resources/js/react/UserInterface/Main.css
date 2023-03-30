@@ -2273,7 +2273,6 @@ body {
     margin-bottom: 20px;
     border-left: 4px solid #ffc514;
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.16);
-    overflow-x: auto;
 }
 
 .annotionRowIcon {
@@ -3065,12 +3064,10 @@ body {
 }
 
 .plan ul li span {
-    font-size: 12px;
 }
-
 .planfoot h4 {
     color: #666;
-    font-size: 13px;
+    font-size: 16px;
     font-weight: 600;
     line-height: 20px;
     margin-bottom: 24px;
@@ -4376,7 +4373,7 @@ div[data-tour-elem="controls"]
 }
 
 .dataTableAnalyticsAccount .singleRow .singleCol:first-child {
-    width: 100px;
+    width: 140px;
 }
 
 .dataTableAnalyticsAccount .singleRow .singleCol:nth-child(2) {
@@ -5132,6 +5129,9 @@ div[data-tour-elem="controls"]
     line-height: 1.25;
 }
 
+.align-left {
+    text-align: left;
+}
 .confirmConnectionTo {
     overflow: hidden;
     max-width: 1000px;
@@ -5758,16 +5758,23 @@ div[data-tour-elem="controls"]
     cursor: pointer;
 }
 
-.tracker-content > div {
-    width: 100%;
+.selectGoogleAccount .fa-ga {
+    background: #FFFFFF !important;
+    height: 25px !important;
+    top: 6px !important;
+    right: 3px !important;
 }
-
-.tracker-content .ga-account-select-holder {
-    width: 100%;
+.text-decoration-underline {
+    text-decoration: underline;
 }
-
-.hide-icon .css-tlfecz-indicatorContainer {
-    display: none;
+.selectGoogleAccount .fa-ga{
+    bottom: 0;
+    top: 0 !important;
+    height: auto !important;
+    background-color: transparent !important;
+}
+.text-orange {
+    color: #F7751E;
 }
 
 @media screen and (max-width: 1439px) {

@@ -11,6 +11,7 @@ use App\Models\PricePlanSubscription;
 use App\Models\User;
 use App\Models\UserActiveDevice;
 use App\Models\UserGaAccount;
+use App\Models\Annotation;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Auth;
@@ -93,11 +94,11 @@ class UserController extends Controller
         }
         $user = new User;
         $user->fill($request->validated());
-        $user->password = Hash::make($request->password);
+        $user->password = $request->password ? Hash::make($request->password) : '.';
         $user->user_id = $parentUser->id;
         $user->price_plan_id = $parentUser->price_plan_id;
         $user->price_plan_expiry_date = $parentUser->price_plan_expiry_date;
-        $user->email_verified_at = now();
+        // $user->email_verified_at = now();
 
         if ($parentUser->is_ds_holidays_enabled) {
             $user->is_ds_holidays_enabled = 1;
@@ -177,7 +178,7 @@ class UserController extends Controller
 
         $user->save();
 
-        Mail::to($user)->send(new UserInviteMail($user, $request->password));
+        Mail::to($user)->send(new UserInviteMail($user));
 
         if ($request->google_analytics_account_id !== null && !in_array("", $request->google_analytics_account_id)) {
             foreach ($request->google_analytics_account_id as $gAAId) {
@@ -195,6 +196,17 @@ class UserController extends Controller
 
         event(new \App\Events\UserInvitedTeamMember($parentUser));
         return ['user' => $user];
+    }
+
+    public function reInviteUser (Request $request) {
+        $user = User::find($request->userId);
+        Mail::to($user)->send(new UserInviteMail($user));
+        $user->created_at = Carbon::now();
+        $user->save();
+
+        $user = Auth::user();
+        $users = $user->user_id ? $user->user->users : $user->users;
+        return ['users' => $users];
     }
 
     /**
@@ -263,6 +275,9 @@ class UserController extends Controller
     {
         $this->authorize('delete', $user);
 
+        if($user->user_id) {
+            Annotation::where('user_id', $user->id)->update(['user_id' => $user->user_id, 'added_by_name' => $user->name]);
+        }
         $user->delete();
 
         return ['success' => true];
@@ -361,11 +376,12 @@ class UserController extends Controller
             Mail::to(
                 [
                     'fernando@app2you.co.il',
-                    'eric@crystalballinsight.com',
+                    'eric@upstartideas.com',
                     'shechter@gmail.com',
                     'galchet@gmail.com',
                     'meglash@upstartideas.com',
                     'ron@crystalball.pro',
+                    'ron@crystalballinsight.com'
                 ]
             )->send(new DailyUserStatsMail($data));
 

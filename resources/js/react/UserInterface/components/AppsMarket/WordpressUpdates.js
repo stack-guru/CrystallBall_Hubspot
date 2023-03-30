@@ -3,7 +3,6 @@ import UserAnnotationColorPicker from "../../helpers/UserAnnotationColorPickerCo
 import DSGAUDatesSelect from "../../utils/DSGAUDatesSelect";
 import ModalHeader from "./common/ModalHeader";
 import DescrptionModalNormal from "./common/DescriptionModalNormal";
-import GoogleAnalyticsPropertySelect from "../../utils/GoogleAnalyticsPropertySelect";
 
 class WordpressUpdates extends React.Component {
     constructor(props) {
@@ -44,53 +43,34 @@ class WordpressUpdates extends React.Component {
 
                 <div className="apps-bodyContent">
                     <div className="white-box">
-                        <div className="d-flex align-items-center justify-content-between mb-3">
-
-                            <div className="checkBoxList">
-                                <label className='themeNewCheckbox d-flex align-items-center justify-content-start' for='last_year_only'>
-                                    <input type="checkbox" id='last_year_only' onChange={(e) => {
-                                        if (e.target.checked) {
-                                            this.props.userDataSourceAddHandler({
-                                                code: "wordpress_updates",
-                                                name: "WordpressUpdate",
-                                                country_name: null,
-                                                retail_marketing_id: null,
-                                                value: "last year",
-                                            });
-                                        } else {
-                                            this.props.userDataSourceDeleteHandler(
-                                                this.props.userDataSources
-                                                    .wordpress_updates[0].id,
-                                                "wordpress_updates"
-                                            );
-                                        }}}
-                                        checked={
+                        <div className="checkBoxList">
+                            <label className='themeNewCheckbox d-flex align-items-center justify-content-start' for='last_year_only'>
+                                <input type="checkbox" id='last_year_only' onChange={(e) => {
+                                    if (e.target.checked) {
+                                        this.props.userDataSourceAddHandler({
+                                            code: "wordpress_updates",
+                                            name: "WordpressUpdate",
+                                            country_name: null,
+                                            retail_marketing_id: null,
+                                            value: "last year",
+                                        });
+                                    } else {
+                                        this.props.userDataSourceDeleteHandler(
                                             this.props.userDataSources
-                                                .wordpress_updates &&
-                                            this.props.userDataSources.wordpress_updates
-                                                .length > 0
-                                        }
-                                        name="last_year_only"
-                                    />
-                                    <span>Show last year only</span>
-                                </label>
-                            </div>
-
-                            <div className="d-flex align-items-center hide-icon">
-                                <span className="betweentext">for</span>
-                                <GoogleAnalyticsPropertySelect
-                                    className="themeNewselect"
-                                    name="ga_property_id"
-                                    id="ga_property_id"
-                                    currentPricePlan={this.props.user.price_plan}
-                                    value={this.props.gaPropertyId}
-                                    onChangeCallback={(gAP) => {
-                                        this.props.updateGAPropertyId(gAP.target.value || null)
-                                    }}
-                                    placeholder="Select GA Properties"
-                                    isClearable={true}
+                                                .wordpress_updates[0].id,
+                                            "wordpress_updates"
+                                        );
+                                    }}}
+                                    checked={
+                                        this.props.userDataSources
+                                            .wordpress_updates &&
+                                        this.props.userDataSources.wordpress_updates
+                                            .length > 0
+                                    }
+                                    name="last_year_only"
                                 />
-                            </div>
+                                <span>Show last year only</span>
+                            </label>
                         </div>
                     </div>
                 </div>

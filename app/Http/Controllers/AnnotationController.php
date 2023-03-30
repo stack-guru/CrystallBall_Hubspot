@@ -72,20 +72,13 @@ class AnnotationController extends Controller
             abort(402, "Please upgrade your plan to add more annotations");
         }
         $userId = $user->id;
-
+        $is_annotation_create = false;
         DB::beginTransaction();
-        // $annotation = new Annotation;
-        // $annotation->fill($request->validated());
-        // $annotation->show_at = $request->show_at ? Carbon::parse($request->show_at) : Carbon::now();
-        // $annotation->user_id = $userId;
-        // $annotation->is_enabled = true;
-        // $annotation->added_by = 'manual';
-        // $annotation->save();
 
         // Check if google analytics property ids are provided in the request
         if ($request->google_analytics_property_id !== null && !in_array("", $request->google_analytics_property_id)) {
             // Fetch current user google analytics property ids in an array for validation
-            $googleAnalyticsPropertyIds = GoogleAnalyticsProperty::ofCurrentUser()->get()->pluck('id')->toArray();
+            $googleAnalyticsPropertyIds = GoogleAnalyticsProperty::whereIn('user_id', $user->getAllGroupUserIdsArray())->get()->pluck('id')->toArray();
 
             foreach ($request->google_analytics_property_id as $gAPId) {
                 // Add record only if the mentioned google analytics property id belongs to current user
@@ -109,6 +102,7 @@ class AnnotationController extends Controller
                     $annotation->is_enabled = true;
                     $annotation->added_by = 'manual';
                     $annotation->save();
+                    $is_annotation_create = true;
                     $aGAP = new AnnotationGaProperty;
                     $aGAP->annotation_id = $annotation->id;
                     $aGAP->google_analytics_property_id = $gAPId;
@@ -116,8 +110,9 @@ class AnnotationController extends Controller
                     $aGAP->save();
                 }
             }
-        } else {
-            
+        } 
+        if(!$is_annotation_create)
+        {
             $annotation = new Annotation;
             $annotation->fill($request->validated());
             $annotation->show_at = $request->show_at ? Carbon::parse($request->show_at) : Carbon::now();
@@ -125,6 +120,7 @@ class AnnotationController extends Controller
             $annotation->is_enabled = true;
             $annotation->added_by = 'manual';
             $annotation->save();
+            $is_annotation_create = true;
             $aGAP = new AnnotationGaProperty;
             $aGAP->annotation_id = $annotation->id;
             $aGAP->google_analytics_property_id = null;
@@ -132,7 +128,6 @@ class AnnotationController extends Controller
             $aGAP->save();
         }
         DB::commit();
-
         event(new \App\Events\AnnotationCreated($annotation));
         return ['annotation' => $annotation];
     }
@@ -188,7 +183,7 @@ class AnnotationController extends Controller
             // Check if google analytics property ids are provided in the request
             if ($request->google_analytics_property_id !== null && !in_array("", $request->google_analytics_property_id)) {
                 // Fetch current user google analytics property ids in an array for validation
-                $googleAnalyticsPropertyIds = GoogleAnalyticsProperty::ofCurrentUser()->get()->pluck('id')->toArray();
+                $googleAnalyticsPropertyIds = GoogleAnalyticsProperty::whereIn('user_id', $user->getAllGroupUserIdsArray())->get()->pluck('id')->toArray();
 
                 foreach ($newGAPIds as $gAPId) {
                     // Add record only if the mentioned google analytics property id belongs to current user
@@ -276,7 +271,7 @@ class AnnotationController extends Controller
         // LEFT JOIN to load all properties selected in annotations
         $annotationsQuery .= " LEFT JOIN annotation_ga_properties ON TempTable.id = annotation_ga_properties.annotation_id";
         // LEFT JOINs to load all property details which are loaded from above statement
-        $annotationsQuery .= " LEFT JOIN google_analytics_properties ON IF(annotation_ga_properties.google_analytics_property_id, annotation_ga_properties.google_analytics_property_id, table_ga_property_id) = google_analytics_properties.id";
+        $annotationsQuery .= " LEFT JOIN google_analytics_properties ON annotation_ga_properties.google_analytics_property_id = google_analytics_properties.id";
         // All where clauses should reside here
         $whereClauses = [];
         // Apply category filter if it is added in GET request query parameter

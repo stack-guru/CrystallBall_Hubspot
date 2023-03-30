@@ -15,10 +15,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Laravel\Passport\HasApiTokens;
 use App\Helpers\AnnotationQueryHelper;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory, Notifiable, HasApiTokens, MustVerifyPhone;
+    use HasFactory, Notifiable, HasApiTokens, MustVerifyPhone, SoftDeletes;
 
     public $pushNotificationType = 'users';
 
