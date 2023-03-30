@@ -98,7 +98,8 @@ class UserController extends Controller
         $user->user_id = $parentUser->id;
         $user->price_plan_id = $parentUser->price_plan_id;
         $user->price_plan_expiry_date = $parentUser->price_plan_expiry_date;
-        // $user->email_verified_at = now();
+        $user->show_config_steps = 0;
+        $user->startup_configuration_showed_at = Carbon::now();
 
         if ($parentUser->is_ds_holidays_enabled) {
             $user->is_ds_holidays_enabled = 1;
