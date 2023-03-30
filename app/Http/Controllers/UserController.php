@@ -12,7 +12,7 @@ use App\Models\User;
 use App\Models\UserActiveDevice;
 use App\Models\UserGaAccount;
 use App\Models\Annotation;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -267,6 +267,8 @@ class UserController extends Controller
         if($user->user_id) {
             Annotation::where('user_id', $user->id)->update(['user_id' => $user->user_id, 'added_by_name' => $user->name]);
         }
+        $user->email = Carbon::now()->format('Ymd') . '_' . $user->email;
+        $user->save();
         $user->delete();
 
         return ['success' => true];
