@@ -3157,7 +3157,9 @@ body {
     margin: 0;
 }
 
-.selectGoogleAccount .css-1hb7zxy-IndicatorsContainer, .modal-editAnnotation .css-1hb7zxy-IndicatorsContainer {
+.selectGoogleAccount .css-1hb7zxy-IndicatorsContainer, 
+.ga-account-select-holder .css-1hb7zxy-IndicatorsContainer, 
+.modal-editAnnotation .css-1hb7zxy-IndicatorsContainer {
     display: none;
 }
 
