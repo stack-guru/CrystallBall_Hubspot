@@ -67,6 +67,11 @@
                             <a class="nav-link" href="{{ route('spectator.price-plan-subscription.index') }}">Payment History</a>
                         </li>
                         @endif
+                        @if($permissions->contains('plan-notifications'))
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('spectator.plan-notifications.index') }}">Plan Notification</a>
+                        </li>
+                        @endif
 
                         @if($permissions->contains('auto-payment-log'))
                         <li class="nav-item">

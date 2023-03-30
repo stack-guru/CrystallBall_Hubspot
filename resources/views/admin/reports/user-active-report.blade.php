@@ -19,6 +19,7 @@
                                         <th scope="col">User Name</th>
                                         <th scope="col">Email</th>
                                         <th scope="col">Child / Parent User</th>
+                                        <th scope="col">User Website</th>
                                         <th scope="col">User Annotations</th>
                                         <th scope="col">Registration Date</th>
                                         <th scope="col">Plan</th>
@@ -46,7 +47,8 @@
                                 <tbody>
                                     @foreach ($users as $user)
                                         <tr>
-                                            <td>{{ $user->name }}</td>
+                                            <td>{{ $user->name }} 
+                                            </td>
                                             <td>
                                                 {{ $user->email }}
                                             </td>
@@ -55,6 +57,11 @@
                                                     <span class="badge badge-primary">{{ $user->user->email }}</span>
                                                 @else
                                                     {{ @$user->users_count }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if($user->website) 
+                                                <a href="{{$user->website}}" class="btn btn-sm btn-primary" style="color:white;">{{$user->website}}</a>
                                                 @endif
                                             </td>
                                             <td class="text-center">
@@ -207,6 +214,7 @@
                     'csv'
                 ],
                 order: [],
+                responsive: true,
                 "paging": true
             });
         });

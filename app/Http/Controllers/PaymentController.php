@@ -6,11 +6,14 @@ use App\Helpers\CheckUserUsageHelper;
 use App\Helpers\DowngradedUserHelper;
 use App\Helpers\UpgradedUserHelper;
 use App\Jobs\MarkSalesInFirstPromoter;
+use App\Mail\AdminPlanDowngradedMail;
 use App\Mail\AdminPlanUpgradedMail;
 use App\Models\Admin;
 use App\Models\Coupon;
 use App\Models\GoogleAnalyticsProperty;
+use App\Models\NotificationSetting;
 use App\Models\PaymentDetail;
+use App\Models\PlanNotification;
 use App\Models\PricePlan;
 use App\Models\WebMonitor;
 use App\Models\PricePlanSubscription;
@@ -253,8 +256,22 @@ class PaymentController extends Controller
 
         UpgradedUserHelper::UpgradingUser($user,$pricePlan);
         // A notification to system administrator of the purchase
+        $downgrade_check = $this->checkExtraApps($request);
         $admin = Admin::first();
-        Mail::to($admin)->send(new AdminPlanUpgradedMail($admin, $user));
+        $notification = new PlanNotification();
+        $notification->user_id = $user->id;
+        if($downgrade_check && count($downgrade_check['showAlerts']) > 0)
+        {
+            $notification->type = 'Package Downgraded';
+            $notification->text = $user->name.' package downgraded to '.$pricePlan->name;
+            $notification->save();
+            Mail::to($admin)->cc('ron@crystalballinsight.com')->send(new AdminPlanDowngradedMail($admin, $user));    
+        }else{
+            $notification->type = 'Package Upgraded';
+            $notification->text = $user->name.' package upgraded to '.$pricePlan->name;
+            $notification->save();
+            Mail::to($admin)->cc('ron@crystalballinsight.com')->send(new AdminPlanUpgradedMail($admin, $user));
+        } 
         if ($pricePlan->price) dispatch(new MarkSalesInFirstPromoter($user, $pricePlan, $price, $transactionId));
 
         return ['success' => true, 'transaction_id' => $transactionId];
@@ -277,7 +294,7 @@ class PaymentController extends Controller
                 $properties_limit_of_selected_plan = 0;
             else 
                 $properties_limit_of_selected_plan = $pricePlan->google_analytics_property_count;
-            $text = "During the ".$pricePlan->name." you used ". $propertyCount ."properties and the plan you selected allows only ".$properties_limit_of_selected_plan.". Note that if you continue with ".$pricePlan->name." plan, we will unassign the properties of the annotations you made during the Trial, you can Edit them later.";
+            $text = "During the ".$user->pricePlan->name." you used ". $propertyCount ." properties and the plan you selected allows only ".$properties_limit_of_selected_plan.". Note that if you continue with ".$pricePlan->name." plan, we will unassign the properties of the annotations you made during the ".$user->pricePlan->name.", you can Edit them later.";
             $showAlerts[] =  'property-alert';
             $alertText[] =  $text;
         }
@@ -286,7 +303,7 @@ class PaymentController extends Controller
         $app_in_use = CheckUserUsageHelper::checkAppsInUse($user,$pricePlan);
         if(count($app_in_use) > 0)
         {  
-            $text = "During the ".$pricePlan->name." you activated ".implode(",",$app_in_use).". Note that if you continue with ".$pricePlan->name." we will deactivate the automations and you will no longer be able to view the annotations";
+            $text = "During the ".$user->pricePlan->name." you activated ".implode(",",$app_in_use).". Note that if you continue with ".$pricePlan->name." we will deactivate the automations and you will no longer be able to view the annotations";
             $showAlerts[] =  'apps-in-use-alert';
             $alertText[] =  $text;
             // return response()->json(['success' => false, 'message' => $text], 422);
@@ -299,12 +316,24 @@ class PaymentController extends Controller
             $total_co_users = User::where('user_id',$user->id)->count();
             if(count($extra_users) > 0)
             {  
-                $text = "During the ".$pricePlan->name." ".$total_co_users." co-workers joined the account. Note that if you continue with Basic ".implode(",",$extra_users)." will lose access";
+                $text = "During the ".$user->pricePlan->name." ".$total_co_users." co-workers joined the account. Note that if you continue with ".$user->pricePlan->name." ".implode(",",$extra_users)." will lose access";
                 $showAlerts[] =  'extra-users-alert';
                 $alertText[] =  $text;
             }
         }
         //Alert for Co-worker Invite End
+        //Alert for Notifcation Start
+        if(!$pricePlan->has_notifications)
+        {
+           $notifications =  NotificationSetting::where('user_id', $user->id)->where('is_enabled',1)->get()->pluck('label')->toArray();
+           if(count($notifications) > 0)
+           {
+                $text = "During the ".$user->pricePlan->name." ".count($notifications)." notifications are enabled. Note that if you continue with ".$user->pricePlan->name." ".implode(",",$notifications)." will be disabled.";
+                $showAlerts[] =  'notification-alert';
+                $alertText[] =  $text;
+           }
+        }
+        //Alert For Notification End
         return ['success' => true, 'showAlerts' => $showAlerts, 'alertText' => $alertText];
     }
 }

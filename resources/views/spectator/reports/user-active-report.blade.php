@@ -19,9 +19,12 @@
                                     <tr>
                                         <th scope="col">User Name</th>
                                         <th scope="col">Email</th>
+                                        <th scope="col">Child / Parent User</th>
+                                        <th scope="col">User Website</th>
                                         <th scope="col">User Annotations</th>
                                         <th scope="col">Registration Date</th>
                                         <th scope="col">Plan</th>
+                                        <th scope="col">Reference Text</th>
                                         <th scope="col">Login to the platform</th>
                                         <th scope="col">open the extension in last 30 days</th>
                                         <th scope="col">click on a red dot on chart</th>
@@ -46,10 +49,17 @@
                                             <td>{{ $user->name }}</td>
                                             <td>
                                                 {{ $user->email }}
+                                            </td>
+                                            <td>
                                                 @if ($user->user)
                                                     <span class="badge badge-primary">{{ $user->user->email }}</span>
                                                 @else
-                                                    (Child Users: {{ $user->users_count }})
+                                                    {{ @$user->users_count }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if($user->website) 
+                                                <a href="{{$user->website}}" class="btn btn-sm btn-primary" style="color:white;">{{$user->website}}</a>
                                                 @endif
                                             </td>
                                             <td class="text-center">
@@ -62,6 +72,7 @@
                                             </td>
                                             <td>{{ $user->created_at }}</td>
                                             <td>{{ @$user->pricePlan->name }}</td>
+                                            <td>{{ @$user->pricePlan->reference_text }}</td>
                                             <td>
                                                 {{ $user->last_login_at }} + {{ $user->login_logs_count }}
                                                 <a class="btn btn-default btn-sm"

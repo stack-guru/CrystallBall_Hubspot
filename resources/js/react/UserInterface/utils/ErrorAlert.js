@@ -6,9 +6,9 @@ export default function ErrorAlert(props) {
         if (errors !== undefined) {
             if (props.errors.message !== undefined) {
                 return (
-                    <>
-                        <div className="alert alert-danger border-0 mt-0 mb-3">
-                            <i><img src={'/icon-info-red.svg'} alt={'icon'} className="svg-inject" /></i>
+                    <div className="alert alert-danger border-0 mt-0 mb-3 flex-column align-content-start justify-content-start align-items-start">
+                        <div>
+                            <i><img src={'/icon-info-red.svg'} alt={'icon'} className="svg-inject"/></i>
                             <span>
                                 {props.errors.message}
                             </span>
@@ -29,12 +29,12 @@ export default function ErrorAlert(props) {
                                 );
                             })}
                         </ul>
-                    </>
+                    </div>
                 );
             } else {
                 return (
                     <div className="alert alert-danger border-0">
-                        <i><img src={'/icon-info-red.svg'} alt={'icon'} className="svg-inject" /></i>
+                        <i><img src={'/icon-info-red.svg'} alt={'icon'} className="svg-inject"/></i>
                         <span>
                         Unknown error occurred
                         </span>
@@ -44,7 +44,7 @@ export default function ErrorAlert(props) {
         } else {
             return (
                 <div className="alert alert-danger border-0 mt-0">
-                    <i><img src={'/icon-info-red.svg'} alt={'icon'} className="svg-inject" /></i>
+                    <i><img src={'/icon-info-red.svg'} alt={'icon'} className="svg-inject"/></i>
                     <span
                         dangerouslySetInnerHTML={{
                             __html: props.errors.message,

@@ -24,7 +24,6 @@ export default class EditUser extends Component {
     }
 
     componentDidMount() {
-        document.title = 'Edit User Account';
 
         if (this.props.editUserId) {
             let userId = this.props.editUserId;
@@ -34,7 +33,6 @@ export default class EditUser extends Component {
                     if (uGAAIds[0] == null) uGAAIds = [""];
                     this.setState({ user: { ...response.data.user, google_analytics_account_id: uGAAIds } });
                     this.props.getUsers();
-                    this.props.toggle();
                 }, (err) => {
                     this.setState({ errors: (err.response).data });
                 }).catch(err => {
@@ -52,11 +50,12 @@ export default class EditUser extends Component {
         e.preventDefault();
 
         HttpClient.put(`/settings/user/${this.state.user.id}`, this.state.user)
-            .then(response => {
+            .then(() => {
                 Toast.fire({
                     icon: 'success',
                     title: "User updated.",
                 });
+                this.props.toggle();
             }, (err) => {
                 this.setState({ errors: (err.response).data });
             }).catch(err => {
@@ -77,7 +76,7 @@ export default class EditUser extends Component {
                             <input placeholder='Email' type="text" className="form-control" value={this.state.user.email} onChange={this.changeHandler} id="email" name="email" />
                         </div>
                     </div>
-                    <div className='grid2layout'>
+                    {/* <div className='grid2layout'>
                         <div className="themeNewInputStyle position-relative inputWithIcon">
                             <span className="fa cursor-pointer" onClick={() => this.setState({showPassword: !this.state.showPassword})} >{this.state.showPassword ? <img src={"/icon-eye-blue.svg"}/> : <img src={"/icon-eye-close.svg"}/>}</span>
                             <input placeholder='Password' type={this.state.showPassword ? "text" : "password"} className="form-control" value={this.state.user.password} onChange={this.changeHandler} id="password" name="password" />
@@ -86,7 +85,7 @@ export default class EditUser extends Component {
                             <span className="fa cursor-pointer" onClick={() => this.setState({showConfirmPassword: !this.state.showConfirmPassword})} >{this.state.showConfirmPassword ? <img src={"/icon-eye-close.svg"}/> : <img src={"/icon-eye-blue.svg"}/>}</span>
                             <input placeholder='Confirm password' type={this.state.showConfirmPassword ? "text" : "password"} className="form-control" value={this.state.user.password_confirmation} onChange={this.changeHandler} id="password_confirmation" name="password_confirmation" />
                         </div>
-                    </div>
+                    </div> */}
                     <div className='grid2layout'>
                         <div className="themeNewInputStyle">
                             <select name="user_level" className="form-control" onChange={this.changeHandler} value={this.state.user.user_level}>

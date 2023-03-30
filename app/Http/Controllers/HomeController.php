@@ -56,6 +56,7 @@ class HomeController extends Controller
             }
         }
         // $user->annotations_count = $user->getTotalAnnotationsCount(true);
+        $user->is_login_with_google = $user->password === User::EMPTY_PASSWORD && $user->has_password == false;
         $user->google_analytics_properties_in_use_count = $user->googleAnalyticsPropertiesInUse()->count();
         $user->do_require_password_change = ($user->password == User::EMPTY_PASSWORD && !is_null($user->app_sumo_uuid));
         $user->user_registration_offers = $user->pricePlan->price == 0 ? UserRegistrationOffer::ofCurrentUser()->alive()->get() : [];
@@ -383,6 +384,7 @@ class HomeController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255',
             'phone' => 'nullable|string',
+            'website' => 'nullable|string',
             'timezone' => 'required',
         ]);
 
@@ -395,7 +397,8 @@ class HomeController extends Controller
         }
 
         $user->name = $request->name;
-        $user->email = $request->email;
+        $user->name = $request->name;
+        $user->website = $request->website;
         $user->phone_number = $request->phone;
         $user->timezone = $request->timezone;
         $user->save();
