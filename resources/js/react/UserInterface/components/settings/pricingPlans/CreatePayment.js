@@ -77,7 +77,10 @@ export default class CreatePayment extends Component {
                 for (let i = 0; i < arr.length; i++) {
                     let r = await swal.fire({
                         text: arr[i],
-                        confirmButtonText : 'Got It'
+                        confirmButtonText : 'Got It',
+                        customClass: {
+                            htmlContainer: "align-left",
+                        },
                     });
                 }
             });  
