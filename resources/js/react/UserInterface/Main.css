@@ -4373,7 +4373,7 @@ div[data-tour-elem="controls"]
 }
 
 .dataTableAnalyticsAccount .singleRow .singleCol:first-child {
-    width: 100px;
+    width: 140px;
 }
 
 .dataTableAnalyticsAccount .singleRow .singleCol:nth-child(2) {
@@ -5129,6 +5129,9 @@ div[data-tour-elem="controls"]
     line-height: 1.25;
 }
 
+.align-left {
+    text-align: left;
+}
 .confirmConnectionTo {
     overflow: hidden;
     max-width: 1000px;
@@ -5758,9 +5761,17 @@ div[data-tour-elem="controls"]
 .selectGoogleAccount .fa-ga {
     background: #FFFFFF !important;
     height: 25px !important;
-    top: 6px !important;
+    top: 10px !important;
     right: 3px !important;
 }
+.text-decoration-underline {
+    text-decoration: underline;
+}
+
+.text-orange {
+    color: #F7751E;
+}
+
 @media screen and (max-width: 1439px) {
     .is-collapsed .sidebar {
         width: 110px;

@@ -8,6 +8,7 @@ import GoogleAnalyticsAccountSelect from "../../../utils/GoogleAnalyticsAccountS
 import UserTeamNameSelect from "../../../utils/UserTeamNameSelect";
 import SpinningLoader from '../../../utils/SpinningLoader'
 import {Button} from 'reactstrap';
+import CreatableSelect from "react-select/creatable";
 
 export default class CreateUser extends Component {
     constructor(props) {
@@ -22,15 +23,18 @@ export default class CreateUser extends Component {
             redirectTo: null,
             showConfirmPassword: false,
             showPassword: false,
+            departmentNames: [],
 
         }
         this.changeHandler = this.changeHandler.bind(this)
         this.submitHandler = this.submitHandler.bind(this)
         this.setDefaultState = this.setDefaultState.bind(this)
+        this.getUsers = this.getUsers.bind(this)
     }
 
     componentDidMount() {
         document.title = 'User Accounts';
+        this.getUsers();
     }
 
     setDefaultState() {
@@ -50,6 +54,23 @@ export default class CreateUser extends Component {
         this.setState({user: {...this.state.user, [e.target.name]: e.target.value}});
     }
 
+    getUsers() {
+        HttpClient.get(`/settings/user`)
+            .then(
+                (response) => {
+                    // filter out unique department names from response.data.users
+                    let departmentNames = response.data.users.map(user => user.department).filter((value, index, self) => self.indexOf(value) === index);
+                    this.setState({ departmentNames: departmentNames.map(tN => { return { label: tN, value: tN } }) });
+                },
+                (err) => {
+                    this.setState({ errors: err.response.data });
+                }
+            )
+            .catch((err) => {
+                this.setState({ errors: err });
+            });
+    }
+
     submitHandler(e) {
         e.preventDefault();
         this.setState({loading: true});
@@ -65,7 +86,7 @@ export default class CreateUser extends Component {
                 });
 
                 if(!this.props.userStartupConfig) {
-                    this.setState({redirectTo: "/settings/user"})
+                    // this.setState({redirectTo: "/settings/user"})
                     this.props.getUsers();
                     this.props.toggle();
                 }
@@ -96,7 +117,7 @@ export default class CreateUser extends Component {
                         </div>
                     </div>
 
-                    <div className='grid2layout'>
+                    {/* <div className='grid2layout'>
                         <div className="themeNewInputStyle position-relative inputWithIcon">
                             <span className="fa cursor-pointer"
                                   onClick={() => this.setState({showPassword: !this.state.showPassword})}>{this.state.showPassword ?
@@ -115,7 +136,7 @@ export default class CreateUser extends Component {
                                    onChange={this.changeHandler} id="password_confirmation"
                                    name="password_confirmation"/>
                         </div>
-                    </div>
+                    </div> */}
 
                     <div className='grid2layout'>
                         <div className="themeNewInputStyle">
@@ -128,8 +149,21 @@ export default class CreateUser extends Component {
                         </div>
 
                         <div className="themeNewInputStyle">
-                            <input type="text" onChange={this.changeHandler} value={this.state.user.department}
-                                   className="form-control" placeholder='Department' id="department" name="department"/>
+                            {/*<input type="text" onChange={this.changeHandler} value={this.state.user.department}
+                                   className="form-control" placeholder='Department' id="department" name="department"/>*/}
+                            <CreatableSelect
+                                name={"department"}
+                                disabled={false}
+                                value={this.state.user.department ? { label: this.state.user.department, value: this.state.user.department }: []}
+                                id={"department"}
+                                isMulti={false}
+                                onChange={(sOption) => {
+                                    this.changeHandler({ target: { name: 'department', value: sOption.value } });
+                                }}
+                                options={this.state.departmentNames}
+                                placeholder={"Department"}
+                            >
+                            </CreatableSelect>
                         </div>
                     </div>
 

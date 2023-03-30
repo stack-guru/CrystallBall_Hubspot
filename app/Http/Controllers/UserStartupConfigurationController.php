@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserStartupConfigurationRequest;
 use App\Models\UserStartupConfiguration;
@@ -189,6 +190,7 @@ class UserStartupConfigurationController extends Controller
         }
 
         $user->show_config_steps = !($request->show_config_steps === 'false');
+        $user->startup_configuration_showed_at = Carbon::now();
         $user->save();
         return ['success' => true, $request->validated()];
     }

@@ -302,6 +302,7 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
 
             Route::apiResource('user', App\Http\Controllers\UserController::class)->except(['index']);
             Route::get('user', [App\Http\Controllers\UserController::class, 'uiIndex']);
+            Route::post('re-invite-user', [App\Http\Controllers\UserController::class, 'reInviteUser']);
 
             Route::post('support', [App\Http\Controllers\HomeController::class, 'storeSupport']);
         });

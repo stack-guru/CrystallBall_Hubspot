@@ -46,6 +46,16 @@ export default class UserStartupConfigurationModal extends Component {
 
     componentDidMount() {
         setInterval(this.checkExtensionInstalled, 5000);
+
+        setTimeout(() => {
+            const userStartupConfig_property_connect = localStorage.getItem('userStartupConfig_property_connect');
+            if (userStartupConfig_property_connect === 'yes' && window.location.pathname === '/annotation') {
+                this.setState({stepNumber: 4}, () => {
+                    localStorage.removeItem('userStartupConfig_property_connect');
+                    localStorage.removeItem('frontend_redirect_to');
+                })
+            }
+        }, 1000);
     }
 
     handleChange(e) {
@@ -246,14 +256,14 @@ export default class UserStartupConfigurationModal extends Component {
                     <ModalBody className='p-6 contentArea installChromeExtension flex-grow-1'>
                         <div className='titleAndCloseButton d-flex justify-content-between align-items-center'>
                             <h2>Install Chrome Extension</h2>
-                            <span className='cursor-pointer'>
+                            {/*<span className='cursor-pointer'>
                                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
                                          xmlns="http://www.w3.org/2000/svg">
                                         <path
                                             d="M9 7.00031L16.0003 0L18 1.99969L10.9997 9L18 16.0003L16.0003 18L9 10.9997L1.99969 18L0 16.0003L7.00031 9L0 1.99969L1.99969 0L9 7.00031Z"
                                             fill="#a6a6a6"/>
                                     </svg>
-                                </span>
+                                </span>*/}
                         </div>
                         <div className='chromeExtensionContent d-flex flex-row-reverse align-items-center'>
                             <div className='pl-4 flex-shrink-0'><img src="./chrome-01.svg"/></div>
@@ -298,14 +308,14 @@ export default class UserStartupConfigurationModal extends Component {
                     <ModalBody className='p-6 contentArea googleAnalytics flex-grow-1'>
                         <div className='titleAndCloseButton d-flex justify-content-between align-items-center'>
                             <h2>Connect Google Analytics</h2>
-                            <span className='cursor-pointer'>
+                            {/*<span className='cursor-pointer'>
                                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
                                          xmlns="http://www.w3.org/2000/svg">
                                         <path
                                             d="M9 7.00031L16.0003 0L18 1.99969L10.9997 9L18 16.0003L16.0003 18L9 10.9997L1.99969 18L0 16.0003L7.00031 9L0 1.99969L1.99969 0L9 7.00031Z"
                                             fill="#a6a6a6"/>
                                     </svg>
-                                </span>
+                                </span>*/}
                         </div>
                         <div className='connectGoogleAnalytics d-flex justify-content-center align-items-center'>
                             <div className='flex-grow-1 d-flex flex-column justify-content-center align-items-center'>
@@ -336,14 +346,14 @@ export default class UserStartupConfigurationModal extends Component {
                     <ModalBody className='p-6 contentArea GAandSearchConsole flex-grow-1'>
                         <div className='titleAndCloseButton d-flex justify-content-between align-items-center'>
                             <h2>Connect GA & Search Console</h2>
-                            <span className='cursor-pointer'>
+                            {/*<span className='cursor-pointer'>
                                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
                                          xmlns="http://www.w3.org/2000/svg">
                                         <path
                                             d="M9 7.00031L16.0003 0L18 1.99969L10.9997 9L18 16.0003L16.0003 18L9 10.9997L1.99969 18L0 16.0003L7.00031 9L0 1.99969L1.99969 0L9 7.00031Z"
                                             fill="#a6a6a6"/>
                                     </svg>
-                                </span>
+                                </span>*/}
                         </div>
                         <div className='connectGAandSearchConsole d-flex flex-column'>
                             <p className='m-0'>Please select URLs for each property</p>
@@ -421,17 +431,17 @@ export default class UserStartupConfigurationModal extends Component {
                         <div
                             className='titleAndCloseButton d-flex justify-content-between align-items-center'>
                             <h2>Connect Recommended Apps</h2>
-                            <span className='cursor-pointer'>
+                            {/*<span className='cursor-pointer'>
                                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
                                          xmlns="http://www.w3.org/2000/svg">
                                         <path
                                             d="M9 7.00031L16.0003 0L18 1.99969L10.9997 9L18 16.0003L16.0003 18L9 10.9997L1.99969 18L0 16.0003L7.00031 9L0 1.99969L1.99969 0L9 7.00031Z"
                                             fill="#a6a6a6"/>
                                     </svg>
-                                </span>
+                                </span>*/}
 
                         </div>
-                        <p>Automated annotations ensure that critical events<br/> are captured and logged.</p>
+                        <p>Automated annotations ensure that critical events <br />are captured and logged. You can edit and add <br /> more from the Apps Market easily.</p>
                         <div className='connectRecommendedApp d-flex justify-content-center align-items-center'>
                             <AppsMarket
                                 userStartupConfig={true}
@@ -442,7 +452,7 @@ export default class UserStartupConfigurationModal extends Component {
                                 toggleDataSourceTour={this.props.toggleDataSourceTour}
                             />
                         </div>
-                        <div className='popupBtnBox d-flex justify-content-between align-items-center'>
+                        <div className='connectRecommendedApp d-flex justify-content-between align-items-center'>
                             <Button onClick={() => {
                                 this.recordStepResponse('IMPORT_OLD_ANNOTATIONS', false);
                                 this.incrementStep(1)
@@ -463,14 +473,14 @@ export default class UserStartupConfigurationModal extends Component {
                     <ModalBody className='p-6 contentArea coWorkers flex-grow-1'>
                         <div className='titleAndCloseButton d-flex justify-content-between align-items-center'>
                             <h2>Create Your Team</h2>
-                            <span className='cursor-pointer'>
+                            {/*<span className='cursor-pointer'>
                                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
                                          xmlns="http://www.w3.org/2000/svg">
                                         <path
                                             d="M9 7.00031L16.0003 0L18 1.99969L10.9997 9L18 16.0003L16.0003 18L9 10.9997L1.99969 18L0 16.0003L7.00031 9L0 1.99969L1.99969 0L9 7.00031Z"
                                             fill="#a6a6a6"/>
                                     </svg>
-                                </span>
+                                </span>*/}
                         </div>
                         <p>Add co-workers or customers for easier<br/> sharing and collaboration</p>
                         <div className='inviteCoWorkers'>
@@ -506,9 +516,30 @@ export default class UserStartupConfigurationModal extends Component {
                         <h1>Good work, {this.state.user.name}!</h1>
                         <p>It's time to see how it works; the best way to check around is:</p>
                         <ul className="mt-5">
-                            <li>Create a manual annotation by clicking the <img className='inject-me' src='/images/plus-icon.svg' onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/images/plus-icon.svg"; }} width='16' height='16' alt='menu icon' /> button</li>
-                            <li className="mt-3">Try Bulk Upload <img className='inject-me' src='/csvUploadd.svg' onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/csvUploadd.svg"; }} width='16' height='16' alt='menu icon' /> to <a href="https://www.crystalball.pro/post/2023-csv-upload-feature-transfer-data-from-universal-analytics-to-google-analytics-4" target={"_blank"}>migrate annotations</a> from Universal to GA4</li>
-                            <li className="mt-3">Go to the Apps Market <img className='inject-me' src='/appMarket.svg' onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/appMarket.svg"; }} width='16' height='16' alt='menu icon' /> to automate annotations from tools you work with</li>
+                            <li>Create a manual annotation by clicking the <img className='inject-me'
+                                                                                src='/images/plus-icon.svg'
+                                                                                onError={({currentTarget}) => {
+                                                                                    currentTarget.onerror = null;
+                                                                                    currentTarget.src = "/images/plus-icon.svg";
+                                                                                }} width='16' height='16'
+                                                                                alt='menu icon'/> button
+                            </li>
+                            <li className="mt-3">Try Bulk Upload <img className='inject-me' src='/csvUploadd.svg'
+                                                                      onError={({currentTarget}) => {
+                                                                          currentTarget.onerror = null;
+                                                                          currentTarget.src = "/csvUploadd.svg";
+                                                                      }} width='16' height='16' alt='menu icon'/> to <a
+                                href="https://www.crystalball.pro/post/2023-csv-upload-feature-transfer-data-from-universal-analytics-to-google-analytics-4"
+                                target={"_blank"}>migrate annotations</a> from Universal to GA4
+                            </li>
+                            <li className="mt-3">Go to the Apps Market <img className='inject-me' src='/appMarket.svg'
+                                                                            onError={({currentTarget}) => {
+                                                                                currentTarget.onerror = null;
+                                                                                currentTarget.src = "/appMarket.svg";
+                                                                            }} width='16' height='16'
+                                                                            alt='menu icon'/> to automate annotations
+                                from tools you work with
+                            </li>
                             <li className="mt-3">See how looks the annotations over GA4/Google Ads/Looker Studio</li>
                         </ul>
                         <div className='popupBtnBox d-flex justify-content-center'>
@@ -524,7 +555,7 @@ export default class UserStartupConfigurationModal extends Component {
         return (
             <Modal isOpen={this.props.isOpen} className='accountSetUpPopup' toggle={this.props.toggleShowTour} size="lg"
                    centered={true} id="scw-modal" backdrop="static">
-                {this.state.isPermissionPopupOpened ? <GooglePermissionPopup/> : ''}
+                {this.state.isPermissionPopupOpened ? <GooglePermissionPopup userStartupConfig={true}/> : ''}
                 {modalBodyFooter}
 
             </Modal>)
