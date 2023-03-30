@@ -46,9 +46,7 @@ export default class UserStartupConfigurationModal extends Component {
 
     componentDidMount() {
         setInterval(this.checkExtensionInstalled, 5000);
-        if(window.location.pathname !== '/annotation') {
-            window.location.href = '/annotation';
-        }
+
         setTimeout(() => {
             const userStartupConfig_property_connect = localStorage.getItem('userStartupConfig_property_connect');
             if (userStartupConfig_property_connect === 'yes' && window.location.pathname === '/annotation') {
