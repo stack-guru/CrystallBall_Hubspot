@@ -62,7 +62,7 @@ export default class IndexUsers extends Component {
             ).asDays();
 
         let status = 'Invited';
-        let btnStyle = 'text-warning';
+        let btnStyle = 'text-orange';
         if (!user.email_verified_at && diff <= -10) {
             status = "Re-Invite";
             btnStyle = 'text-danger';
@@ -260,9 +260,9 @@ export default class IndexUsers extends Component {
                                                 <div className="singleCol text-left"><span>{user.team_name}</span></div>
                                                 <div className="singleCol text-right">
                                                     <span>{this.props.user.user_level == "admin" ? (
-                                                        <div className="d-flex">
-                                                            <span onClick={() => this.reInvite(user)} className={`${this.getUserStatus(user).btnStyle}`}>
-                                                                <b className={this.getUserStatus(user).btnStyle === 'text-danger' ? 'text-decoration-underline cursor-pointer' : '' }>{this.getUserStatus(user).status}</b>
+                                                        <div className="d-flex justify-content-center align-items-center">
+                                                            <span onClick={() => this.reInvite(user)} className={`${this.getUserStatus(user).btnStyle} mr-2`}>
+                                                                <span className={this.getUserStatus(user).btnStyle === 'text-danger' ? 'text-decoration-underline cursor-pointer' : '' }>{this.getUserStatus(user).status}</span>
                                                             </span>
                                                             <div className="cursor-pointer" onClick={() => this.setState({ editUserId: user.id })}><img alt={"icon-edit"} src={`/icon-edit.svg`} /></div>
                                                             <Link onClick={() => this.handleDelete(user.id)}><img alt={"icon-trash"} src={`/icon-trash.svg`} /></Link>
