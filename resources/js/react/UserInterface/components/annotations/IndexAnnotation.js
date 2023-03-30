@@ -581,7 +581,7 @@ class IndexAnnotations extends React.Component {
                                             selectedIcon = '/csv-upload.svg';
                                         } else if (dataSource === 'api' && tableName === 'annotations') {
                                             borderLeftColor = this.state.userAnnotationColors.api;
-                                            selectedIcon = '/api.svg';
+                                            selectedIcon = '/api-image.svg';
                                         } else if (dataSource === 'System' && tableName === 'google_algorithm_updates') {
                                             borderLeftColor = this.state.userAnnotationColors.google_algorithm_updates;
                                             selectedIcon = '/google_algorithm_updates.svg';
