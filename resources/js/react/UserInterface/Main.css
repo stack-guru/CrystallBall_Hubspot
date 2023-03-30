@@ -5767,12 +5767,7 @@ div[data-tour-elem="controls"]
 .text-decoration-underline {
     text-decoration: underline;
 }
-.selectGoogleAccount .fa-ga{
-    bottom: 0;
-    top: 0 !important;
-    height: auto !important;
-    background-color: transparent !important;
-}
+
 .text-orange {
     color: #F7751E;
 }
