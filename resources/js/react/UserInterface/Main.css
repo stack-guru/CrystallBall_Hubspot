@@ -5764,6 +5764,12 @@ div[data-tour-elem="controls"]
 .text-decoration-underline {
     text-decoration: underline;
 }
+.selectGoogleAccount .fa-ga{
+    bottom: 0;
+    top: 0 !important;
+    height: auto !important;
+    background-color: transparent !important;
+}
 @media screen and (max-width: 1439px) {
     .is-collapsed .sidebar {
         width: 110px;
