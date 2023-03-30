@@ -151,7 +151,7 @@ class Main extends React.Component {
 
             <React.Fragment>
                 <div className="sidebar">
-                    <AddNewPasswordModal show={this.state.showPasswordPopup} user={this.state.user}/>
+                    <AddNewPasswordModal show={this.state.showPasswordPopup} reloadUser={this.loadUser} user={this.state.user}/>
                     <AddWebsiteModal reloadUser={this.loadUser}
                                      show={!this.state.showPasswordPopup && !this.state.user.website && (isFreeEmail(this.state.user.email) || this.state.user.is_login_with_google)}
                                      user={this.state.user}/>
