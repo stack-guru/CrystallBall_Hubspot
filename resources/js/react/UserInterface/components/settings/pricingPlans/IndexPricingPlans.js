@@ -39,6 +39,11 @@ export default class IndexPricingPlans extends React.Component {
                 }, 1 * 1000);
             }
         }
+        
+        if (this.props.user.price_plan.name == "Trial Ended") {
+            this.props.upgradePopup('trial-ended')
+        }
+
 
         // swal.fire({
         //     html: `<ga-plan-downgrade-upgrade-popup heading="<h1>Upgrade today to add more  <span>Ads Trackers</span></h1>"
