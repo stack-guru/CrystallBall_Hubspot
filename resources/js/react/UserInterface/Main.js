@@ -612,8 +612,11 @@ class Main extends React.Component {
                     })
                 }
                 if (response.data.user.trail_plan_status == true) {
-                    // this.setState({showUpgradePopup: true});
-                    // this.setState({upgradePopupType: 'trial-ended'});
+                    this.setState({showUpgradePopup: true});
+                    this.setState({upgradePopupType: 'trial-ended'});
+                }
+                if (response.data.user.price_plan.name == "Trial Ended") {
+                    this.setState({showPasswordPopup: false});
                 }
                 if (response.data.user.price_plan.name == 'Free') {
                     setTimeout(() => {

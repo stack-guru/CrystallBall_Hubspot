@@ -73,7 +73,12 @@ export default class CreateAnnotation extends React.Component {
             this.setState(loadStateFromLocalStorage("CreateAnnotation"));
         }, 1000);
 
-
+        if(this.props.currentPricePlan.name == "Trial Ended")
+        {
+            removeStateFromLocalStorage("CreateAnnotation");
+            this.props.togglePopup('');
+            this.setState({redirectTo: "/settings/price-plans"});
+        }
         this.loadCategoriesList();
         this.loadUserAnnotationColors();
         this.checkIfCanCreateAnnotation();

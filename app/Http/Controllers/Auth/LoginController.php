@@ -79,8 +79,11 @@ class LoginController extends Controller
     protected function authenticated(AuthRequest $request, $user)
     {
         $user->last_login_at = new \DateTime;
+        if($user->pricePlan && $user->pricePlan->name == 'Trial Ended')
+        {
+            $user->show_trail_popup = true;
+        }
         $user->save();
-
         if ($user->user_id) {
             if (!($user->user->pricePlan->ga_account_count > 1 || $user->user->pricePlan->ga_account_count == 0)) {
                 Auth::logout();
