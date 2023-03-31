@@ -137,6 +137,8 @@ class Main extends React.Component {
         if ([
             "/settings",
             "/settings/price-plans",
+            "/settings/profile",
+            "/settings/support",
             "/settings/price-plans/payment",
             "/settings/payment-history",
             "/settings/payment-detail/create",
@@ -610,8 +612,8 @@ class Main extends React.Component {
                     })
                 }
                 if (response.data.user.trail_plan_status == true) {
-                    this.setState({showUpgradePopup: true});
-                    this.setState({upgradePopupType: 'trial-ended'});
+                    // this.setState({showUpgradePopup: true});
+                    // this.setState({upgradePopupType: 'trial-ended'});
                 }
                 if (response.data.user.price_plan.name == 'Free') {
                     setTimeout(() => {
