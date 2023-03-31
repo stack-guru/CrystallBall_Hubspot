@@ -195,7 +195,7 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
-        $user->email = Carbon::now()->format('Ymd') . '_' . $user->email;
+        $user->email = Carbon::now()->format('Ymdhis') . '_' . $user->email;
         $user->save();
         $user->delete();
         return redirect()->route('admin.user.index')->with('success', true);
