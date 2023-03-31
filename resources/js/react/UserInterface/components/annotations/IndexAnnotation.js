@@ -251,7 +251,7 @@ class IndexAnnotations extends React.Component {
         if (sortBy) link += `&sort_by=${sortBy}`;
         if (searchText) link += `&search=${searchText}`;
         if (sortBy === 'category' && category) link += `&cateogry=${category}`;
-        if (googleAnalyticsProperty) link += `&annotation_ga_property_id=${googleAnalyticsProperty}`;
+        if (sortBy === 'ga-property' && googleAnalyticsProperty) link += `&annotation_ga_property_id=${googleAnalyticsProperty}`;
         if (pageSize) link += `&page_size=${pageSize}`;
         if (pageNumber) link += `&page_number=${pageNumber}`;
 
@@ -432,7 +432,7 @@ class IndexAnnotations extends React.Component {
                                     <img className='inject-me' src='/appMarket.svg' onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/appMarket.svg"; }} width='16' height='16' alt='menu icon' />
                                 </a>
                                 {this.props.user.user_level == "admin" || this.props.user.user_level == "team" ? (
-                                    <a data-toggle="tooltip" data-placement="top" title="CSV Upload" onClick={() => this.props.openAnnotationPopup('upload')} href="javascript:void(0);">
+                                    <a className="d-none d-sm-block" data-toggle="tooltip" data-placement="top" title="CSV Upload" onClick={() => this.props.openAnnotationPopup('upload')} href="javascript:void(0);">
                                         <img className='inject-me' src='/csvUploadd.svg' onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/csvUploadd.svg"; }} width='16' height='16' alt='menu icon' />
                                     </a>)
                                     :
@@ -581,7 +581,7 @@ class IndexAnnotations extends React.Component {
                                             selectedIcon = '/csv-upload.svg';
                                         } else if (dataSource === 'api' && tableName === 'annotations') {
                                             borderLeftColor = this.state.userAnnotationColors.api;
-                                            selectedIcon = '/api.svg';
+                                            selectedIcon = '/api-image.svg';
                                         } else if (dataSource === 'System' && tableName === 'google_algorithm_updates') {
                                             borderLeftColor = this.state.userAnnotationColors.google_algorithm_updates;
                                             selectedIcon = '/google_algorithm_updates.svg';
