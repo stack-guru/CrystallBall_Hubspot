@@ -2318,6 +2318,7 @@ body {
     margin-right: 10px;
     padding-right: 10px;
     border-right: 1px solid #096db7;
+    word-break: break-all;
 }
 
 .annotionRow .description p.annotationDesc {
@@ -2479,7 +2480,12 @@ body {
 }
 
 .dataTableusers .singleRow .singleCol {
-    width: 16.667%;
+    width: 15%;
+    flex-shrink: 0;
+    justify-content: start;
+}
+.dataTableusers .singleRow .singleCol:first-child {
+    width: 25%;
     flex-shrink: 0;
     justify-content: start;
 }
