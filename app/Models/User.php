@@ -351,8 +351,11 @@ class User extends Authenticatable implements MustVerifyEmail
             array_push($userIdsArray, $user->id);
         } else {
             // Current user is child, find admin, grab all child users, pluck ids
-            $userIdsArray = $user->user->users->pluck('id')->toArray();
-            array_push($userIdsArray, $user->user->id);
+            if($user->user && $user->user->users->count() > 0)
+            {
+                $userIdsArray = $user->user->users->pluck('id')->toArray();
+                array_push($userIdsArray, $user->user->id);
+            }
             // Set Current User to Admin so that data source configuration which applies are that of admin
             $user = $user->user;
         }
@@ -369,8 +372,7 @@ class User extends Authenticatable implements MustVerifyEmail
         $annotationsQuery .= "SELECT TempTable.* FROM (";
         $annotationsQuery .= AnnotationQueryHelper::allAnnotationsUnionQueryString($this, '*', $userIdsArray, '*', true);
         $annotationsQuery .= ") AS TempTable";
-
-        if ($userPricePlan->annotations_count > 0 && $applyLimit) {
+        if ($userPricePlan && $userPricePlan->annotations_count > 0 && $applyLimit) {
             $annotationsQuery .= " LIMIT " . $userPricePlan->annotations_count;
         }
         $annotationsQuery .= ") AS TempTable2";
