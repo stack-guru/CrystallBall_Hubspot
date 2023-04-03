@@ -346,12 +346,9 @@ class User extends Authenticatable implements MustVerifyEmail
         $userIdsArray = [];
 
         if (!$user->user_id) {
-            if($user->users->count() > 0)
-            {
-                // Current user is not child, grab all child users, pluck ids
-                $userIdsArray = $user->users->pluck('id')->toArray();
-                array_push($userIdsArray, $user->id);
-            }
+            // Current user is not child, grab all child users, pluck ids
+            $userIdsArray = $user->users->pluck('id')->toArray();
+            array_push($userIdsArray, $user->id);
         } else {
             // Current user is child, find admin, grab all child users, pluck ids
             if($user->user && $user->user->users->count() > 0)
@@ -359,11 +356,8 @@ class User extends Authenticatable implements MustVerifyEmail
                 $userIdsArray = $user->user->users->pluck('id')->toArray();
                 array_push($userIdsArray, $user->user->id);
             }
-            if($user->user)
-            {
-                // Set Current User to Admin so that data source configuration which applies are that of admin
-                $user = $user->user;
-            }
+            // Set Current User to Admin so that data source configuration which applies are that of admin
+            $user = $user->user;
         }
 
         return $userIdsArray;
