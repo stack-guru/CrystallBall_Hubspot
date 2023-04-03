@@ -36,7 +36,7 @@ class GoogleAnalyticsPropertyController extends Controller
                 abort(402, "Please upgrade your plan to use Google Analytics Properties.");
             }
 
-            $googleAnalyticsProperties = $googleAnalyticsPropertiesQuery->get()->unique('name');
+            $googleAnalyticsProperties = $googleAnalyticsPropertiesQuery->get();
         } else {
             $googleAnalyticsProperties = $googleAnalyticsPropertiesQuery->ofCurrentUser();
 
@@ -44,7 +44,7 @@ class GoogleAnalyticsPropertyController extends Controller
                 $googleAnalyticsProperties = $googleAnalyticsProperties->orderByRaw("$request->sortBy * 1 desc");
             }
             // return $googleAnalyticsProperties->toSql();
-            $googleAnalyticsProperties = $googleAnalyticsProperties->get()->unique('name');
+            $googleAnalyticsProperties = $googleAnalyticsProperties->get();
 
         }
         // if user's plan is trial or free new than only return 1 ga account with 1 property
