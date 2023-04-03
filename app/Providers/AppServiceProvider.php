@@ -34,6 +34,9 @@ class AppServiceProvider extends ServiceProvider
                 config(['app.name' => 'GAannotations', 'app.url' => 'https://app.gaannotations.com', 'app.base_url' => 'https://www.gaannotations.com', 'app.host' => request()->getHost()]);
                 config(['app.icon' => asset('/favicon-gaa.ico'), 'app.logo' => asset('/images/company_logo_gaa.png')]);
                 config(['mail.from' => ['address' => 'contact@gaannotations.com', 'name' => 'GAannotations']]);
+
+		// temporary
+		config(['session.same_site' => 'lax']);
                 break;
 
             case 'alpha.lukionline.me';
@@ -41,6 +44,9 @@ class AppServiceProvider extends ServiceProvider
                 config(['app.name' => 'Crystal Ball', 'app.url' => 'https://app.crystalballinsight.com', 'app.base_url' => 'https://www.crystalball.pro', 'app.host' => request()->getHost()]);
                 config(['app.icon' => asset('/favicon-cbi.ico'), 'app.logo' => asset('/images/company_logo_cbi.png')]);
                 config(['mail.from' => ['address' => 'contact@crystalballinsight.com', 'name' => 'Crystal Ball']]);
+
+		// temporary
+		config(['session.same_site' => 'lax']);
                 break;
 
             case 'localhost':
