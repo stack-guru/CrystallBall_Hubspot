@@ -414,7 +414,7 @@ class Sidebar extends React.Component {
                                 {this.props.user.user_level == "admin" ||
                                     this.props.user.user_level == "team" ? (
                                     <a
-                                        className="dropdown-item"
+                                        className="d-none d-sm-block dropdown-item"
                                         href="javascript:void(0);"
                                         onClick={() => this.props.openAnnotationPopup('upload')}
                                     >

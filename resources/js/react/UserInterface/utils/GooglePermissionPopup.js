@@ -46,9 +46,11 @@ export default class GooglePermissionPopup extends Component {
                 }
                 let query_string = new URLSearchParams(query_string_obj).toString();
                 // Save pathname in this storage without domain name
-                localStorage.setItem("frontend_redirect_to", window.location.pathname);
                 if( this.props.userStartupConfig ) {
+                    localStorage.setItem("frontend_redirect_to", '/annotation');
                     localStorage.setItem("userStartupConfig_property_connect", `yes`);
+                } else {
+                    localStorage.setItem("frontend_redirect_to", window.location.pathname);
                 }
                 window.location = "/settings/google-account/create?" + query_string;
             }

@@ -137,6 +137,8 @@ class Main extends React.Component {
         if ([
             "/settings",
             "/settings/price-plans",
+            "/settings/profile",
+            "/settings/support",
             "/settings/price-plans/payment",
             "/settings/payment-history",
             "/settings/payment-detail/create",
@@ -151,7 +153,7 @@ class Main extends React.Component {
 
             <React.Fragment>
                 <div className="sidebar">
-                    <AddNewPasswordModal show={this.state.showPasswordPopup} user={this.state.user}/>
+                    <AddNewPasswordModal show={this.state.showPasswordPopup} reloadUser={this.loadUser} user={this.state.user}/>
                     <AddWebsiteModal reloadUser={this.loadUser}
                                      show={!this.state.showPasswordPopup && !this.state.user.website && (isFreeEmail(this.state.user.email) || this.state.user.is_login_with_google)}
                                      user={this.state.user}/>
@@ -612,6 +614,9 @@ class Main extends React.Component {
                 if (response.data.user.trail_plan_status == true) {
                     this.setState({showUpgradePopup: true});
                     this.setState({upgradePopupType: 'trial-ended'});
+                }
+                if (response.data.user.price_plan.name == "Trial Ended") {
+                    this.setState({showPasswordPopup: false});
                 }
                 if (response.data.user.price_plan.name == 'Free') {
                     setTimeout(() => {

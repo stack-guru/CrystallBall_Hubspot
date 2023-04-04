@@ -12,7 +12,7 @@ use App\Models\User;
 use App\Models\UserActiveDevice;
 use App\Models\UserGaAccount;
 use App\Models\Annotation;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -98,7 +98,8 @@ class UserController extends Controller
         $user->user_id = $parentUser->id;
         $user->price_plan_id = $parentUser->price_plan_id;
         $user->price_plan_expiry_date = $parentUser->price_plan_expiry_date;
-        // $user->email_verified_at = now();
+        $user->show_config_steps = 0;
+        $user->startup_configuration_showed_at = Carbon::now();
 
         if ($parentUser->is_ds_holidays_enabled) {
             $user->is_ds_holidays_enabled = 1;
@@ -278,6 +279,8 @@ class UserController extends Controller
         if($user->user_id) {
             Annotation::where('user_id', $user->id)->update(['user_id' => $user->user_id, 'added_by_name' => $user->name]);
         }
+        $user->email = Carbon::now()->format('Ymd') . '_' . $user->email;
+        $user->save();
         $user->delete();
 
         return ['success' => true];

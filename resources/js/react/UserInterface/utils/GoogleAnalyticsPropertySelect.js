@@ -35,8 +35,8 @@ export default class GoogleAnalyticsPropertySelect extends Component {
             }
             this.setState({ allProperties: options });
         });
-
-
+        console.log("All Properties");
+        console.log(this.state.allProperties);
     }
 
     componentDidUpdate(prevProps) {

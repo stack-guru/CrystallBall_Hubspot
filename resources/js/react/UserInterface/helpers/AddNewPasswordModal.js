@@ -73,6 +73,7 @@ export default class AddNewPasswordModal extends React.Component {
                         icon: 'success',
                         title: "Password added.",
                     });
+                    this.props.reloadUser();
                     this.setState({redirectTo: "/annotation"});
                     this.props.togglePopup('');
                 }, (err) => {

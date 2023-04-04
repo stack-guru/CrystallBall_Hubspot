@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Carbon;
 
 class UserController extends Controller
 {
@@ -193,7 +194,9 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = User::find($id);
-        $user->bitbucket_annotations()->delete();
+
+        $user->email = Carbon::now()->format('Ymdhis') . '_' . $user->email;
+        $user->save();
         $user->delete();
         return redirect()->route('admin.user.index')->with('success', true);
     }

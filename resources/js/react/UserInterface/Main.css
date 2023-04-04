@@ -2273,7 +2273,7 @@ body {
     margin-bottom: 20px;
     border-left: 4px solid #ffc514;
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.16);
-    overflow-x: auto;
+    overflow-y: auto;
 }
 
 .annotionRowIcon {
@@ -2291,6 +2291,7 @@ body {
 
 .annotionRow .description {
     width: 42%;
+    min-width: 200px;
     color: #333;
     font-size: 16px;
     padding: 0 24px;
@@ -2317,6 +2318,7 @@ body {
     margin-right: 10px;
     padding-right: 10px;
     border-right: 1px solid #096db7;
+    word-break: break-all;
 }
 
 .annotionRow .description p.annotationDesc {
@@ -2478,7 +2480,12 @@ body {
 }
 
 .dataTableusers .singleRow .singleCol {
-    width: 16.667%;
+    width: 15%;
+    flex-shrink: 0;
+    justify-content: start;
+}
+.dataTableusers .singleRow .singleCol:first-child {
+    width: 25%;
     flex-shrink: 0;
     justify-content: start;
 }
@@ -5764,18 +5771,13 @@ div[data-tour-elem="controls"]
 .selectGoogleAccount .fa-ga {
     background: #FFFFFF !important;
     height: 25px !important;
-    top: 6px !important;
+    top: 10px !important;
     right: 3px !important;
 }
 .text-decoration-underline {
     text-decoration: underline;
 }
-.selectGoogleAccount .fa-ga{
-    bottom: 0;
-    top: 0 !important;
-    height: auto !important;
-    background-color: transparent !important;
-}
+
 .text-orange {
     color: #F7751E;
 }
@@ -5812,8 +5814,24 @@ div[data-tour-elem="controls"]
 }
 
 @media screen and (max-width: 991px) {
+    .is-collapsed .page-container {
+        padding-left: 0 !important;
+    }
     .sidebar {
         left: 0;
+    }
+    .is-collapsed .sidebar {
+        background-color: transparent;
+    }
+    .is-collapsed .sidebar .sidebar-inner {
+        border: none;
+    }
+    .is-collapsed .sidebar .flex-grow-1 {
+        display: none;
+    }
+    .is-collapsed .sidebar .dropdown-holder {
+        position: fixed;
+        bottom: 30px;
     }
 }
 
@@ -5822,9 +5840,37 @@ div[data-tour-elem="controls"]
         grid-template-columns: auto auto;
     }
 
+    .header .header-container {
+        padding: 15px 4px;
+    }
+
+    .header .addPhoto {
+        width: 25px;
+        height: 25px;
+    }
+
+    .pageHead > .d-flex {
+        flex-wrap: wrap;
+    }
+
     .pageFilters {
         gap: 1rem;
         display: grid;
         grid-template-columns: auto auto;
+        flex-flow: wrap;
+    }
+    .pageFilters .d-flex {
+        width: 100%;
+    }
+    .pageFilters .d-flex:nth-child(2) {
+        flex-flow: wrap-reverse;
+    }
+    .pageFilters .filter-sort, .pageFilters .filter-search {
+        width: 100%;
+        margin-right: 0 !important;
+    }
+
+    .pageFilters .btn-extraSelect {
+        margin-top: 10px;
     }
 }
