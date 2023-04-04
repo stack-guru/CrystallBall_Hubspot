@@ -197,7 +197,7 @@ class AnnotationQueryHelper
         $gAUConf = UserDataSource::whereIn('user_id', $userIdsArray)->where('ds_code', 'google_algorithm_update_dates')->first();
         if ($gAUConf) {
             if ($gAUConf->status != '' && $gAUConf->status != null) {
-                $annotationsQuery .= ' where status = "' . $gAUConf->status . '"';
+                $annotationsQuery .= ' where google_algorithm_updates.status = "' . $gAUConf->status . '"';
             }
         }
 
