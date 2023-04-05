@@ -155,7 +155,7 @@ class Main extends React.Component {
                 <div className="sidebar">
                     <AddNewPasswordModal show={this.state.showPasswordPopup} reloadUser={this.loadUser} user={this.state.user}/>
                     <AddWebsiteModal reloadUser={this.loadUser}
-                                     show={!this.state.showPasswordPopup && !this.state.user.website && (isFreeEmail(this.state.user.email) || this.state.user.is_login_with_google)}
+                                     show={!this.state.showPasswordPopup && !this.state.user.user_id  && !this.state.user.website && (isFreeEmail(this.state.user.email) || this.state.user.is_login_with_google)}
                                      user={this.state.user}/>
 
                     {/* <InterfaceTour isOpen={this.state.showInterfaceTour} toggleShowTour={this.toggleInterfaceTour} /> */}
