@@ -24,7 +24,7 @@ class GoogleAlertService
             $doc->normalize();
             $lis = $doc->getElementsByTagName('li');
         } catch (Exception $exception) {
-            log(print_r($exception->getMessage(), 1));
+            info(print_r($exception->getMessage(), 1));
             return false;
         }
 
