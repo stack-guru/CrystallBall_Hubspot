@@ -5824,6 +5824,19 @@ div[data-tour-elem="controls"]
     }
 }
 
+.emoji-up-down {
+    display: inline-block;
+    animation: upDown 1s infinite ease-in-out;
+}
+
+@keyframes upDown {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
 @media screen and (max-width: 767px) {
     .items {
         grid-template-columns: auto auto;

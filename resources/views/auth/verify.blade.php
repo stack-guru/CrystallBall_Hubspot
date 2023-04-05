@@ -14,7 +14,7 @@
                 @else
                     <figure><img src='/icon-confirmation-email.svg' /></figure>
                     <h1>Confirmation email sent!</h1>
-                    <em style="font-size: 1.5em;">{{ auth()->user()->email }}</em>
+                    <em style="font-size: 1.3em;">{{ auth()->user()->email }}</em>
                     <p>Click on the confirmation link to verify your email</p>
                 @endif
 
