@@ -114,7 +114,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                         label: (
                             <div className="d-flex propertyLabel">
                                 <span style={{ background: "#2d9cdb" }} className="dot"></span>
-                                <span className="text-truncate" style={{ maxWidth: 150 }}>{gap.name + ' ' + gap.google_analytics_account.name}</span>
+                                <span className="text-truncate" style={{ maxWidth: 400 }}>{gap.name + ' ' + gap.google_analytics_account.name}</span>
                             </div>
                         )
                     };
@@ -247,6 +247,12 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                                 return "No Property"
                             }}
                             className={`${this.props.className} ga-account-select-holder`}
+                            styles={{
+                                menu: (provided) => ({
+                                    ...provided,
+                                    width: 500,
+                                }),
+                            }}
                             name={this.props.name}
                             disabled={this.props.disabled}
                             // value={this.state.aProperties}

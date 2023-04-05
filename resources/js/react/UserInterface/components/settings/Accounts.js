@@ -184,7 +184,7 @@ export default class Accounts extends React.Component {
                             }
                         </div>
                     </section>
-                    <section className='accountsHolder'>
+                    {/*<section className='accountsHolder'>
                         <h3>Social accounts</h3>
                         <div className="accounts socialAccounts">
                             {
@@ -304,9 +304,9 @@ export default class Accounts extends React.Component {
                                 </div>
                             </div>
                         </div>
-                    </section>
+                    </section>*/}
                     <section className='accountsHolder'>
-                        <h3>Analytics Accounts</h3>
+                        {/*<h3>Analytics Accounts</h3>*/}
 
                         <div className='btn-goToAnalyticsAccount'>
                             <span className='mb-3'>
