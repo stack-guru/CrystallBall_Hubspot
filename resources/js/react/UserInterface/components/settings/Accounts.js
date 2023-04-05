@@ -85,23 +85,23 @@ export default class Accounts extends React.Component {
                 swal.fire("Error", message, success == "false" ? "error" : "success");
             }
             this.setState({showACCISModal: searchParams && searchParams.has('do-refresh') && searchParams.has('google_account_id')})
+        }
+        this.getGoogleAccounts();
+        this.getGAAccounts();
+        this.getGAProperties();
+        this.getGSCSites();
 
-            this.getGoogleAccounts();
-            this.getGAAccounts();
-            this.getGAProperties();
-            this.getGSCSites();
+        if (this.state.user.google_accounts_tour_showed_at == null && this.state.user.last_login_at !== null) {
+            setTimeout(function () {
+                document.getElementById("properties-video-modal-button").click();
+            }, 3000)
+            HttpClient.put(`/data-source/mark-google-accounts-tour`, {google_accounts_tour_showed_at: true})
+                .then(response => {
+                    (this.props.reloadUser)();
+                }, (err) => {
+                }).catch(err => {
+            });
 
-            if (this.state.user.google_accounts_tour_showed_at == null && this.state.user.last_login_at !== null) {
-                setTimeout(function () {
-                    document.getElementById("properties-video-modal-button").click();
-                }, 3000)
-                HttpClient.put(`/data-source/mark-google-accounts-tour`, {google_accounts_tour_showed_at: true})
-                    .then(response => {
-                        (this.props.reloadUser)();
-                    }, (err) => {
-                    }).catch(err => {
-                });
-            }
         }
     }
 
