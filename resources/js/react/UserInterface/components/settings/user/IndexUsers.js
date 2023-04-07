@@ -77,9 +77,11 @@ export default class IndexUsers extends Component {
 
     getUsers() {
         HttpClient.get(`/settings/user`)
+        // HttpClient.get('/ui/settings/google-analytics-property?keyword=')
         .then(
             (response) => {
                 this.setState({ users: response.data.users });
+                console.log(response.data.users,"??????????????")
             },
             (err) => {
                 this.setState({ errors: err.response.data });

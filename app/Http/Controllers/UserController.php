@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Requests\UserRequest;
 use App\Mail\DailyUserStatsMail;
 use App\Mail\UserInviteMail;
+use App\Models\GoogleAnalyticsProperty;
 use App\Models\PricePlan;
 use App\Models\PricePlanSubscription;
 use App\Models\User;
@@ -181,8 +182,14 @@ class UserController extends Controller
 
         Mail::to($user)->send(new UserInviteMail($user));
 
-        if ($request->google_analytics_account_id !== null && !in_array("", $request->google_analytics_account_id)) {
-            foreach ($request->google_analytics_account_id as $gAAId) {
+        $gaAccountIds = [];
+        $gaProperties = GoogleAnalyticsProperty::whereIn('id',$request->google_analytics_property_id)->with(['googleAnalyticsAccount'])->get();
+        foreach($gaProperties as $property) {
+            $gaAccountIds[] = $property->google_analytics_account->id;
+        }
+
+        if ($gaAccountIds !== null && !in_array("", $gaAccountIds)) {
+            foreach($gaAccountIds as $gAAId) {
                 $uGAA = new UserGaAccount;
                 $uGAA->user_id = $user->id;
                 $uGAA->google_analytics_account_id = $gAAId;
