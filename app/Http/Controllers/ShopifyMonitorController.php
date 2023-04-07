@@ -85,31 +85,35 @@ class ShopifyMonitorController extends Controller
         return ['success' => true];
     }
 
-
-    public function shopifyUrl (Request $req) {
+    public function saveShopifyProducts (Request $req) {
 
         $userID = Auth::user()->id;
         $url = $req->shopifyUrl;
-        $gaPropertyId = $req->gaPropertyId;
+
+        // if($monitor) {
+        //     return response()->json(['success' => false, 'message' => 'You already have this store url setup.'], 402);
+        // }
+       
+        $shopifyService = new ShopifyService();
+        $products = $shopifyService->getShopifyProducts($url);
+        if(!$products) {
+            return response()->json(['success' => false, 'message' => 'Please provide the valid store url'], 400);
+        }        
+
+        $monitor = ShopifyMonitor::where('url', $url)->where('user_id', $userID)->first();
+        if(!$monitor) {
+            $monitor = new ShopifyMonitor();
+            $monitor->url = $url;
+            $monitor->user_id = $userID;
+        }
+        $monitor->ga_property_id = $req->gaPropertyId;
+        $monitor->events = $req->events;
+        $monitor->save();
 
         $shopifyService = new ShopifyService();
-        $status = $shopifyService->saveShopifyProducts($url, $userID);
+        $shopifyService->saveShopifyProducts(json_decode($req->events), $products, $userID);
 
-        if ($status) {
-            $exist = ShopifyMonitor::where('url', $url)->where('user_id', $userID)->first();
-            if(!$exist) {
-                $monitor = new ShopifyMonitor();
-                $monitor->url = $url;
-                $monitor->user_id = $userID;
-                $monitor->ga_property_id = $gaPropertyId;
-                $monitor->save();
-                return response()->json(['success' => true], 200);
-            } else {
-                return response()->json(['success' => false, 'message' => 'You already have this store url setup.'], 402);
-            }
-        } else {
-            return response()->json(['success' => false, 'message' => 'Please provide the valid store url'], 400);
-        }
+        return response()->json(['success' => true], 200);
 
     }
 
