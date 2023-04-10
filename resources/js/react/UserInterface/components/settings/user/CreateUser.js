@@ -89,7 +89,7 @@ export default class CreateUser extends Component {
                     this.setDefaultState();
                 });
 
-                console.log("responce >>>>>>>>>>>",response)
+                // console.log("responce >>>>>>>>>>>",response)
                 if(!this.props.userStartupConfig) {
                     // this.setState({redirectTo: "/settings/user"})
                     this.props.getUsers();
