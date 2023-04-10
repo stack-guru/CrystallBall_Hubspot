@@ -97,7 +97,7 @@
                     <div class='sliderHolder'>
                         <div class="signup-slider">
                             <div class='slide'>
-                                <h4>Annotations for GA4, Google Ads,
+                                <h4>Annotations for GA4, Google Ads,<br/>
                                     Data Studio/Looker</h4>
                                 <img src="/images/signup-slide-1.svg"/>
                             </div>

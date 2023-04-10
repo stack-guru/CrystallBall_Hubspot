@@ -390,9 +390,9 @@ export default class Profile extends React.Component {
                             <div className='gridBox'>
                                 <div className="column">
                                     <h2>Current subscription</h2>
-                                    <h3>{this.props.user.price_plan.name} <span>(Yearly)</span></h3>
-                                    <p>Renew
-                                        date: {moment(this.props.user.price_plan_expiry_date).format('DD MMM, YYYY')}</p>
+                                    <h3>{this.props.user.price_plan.name} {this.props.user.price_plan.price != 0 ?
+                                        <span>(Yearly)</span> : null}</h3>
+                                    <p>{this.props.user.price_plan.price == 0 ? "Expiration date" :  "Renew date"}: {moment(this.props.user.price_plan_expiry_date).format('DD MMM, YYYY')}</p>
 
                                     <h2>Features in {this.props.user.price_plan.name} plan</h2>
                                     <div className="d-flex justify-content-between">

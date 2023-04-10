@@ -268,6 +268,7 @@ export default class UserStartupConfigurationModal extends Component {
                         <div className='chromeExtensionContent d-flex flex-row-reverse align-items-center'>
                             <div className='pl-4 flex-shrink-0'><img src="./chrome-01.svg"/></div>
                             <div className='flex-grow-1 d-flex flex-column'>
+                                <span className="text-center">Download Now <span className="emoji-up-down">👇</span></span>
                                 <a href="https://chrome.google.com/webstore/detail/automated-google-analytic/jfkimpgkmamkdhamnhabohpeaplbpmom?hl=en"
                                    target="_blank">
                                     <strong><img src="./chromeExtension.svg"/></strong>
