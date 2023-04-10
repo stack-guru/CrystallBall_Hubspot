@@ -44,7 +44,7 @@ class LoginController extends Controller
                 $user->last_logged_into_extension_at = Carbon::now();
                 $user->save();
 
-                Auth::guard()->login($user);
+                Auth::guard()->login($user, true);
                 return true;
             } else {
                 $response = ["message" => "Invalid password"];
