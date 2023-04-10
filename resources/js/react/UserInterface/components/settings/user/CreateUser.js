@@ -4,7 +4,6 @@ import {Redirect} from 'react-router-dom'
 
 import ErrorAlert from '../../../utils/ErrorAlert'
 import HttpClient from '../../../utils/HttpClient'
-import GoogleAnalyticsAccountSelect from "../../../utils/GoogleAnalyticsAccountSelect";
 import UserTeamNameSelect from "../../../utils/UserTeamNameSelect";
 import SpinningLoader from '../../../utils/SpinningLoader'
 import {Button} from 'reactstrap';
@@ -54,7 +53,7 @@ export default class CreateUser extends Component {
 
 
     changeHandler(e) {
-        console.log(e.target.name,"?????????")
+        // console.log(e.target.name,"?????????")
         this.setState({user: {...this.state.user, [e.target.name]: e.target.value}});
     }
 
@@ -90,6 +89,7 @@ export default class CreateUser extends Component {
                     this.setDefaultState();
                 });
 
+                console.log("responce >>>>>>>>>>>",response)
                 if(!this.props.userStartupConfig) {
                     // this.setState({redirectTo: "/settings/user"})
                     this.props.getUsers();

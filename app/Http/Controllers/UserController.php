@@ -71,6 +71,7 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
+
         $this->authorize('create', User::class);
         $parentUser = Auth::user();
 
@@ -182,11 +183,21 @@ class UserController extends Controller
 
         Mail::to($user)->send(new UserInviteMail($user));
 
+
         $gaAccountIds = [];
-        $gaProperties = GoogleAnalyticsProperty::whereIn('id',$request->google_analytics_property_id)->with(['googleAnalyticsAccount'])->get();
-        foreach($gaProperties as $property) {
-            $gaAccountIds[] = $property->google_analytics_account->id;
+        $gaProperties = GoogleAnalyticsProperty::whereIn('id', $request->google_analytics_property_id)->with(['googleAnalyticsAccount'])->get();
+
+        foreach ($gaProperties as $property) {
+            $gaAccountIds[] = $property->googleAnalyticsAccount->id;
         }
+
+
+//        $gaAccountIds = [];
+//        $gaProperties = GoogleAnalyticsProperty::whereIn('id',$request->google_analytics_property_id)->with(['googleAnalyticsAccount'])->get();
+//        Log::info('Variable value: ');
+//        foreach($gaProperties as $property) {
+//            $gaAccountIds[] = $property->google_analytics_account->id;
+//        }
 
         if ($gaAccountIds !== null && !in_array("", $gaAccountIds)) {
             foreach($gaAccountIds as $gAAId) {
