@@ -136,7 +136,7 @@ const ShopifyStoreConfig = (props) => {
                     {products?.map((product) => {
                         return (
                             <label className="themeNewCheckbox d-flex align-items-center justify-content-start textDark" key={product}>
-                                <input value={product} type="checkbox" name='product-row' />
+                                <input value={product} type="checkbox" defaultChecked={true} name='product-row' />
                                 <span>{product}</span>
                             </label>
                         )
