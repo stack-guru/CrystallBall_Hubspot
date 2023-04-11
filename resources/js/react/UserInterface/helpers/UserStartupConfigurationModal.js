@@ -265,14 +265,14 @@ export default class UserStartupConfigurationModal extends Component {
                                     </svg>
                                 </span>*/}
                         </div>
-                        <div className='chromeExtensionContent d-flex flex-row-reverse align-items-center'>
-                            <div className='pl-4 flex-shrink-0'><img src="./chrome-01.svg"/></div>
+                        <div className='chromeExtensionContent d-flex flex-row-reverse align-items-center mb-3'>
+                            <div className='pl-4 flex-shrink-1'><img style={{width: 221}} src="./chrome-01.svg"/></div>
                             <div className='flex-grow-1 d-flex flex-column'>
-                                <span className="text-center">Download Now <span className="emoji-up-down">👇</span></span>
+                                {/*<span className="text-center">Download Now <span className="emoji-up-down">👇</span></span>
                                 <a href="https://chrome.google.com/webstore/detail/automated-google-analytic/jfkimpgkmamkdhamnhabohpeaplbpmom?hl=en"
                                    target="_blank">
-                                    <strong><img src="./chromeExtension.svg"/></strong>
-                                </a>
+                                    <strong><img alt={"chromeExtension"} style={{width: 221}} src="./chromeExtension.svg"/></strong>
+                                </a>*/}
                                 <p>Install our extension, It's like a sticky note on your data charts.</p>
                                 <ul>
                                     <li>
@@ -289,6 +289,13 @@ export default class UserStartupConfigurationModal extends Component {
                                     </li>
                                 </ul>
                             </div>
+                        </div>
+                        <div className="text-center">
+                            <a href="https://chrome.google.com/webstore/detail/automated-google-analytic/jfkimpgkmamkdhamnhabohpeaplbpmom?hl=en"
+                               target="_blank">
+                                <img alt={"chromeExtension"}
+                                     src="./chromeExtension.svg"/>
+                            </a>
                         </div>
                         <div className='popupBtnBox d-flex justify-content-between align-items-center'>
                             <Button onClick={() => {
@@ -442,7 +449,8 @@ export default class UserStartupConfigurationModal extends Component {
                                 </span>*/}
 
                         </div>
-                        <p>Automated annotations ensure that critical events <br />are captured and logged. You can edit and add <br /> more from the Apps Market easily.</p>
+                        <p>Automated annotations ensure that critical events <br/>are captured and logged. You can edit
+                            and add <br/> more from the Apps Market easily.</p>
                         <div className='connectRecommendedApp d-flex justify-content-center align-items-center'>
                             <AppsMarket
                                 userStartupConfig={true}
