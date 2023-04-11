@@ -178,7 +178,10 @@ export default class CreateUser extends Component {
                                                            id="google_analytics_property_id" className="gray_clr"
                                                            // value={this.state.annotation.google_analytics_property_id}
                                                            onChangeCallback={this.changeHandler}
-                                                           placeholder="Select Properties"
+                                                           placeholder="Select Properties" components={{
+                                DropdownIndicator: () => null,
+                                IndicatorSeparator: () => null
+                            }}
                                                             multiple
                                                            currentPricePlan={this.props.user.price_plan}
                             />

@@ -364,7 +364,7 @@ class Main extends React.Component {
                                     showUpgradePopup: true,
                                     upgradePopupType: popupType
                                 })} user={this.state.user}
-                                    currentPricePlan={this.state.user.price_plan}
+                                    currentPricePlan={this.state.price_plan}
                                 />
                             </Route>
                             <Route exact path="/settings/user/:id?/edit" refresh={true}
@@ -372,6 +372,7 @@ class Main extends React.Component {
                                        showUpgradePopup: true,
                                        upgradePopupType: popupType
                                    })} routeParams={routeParams}/>}
+                                   currentPricePlan={this.state.user.price_plan}
                             />
                             <Route exact path="/settings/custom-price-plan/:code?" refresh={true}
                                    render={(routeParams) =>

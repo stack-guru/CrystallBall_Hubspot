@@ -81,7 +81,6 @@ export default class IndexUsers extends Component {
         .then(
             (response) => {
                 this.setState({ users: response.data.users });
-                console.log(response.data.users,"??????????????")
             },
             (err) => {
                 this.setState({ errors: err.response.data });

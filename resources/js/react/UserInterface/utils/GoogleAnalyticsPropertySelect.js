@@ -34,8 +34,8 @@ export default class GoogleAnalyticsPropertySelect extends Component {
             }
             this.setState({ allProperties: options });
         });
-        console.log("All Properties");
-        console.log(this.state.allProperties);
+        // console.log("All Properties");
+        // console.log(this.state.allProperties);
     }
 
     componentDidUpdate(prevProps) {
@@ -199,7 +199,9 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                     </Modal>
 
                     <div className="themeNewInputStyle position-relative inputWithIcon">
-                        <i className="icon fa"><img src='/icon-plus.svg' /></i>
+                         <i className="icon fa">
+                             <img src='/icon-plus.svg' />
+                         </i>
                         <Select
                             menuPosition={'fixed'}
                             onFocus={(e) => {
