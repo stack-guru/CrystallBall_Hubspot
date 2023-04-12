@@ -4,11 +4,11 @@ import {Redirect} from 'react-router-dom'
 
 import ErrorAlert from '../../../utils/ErrorAlert'
 import HttpClient from '../../../utils/HttpClient'
-import GoogleAnalyticsAccountSelect from "../../../utils/GoogleAnalyticsAccountSelect";
 import UserTeamNameSelect from "../../../utils/UserTeamNameSelect";
 import SpinningLoader from '../../../utils/SpinningLoader'
 import {Button} from 'reactstrap';
 import CreatableSelect from "react-select/creatable";
+import GoogleAnalyticsPropertySelect from "../../../utils/GoogleAnalyticsPropertySelect";
 
 export default class CreateUser extends Component {
     constructor(props) {
@@ -17,7 +17,9 @@ export default class CreateUser extends Component {
         this.state = {
             user: {
                 name: '', email: '', password: '', password_confirmation: '', user_level: 'admin', department: '',
-                google_analytics_account_id: [""], team_name: ""
+                // google_analytics_account_id: [""],
+                google_analytics_property_id: [""],
+                team_name: ""
             },
             errors: undefined,
             redirectTo: null,
@@ -51,11 +53,13 @@ export default class CreateUser extends Component {
 
 
     changeHandler(e) {
+        // console.log(e.target.name,"?????????")
         this.setState({user: {...this.state.user, [e.target.name]: e.target.value}});
     }
 
     getUsers() {
         HttpClient.get(`/settings/user`)
+        // HttpClient.get('/ui/settings/google-analytics-property?keyword=' + keyword)
             .then(
                 (response) => {
                     // filter out unique department names from response.data.users
@@ -85,6 +89,7 @@ export default class CreateUser extends Component {
                     this.setDefaultState();
                 });
 
+                // console.log("responce >>>>>>>>>>>",response)
                 if(!this.props.userStartupConfig) {
                     // this.setState({redirectTo: "/settings/user"})
                     this.props.getUsers();
@@ -169,12 +174,24 @@ export default class CreateUser extends Component {
 
                     <div className='grid2layout'>
                         <div className="themeNewInputStyle">
-                            <GoogleAnalyticsAccountSelect name="google_analytics_account_id"
-                                                          id="google_analytics_account_id"
-                                                          value={this.state.user.google_analytics_account_id}
-                                                          onChangeCallback={this.changeHandler}
-                                                          placeholder="Select Properties"
-                                                          multiple></GoogleAnalyticsAccountSelect>
+                            <GoogleAnalyticsPropertySelect name="google_analytics_property_id"
+                                                           id="google_analytics_property_id" className="gray_clr"
+                                                           // value={this.state.annotation.google_analytics_property_id}
+                                                           onChangeCallback={this.changeHandler}
+                                                           placeholder="Select Properties" components={{
+                                DropdownIndicator: () => null,
+                                IndicatorSeparator: () => null
+                            }}
+                                                            multiple
+                                                           currentPricePlan={this.props.user.price_plan}
+                            />
+
+                            {/*<GoogleAnalyticsAccountSelect name="google_analytics_account_id"*/}
+                            {/*                              id="google_analytics_account_id"*/}
+                            {/*                              value={this.state.user.google_analytics_account_id}*/}
+                            {/*                              onChangeCallback={this.changeHandler}*/}
+                            {/*                              placeholder="Select Properties"*/}
+                            {/*                              multiple></GoogleAnalyticsAccountSelect>*/}
                         </div>
 
                         <div className="themeNewInputStyle">

@@ -5,6 +5,7 @@ import HttpClient from '../../../utils/HttpClient'
 import ErrorAlert from '../../../utils/ErrorAlert'
 import GoogleAnalyticsAccountSelect from "../../../utils/GoogleAnalyticsAccountSelect";
 import UserTeamNameSelect from "../../../utils/UserTeamNameSelect";
+import GoogleAnalyticsPropertySelect from "../../../utils/GoogleAnalyticsPropertySelect";
 
 export default class EditUser extends Component {
     constructor(props) {
@@ -13,7 +14,8 @@ export default class EditUser extends Component {
         this.state = {
             user: {
                 name: '', email: '', password: '', password_confirmation: '', user_level: 'admin', department: '',
-                google_analytics_account_id: [""], team_name: ""
+                google_analytics_account_id: [""],
+                google_analytics_property_id: [""], team_name: ""
             },
             showConfirmPassword: false,
             showPassword: false,
@@ -30,9 +32,12 @@ export default class EditUser extends Component {
             HttpClient.get(`/settings/user/${userId}`)
                 .then(response => {
                     let uGAAIds = response.data.user.user_ga_accounts.map(uGAAA => uGAAA.google_analytics_account_id);
+                    // let uGAAIds = response.data.user.user_ga_accounts.map(uGAAA => uGAAA.google_analytics_property_id);
                     if (uGAAIds[0] == null) uGAAIds = [""];
                     this.setState({ user: { ...response.data.user, google_analytics_account_id: uGAAIds } });
+                    // this.setState({ user: { ...response.data.user, google_analytics_property_id: uGAAIds } });
                     this.props.getUsers();
+                    console.log(response,'?????   in edit user script')
                 }, (err) => {
                     this.setState({ errors: (err.response).data });
                 }).catch(err => {
@@ -100,7 +105,24 @@ export default class EditUser extends Component {
                     </div>
                     <div className='grid2layout'>
                         <div className="themeNewInputStyle">
-                            <GoogleAnalyticsAccountSelect name="google_analytics_account_id" id="google_analytics_account_id" value={this.state.user.google_analytics_account_id} onChangeCallback={this.changeHandler} placeholder="Select GA Accounts" multiple></GoogleAnalyticsAccountSelect>
+                            <GoogleAnalyticsPropertySelect name="google_analytics_property_id"
+                                                           id="google_analytics_property_id" className="gray_clr"
+                                                           // value={this.state.annotation.google_analytics_property_id}
+                                                           onChangeCallback={this.changeHandler}
+                                                           placeholder="Select Properties" components={{
+                                DropdownIndicator: () => null,
+                                IndicatorSeparator: () => null
+                            }}
+                                                           multiple
+                                                           // currentPricePlan={this.props.user.price_plan}
+                            />
+                            {/*<GoogleAnalyticsAccountSelect*/}
+                            {/*name="google_analytics_account_id"*/}
+                            {/*id="google_analytics_account_id"*/}
+                            {/*value={this.state.user.google_analytics_account_id}*/}
+                            {/*onChangeCallback={this.changeHandler}*/}
+                            {/*placeholder="Select GA Accounts" multiple>*/}
+                            {/*</GoogleAnalyticsAccountSelect>*/}
                         </div>
                         <div className="themeNewInputStyle">
                             <UserTeamNameSelect name="team_name" id="team_name" value={this.state.user.team_name} onChangeCallback={this.changeHandler} placeholder="Select Team or Create"></UserTeamNameSelect>

@@ -57,6 +57,7 @@ export default class EditAnnotation extends React.Component {
                     let gAPIds = response.data.annotation.annotation_ga_properties.map(agAPA => agAPA.google_analytics_property_id);
                     if (gAPIds[0] == null) gAPIds = [""];
                     this.setState({ isBusy: false, annotation: { ...response.data.annotation, google_analytics_property_id: gAPIds }, googleAnnotationProperties: gAPs });
+                    // console.log(response,"????????????????")
                 }, (err) => {
 
                     this.setState({ isBusy: false, errors: (err.response).data });
