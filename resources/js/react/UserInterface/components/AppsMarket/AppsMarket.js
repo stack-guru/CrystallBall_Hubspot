@@ -1809,270 +1809,8 @@ class AppsMarket extends React.Component {
     }
 
     serviceStatusHandler(e) {
-        if (this.props.user.price_plan.has_data_sources) {
-            if (e.persist) {
-                e.persist();
-            }
-
-            if (e.target.name == "is_ds_holidays_enabled" && e.target.checked) {
-                this.sectionToggler("holidays");
-                this.updateUserService(e);
-            } else if (
-                e.target.name == "is_ds_holidays_enabled" &&
-                !e.target.checked
-            ) {
-                this.sectionToggler(null);
-                this.updateUserService(e);
-            }
-            if (
-                e.target.name == "is_ds_retail_marketing_enabled" &&
-                e.target.checked
-            ) {
-                this.sectionToggler("retail_marketings");
-                this.updateUserService(e);
-            } else if (
-                e.target.name == "is_ds_retail_marketing_enabled" &&
-                !e.target.checked
-            ) {
-                this.sectionToggler(null);
-                this.updateUserService(e);
-            }
-            if (
-                e.target.name == "is_ds_weather_alerts_enabled" &&
-                e.target.checked
-            ) {
-                this.sectionToggler("weather_alerts");
-                this.updateUserService(e);
-            } else if (
-                e.target.name == "is_ds_weather_alerts_enabled" &&
-                !e.target.checked
-            ) {
-                this.sectionToggler(null);
-                this.updateUserService(e);
-            }
-            if (
-                e.target.name == "is_ds_google_alerts_enabled" &&
-                e.target.checked
-            ) {
-                this.sectionToggler("google_alerts");
-                this.updateUserService(e);
-            } else if (
-                e.target.name == "is_ds_google_alerts_enabled" &&
-                !e.target.checked
-            ) {
-                this.sectionToggler(null);
-                this.updateUserService(e);
-            }
-            if (
-                e.target.name == "is_ds_web_monitors_enabled" &&
-                e.target.checked
-            ) {
-                this.sectionToggler("web_monitors");
-                this.updateUserService(e);
-            } else if (
-                e.target.name == "is_ds_web_monitors_enabled" &&
-                !e.target.checked
-            ) {
-                this.sectionToggler(null);
-                this.updateUserService(e);
-            }
-            if (
-                e.target.name == "is_ds_wordpress_updates_enabled" &&
-                e.target.checked
-            ) {
-                this.sectionToggler(null);
-                this.updateUserService(e);
-            } else if (
-                e.target.name == "is_ds_wordpress_updates_enabled" &&
-                !e.target.checked
-            ) {
-                this.sectionToggler(null);
-                this.updateUserService(e);
-            }
-
-            if (
-                e.target.name == "is_ds_shopify_annotation_enabled" &&
-                e.target.checked
-            ) {
-                this.sectionToggler(null);
-                this.updateUserService(e);
-            } else if (
-                e.target.name == "is_ds_shopify_annotation_enabled" &&
-                !e.target.checked
-            ) {
-                this.sectionToggler(null);
-                this.updateUserService(e);
-            }
-            if (
-                e.target.name == "is_ds_google_algorithm_updates_enabled" &&
-                e.target.checked
-            ) {
-                this.sectionToggler("google_algorithm_updates");
-                this.updateUserService(e);
-            } else if (
-                e.target.name == "is_ds_google_algorithm_updates_enabled" &&
-                !e.target.checked
-            ) {
-                this.sectionToggler(null);
-                this.updateUserService(e);
-            }
-            if (
-                e.target.name == "is_ds_keyword_tracking_enabled" &&
-                e.target.checked
-            ) {
-                this.sectionToggler("keyword_tracking");
-                this.updateUserService(e);
-            } else if (
-                e.target.name == "is_ds_keyword_tracking_enabled" &&
-                !e.target.checked
-            ) {
-                this.sectionToggler(null);
-                this.updateUserService(e);
-            }
-
-            if (
-                e.target.name == "is_ds_apple_podcast_annotation_enabled" &&
-                e.target.checked
-            ) {
-                this.sectionToggler("apple_podcast");
-                this.updateUserService(e);
-            } else if (
-                e.target.name == "is_ds_apple_podcast_annotation_enabled" &&
-                !e.target.checked
-            ) {
-                this.sectionToggler(null);
-                this.updateUserService(e);
-            }
-            if (
-                e.target.name == "is_ds_instagram_tracking_enabled" &&
-                e.target.checked
-            ) {
-                if (this.state.userInstagramAccountsExists) {
-                    this.sectionToggler("instagram_tracking");
-                    this.updateUserService(e, this);
-                } else {
-                    swal.fire({
-                        customClass: {
-                            htmlContainer: "py-3",
-                        },
-                        showCloseButton: true,
-                        title: "Connect with Instagram",
-                        text: "Connect your Instagram account to create automatic annotations for new posts; when you reach a post goal or run campaigns..",
-                        confirmButtonClass:
-                            "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
-                        confirmButtonText:
-                            "<a href='/socialite/facebook' class='text-white'><i class='mr-2 fa fa-instagram'> </i>" +
-                            "Connect Instagram Account</a>",
-                    });
-                }
-            } else if (
-                e.target.name == "is_ds_instagram_tracking_enabled" &&
-                !e.target.checked
-            ) {
-                this.sectionToggler(null);
-                this.updateUserService(e);
-            }
-            if (
-                e.target.name == "is_ds_facebook_tracking_enabled" &&
-                e.target.checked
-            ) {
-                if (this.state.userFacebookAccountsExists) {
-                    this.sectionToggler("facebook_tracking");
-                    this.updateUserService(e, this);
-                } else {
-                    swal.fire({
-                        customClass: {
-                            htmlContainer: "py-3",
-                        },
-                        showCloseButton: true,
-                        title: "Connect with Facebook",
-                        text: "Connect your Facebook account to create automatic annotations for new posts; when you reach a post goal or run campaigns..",
-                        confirmButtonClass:
-                            "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
-                        confirmButtonText:
-                            "<a href='/socialite/facebook' class='text-white'><i class='mr-2 fa fa-facebook'> </i>" +
-                            "Connect Facebook Account</a>",
-                    });
-                }
-            } else if (
-                e.target.name == "is_ds_facebook_tracking_enabled" &&
-                !e.target.checked
-            ) {
-                this.sectionToggler(null);
-                this.updateUserService(e);
-            }
-
-            if (
-                e.target.name == "is_ds_bitbucket_tracking_enabled" &&
-                e.target.checked
-            ) {
-                if (this.state.userBitbucketAccountsExists) {
-                    this.sectionToggler("bitbucket_tracking");
-                    this.updateUserService(e, this);
-                } else {
-                    swal.fire({
-                        iconHtml: '<img src="/bitbucket-small.svg">',
-                        showCloseButton: true,
-                        title: "Connect with Bitbucket",
-                        text: "Connect your Bitbucket account to create automatic annotations for commits",
-                        confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
-                        confirmButtonText: "<a href='/socialite/bitbucket' class='text-white'><i class='mr-2 fa fa-bitbucket'> </i>" + "Connect Bitbucket Account</a>",
-                        customClass: {
-                            htmlContainer: "py-3",
-                        },
-                        customClass: {
-                            popup: "popupAlert",
-                            closeButton: "closeButtonTwitterAlert",
-                        },
-                    });
-                }
-            } else if (
-                e.target.name == "is_ds_bitbucket_tracking_enabled" &&
-                !e.target.checked
-            ) {
-                this.sectionToggler(null);
-                this.updateUserService(e);
-            }
-
-            if (
-                e.target.name == "is_ds_github_tracking_enabled" &&
-                e.target.checked
-            ) {
-                if (this.state.userGithubAccountsExists) {
-                    this.sectionToggler("github_tracking");
-                    this.updateUserService(e, this);
-                } else {
-                    swal.fire({
-                        iconHtml: '<img src="/github-small.svg">',
-                        showCloseButton: true,
-                        title: "Connect with Github",
-                        text: "Connect your github account to create automatic annotations for commits",
-                        confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
-                        confirmButtonText: "<a href='/socialite/github' class='text-white'><i class='mr-2 fa fa-github'> </i>" + "Connect Github Account</a>",
-                        customClass: {
-                            htmlContainer: "py-3",
-                        },
-                        customClass: {
-                            popup: "popupAlert",
-                            closeButton: "closeButtonTwitterAlert",
-                        },
-                    });
-                }
-            } else if (
-                e.target.name == "is_ds_github_tracking_enabled" &&
-                !e.target.checked
-            ) {
-                this.sectionToggler(null);
-                this.updateUserService(e);
-            }
-
-            if (e.target.name == "is_ds_twitter_tracking_enabled") {
-                this.updateUserService(e);
-                this.sectionToggler(
-                    e.target.checked ? "twitter_tracking" : null
-                );
-            }
-        } else {
+        if(this.props.user.price_plan.name == 'Trial Ended')
+        {
             if (e.target.name === 'is_ds_keyword_tracking_enabled') {
                 this.props.upgradePopup('rank-tracking-access')
             }
@@ -2111,22 +1849,325 @@ class AppsMarket extends React.Component {
             if (e.target.name === 'is_ds_shopify_annotation_enabled') {
                 this.props.upgradePopup('integrations')
             }
-        }
 
-        if (
-            e.target.name == "is_ds_wordpress_enabled" &&
-            e.target.checked
-        ) {
-            this.sectionToggler("wordpress"); // not sure about the parameter "wordpress", it was old logic
-            this.updateUserService(e);
-        } else if (
-            e.target.name == "is_ds_wordpress_enabled" &&
-            !e.target.checked
-        ) {
-            this.sectionToggler(null);
-            this.updateUserService(e);
+        }else{
+            if (this.props.user.price_plan.has_data_sources) {
+                if (e.persist) {
+                    e.persist();
+                }
+    
+                if (e.target.name == "is_ds_holidays_enabled" && e.target.checked) {
+                    this.sectionToggler("holidays");
+                    this.updateUserService(e);
+                } else if (
+                    e.target.name == "is_ds_holidays_enabled" &&
+                    !e.target.checked
+                ) {
+                    this.sectionToggler(null);
+                    this.updateUserService(e);
+                }
+                if (
+                    e.target.name == "is_ds_retail_marketing_enabled" &&
+                    e.target.checked
+                ) {
+                    this.sectionToggler("retail_marketings");
+                    this.updateUserService(e);
+                } else if (
+                    e.target.name == "is_ds_retail_marketing_enabled" &&
+                    !e.target.checked
+                ) {
+                    this.sectionToggler(null);
+                    this.updateUserService(e);
+                }
+                if (
+                    e.target.name == "is_ds_weather_alerts_enabled" &&
+                    e.target.checked
+                ) {
+                    this.sectionToggler("weather_alerts");
+                    this.updateUserService(e);
+                } else if (
+                    e.target.name == "is_ds_weather_alerts_enabled" &&
+                    !e.target.checked
+                ) {
+                    this.sectionToggler(null);
+                    this.updateUserService(e);
+                }
+                if (
+                    e.target.name == "is_ds_google_alerts_enabled" &&
+                    e.target.checked
+                ) {
+                    this.sectionToggler("google_alerts");
+                    this.updateUserService(e);
+                } else if (
+                    e.target.name == "is_ds_google_alerts_enabled" &&
+                    !e.target.checked
+                ) {
+                    this.sectionToggler(null);
+                    this.updateUserService(e);
+                }
+                if (
+                    e.target.name == "is_ds_web_monitors_enabled" &&
+                    e.target.checked
+                ) {
+                    this.sectionToggler("web_monitors");
+                    this.updateUserService(e);
+                } else if (
+                    e.target.name == "is_ds_web_monitors_enabled" &&
+                    !e.target.checked
+                ) {
+                    this.sectionToggler(null);
+                    this.updateUserService(e);
+                }
+                if (
+                    e.target.name == "is_ds_wordpress_updates_enabled" &&
+                    e.target.checked
+                ) {
+                    this.sectionToggler(null);
+                    this.updateUserService(e);
+                } else if (
+                    e.target.name == "is_ds_wordpress_updates_enabled" &&
+                    !e.target.checked
+                ) {
+                    this.sectionToggler(null);
+                    this.updateUserService(e);
+                }
+    
+                if (
+                    e.target.name == "is_ds_shopify_annotation_enabled" &&
+                    e.target.checked
+                ) {
+                    this.sectionToggler(null);
+                    this.updateUserService(e);
+                } else if (
+                    e.target.name == "is_ds_shopify_annotation_enabled" &&
+                    !e.target.checked
+                ) {
+                    this.sectionToggler(null);
+                    this.updateUserService(e);
+                }
+                if (
+                    e.target.name == "is_ds_google_algorithm_updates_enabled" &&
+                    e.target.checked
+                ) {
+                    this.sectionToggler("google_algorithm_updates");
+                    this.updateUserService(e);
+                } else if (
+                    e.target.name == "is_ds_google_algorithm_updates_enabled" &&
+                    !e.target.checked
+                ) {
+                    this.sectionToggler(null);
+                    this.updateUserService(e);
+                }
+                if (
+                    e.target.name == "is_ds_keyword_tracking_enabled" &&
+                    e.target.checked
+                ) {
+                    this.sectionToggler("keyword_tracking");
+                    this.updateUserService(e);
+                } else if (
+                    e.target.name == "is_ds_keyword_tracking_enabled" &&
+                    !e.target.checked
+                ) {
+                    this.sectionToggler(null);
+                    this.updateUserService(e);
+                }
+    
+                if (
+                    e.target.name == "is_ds_apple_podcast_annotation_enabled" &&
+                    e.target.checked
+                ) {
+                    this.sectionToggler("apple_podcast");
+                    this.updateUserService(e);
+                } else if (
+                    e.target.name == "is_ds_apple_podcast_annotation_enabled" &&
+                    !e.target.checked
+                ) {
+                    this.sectionToggler(null);
+                    this.updateUserService(e);
+                }
+                if (
+                    e.target.name == "is_ds_instagram_tracking_enabled" &&
+                    e.target.checked
+                ) {
+                    if (this.state.userInstagramAccountsExists) {
+                        this.sectionToggler("instagram_tracking");
+                        this.updateUserService(e, this);
+                    } else {
+                        swal.fire({
+                            customClass: {
+                                htmlContainer: "py-3",
+                            },
+                            showCloseButton: true,
+                            title: "Connect with Instagram",
+                            text: "Connect your Instagram account to create automatic annotations for new posts; when you reach a post goal or run campaigns..",
+                            confirmButtonClass:
+                                "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                            confirmButtonText:
+                                "<a href='/socialite/facebook' class='text-white'><i class='mr-2 fa fa-instagram'> </i>" +
+                                "Connect Instagram Account</a>",
+                        });
+                    }
+                } else if (
+                    e.target.name == "is_ds_instagram_tracking_enabled" &&
+                    !e.target.checked
+                ) {
+                    this.sectionToggler(null);
+                    this.updateUserService(e);
+                }
+                if (
+                    e.target.name == "is_ds_facebook_tracking_enabled" &&
+                    e.target.checked
+                ) {
+                    if (this.state.userFacebookAccountsExists) {
+                        this.sectionToggler("facebook_tracking");
+                        this.updateUserService(e, this);
+                    } else {
+                        swal.fire({
+                            customClass: {
+                                htmlContainer: "py-3",
+                            },
+                            showCloseButton: true,
+                            title: "Connect with Facebook",
+                            text: "Connect your Facebook account to create automatic annotations for new posts; when you reach a post goal or run campaigns..",
+                            confirmButtonClass:
+                                "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                            confirmButtonText:
+                                "<a href='/socialite/facebook' class='text-white'><i class='mr-2 fa fa-facebook'> </i>" +
+                                "Connect Facebook Account</a>",
+                        });
+                    }
+                } else if (
+                    e.target.name == "is_ds_facebook_tracking_enabled" &&
+                    !e.target.checked
+                ) {
+                    this.sectionToggler(null);
+                    this.updateUserService(e);
+                }
+    
+                if (
+                    e.target.name == "is_ds_bitbucket_tracking_enabled" &&
+                    e.target.checked
+                ) {
+                    if (this.state.userBitbucketAccountsExists) {
+                        this.sectionToggler("bitbucket_tracking");
+                        this.updateUserService(e, this);
+                    } else {
+                        swal.fire({
+                            iconHtml: '<img src="/bitbucket-small.svg">',
+                            showCloseButton: true,
+                            title: "Connect with Bitbucket",
+                            text: "Connect your Bitbucket account to create automatic annotations for commits",
+                            confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                            confirmButtonText: "<a href='/socialite/bitbucket' class='text-white'><i class='mr-2 fa fa-bitbucket'> </i>" + "Connect Bitbucket Account</a>",
+                            customClass: {
+                                htmlContainer: "py-3",
+                            },
+                            customClass: {
+                                popup: "popupAlert",
+                                closeButton: "closeButtonTwitterAlert",
+                            },
+                        });
+                    }
+                } else if (
+                    e.target.name == "is_ds_bitbucket_tracking_enabled" &&
+                    !e.target.checked
+                ) {
+                    this.sectionToggler(null);
+                    this.updateUserService(e);
+                }
+    
+                if (
+                    e.target.name == "is_ds_github_tracking_enabled" &&
+                    e.target.checked
+                ) {
+                    if (this.state.userGithubAccountsExists) {
+                        this.sectionToggler("github_tracking");
+                        this.updateUserService(e, this);
+                    } else {
+                        swal.fire({
+                            iconHtml: '<img src="/github-small.svg">',
+                            showCloseButton: true,
+                            title: "Connect with Github",
+                            text: "Connect your github account to create automatic annotations for commits",
+                            confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                            confirmButtonText: "<a href='/socialite/github' class='text-white'><i class='mr-2 fa fa-github'> </i>" + "Connect Github Account</a>",
+                            customClass: {
+                                htmlContainer: "py-3",
+                            },
+                            customClass: {
+                                popup: "popupAlert",
+                                closeButton: "closeButtonTwitterAlert",
+                            },
+                        });
+                    }
+                } else if (
+                    e.target.name == "is_ds_github_tracking_enabled" &&
+                    !e.target.checked
+                ) {
+                    this.sectionToggler(null);
+                    this.updateUserService(e);
+                }
+    
+                if (e.target.name == "is_ds_twitter_tracking_enabled") {
+                    this.updateUserService(e);
+                    this.sectionToggler(
+                        e.target.checked ? "twitter_tracking" : null
+                    );
+                }
+            } else {
+                if (e.target.name === 'is_ds_keyword_tracking_enabled') {
+                    this.props.upgradePopup('rank-tracking-access')
+                }
+                if (e.target.name === 'is_ds_google_alerts_enabled') {
+                    this.props.upgradePopup('news-alert')
+                }
+    
+                if (e.target.name === 'is_ds_keyword_tracking_enabled') {
+                    this.props.upgradePopup('rank-tracking-access')
+                }
+    
+                if (e.target.name === 'is_ds_weather_alerts_enabled' || e.target.name === 'is_ds_google_algorithm_updates_enabled') {
+                    this.props.upgradePopup('integrations')
+                }
+    
+                if (e.target.name === 'is_ds_twitter_tracking_enabled') {
+                    this.props.upgradePopup('social-media')
+                }
+    
+                if (e.target.name === 'is_ds_apple_podcast_annotation_enabled') {
+                    this.props.upgradePopup('integrations')
+                }
+    
+                if (e.target.name === 'is_ds_github_tracking_enabled' || e.target.name === 'is_ds_bitbucket_tracking_enabled') {
+                    this.props.upgradePopup('integrations')
+                }
+    
+                if (e.target.name === 'is_ds_retail_marketing_enabled' || e.target.name === 'is_ds_holidays_enabled') {
+                    this.props.upgradePopup('integrations')
+                }
+    
+                if (e.target.name === 'is_ds_web_monitors_enabled') {
+                    this.props.upgradePopup('website-monitoring-upgrade')
+                }
+    
+                if (e.target.name === 'is_ds_shopify_annotation_enabled') {
+                    this.props.upgradePopup('integrations')
+                }
+            }
+            if (
+                e.target.name == "is_ds_wordpress_enabled" &&
+                e.target.checked
+            ) {
+                this.sectionToggler("wordpress"); // not sure about the parameter "wordpress", it was old logic
+                this.updateUserService(e);
+            } else if (
+                e.target.name == "is_ds_wordpress_enabled" &&
+                !e.target.checked
+            ) {
+                this.sectionToggler(null);
+                this.updateUserService(e);
+            }
         }
-
     }
 
     userDataSourceAddHandler(dataSource) {

@@ -146,7 +146,8 @@ export default class IndexUsers extends Component {
                                 {this.props.user.user_level == "admin" ? (
                                     <>
                                         {this.props.user.price_plan
-                                            .user_per_ga_account_count > -1 ? (
+                                            .user_per_ga_account_count > -1 && this.props.user.price_plan
+                                            .name != "Trial Ended" ? (
                                             <a onClick={() => this.setState({ addUserPopup: true })} href="javascript:void(0);" className="btn-adduser d-flex align-items-center justify-content-center">
                                                 <i className="fa fa-plus"></i>
                                                 <span>Add User</span>
