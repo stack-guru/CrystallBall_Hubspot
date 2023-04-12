@@ -656,7 +656,7 @@ class IndexAnnotations extends React.Component {
 
                                         return (
                                             <div className={`annotionRow d-flex align-items-center ${this.state.selectedRows.includes(anno.added_by) && "record-checked"}`} data-diff-in-milliseconds={diffTime} style={{ 'borderLeftColor': borderLeftColor }} id={rowId}
-                                                key={idx + (anno.added_by || "").toString()}
+                                                key={anno.added_by.toString()}
                                                 onClick={
                                                     () => {
                                                         if (anno.added_by && this.state.enableSelect) {
