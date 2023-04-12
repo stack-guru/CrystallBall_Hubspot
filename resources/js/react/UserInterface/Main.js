@@ -143,7 +143,7 @@ class Main extends React.Component {
             "/settings/payment-history",
             "/settings/payment-detail/create",
         ].indexOf(this.props.location.pathname) == -1 && this.state.user.price_plan.name == "Trial Ended") {
-            return <Redirect to={"/settings/price-plans"}/>
+            // return <Redirect to={"/settings/price-plans"}/>
         }
 
         if (["/settings/change-password"].indexOf(this.props.location.pathname) == -1 && this.state.user.do_require_password_change == true) {
@@ -565,10 +565,6 @@ class Main extends React.Component {
         //     httpRequestWithCredentials: false,
         //     renumerateIRIElements: false
         // })
-
-        window.onbeforeunload = function () {
-            window.scrollTo(0, 0);
-        }
 
         let loader = document.getElementById("loader");
         loader.classList.remove("fadeOut")

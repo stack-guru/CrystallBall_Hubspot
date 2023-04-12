@@ -77,7 +77,8 @@ export default class CreateAnnotation extends React.Component {
         {
             removeStateFromLocalStorage("CreateAnnotation");
             this.props.togglePopup('');
-            this.setState({redirectTo: "/settings/price-plans"});
+            this.props.upgradePopup('more-annotations')
+            // this.setState({redirectTo: "/settings/price-plans"});
         }
         this.loadCategoriesList();
         this.loadUserAnnotationColors();
