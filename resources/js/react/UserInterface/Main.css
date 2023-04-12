@@ -3164,7 +3164,9 @@ body {
     margin: 0;
 }
 
-.selectGoogleAccount .css-1hb7zxy-IndicatorsContainer, .modal-editAnnotation .css-1hb7zxy-IndicatorsContainer {
+.selectGoogleAccount .css-1hb7zxy-IndicatorsContainer, 
+.ga-account-select-holder .css-1hb7zxy-IndicatorsContainer, 
+.modal-editAnnotation .css-1hb7zxy-IndicatorsContainer {
     display: none;
 }
 
@@ -5778,6 +5780,15 @@ div[data-tour-elem="controls"]
 
 .text-orange {
     color: #F7751E;
+}
+.tracker-content > div {
+    width: 100%;
+}
+.tracker-content .ga-account-select-holder {
+    width: 100%;
+}
+.hide-icon .css-tlfecz-indicatorContainer {
+    display: none;
 }
 
 @media screen and (max-width: 1439px) {

@@ -1,5 +1,6 @@
 import React from 'react';
 import HttpClient from '../utils/HttpClient';
+import GoogleAnalyticsPropertySelect from "../utils/GoogleAnalyticsPropertySelect";
 
 export default class DSGAUDatesSelect extends React.Component {
     constructor(props) {
@@ -46,13 +47,30 @@ export default class DSGAUDatesSelect extends React.Component {
         return (
             <div className="apps-bodyContent">
                 <h4 className='themeNewTitle'>Select mode:</h4>
-                <div className="status input-group mb-3 themeNewInputGroup">
-                    <select className="form-control" placeholder="Search" value={this.props.ds_data.length ? (this.props.ds_data[0].status ? this.props.ds_data[0].status : "") : ""} name="searchStatus" onChange={this.selectedStatusChanged}>
-                        <option value="">Both</option>
-                        <option value="unconfirmed">Unconfirmed</option>
-                        <option value="confirmed">Confirmed</option>
-                    </select>
+                <div className="d-flex align-items-center justify-content-between mb-3">
+                    <div className="input-group themeNewInputGroup">
+                        <select className="form-control" placeholder="Search" value={this.props.ds_data.length ? (this.props.ds_data[0].status ? this.props.ds_data[0].status : "") : ""} name="searchStatus" onChange={this.selectedStatusChanged}>
+                            <option value="">Both</option>
+                            <option value="unconfirmed">Unconfirmed</option>
+                            <option value="confirmed">Confirmed</option>
+                        </select>
+                    </div>
+
+                    <span className="betweentext">for</span>
+                    <GoogleAnalyticsPropertySelect
+                        className="themeNewselect hide-icon"
+                        name="ga_property_id"
+                        id="ga_property_id"
+                        currentPricePlan={this.props.user.price_plan}
+                        value={this.props.gaPropertyId}
+                        onChangeCallback={(gAP) => {
+                            this.props.updateGAPropertyId(gAP.target.value || null)
+                        }}
+                        placeholder="Select GA Properties"
+                        isClearable={true}
+                    />
                 </div>
+
                 <div className="checkBoxList d-flex flex-column">
                     {
                         this.state.google_algorithm_updates.map(gAU => {

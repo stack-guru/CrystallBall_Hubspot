@@ -80,9 +80,16 @@ class Apple extends React.Component {
                 />
 
                 <ApplePodcastConfig 
+                    user={this.props.user}
                     updateUserService={this.props.updateUserService}
+                    onUncheckCallback={this.props.userDataSourceDeleteHandler}
                     updateTrackingStatus={this.updateTrackingStatus.bind(this)}
-                    upgradePopup={this.props.upgradePopup} limitReached={this.state.applePodcast?.length >= (this.props.user.price_plan.apple_podcast_monitor_count * 1)} existingPodcast={this.state.applePodcast} getExistingPodcasts={this.getExistingPodcasts} gaPropertyId={this.props.ga_property_id}/>
+                    upgradePopup={this.props.upgradePopup} 
+                    limitReached={this.state.applePodcast?.length >= (this.props.user.price_plan.apple_podcast_monitor_count * 1)} 
+                    existingPodcast={this.state.applePodcast} 
+                    getExistingPodcasts={this.getExistingPodcasts} 
+                    updateGAPropertyId={this.props.updateGAPropertyId}
+                    gaPropertyId={this.props.ga_property_id}/>
                 </>
                 }
             </div>
