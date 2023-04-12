@@ -570,6 +570,10 @@ class Main extends React.Component {
         //     renumerateIRIElements: false
         // })
 
+        window.onbeforeunload = function () {
+            window.scrollTo(0, 0);
+        }
+
         let loader = document.getElementById("loader");
         loader.classList.remove("fadeOut")
         this.loadUser();

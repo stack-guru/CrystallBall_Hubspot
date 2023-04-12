@@ -191,36 +191,38 @@ class AnnotationController extends Controller
         }
 
         $userId = $user->id;
-
+        $is_annotation_create = false;
 
         DB::beginTransaction();
-        $annotation = new Annotation;
-        $annotation->fill($request->validated());
-        $annotation->show_at = $request->show_at ? Carbon::parse($request->show_at) : Carbon::now();
-        $annotation->user_id = $userId;
-        $annotation->is_enabled = true;
-        $annotation->added_by = 'manual';
-        $annotation->save();
 
         // Check if google analytics property ids are provided in the request
         if ($request->google_analytics_property_id !== null && !in_array("", $request->google_analytics_property_id)) {
             // Fetch current user google analytics property ids in an array for validation
-            $googleAnalyticsPropertyIds = GoogleAnalyticsProperty::ofCurrentUser()->get()->pluck('id')->toArray();
+            $googleAnalyticsPropertyIds = GoogleAnalyticsProperty::whereIn('user_id', $user->getAllGroupUserIdsArray())->get()->pluck('id')->toArray();
 
             foreach ($request->google_analytics_property_id as $gAPId) {
                 // Add record only if the mentioned google analytics property id belongs to current user
                 if (in_array($gAPId, $googleAnalyticsPropertyIds)) {
-
                     $googleAnalyticsProperty = GoogleAnalyticsProperty::find($gAPId);
                     if (!$googleAnalyticsProperty->is_in_use) {
                         if ($user->isPricePlanGoogleAnalyticsPropertyLimitReached()) {
                             DB::rollback();
-                            abort(402, "You have reached the properties plan's limit.\nPlease go to the dashboard to upgrade your plan.");
+                            // There are 2 different messages to send for different price plan users.
+                            if ($user->pricePlan->name == PricePlan::PRO) abort(402, 'You\'ve reached the maximum properties for this plan. <a href="' . RouteServiceProvider::PRODUCT_WEBSITE_PRICE_PLAN_PAGE . '" target="_blank" >Contact sales to upgrade your plan.</a>');
+                            abort(402, 'You\'ve reached the maximum properties for this plan. <a href="' . route('settings.price-plans') . '" target="_blank" >Upgrade your plan.</a>');
                         }
                     }
                     $googleAnalyticsProperty->is_in_use = true;
                     $googleAnalyticsProperty->save();
-
+                    
+                    $annotation = new Annotation;
+                    $annotation->fill($request->validated());
+                    $annotation->show_at = $request->show_at ? Carbon::parse($request->show_at) : Carbon::now();
+                    $annotation->user_id = $userId;
+                    $annotation->is_enabled = true;
+                    $annotation->added_by = 'manual';
+                    $annotation->save();
+                    $is_annotation_create = true;
                     $aGAP = new AnnotationGaProperty;
                     $aGAP->annotation_id = $annotation->id;
                     $aGAP->google_analytics_property_id = $gAPId;
@@ -228,7 +230,17 @@ class AnnotationController extends Controller
                     $aGAP->save();
                 }
             }
-        } else {
+        } 
+        if(!$is_annotation_create)
+        {
+            $annotation = new Annotation;
+            $annotation->fill($request->validated());
+            $annotation->show_at = $request->show_at ? Carbon::parse($request->show_at) : Carbon::now();
+            $annotation->user_id = $userId;
+            $annotation->is_enabled = true;
+            $annotation->added_by = 'manual';
+            $annotation->save();
+            $is_annotation_create = true;
             $aGAP = new AnnotationGaProperty;
             $aGAP->annotation_id = $annotation->id;
             $aGAP->google_analytics_property_id = null;

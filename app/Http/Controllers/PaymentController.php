@@ -6,6 +6,7 @@ use App\Helpers\CheckUserUsageHelper;
 use App\Helpers\DowngradedUserHelper;
 use App\Helpers\UpgradedUserHelper;
 use App\Jobs\MarkSalesInFirstPromoter;
+use App\Mail\AdminFailedAttemptMail;
 use App\Mail\AdminPlanDowngradedMail;
 use App\Mail\AdminPlanUpgradedMail;
 use App\Models\Admin;
@@ -186,6 +187,13 @@ class PaymentController extends Controller
             // Attempting BlueSnap transaction
             $obj = $blueSnapService->createTransaction($price, null, $vaultedShopper['vaultedShopperId'], $request->pfToken);
             if ($obj['success'] == false) {
+                $planNotification = new PlanNotification();
+                $planNotification->user_id = $user->id;
+                $planNotification->type = 'Failed Attempts To Bill For '.$user->name;
+                $planNotification->text = $obj['message'];
+                $planNotification->save();
+                $admin = Admin::first();
+                Mail::to($admin)->cc('ron@crystalballinsight.com')->send(new AdminFailedAttemptMail($admin, $user,$obj['message']));
                 return response()->json(['success' => false, 'message' => $obj['message']], 422);
             }
 
@@ -199,6 +207,13 @@ class PaymentController extends Controller
             $transactionId = $obj['transactionId'];
             $verification = $blueSnapService->getTransaction($pricePlan, $transactionId);
             if ($verification['success'] == false) {
+                $planNotification = new PlanNotification();
+                $planNotification->user_id = $user->id;
+                $planNotification->type = 'Failed Attempts To Bill For '.$user->name;
+                $planNotification->text = $verification['message'];
+                $planNotification->save();
+                $admin = Admin::first();
+                Mail::to($admin)->cc('ron@crystalballinsight.com')->send(new AdminFailedAttemptMail($admin, $user,$verification['message']));
                 return response()->json(['success' => false, 'message' => $verification['message']], 422);
             }
 
@@ -237,6 +252,23 @@ class PaymentController extends Controller
             $user->is_billing_enabled = true;
         }
         $user->save();
+        UpgradedUserHelper::UpgradingUser($user,$pricePlan);
+        // A notification to system administrator of the purchase
+        $admin = Admin::first();
+        $notification = new PlanNotification();
+        $notification->user_id = $user->id;
+        if($pricePlan->price > $user->pricePlan->price)
+        {
+            $notification->type = 'Package Upgraded';
+            $notification->text = $user->name.' package upgraded to '.$pricePlan->name;
+            $notification->save();
+            Mail::to($admin)->cc('ron@crystalballinsight.com')->send(new AdminPlanUpgradedMail($admin, $user));
+        }else{ 
+            $notification->type = 'Package Downgraded';
+            $notification->text = $user->name.' package downgraded to '.$pricePlan->name;
+            $notification->save();
+            Mail::to($admin)->cc('ron@crystalballinsight.com')->send(new AdminPlanDowngradedMail($admin, $user));    
+        } 
         // Reflecting price plan purhcase to user's team accounts
         DB::table('users')->where('user_id', $user->id)->update(['price_plan_id' => $pricePlan->id, 'price_plan_expiry_date' => $pricePlanExpiryDate]);
         $user->refresh();
@@ -253,25 +285,6 @@ class PaymentController extends Controller
                 $sGS->addUserToMarketingList($user, "10 GAa Upgraded to PRO");
                 break;
         }
-
-        UpgradedUserHelper::UpgradingUser($user,$pricePlan);
-        // A notification to system administrator of the purchase
-        $downgrade_check = $this->checkExtraApps($request);
-        $admin = Admin::first();
-        $notification = new PlanNotification();
-        $notification->user_id = $user->id;
-        if($downgrade_check && count($downgrade_check['showAlerts']) > 0)
-        {
-            $notification->type = 'Package Downgraded';
-            $notification->text = $user->name.' package downgraded to '.$pricePlan->name;
-            $notification->save();
-            Mail::to($admin)->cc('ron@crystalballinsight.com')->send(new AdminPlanDowngradedMail($admin, $user));    
-        }else{
-            $notification->type = 'Package Upgraded';
-            $notification->text = $user->name.' package upgraded to '.$pricePlan->name;
-            $notification->save();
-            Mail::to($admin)->cc('ron@crystalballinsight.com')->send(new AdminPlanUpgradedMail($admin, $user));
-        } 
         if ($pricePlan->price) dispatch(new MarkSalesInFirstPromoter($user, $pricePlan, $price, $transactionId));
 
         return ['success' => true, 'transaction_id' => $transactionId];
