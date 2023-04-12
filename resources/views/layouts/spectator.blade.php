@@ -62,6 +62,11 @@
                             <a class="nav-link" href="{{ route('spectator.dashboard') }}">Dashboard</a>
                         </li>
 
+                        @if($permissions->contains('coupon'))
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{route('spectator.coupon.index')}}">Coupons</a>
+                        </li>
+                        @endif
                         @if($permissions->contains('price-plan-subscription'))
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('spectator.price-plan-subscription.index') }}">Payment History</a>
