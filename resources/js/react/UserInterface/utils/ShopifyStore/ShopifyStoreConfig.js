@@ -20,7 +20,7 @@ import {
 import GoogleAnalyticsPropertySelect from "../GoogleAnalyticsPropertySelect";
 
 const ShopifyStoreConfig = (props) => {
-    const [products, setProducts] = useState(['New Product', 'Updated Product', 'Removed Product']);
+    const products = ['New Product', 'Updated Product', 'Removed Product'];
     const [inputValue, setInputVale] = useState("");
     const [activeDeletePopover, setActiveDeletePopover] = useState("");
 

@@ -16,6 +16,15 @@ class Wordpress extends React.Component {
             token_name: '',
             redirectTo: null,
             userAnnotationColors: {},
+            events: [
+                'Wordpress Updates',
+                'Pages Created', 
+                'Pages Updated', 
+                'Pages Deleted',
+                'Posts Created',
+                'Posts Updated',
+                'Posts Deleted',
+            ],
         }
         this.generateAPIKey = this.generateAPIKey.bind(this)
         this.copyAccessToken = this.copyAccessToken.bind(this)
@@ -92,6 +101,21 @@ class Wordpress extends React.Component {
                     <div className="white-box">
                         <div className="contentBox">
                             <p className="mb-0">1. Install our plugin from <a href="https://wordpress.org/plugins/crystal-ball-insight/" target="_blank">Plugins</a> market</p>
+                        </div>
+                        <div className="contentBox">
+                            <p className="mb-0">Select events</p>
+
+                            <div className="checkboxes">
+                                {this.state.events?.map((event) => {
+                                    return (
+                                        <label className="themeNewCheckbox d-flex align-items-center justify-content-start textDark" key={event}>
+                                            <input value={event} type="checkbox" defaultChecked={true} name='event-row' />
+                                            <span>{event}</span>
+                                        </label>
+                                    )
+                                })}
+                            </div>
+
                         </div>
                         <div className="contentBox d-flex flex-column">
                             <p className="mb-3">2. Create API Key</p>
