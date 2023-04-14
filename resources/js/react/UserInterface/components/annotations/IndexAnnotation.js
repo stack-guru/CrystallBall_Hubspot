@@ -441,7 +441,7 @@ class IndexAnnotations extends React.Component {
                             </div>
                         </div>
 
-                        <form className="pageFilters d-flex justify-content-between align-items-center">
+                        <div className="pageFilters d-flex justify-content-between align-items-center">
                             <div className="d-flex">
                                 <FormGroup className="filter-sort position-relative mr-3">
                                     <Label className="sr-only" for="dropdownFilters">sort by filter</Label>
@@ -529,7 +529,7 @@ class IndexAnnotations extends React.Component {
                                     <button className="btn-searchIcon"><img className="d-block" src="/search-new.svg" width="16" height="16" alt="Search" /></button>
                                 </FormGroup>
                             </div>
-                        </form>
+                        </div>
                         {this.state.enableSelect ? (
                             <div className="btnBox d-flex">
                                 <p className="mb-0">{`${this.state.selectedRows.length} annotations selected`}</p>
