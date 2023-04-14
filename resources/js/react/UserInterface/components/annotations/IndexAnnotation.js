@@ -441,7 +441,7 @@ class IndexAnnotations extends React.Component {
                             </div>
                         </div>
 
-                        <form className="pageFilters d-flex justify-content-between align-items-center">
+                        <div className="pageFilters d-flex justify-content-between align-items-center">
                             <div className="d-flex">
                                 <FormGroup className="filter-sort position-relative mr-3">
                                     <Label className="sr-only" for="dropdownFilters">sort by filter</Label>
@@ -529,7 +529,7 @@ class IndexAnnotations extends React.Component {
                                     <button className="btn-searchIcon"><img className="d-block" src="/search-new.svg" width="16" height="16" alt="Search" /></button>
                                 </FormGroup>
                             </div>
-                        </form>
+                        </div>
                         {this.state.enableSelect ? (
                             <div className="btnBox d-flex">
                                 <p className="mb-0">{`${this.state.selectedRows.length} annotations selected`}</p>
@@ -656,7 +656,7 @@ class IndexAnnotations extends React.Component {
 
                                         return (
                                             <div className={`annotionRow d-flex align-items-center ${this.state.selectedRows.includes(anno.added_by) && "record-checked"}`} data-diff-in-milliseconds={diffTime} style={{ 'borderLeftColor': borderLeftColor }} id={rowId}
-                                                key={idx + (anno.added_by || "").toString()}
+                                                key={anno.added_by.toString()}
                                                 onClick={
                                                     () => {
                                                         if (anno.added_by && this.state.enableSelect) {

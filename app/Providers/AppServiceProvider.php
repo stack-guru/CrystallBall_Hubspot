@@ -35,8 +35,6 @@ class AppServiceProvider extends ServiceProvider
                 config(['app.icon' => asset('/favicon-gaa.ico'), 'app.logo' => asset('/images/company_logo_gaa.png')]);
                 config(['mail.from' => ['address' => 'contact@gaannotations.com', 'name' => 'GAannotations']]);
 
-		// temporary
-		config(['session.same_site' => 'lax']);
                 break;
 
             case 'alpha.lukionline.me';
@@ -45,8 +43,6 @@ class AppServiceProvider extends ServiceProvider
                 config(['app.icon' => asset('/favicon-cbi.ico'), 'app.logo' => asset('/images/company_logo_cbi.png')]);
                 config(['mail.from' => ['address' => 'contact@crystalballinsight.com', 'name' => 'Crystal Ball']]);
 
-		// temporary
-		config(['session.same_site' => 'lax']);
                 break;
 
             case 'localhost':
