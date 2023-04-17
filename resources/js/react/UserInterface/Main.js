@@ -360,16 +360,20 @@ class Main extends React.Component {
                                 })} user={this.state.user}/>
                             </Route>
                             <Route exact path="/settings/user/create" refresh={true}>
-                                <CreateUser upgradePopup={(popupType) => this.setState({
+                                <CreateUser
+                                    upgradePopup={(popupType) => this.setState({
                                     showUpgradePopup: true,
                                     upgradePopupType: popupType
-                                })} user={this.state.user}/>
+                                })} user={this.state.user}
+                                    currentPricePlan={this.state.price_plan}
+                                />
                             </Route>
                             <Route exact path="/settings/user/:id?/edit" refresh={true}
                                    render={(routeParams) => <EditUser upgradePopup={(popupType) => this.setState({
                                        showUpgradePopup: true,
                                        upgradePopupType: popupType
                                    })} routeParams={routeParams}/>}
+                                   currentPricePlan={this.state.user.price_plan}
                             />
                             <Route exact path="/settings/custom-price-plan/:code?" refresh={true}
                                    render={(routeParams) =>

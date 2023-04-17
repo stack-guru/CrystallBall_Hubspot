@@ -1,10 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import * as $ from "jquery";
 import CompanyLogo from "../utils/CompanyLogo";
 import CompanyHeading from "../utils/CompanyHeading";
 import AppsModal from "../components/AppsMarket/AppsModal";
 import AnnotationsCreate from "../components/annotations/CreateAnnotation";
+
 class Sidebar extends React.Component {
     constructor(props) {
         super(props);
@@ -41,9 +42,9 @@ class Sidebar extends React.Component {
 
         let body = document.getElementsByTagName("body")[0];
         if (body.classList.contains("is-collapsed")) {
-            this.setState({ isCollapsed: true });
+            this.setState({isCollapsed: true});
         } else {
-            this.setState({ isCollapsed: false });
+            this.setState({isCollapsed: false});
         }
     }
 
@@ -78,10 +79,10 @@ class Sidebar extends React.Component {
         let body = document.getElementsByTagName("body")[0];
         if (body.classList.contains("is-collapsed")) {
             body.classList.remove("is-collapsed");
-            this.setState({ isCollapsed: false });
+            this.setState({isCollapsed: false});
         } else {
             body.classList.add("is-collapsed");
-            this.setState({ isCollapsed: true });
+            this.setState({isCollapsed: true});
         }
     }
 
@@ -148,10 +149,10 @@ class Sidebar extends React.Component {
                             </Link>
                         </li>
                         {this.props.user.user_level == "admin" ||
-                            this.props.user.user_level == "team" ? (
+                        this.props.user.user_level == "team" ? (
                             <li className="nav-item gaa-menu-item">
                                 <a href="javascript:void(0);"
-                                    onClick={() => this.props.openAnnotationPopup('manual')}>
+                                   onClick={() => this.props.openAnnotationPopup('manual')}>
                                     <span className="sidebar-link d-flex align-items-center justify-content-start">
                                         <span>
                                             <svg width={26} height={26} viewBox="0 0 26 26" fill="none">
@@ -198,8 +199,8 @@ class Sidebar extends React.Component {
                                                     y2={23.0427}
                                                     gradientUnits="userSpaceOnUse"
                                                 >
-                                                    <stop offset={0.275742} stopColor="currentColor" />
-                                                    <stop offset={1} stopColor="currentColor" />
+                                                    <stop offset={0.275742} stopColor="currentColor"/>
+                                                    <stop offset={1} stopColor="currentColor"/>
                                                 </linearGradient>
                                             </defs>
                                         </svg>
@@ -264,6 +265,8 @@ class Sidebar extends React.Component {
                                 </span>
                             </Link>
                         </li>
+
+
                         {/* <li className="nav-item gaa-menu-item">
                             <Link to="/api-key">
                                 <span className="sidebar-link d-flex align-items-center justify-content-start">
@@ -293,8 +296,9 @@ class Sidebar extends React.Component {
                                                 height={22}
                                                 fill="#000"
                                             >
-                                                <path fill="#fff" d="M2 2H24V24H2z" />
-                                                <path d="M13 7.834a5.166 5.166 0 100 10.332 5.166 5.166 0 000-10.332zm0 8.856a3.69 3.69 0 110-7.38 3.69 3.69 0 010 7.38zm9.852-1.624l-1.375-1.826c.01-.166 0-.341 0-.47l1.375-1.836a.72.72 0 00.12-.637c-.233-.85-.57-1.668-1.006-2.435a.758.758 0 00-.535-.37l-2.26-.322-.341-.341-.323-2.26a.757.757 0 00-.369-.535 10.588 10.588 0 00-2.435-1.006.72.72 0 00-.637.12L13.24 4.513h-.48l-1.826-1.365a.72.72 0 00-.637-.12c-.85.233-1.668.57-2.435 1.006a.756.756 0 00-.37.535l-.322 2.26-.341.341-2.26.323a.756.756 0 00-.535.369 10.59 10.59 0 00-1.006 2.435.72.72 0 00.12.637l1.375 1.826v.47l-1.375 1.836a.72.72 0 00-.12.637c.233.85.57 1.668 1.006 2.435a.756.756 0 00.535.37l2.26.322.341.341.323 2.26a.757.757 0 00.369.535c.767.436 1.585.773 2.435 1.006a.71.71 0 00.636-.12l1.827-1.365h.48l1.826 1.365a.72.72 0 00.637.12 10.59 10.59 0 002.435-1.006.757.757 0 00.37-.535l.322-2.269c.11-.11.24-.23.332-.332l2.27-.323a.758.758 0 00.534-.369 10.59 10.59 0 001.006-2.435.72.72 0 00-.12-.637zm-2.002 2.03l-2.15.304a.765.765 0 00-.433.23c-.11.12-.452.471-.618.619a.738.738 0 00-.249.452l-.304 2.15c-.46.244-.942.445-1.44.599l-1.743-1.31a.71.71 0 00-.489-.139h-.848a.71.71 0 00-.49.139l-1.743 1.31a8.181 8.181 0 01-1.439-.6L8.6 18.7a.738.738 0 00-.25-.451 6.131 6.131 0 01-.599-.6.738.738 0 00-.452-.249l-2.15-.304a8.938 8.938 0 01-.599-1.44l1.31-1.743a.811.811 0 00.148-.461c-.01-.166-.019-.646-.01-.876a.71.71 0 00-.138-.49l-1.31-1.743c.158-.496.358-.977.6-1.439L7.3 8.6a.738.738 0 00.451-.25c.186-.213.386-.413.6-.599A.738.738 0 008.6 7.3l.304-2.15a8.938 8.938 0 011.44-.599l1.743 1.31a.71.71 0 00.489.138c.276-.009.572-.009.848 0a.71.71 0 00.49-.138l1.743-1.31c.497.154.98.355 1.439.6L17.4 7.3a.738.738 0 00.25.451c.213.186.413.386.599.6a.738.738 0 00.452.249l2.15.304c.244.46.445.942.599 1.44l-1.31 1.743a.811.811 0 00-.148.461c.01.166.019.646.01.876a.71.71 0 00.138.49l1.31 1.743c-.154.497-.355.98-.6 1.439z" />
+                                                <path fill="#fff" d="M2 2H24V24H2z"/>
+                                                <path
+                                                    d="M13 7.834a5.166 5.166 0 100 10.332 5.166 5.166 0 000-10.332zm0 8.856a3.69 3.69 0 110-7.38 3.69 3.69 0 010 7.38zm9.852-1.624l-1.375-1.826c.01-.166 0-.341 0-.47l1.375-1.836a.72.72 0 00.12-.637c-.233-.85-.57-1.668-1.006-2.435a.758.758 0 00-.535-.37l-2.26-.322-.341-.341-.323-2.26a.757.757 0 00-.369-.535 10.588 10.588 0 00-2.435-1.006.72.72 0 00-.637.12L13.24 4.513h-.48l-1.826-1.365a.72.72 0 00-.637-.12c-.85.233-1.668.57-2.435 1.006a.756.756 0 00-.37.535l-.322 2.26-.341.341-2.26.323a.756.756 0 00-.535.369 10.59 10.59 0 00-1.006 2.435.72.72 0 00.12.637l1.375 1.826v.47l-1.375 1.836a.72.72 0 00-.12.637c.233.85.57 1.668 1.006 2.435a.756.756 0 00.535.37l2.26.322.341.341.323 2.26a.757.757 0 00.369.535c.767.436 1.585.773 2.435 1.006a.71.71 0 00.636-.12l1.827-1.365h.48l1.826 1.365a.72.72 0 00.637.12 10.59 10.59 0 002.435-1.006.757.757 0 00.37-.535l.322-2.269c.11-.11.24-.23.332-.332l2.27-.323a.758.758 0 00.534-.369 10.59 10.59 0 001.006-2.435.72.72 0 00-.12-.637zm-2.002 2.03l-2.15.304a.765.765 0 00-.433.23c-.11.12-.452.471-.618.619a.738.738 0 00-.249.452l-.304 2.15c-.46.244-.942.445-1.44.599l-1.743-1.31a.71.71 0 00-.489-.139h-.848a.71.71 0 00-.49.139l-1.743 1.31a8.181 8.181 0 01-1.439-.6L8.6 18.7a.738.738 0 00-.25-.451 6.131 6.131 0 01-.599-.6.738.738 0 00-.452-.249l-2.15-.304a8.938 8.938 0 01-.599-1.44l1.31-1.743a.811.811 0 00.148-.461c-.01-.166-.019-.646-.01-.876a.71.71 0 00-.138-.49l-1.31-1.743c.158-.496.358-.977.6-1.439L7.3 8.6a.738.738 0 00.451-.25c.186-.213.386-.413.6-.599A.738.738 0 008.6 7.3l.304-2.15a8.938 8.938 0 011.44-.599l1.743 1.31a.71.71 0 00.489.138c.276-.009.572-.009.848 0a.71.71 0 00.49-.138l1.743-1.31c.497.154.98.355 1.439.6L17.4 7.3a.738.738 0 00.25.451c.213.186.413.386.599.6a.738.738 0 00.452.249l2.15.304c.244.46.445.942.599 1.44l-1.31 1.743a.811.811 0 00-.148.461c.01.166.019.646.01.876a.71.71 0 00.138.49l1.31 1.743c-.154.497-.355.98-.6 1.439z"/>
                                             </mask>
                                             <path
                                                 d="M13 7.834a5.166 5.166 0 100 10.332 5.166 5.166 0 000-10.332zm0 8.856a3.69 3.69 0 110-7.38 3.69 3.69 0 010 7.38zm9.852-1.624l-1.375-1.826c.01-.166 0-.341 0-.47l1.375-1.836a.72.72 0 00.12-.637c-.233-.85-.57-1.668-1.006-2.435a.758.758 0 00-.535-.37l-2.26-.322-.341-.341-.323-2.26a.757.757 0 00-.369-.535 10.588 10.588 0 00-2.435-1.006.72.72 0 00-.637.12L13.24 4.513h-.48l-1.826-1.365a.72.72 0 00-.637-.12c-.85.233-1.668.57-2.435 1.006a.756.756 0 00-.37.535l-.322 2.26-.341.341-2.26.323a.756.756 0 00-.535.369 10.59 10.59 0 00-1.006 2.435.72.72 0 00.12.637l1.375 1.826v.47l-1.375 1.836a.72.72 0 00-.12.637c.233.85.57 1.668 1.006 2.435a.756.756 0 00.535.37l2.26.322.341.341.323 2.26a.757.757 0 00.369.535c.767.436 1.585.773 2.435 1.006a.71.71 0 00.636-.12l1.827-1.365h.48l1.826 1.365a.72.72 0 00.637.12 10.59 10.59 0 002.435-1.006.757.757 0 00.37-.535l.322-2.269c.11-.11.24-.23.332-.332l2.27-.323a.758.758 0 00.534-.369 10.59 10.59 0 001.006-2.435.72.72 0 00-.12-.637zm-2.002 2.03l-2.15.304a.765.765 0 00-.433.23c-.11.12-.452.471-.618.619a.738.738 0 00-.249.452l-.304 2.15c-.46.244-.942.445-1.44.599l-1.743-1.31a.71.71 0 00-.489-.139h-.848a.71.71 0 00-.49.139l-1.743 1.31a8.181 8.181 0 01-1.439-.6L8.6 18.7a.738.738 0 00-.25-.451 6.131 6.131 0 01-.599-.6.738.738 0 00-.452-.249l-2.15-.304a8.938 8.938 0 01-.599-1.44l1.31-1.743a.811.811 0 00.148-.461c-.01-.166-.019-.646-.01-.876a.71.71 0 00-.138-.49l-1.31-1.743c.158-.496.358-.977.6-1.439L7.3 8.6a.738.738 0 00.451-.25c.186-.213.386-.413.6-.599A.738.738 0 008.6 7.3l.304-2.15a8.938 8.938 0 011.44-.599l1.743 1.31a.71.71 0 00.489.138c.276-.009.572-.009.848 0a.71.71 0 00.49-.138l1.743-1.31c.497.154.98.355 1.439.6L17.4 7.3a.738.738 0 00.25.451c.213.186.413.386.599.6a.738.738 0 00.452.249l2.15.304c.244.46.445.942.599 1.44l-1.31 1.743a.811.811 0 00-.148.461c.01.166.019.646.01.876a.71.71 0 00.138.49l1.31 1.743c-.154.497-.355.98-.6 1.439z"
@@ -322,7 +326,7 @@ class Sidebar extends React.Component {
                             >
                                 <ul className="list-unstyled">
                                     {this.props.user.user_level == "admin" ||
-                                        this.props.user.user_level == "team" ? (
+                                    this.props.user.user_level == "team" ? (
                                         <React.Fragment>
                                             {/* <li className="nav-item dropdown"><Link to="/settings/google-account" className="sidebar-link"><span className="nav-link">Add Properties/Accounts</span></Link></li> */}
                                             {/* <li className="nav-item dropdown"><Link to="/settings/user" className="sidebar-link"><span className="nav-link">Manage Users</span></Link></li> */}
@@ -367,6 +371,37 @@ class Sidebar extends React.Component {
                                 </ul>
                             </div>
                         </li>
+
+                        <li className="nav-item gaa-menu-item">
+                            {/* <Link to="/analytics-and-business-intelligence"> */}
+                            <a target={"_blank"} href="https://www.crystalball.pro/ai-beta-registration">
+                                <span className="sidebar-link d-flex align-items-center justify-content-start">
+                                    <span>
+                                        <svg width="26" height="26" viewBox="0 0 26 26" fill="none"
+                                             xmlns="http://www.w3.org/2000/svg">
+<path
+    d="M7.29149 18.4362C5.96505 17.2748 5.02437 15.7365 4.59497 14.0265C4.16557 12.3166 4.26789 10.5163 4.88826 8.86607C5.50863 7.21579 6.61756 5.79397 8.06704 4.79034C9.51652 3.78672 11.2376 3.24902 13.0007 3.24902C14.7637 3.24902 16.4848 3.78672 17.9343 4.79034C19.3837 5.79397 20.4927 7.21579 21.113 8.86607C21.7334 10.5163 21.8357 12.3166 21.4063 14.0265C20.9769 15.7365 20.0363 17.2748 18.7098 18.4362"
+    stroke="#666666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path
+    d="M11.916 7.58331C11.0541 7.58331 10.2274 7.92572 9.61792 8.53522C9.00842 9.14471 8.66602 9.97136 8.66602 10.8333M5.41602 20.5833C5.41602 21.1579 5.64429 21.709 6.05062 22.1154C6.45695 22.5217 7.00805 22.75 7.58268 22.75H18.416C18.9907 22.75 19.5418 22.5217 19.9481 22.1154C20.3544 21.709 20.5827 21.1579 20.5827 20.5833C20.5827 20.0087 20.3544 19.4576 19.9481 19.0512C19.5418 18.6449 18.9907 18.4166 18.416 18.4166H7.58268C7.00805 18.4166 6.45695 18.6449 6.05062 19.0512C5.64429 19.4576 5.41602 20.0087 5.41602 20.5833Z"
+    stroke="#666666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="11.0508" y="1.04993" width="12.6" height="5.25" fill="white"/>
+<path d="M21.8008 4.60049H22.6508L22.2508 3.50049L21.8008 4.60049Z" fill="#FF3321"/>
+<path
+    d="M14.1004 4.3501H13.1504V5.1001H13.9504C14.1504 5.1501 14.3504 5.0001 14.4004 4.8001C14.4504 4.6001 14.3004 4.4001 14.1004 4.3501Z"
+    fill="#FF3321"/>
+<path
+    d="M14.2504 3.50009C14.2504 3.30009 14.1004 3.15009 13.8504 3.15009H13.1504V3.80009H13.8504C14.1004 3.85009 14.2504 3.70009 14.2504 3.50009Z"
+    fill="#FF3321"/>
+<path
+    d="M25.5 0H10.5C10.2 0 10 0.2 10 0.5V7.5C10 7.8 10.2 8 10.5 8H12.5C12.5 8 14.4503 8 15.7 8C19.5271 8 25.5 8 25.5 8C25.8 8 26 7.8 26 7.5V0.5C26 0.2 25.75 0 25.5 0ZM14.15 5.55H12.55V2.55H14.05C14.5 2.5 14.9 2.8 14.95 3.25V3.3C14.95 3.6 14.8 3.85 14.55 3.95C14.85 4.05 15.1 4.35 15.1 4.7C15.05 5.2 14.65 5.55 14.15 5.55ZM17.9 3.1H16.25V3.7H17.75V4.3H16.25V4.95H17.9V5.55H15.6V2.55H17.9V3.1ZM19.8 5.55H19.15V3.15H18.2V2.55H20.7V3.15H19.8V5.55ZM23.15 5.55L22.95 5.05H21.6L21.4 5.55H20.7L21.9 2.55H22.6L23.85 5.55H23.15Z"
+    fill="#FF3321"/>
+</svg>
+</span>
+                                    <span className="title flex-grow-1">AI insight preview</span>
+                                </span>
+                            </a>
+                        </li>
                     </ul>
                 </nav>
                 <div className="btn-holder dropdown-holder">
@@ -395,7 +430,11 @@ class Sidebar extends React.Component {
                                     onClick={() => this.props.openAnnotationPopup('manual')}
                                 >
                                     <span>
-                                    <img className='inject-me' src='/images/plus-icon.svg' onError={({ currentTarget }) => { currentTarget.onerror = null; currentTarget.src = "/images/plus-icon.svg"; }} width='16' height='16' alt='menu icon' />
+                                    <img className='inject-me' src='/images/plus-icon.svg'
+                                         onError={({currentTarget}) => {
+                                             currentTarget.onerror = null;
+                                             currentTarget.src = "/images/plus-icon.svg";
+                                         }} width='16' height='16' alt='menu icon'/>
                                     </span>
                                     <span className="pl-2">Manual</span>
                                 </a>
@@ -412,7 +451,7 @@ class Sidebar extends React.Component {
                                     <span className="pl-2">Apps Market</span>
                                 </a>
                                 {this.props.user.user_level == "admin" ||
-                                    this.props.user.user_level == "team" ? (
+                                this.props.user.user_level == "team" ? (
                                     <a
                                         className="d-none d-sm-block dropdown-item"
                                         href="javascript:void(0);"
@@ -437,4 +476,5 @@ class Sidebar extends React.Component {
         );
     }
 }
+
 export default Sidebar;

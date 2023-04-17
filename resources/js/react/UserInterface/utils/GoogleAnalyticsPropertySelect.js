@@ -19,7 +19,6 @@ export default class GoogleAnalyticsPropertySelect extends Component {
             selectedProperties: [],
             showUpgradePopup: false
         };
-        this.searchGoogleAnalyticsProperties = this.searchGoogleAnalyticsProperties.bind(this);
         this.onChangeHandler = this.onChangeHandler.bind(this);
         this.deleteKeyword = this.deleteKeyword.bind(this);
     }
@@ -35,8 +34,8 @@ export default class GoogleAnalyticsPropertySelect extends Component {
             }
             this.setState({ allProperties: options });
         });
-        console.log("All Properties");
-        console.log(this.state.allProperties);
+        // console.log("All Properties");
+        // console.log(this.state.allProperties);
     }
 
     componentDidUpdate(prevProps) {
@@ -147,7 +146,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
         }
 
         if (
-            (this.props.currentPricePlan.google_analytics_property_count < (
+                (this.props.currentPricePlan.google_analytics_property_count < (
                 this.state.allProperties.filter(sO => sO.isInUse).length
                 + finalSelectedProperty.filter(sO => !sO.isInUse).length)
             )
@@ -201,7 +200,9 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                     </Modal>
 
                     <div className="themeNewInputStyle position-relative inputWithIcon">
-                        <i className="icon fa"><img src='/icon-plus.svg' /></i>
+                         <i className="icon fa">
+                             <img src='/icon-plus.svg' />
+                         </i>
                         <Select
                             menuPosition={'fixed'}
                             onFocus={(e) => {
