@@ -12,7 +12,7 @@ export default function SiteRenamedTopNotice(props) {
     //         🥳 Try the New <a style={{ color: 'white', textDecoration: 'underline' }} href="/data-source">Apps Market</a> to Add Automated Annotations - {' '}
     //     </>;
 
-    let gannotations = () => <> New Chrome extension is now available {' > '} <a style={{ color: 'white', textDecoration: 'underline' }} href="https://chrome.google.com/webstore/detail/automated-google-analytic/jfkimpgkmamkdhamnhabohpeaplbpmom?hl=en">Update to version 1.5.1</a> - {' '} </>;
+    let gannotations = () => <> New Chrome extension is now available {' > '} <a target={"_blank"} style={{ color: 'white', textDecoration: 'underline' }} href="https://chrome.google.com/webstore/detail/automated-google-analytic/jfkimpgkmamkdhamnhabohpeaplbpmom?hl=en">Update to version 1.5.1</a> - {' '} </>;
 
     return (
         <TopNoticeBar show={props.show} backgroundColor="linear-gradient(90deg, #3b8bfa 33.33%, #3b8bfa 100%)"
