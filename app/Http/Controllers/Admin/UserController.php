@@ -126,6 +126,14 @@ class UserController extends Controller
                             <button type="button"
                                 onclick="document.getElementById('makeOwnerUserForm<?=$row->id?>').submit()"
                                 class="btn btn-secondary m-2">Make Owner</button>
+                            <form id="verifyUserForm<?=$row->id?>" method="POST"
+                                action="<?=route('admin.user.email-verify', $row->id)?>">
+                                <?=csrf_field()?>
+                                <?=method_field("PUT")?>
+                            </form>
+                            <button type="button"
+                                onclick="document.getElementById('verifyUserForm<?=$row->id?>').submit()"
+                                class="btn btn-info m-2">Verify Email</button>
                         </div>
                     <?php
                     return ob_get_clean();
@@ -231,6 +239,16 @@ class UserController extends Controller
             'user_id' => $newOwnerId,
         ]);
 
+        return redirect()->route('admin.user.index')->with('success', true);
+    }
+    public function emailVerify(User $user)
+    {
+        if ($user->email_verified_at) {
+            return redirect()->route('admin.user.index')->with('error', "User Email is already verified");
+        }
+        User::where('id', $user->id)->update([
+            'email_verified_at' => Carbon::now(),
+        ]);
         return redirect()->route('admin.user.index')->with('success', true);
     }
 }
