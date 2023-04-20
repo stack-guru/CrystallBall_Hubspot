@@ -3164,8 +3164,8 @@ body {
     margin: 0;
 }
 
-.selectGoogleAccount .css-1hb7zxy-IndicatorsContainer, 
-.ga-account-select-holder .css-1hb7zxy-IndicatorsContainer, 
+.selectGoogleAccount .css-1hb7zxy-IndicatorsContainer,
+.ga-account-select-holder .css-1hb7zxy-IndicatorsContainer,
 .modal-editAnnotation .css-1hb7zxy-IndicatorsContainer {
     display: none;
 }
@@ -4387,7 +4387,7 @@ div[data-tour-elem="controls"]
 }
 
 .dataTableAnalyticsAccount .singleRow .singleCol:nth-child(2) {
-    width: 20%;
+    width: 25%;
 }
 
 .dataTableAnalyticsAccount .singleRow .singleCol:nth-child(3) {
@@ -4424,6 +4424,7 @@ div[data-tour-elem="controls"]
     align-items: center;
     border-radius: 24px;
     background: #0bd25f;
+    min-width: 80px;
 }
 
 .tag-inuse i {

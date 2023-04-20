@@ -162,11 +162,11 @@ export default class IndexDashboard extends Component {
                                         <div className="singleCol text-left"><span>{gAP.id}</span></div>
                                         <div className="singleCol text-left">
                                             <span className='w-100 d-flex justify-content-start'>
-                                                {
+                                                <span className={"text-truncate"}>{
                                                     (gAP.google_analytics_account) ?
                                                         gAP.google_analytics_account.name :
                                                         ''
-                                                }
+                                                }</span>
                                                 {
                                                     gAP.is_in_use ?
                                                         <em className='tag-inuse'><i className='fa fa-check'></i><i>In use</i></em> :
