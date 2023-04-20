@@ -69,7 +69,7 @@ class TagComponentGAP extends HTMLElement {
         </ul>
       </div>
       <div class="btns-upgradePopup">
-        <a href="https://calendly.com/crystal-ball/30min" target="_blank" class="btn-bookAdemo">Book a Demo</a>
+        ${this.getAttribute("button")}
         <a href="/settings/price-plans" class="btn-subscribeNow">Subscribe now</a>
       </div>
     </div>

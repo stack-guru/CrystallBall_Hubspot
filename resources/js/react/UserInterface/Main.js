@@ -73,6 +73,7 @@ class Main extends React.Component {
             mKeyAnnotation: '',
             showUpgradePopup: false,
             upgradePopupType: '',
+            upgradePopupButtonText: '<a href="https://calendly.com/crystal-ball/30min" target="_blank" class="btn-bookAdemo">Book a Demo</a>',
             csvUploadPopupSize: 'md upload-csv',
         }
         this.loadUser = this.loadUser.bind(this)
@@ -426,6 +427,7 @@ class Main extends React.Component {
                     {this.state.upgradePopupType === 'api-upgrade' ? <ga-upgrade-popup
                         heading={`<h1>Upgrade to access <span>API Functionality</span></h1>`}
                         subHeading={`<p>and get access to all amazing features</p>`}
+                        button={this.state.upgradePopupButtonText}
                         bannerImg="/images/apiFunctionality.svg"
                     >
                     </ga-upgrade-popup> : null}
@@ -433,6 +435,7 @@ class Main extends React.Component {
                     {this.state.upgradePopupType === 'news-alert' ? <ga-upgrade-popup
                         heading={`<h1>Increase your credits limits to add more <span>News Alerts</span></h1>`}
                         subHeading={`<p>Upgrade to get access to all amazing features</p>`}
+                        button={this.state.upgradePopupButtonText}
                         bannerImg="/images/news-upgrade.svg"
                     >
                     </ga-upgrade-popup> : null}
@@ -440,6 +443,7 @@ class Main extends React.Component {
                     {this.state.upgradePopupType === 'rank-tracking-access' ? <ga-upgrade-popup
                         heading={`<h1>Upgrade to access <span>Rank Tracking (SERP)</span></h1>`}
                         subHeading={`<p>and get access to all amazing features</p>`}
+                        button={this.state.upgradePopupButtonText}
                         bannerImg="/images/rank-tracking-upgrade.svg"
                     >
                     </ga-upgrade-popup> : null}
@@ -447,6 +451,7 @@ class Main extends React.Component {
                     {this.state.upgradePopupType === 'rank-tracking' ? <ga-upgrade-popup
                         heading={`<h1>Increase your credits limits to add more <span>Rank Trackers</span></h1>`}
                         subHeading={`<p>Upgrade to get access to all amazing features</p>`}
+                        button={this.state.upgradePopupButtonText}
                         bannerImg="/images/rank-tracking-upgrade.svg"
                     >
                     </ga-upgrade-popup> : null}
@@ -454,6 +459,7 @@ class Main extends React.Component {
                     {this.state.upgradePopupType === 'website-monitoring-upgrade' ? <ga-upgrade-popup
                         heading={`<h1>Upgrade today to add <span>Website Monitors</span></h1>`}
                         subHeading={`<p>and get access to all amazing features</p>`}
+                        button={this.state.upgradePopupButtonText}
                         bannerImg="/images/web-monitor-upgrade.svg"
                     >
                     </ga-upgrade-popup> : null}
@@ -461,6 +467,7 @@ class Main extends React.Component {
                     {this.state.upgradePopupType === 'website-monitoring-limit' ? <ga-upgrade-popup
                         heading={`<h1>Increase your credits limits to add more <span>Website Monitors</span></h1>`}
                         subHeading={`<p>Upgrade to get access to all amazing features</p>`}
+                        button={this.state.upgradePopupButtonText}
                         bannerImg="/images/web-monitor-limit-increase.svg"
                     >
                     </ga-upgrade-popup> : null}
@@ -468,6 +475,7 @@ class Main extends React.Component {
                     {this.state.upgradePopupType === 'add-more-than-one-property' ? <ga-upgrade-popup
                         heading={`<h1>Upgrade to add <span>more than one</span> property</h1>`}
                         subHeading={`<p>and get access to all amazing features</p>`}
+                        button={this.state.upgradePopupButtonText}
                         bannerImg="/images/more-property-upgrade.svg"
                     >
                     </ga-upgrade-popup> : null}
@@ -475,6 +483,7 @@ class Main extends React.Component {
                     {this.state.upgradePopupType === 'add-more-property' ? <ga-upgrade-popup
                         heading={`<h1>Upgrade today to add <span>more properties</span></h1>`}
                         subHeading={`<p>and get access to all amazing features</p>`}
+                        button={this.state.upgradePopupButtonText}
                         bannerImg="/images/more-property-upgrade.svg"
                     >
                     </ga-upgrade-popup> : null}
@@ -482,6 +491,7 @@ class Main extends React.Component {
                     {this.state.upgradePopupType === 'more-users' ? <ga-upgrade-popup
                         heading={`<h1>Upgrade today and add <span>more users</span> to your company account</h1>`}
                         subHeading={`<p>and get access to all amazing features</p>`}
+                        button={this.state.upgradePopupButtonText}
                         bannerImg="/images/more-users.svg"
                     >
                     </ga-upgrade-popup> : null}
@@ -489,6 +499,7 @@ class Main extends React.Component {
                     {this.state.upgradePopupType === 'more-annotations' ? <ga-upgrade-popup
                         heading={`<h1>Upgrade today to add <span>more annotations</span></h1>`}
                         subHeading={`<p>and get access to all amazing features</p>`}
+                        button={this.state.upgradePopupButtonText}
                         bannerImg="/images/more-annotations.svg"
                     >
                     </ga-upgrade-popup> : null}
@@ -496,6 +507,7 @@ class Main extends React.Component {
                     {this.state.upgradePopupType === 'integrations' ? <ga-upgrade-popup
                         heading={`<h1>Upgrade today to access <span>integrations</span></h1>`}
                         subHeading={`<p>and get access to all amazing features</p>`}
+                        button={this.state.upgradePopupButtonText}
                         bannerImg="/images/more-integrations.svg"
                     >
                     </ga-upgrade-popup> : null}
@@ -503,6 +515,7 @@ class Main extends React.Component {
                     {this.state.upgradePopupType === 'get-notifications' ? <ga-upgrade-popup
                         heading={`<h1>Upgrade today to <span>get notifications</span> via Email, SMS, and Push</h1>`}
                         subHeading={`<p>and get access to all amazing features</p>`}
+                        button={this.state.upgradePopupButtonText}
                         bannerImg="/images/get-notifications.svg"
                     >
                     </ga-upgrade-popup> : null}
@@ -510,6 +523,7 @@ class Main extends React.Component {
                     {this.state.upgradePopupType === 'podcast-trackers' ? <ga-upgrade-popup
                         heading={`<h1>Upgrade to add more <span>Podcast Trackers</span></h1>`}
                         subHeading={`<p>and get access to all amazing features</p>`}
+                        button={this.state.upgradePopupButtonText}
                         bannerImg="/images/podcast-trackers.svg"
                     >
                     </ga-upgrade-popup> : null}
@@ -517,6 +531,7 @@ class Main extends React.Component {
                     {this.state.upgradePopupType === 'increase-limits' ? <ga-upgrade-popup
                         heading={`<h1>You’ve reached your plan limits! Upgrade to  <span>increase limits</span></h1>`}
                         subHeading={`<p>and get access to all amazing features</p>`}
+                        button={this.state.upgradePopupButtonText}
                         bannerImg="/images/increase-limits.svg"
                     >
                     </ga-upgrade-popup> : null}
@@ -524,6 +539,7 @@ class Main extends React.Component {
                     {this.state.upgradePopupType === 'more-repositories' ? <ga-upgrade-popup
                         heading={`<h1>Upgrade today to track  <span>more repositories</span></h1>`}
                         subHeading={`<p>and get access to all amazing features</p>`}
+                        button={this.state.upgradePopupButtonText}
                         bannerImg="/images/more-repositories.svg"
                     >
                     </ga-upgrade-popup> : null}
@@ -531,6 +547,7 @@ class Main extends React.Component {
                     {this.state.upgradePopupType === 'social-media' ? <ga-upgrade-popup
                         heading={`<h1>Upgrade today to access  <span>social media</span> tracking and insights</h1>`}
                         subHeading={`<p>and get access to all amazing features</p>`}
+                        button={this.state.upgradePopupButtonText}
                         bannerImg="/images/social-media.svg"
                     >
                     </ga-upgrade-popup> : null}
@@ -538,6 +555,7 @@ class Main extends React.Component {
                     {this.state.upgradePopupType === 'ads-trackers' ? <ga-upgrade-popup
                         heading={`<h1>Upgrade today to add more  <span>Ads Trackers</span></h1>`}
                         subHeading={`<p>and get access to all amazing features</p>`}
+                        button={this.state.upgradePopupButtonText}
                         bannerImg="/images/trackers-ads.svg"
                     >
                     </ga-upgrade-popup> : null}
@@ -618,6 +636,9 @@ class Main extends React.Component {
                 if (response.data.user.trail_plan_status == true) {
                     this.setState({showUpgradePopup: true});
                     this.setState({upgradePopupType: 'trial-ended'});
+                }
+                if (response.data.user.price_plan.code === 'free new' && (!response.data.user.price_plan_settings || response.data.user.price_plan_settings.extended_trial.activation_count < 1)) {
+                    this.setState({upgradePopupButtonText: '<a  href="/settings/price-plans"  class="btn-bookAdemo">Extend my Trial</a>'});
                 }
                 if (response.data.user.price_plan.name == "Trial Ended") {
                     this.setState({showPasswordPopup: false});

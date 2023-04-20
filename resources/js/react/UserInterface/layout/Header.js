@@ -86,9 +86,10 @@ class header extends React.Component {
                                     </svg>
                                 </Link>
                                 {
-                                    this.props.user.price_plan.code === 'free new' && (!this.props.user.price_plan_settings || this.props.user.price_plan_settings.extended_trial.activation_count < 1) ? <button onClick={() => { this.props.extendTrial(); }} className="btn-adduser btn-trial mr-3">Extend my Trial</button>
-                                        :
-                                        null
+                                    // this.props.user.price_plan.code === 'free new' && (!this.props.user.price_plan_settings || this.props.user.price_plan_settings.extended_trial.activation_count < 1) ?
+                                     <button onClick={() => { this.props.extendTrial(); }} className="btn-adduser btn-trial mr-3">Extend my Trial</button>
+                                        // :
+                                        // null
                                 }
                             </>
                             :

@@ -192,6 +192,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                         <ga-upgrade-popup
                             heading={`<h1>Upgrade today to add <span>more properties</span></h1>`}
                             subHeading={`<p>and get access to all amazing features</p>`}
+                            button={`<a href="https://calendly.com/crystal-ball/30min" target="_blank" class="btn-bookAdemo">Book a Demo</a>`}
                             bannerImg="/images/more-property-upgrade.svg"
                         >
                         </ga-upgrade-popup>
