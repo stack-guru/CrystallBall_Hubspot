@@ -25,8 +25,8 @@
                         <tbody>
                             <tr>
                                 <td>{{$pricePlanSubscription->id}}</td>
-                                <td>{{$pricePlanSubscription->user->name}}</td>
-                                <td>{{$pricePlanSubscription->user->email}}</td>
+                                <td>{{@$pricePlanSubscription->user->name}}</td>
+                                <td>{{@$pricePlanSubscription->user->email}}</td>
                                 <td>@if($pricePlanSubscription->coupon){{$pricePlanSubscription->coupon->code}} / {{$pricePlanSubscription->coupon->discount_percent}}%@endif</td>
                                 <td>${{$pricePlanSubscription->charged_price}}</td>
                                 <td>{{$pricePlanSubscription->created_at->todateString()}}</td>
