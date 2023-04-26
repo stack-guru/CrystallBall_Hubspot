@@ -213,9 +213,9 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
                     // Continuing user paid plan
                     // checking if recurring coupon applied
                     if ($isCouponApplied) {
-                        $pricePlanSubscriptionId = $this->addPricePlanSubscription($responseArr['transactionId'], $user->id, $lastPaymentDetail->id, $user->price_plan_id, $pricePlanPrice, new \DateTime('+' . $lastPricePlanSubscription->plan_duration . ' month'), $coupon->id, $coupon->recurring_discount_count - 1);
+                        $pricePlanSubscriptionId = $this->addPricePlanSubscription($responseArr['transactionId'], $user->id, $lastPaymentDetail->id, $user->price_plan_id, $pricePlanPrice, $lastPricePlanSubscription->plan_duration , new \DateTime('+' . $lastPricePlanSubscription->plan_duration . ' month'), $coupon->id, $coupon->recurring_discount_count - 1);
                     } else {
-                        $pricePlanSubscriptionId = $this->addPricePlanSubscription($responseArr['transactionId'], $user->id, $lastPaymentDetail->id, $user->price_plan_id, $pricePlanPrice, new \DateTime('+' . $lastPricePlanSubscription->plan_duration . ' month'));
+                        $pricePlanSubscriptionId = $this->addPricePlanSubscription($responseArr['transactionId'], $user->id, $lastPaymentDetail->id, $user->price_plan_id, $pricePlanPrice, $lastPricePlanSubscription->plan_duration , new \DateTime('+' . $lastPricePlanSubscription->plan_duration . ' month'));
                     }
 
                     // checking if registration offer is applied
@@ -247,7 +247,7 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
         $this->info(count($users) . " user(s) have been resubscribed to their paid plans.");
     }
 
-    private function addPricePlanSubscription($transactionId, $userId, $paymentDetailId, $pricePlanId, $chargedPrice, $expiryDate, $couponId = null, $couponLeftRecurringCount = 0)
+    private function addPricePlanSubscription($transactionId, $userId, $paymentDetailId, $pricePlanId, $chargedPrice, $planDuration ,$expiryDate, $couponId = null, $couponLeftRecurringCount = 0)
     {
         $pricePlanSubscription = new PricePlanSubscription;
         $pricePlanSubscription->transaction_id = $transactionId;
@@ -257,6 +257,7 @@ class ResubscribeUserPlansSubscriptionCommand extends Command
         $pricePlanSubscription->price_plan_id = $pricePlanId;
         $pricePlanSubscription->charged_price = $chargedPrice;
         $pricePlanSubscription->coupon_id = $couponId;
+        $pricePlanSubscription->plan_duration = $planDuration;
         $pricePlanSubscription->left_coupon_recurring = $couponLeftRecurringCount;
         $pricePlanSubscription->save();
         return $pricePlanSubscription->id;
