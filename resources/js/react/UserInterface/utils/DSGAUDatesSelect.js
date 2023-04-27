@@ -1,6 +1,7 @@
 import React from 'react';
 import HttpClient from '../utils/HttpClient';
 import GoogleAnalyticsPropertySelect from "../utils/GoogleAnalyticsPropertySelect";
+import Toast from "./Toast";
 
 export default class DSGAUDatesSelect extends React.Component {
     constructor(props) {
@@ -28,10 +29,10 @@ export default class DSGAUDatesSelect extends React.Component {
         HttpClient.get(getUrl).then(resp => {
             this.setState({ isBusy: false, google_algorithm_updates: resp.data.google_algorithm_updates })
         }, (err) => {
-            
+
             this.setState({ isBusy: false, errors: err.response.data })
         }).catch(err => {
-            
+
             this.setState({ isBusy: false, errors: err })
         })
     }
@@ -65,6 +66,17 @@ export default class DSGAUDatesSelect extends React.Component {
                         value={this.props.gaPropertyId}
                         onChangeCallback={(gAP) => {
                             this.props.updateGAPropertyId(gAP.target.value || null)
+
+
+                            const currentValue = this.props.ds_data.length ? (this.props.ds_data[0].status ? this.props.ds_data[0].status : "") : ""
+                            if (currentValue) {
+                                this.selectedStatusChanged({ target: { name: 'searchStatus', value: currentValue } });
+                            } else {
+                                Toast.fire({
+                                    icon: 'success',
+                                    title: "Successfully saved google update settings.",
+                                });
+                            }
                         }}
                         placeholder="Select GA Properties"
                         isClearable={true}
