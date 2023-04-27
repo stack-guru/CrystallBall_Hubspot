@@ -2129,15 +2129,16 @@ body {
 }
 
 .inputWithIcon .fa {
-    top: 0;
-    right: 0;
+    top: 10px;
+    right: 7px;
     z-index: 2;
-    width: 44px;
-    height: 44px;
+    width: 25px;
+    height: 25px;
     position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
+    background: #ffff;
 }
 
 .themeNewTitle,
