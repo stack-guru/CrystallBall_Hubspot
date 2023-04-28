@@ -92,7 +92,7 @@ class AnnotationController extends Controller
             $request->query('show_wordpress_updates') ? $request->query('show_wordpress_updates') : 'false',
             $request->query('show_keyword_tracking') ? $request->query('show_keyword_tracking') : 'false',
             $request->query('show_facebook_tracking') ? $request->query('show_facebook_tracking') : 'false',
-            $request->query('show_intagram_tracking') ? $request->query('show_intagram_tracking') : 'false',
+            $request->query('show_instagram_tracking') ? $request->query('show_instagram_tracking') : 'false',
             $request->query('show_twitter_tracking') ? $request->query('show_twitter_tracking') : 'false',
             $request->query('show_g_ads_history_change_enabled') ? $request->query('show_g_ads_history_change_enabled') : 'false',
             $request->query('show_bitbucket_tracking') ? $request->query('show_bitbucket_tracking') : 'false',
