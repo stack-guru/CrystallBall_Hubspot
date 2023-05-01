@@ -43,8 +43,8 @@ class GoogleAccountController extends Controller
                 array_push($scopes, GoogleAccount::SCOPE_AUTH_ANALYTICS_READONLY);
             }
             if ($request->google_search_console_perm == 'true') {
-                // array_push($scopes, GoogleAccount::SCOPE_AUTH_WEBMASTERS);
-                // array_push($scopes, GoogleAccount::SCOPE_AUTH_WEBMASTERS_READONLY);
+                array_push($scopes, GoogleAccount::SCOPE_AUTH_WEBMASTERS);
+                array_push($scopes, GoogleAccount::SCOPE_AUTH_WEBMASTERS_READONLY);
             }
             if (config('app.env') == 'development' || config('app.env') == 'local') {
                 if ($request->google_ads_perm == 'true') {
@@ -58,8 +58,8 @@ class GoogleAccountController extends Controller
 
                 GoogleAccount::SCOPE_AUTH_ANALYTICS_READONLY,
 
-                // GoogleAccount::SCOPE_AUTH_WEBMASTERS,
-                // GoogleAccount::SCOPE_AUTH_WEBMASTERS_READONLY,
+                GoogleAccount::SCOPE_AUTH_WEBMASTERS,
+                GoogleAccount::SCOPE_AUTH_WEBMASTERS_READONLY,
             ];
 
             if (config('app.env') == 'development' || config('app.env') == 'local') {

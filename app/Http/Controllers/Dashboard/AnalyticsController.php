@@ -11,6 +11,8 @@ use App\Models\GoogleAnalyticsProperty;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Carbon;
 use App\Helpers\AnnotationQueryHelper;
+use App\Models\GoogleSearchConsoleSite;
+use App\Models\GoogleSearchConsoleStatistics;
 
 class AnalyticsController extends Controller
 {
@@ -260,6 +262,37 @@ class AnalyticsController extends Controller
         return ['statistics' => $statistics];
     }
 
+    public function devicesIndexByImpression(Request $request)
+    {
+        
+        $this->validate($request, [
+            'start_date' => 'required|date|after:2005-01-01|before:today|before:end_date',
+            'end_date' => 'required|date|after:2005-01-01|after:start_date',
+            'ga_property_id' => 'required'
+        ]);
+
+        $userIdsArray = (Auth::user())->getAllGroupUserIdsArray();
+
+        $gAProperty = GoogleAnalyticsProperty::findOrFail($request->query('ga_property_id'));
+        if (!in_array($gAProperty->user_id, $userIdsArray)) {
+            abort(404, "Unable to find Google Analytics Property for the given id.");
+        }
+        if(!$gAProperty->google_search_console_site_id)
+        {
+            abort(404, "Unable to find Google Search Console Site for the given id.");
+        }
+        $gSCSite = GoogleSearchConsoleSite::findOrFail($gAProperty->google_search_console_site_id);
+        if (!in_array($gSCSite->user_id, $userIdsArray)) {
+            abort(404, "Unable to find Google Search Console Site for the given id.");
+        }
+        $statistics = GoogleSearchConsoleStatistics::selectRaw('device, SUM(clicks_count) as sum_clicks_count, SUM(impressions_count) as sum_impressions_count')
+            ->groupBy('device')
+            ->whereBetween('statistics_date', [$request->query('start_date'), $request->query('end_date')])
+            ->where('google_search_console_site_id', $gSCSite->id)
+            ->get();
+
+        return ['statistics' => $statistics];
+    }
     public function usersDaysIndex(Request $request)
     {
         $this->validate($request, [
@@ -279,6 +312,37 @@ class AnalyticsController extends Controller
             ->whereBetween('statistics_date', [$request->query('start_date'), $request->query('end_date')])
             ->where('ga_property_id', $gAProperty->id)
             ->orderBy('statistics_date')
+            ->get();
+
+        return ['statistics' => $statistics];
+    }
+    public function countriesIndex(Request $request)
+    {
+        $this->validate($request, [
+            'start_date' => 'required|date|after:2005-01-01|before:today|before:end_date',
+            'end_date' => 'required|date|after:2005-01-01|after:start_date',
+            'ga_property_id' => 'required'
+        ]);
+
+        $userIdsArray = (Auth::user())->getAllGroupUserIdsArray();
+
+        $gAProperty = GoogleAnalyticsProperty::findOrFail($request->query('ga_property_id'));
+        if (!in_array($gAProperty->user_id, $userIdsArray)) {
+            abort(404, "Unable to find Google Analytics Property for the given id.");
+        }
+        if(!$gAProperty->google_search_console_site_id)
+        {
+            abort(404, "Unable to find Google Search Console Site for the given id.");
+        }
+        $gSCSite = GoogleSearchConsoleSite::findOrFail($gAProperty->google_search_console_site_id);
+        if (!in_array($gSCSite->user_id, $userIdsArray)) {
+            abort(404, "Unable to find Google Search Console Site for the given id.");
+        }
+        $statistics = GoogleSearchConsoleStatistics::selectRaw('country, SUM(clicks_count) as sum_clicks_count, SUM(impressions_count) as sum_impressions_count')
+            ->groupBy('country')
+            ->whereBetween('statistics_date', [$request->query('start_date'), $request->query('end_date')])
+            ->where('google_search_console_site_id', $gSCSite->id)
+            ->orderBy('sum_clicks_count', 'DESC')
             ->get();
 
         return ['statistics' => $statistics];
