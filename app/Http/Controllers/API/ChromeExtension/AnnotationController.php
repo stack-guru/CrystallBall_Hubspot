@@ -121,7 +121,7 @@ class AnnotationController extends Controller
         $startDate = Carbon::parse($request->query('startDate'));
         $endDate = Carbon::parse($request->query('endDate'));
 
-        $annotationsQuery = "SELECT TempTable.category, TempTable.event_name, TempTable.show_at, `annotation_ga_properties`.`google_analytics_property_id` AS annotation_ga_property_id, `google_analytics_properties`.`name` AS google_analytics_property_name FROM (";
+        $annotationsQuery = "SELECT added_by, TempTable.category, TempTable.event_name, TempTable.description, TempTable.show_at, `annotation_ga_properties`.`google_analytics_property_id` AS annotation_ga_property_id, `google_analytics_properties`.`name` AS google_analytics_property_name FROM (";
 
         $annotationsQuery .= AnnotationQueryHelper::allAnnotationsUnionQueryString(
             $user,
@@ -209,17 +209,17 @@ class AnnotationController extends Controller
                         if ($user->isPricePlanGoogleAnalyticsPropertyLimitReached()) {
                             DB::rollback();
                             // There are 2 different messages to send for different price plan users.
-                            if ($user->pricePlan->name == PricePlan::PRO) 
+                            if ($user->pricePlan->name == PricePlan::PRO)
                             {
                                 abort(402, 'You\'ve reached the maximum properties for this plan. <a href="' . RouteServiceProvider::PRODUCT_WEBSITE_PRICE_PLAN_PAGE . '" target="_blank" >Contact sales to upgrade your plan.</a>');
                             }else{
                                 abort(402, 'You\'ve reached the maximum properties for this plan. <a href="' . route('settings.price-plans') . '" target="_blank" >Upgrade your plan.</a>');
-                            } 
+                            }
                         }
                     }
                     $googleAnalyticsProperty->is_in_use = true;
                     $googleAnalyticsProperty->save();
-                    
+
                     $annotation = new Annotation;
                     $annotation->fill($request->validated());
                     $annotation->show_at = $request->show_at ? Carbon::parse($request->show_at) : Carbon::now();
@@ -235,7 +235,7 @@ class AnnotationController extends Controller
                     $aGAP->save();
                 }
             }
-        } 
+        }
         if(!$is_annotation_create)
         {
             $annotation = new Annotation;
