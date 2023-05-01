@@ -63,7 +63,7 @@ class HomeController extends Controller
         if($user->show_trail_popup)
         {
             $user->trail_plan_status = true;
-            
+
             User::where('id', $user->id)
                 ->update([
                     'show_trail_popup' => false,

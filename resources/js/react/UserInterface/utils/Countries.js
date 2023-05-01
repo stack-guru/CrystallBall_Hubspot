@@ -1,6 +1,7 @@
 import React from "react";
 import HttpClient from "../utils/HttpClient";
 import GoogleAnalyticsPropertySelect from "../utils/GoogleAnalyticsPropertySelect";
+import Toast from "./Toast";
 
 export default class countries extends React.Component {
     constructor(props) {
@@ -58,7 +59,7 @@ export default class countries extends React.Component {
             this.props.updateUserService({ target: {
                     name: "is_ds_holidays_enabled",
                     checked: true,
-                }, 
+                },
             });
         } else {
             this.props.onUncheckCallback(e.target.id, "holidays");
@@ -78,7 +79,7 @@ export default class countries extends React.Component {
         this.props.updateUserService({ target: {
                 name: "is_ds_holidays_enabled",
                 checked: true,
-            }, 
+            },
         });
     }
 
@@ -98,7 +99,7 @@ export default class countries extends React.Component {
         this.props.updateUserService({ target: {
                 name: "is_ds_holidays_enabled",
                 checked: false,
-            }, 
+            },
         });
     }
 
@@ -117,7 +118,7 @@ export default class countries extends React.Component {
                         </div>
                     </div>
 
-                    <div className="d-flex align-items-center w-100 justify-content-end">
+                    {/*<div className="d-flex align-items-center w-100 justify-content-end">
                         <span className="betweentext">for</span>
                         <GoogleAnalyticsPropertySelect
                             className="themeNewselect hide-icon"
@@ -127,12 +128,22 @@ export default class countries extends React.Component {
                             value={this.props.gaPropertyId}
                             onChangeCallback={(gAP) => {
                                 this.props.updateGAPropertyId(gAP.target.value || null)
+
+                                const currentValue = userCountries.length
+                                if (currentValue) {
+                                    this.handleClick({target: {checked: true, name: userCountries[0]}});
+                                } else {
+                                    Toast.fire({
+                                        icon: 'success',
+                                        title: "Successfully saved holidays settings.",
+                                    });
+                                }
                             }}
                             placeholder="Select GA Properties"
                             isClearable={true}
                             onDeleteCallback={this.props.onUncheckCallback}
                         />
-                    </div>
+                    </div>*/}
                 </div>
                 <div className="grid2layout">
                     <div className="column">
@@ -183,7 +194,7 @@ export default class countries extends React.Component {
                                             );
                                     })
                                 ) : (
-                                    
+
                                     <span>No country found</span>
                                 )}
                             </div>
