@@ -144,7 +144,7 @@ export default class AddKeyword extends React.Component {
                     this.props.updateUserService({ target: {
                             name: "is_ds_keyword_tracking_enabled",
                             checked: true,
-                        },
+                        }, 
                     });
                     const Toast = Swal.mixin({
                         toast: true,
@@ -259,7 +259,7 @@ export default class AddKeyword extends React.Component {
                         </select>
                     </div>
 
-                    {/*<div className="d-flex align-items-center w-100 justify-content-end tracker-content">
+                    <div className="d-flex align-items-center w-100 justify-content-end tracker-content">
                         <span className="betweentext">for</span>
                         <GoogleAnalyticsPropertySelect
                             className="themeNewselect hide-icon"
@@ -274,7 +274,7 @@ export default class AddKeyword extends React.Component {
                             isClearable={true}
                             onDeleteCallback={this.props.onUncheckCallback}
                         />
-                    </div>*/}
+                    </div>
 
                     <div className="themeNewInputGroup inputWithIcon position-relative">
                         <input type="text" className="form-control" placeholder="your-company-domain.com" name="url" id="url" onChange={(e) => {this.setState({ url: e.target.value });}}/>

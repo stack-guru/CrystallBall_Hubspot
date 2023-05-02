@@ -54,7 +54,7 @@ export default class BitbucketTracking extends React.Component {
             // this.setState({ used_credits: this.state.used_credits - 1 });
             (this.props.onUncheckCallback)(e.target.id, 'bitbucket_tracking')
         }
-
+        
         let isChecked = false;
         if( usedCredits > 0 ) isChecked = true;
 
@@ -80,7 +80,7 @@ export default class BitbucketTracking extends React.Component {
         let userRepositories = this.props.ds_data.map(ds => ds.value);
         return (
             <div className="apps-bodyContent">
-                {/*<div className="white-box">
+                <div className="white-box">
                     <label for="ga_property_id">Select Property</label>
                     <div className="d-flex align-items-center w-100">
                         <GoogleAnalyticsPropertySelect
@@ -96,7 +96,7 @@ export default class BitbucketTracking extends React.Component {
                             isClearable={true}
                         />
                     </div>
-                </div>*/}
+                </div>
                 {/* <div className='white-box'> */}
                     {/* <h5 className="textblue mb-4">Bitbucket Commits Tracking</h5>
                     <strong>Credits: {this.state.used_credits}/{this.state.total_credits}</strong> */}

@@ -55,7 +55,7 @@ export default class GithubTracking extends React.Component {
 
         let isChecked = false;
         if( usedCredits > 0 ) isChecked = true;
-
+        
         this.props.updateTrackingStatus(isChecked)
         this.props.updateUserService({ target: {
             name: "is_ds_github_tracking_enabled",
@@ -79,7 +79,7 @@ export default class GithubTracking extends React.Component {
 
         return (
             <div className="apps-bodyContent">
-                {/*<label for="ga_property_id">Select Property</label>
+                <label for="ga_property_id">Select Property</label>
                 <div className="d-flex align-items-center w-100">
                     <GoogleAnalyticsPropertySelect
                         className="themeNewselect hide-icon"
@@ -93,7 +93,7 @@ export default class GithubTracking extends React.Component {
                         placeholder="Select GA Properties"
                         isClearable={true}
                     />
-                </div>*/}
+                </div>
                 <div className='white-box'>
                     {/* <h5 className="textblue mb-4">Github Commits Tracking</h5>
                     <strong className='d-block'>Credits: {this.state.used_credits}/{this.state.total_credits}</strong> */}

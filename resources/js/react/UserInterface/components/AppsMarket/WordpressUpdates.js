@@ -80,7 +80,7 @@ class WordpressUpdates extends React.Component {
                                         </label>
                                     </div>
 
-                                    {/*<div className="d-flex align-items-center hide-icon">
+                                    <div className="d-flex align-items-center hide-icon">
                                         <span className="betweentext">for</span>
                                         <GoogleAnalyticsPropertySelect
                                             className="themeNewselect"
@@ -113,7 +113,7 @@ class WordpressUpdates extends React.Component {
                                             placeholder="Select GA Properties"
                                             isClearable={true}
                                         />
-                                    </div>*/}
+                                    </div>
                                 </div>
                             </div>
                         </div>
