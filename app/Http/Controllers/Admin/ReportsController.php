@@ -10,12 +10,22 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use App\Helpers\AnnotationQueryHelper;
+use Carbon\Carbon;
 
 class ReportsController extends Controller
 {
     public function showUserActiveReport(Request $request)
     {
-        $users = User::orderBy('created_at', 'DESC')
+        if($request->start_date)
+        {
+            $start_date = Carbon::parse($request->start_date);
+            $end_date = Carbon::parse($request->end_date);
+        }else{
+            $start_date = Carbon::parse(date('Y-m-d',strtotime("-30 days")));
+            $end_date = Carbon::today();
+        }
+        $users = User::whereBetween('created_at',[$start_date,$end_date])
+            ->orderBy('created_at', 'DESC')
             ->with([
                 'user',
                 'pricePlan',
@@ -38,12 +48,11 @@ class ReportsController extends Controller
             ->withCount('emailNotificationLogs')
             ->withCount('users')
             ->get();
-
         foreach ($users as $user) {
             $user->total_annotations_count = $user->getTotalAnnotationsCount(false);
         }
 
-        return view('admin/reports/user-active-report')->with('users', $users);
+        return view('admin/reports/user-active-report')->with('users', $users)->with('start_date',$start_date)->with('end_date',$end_date);
     }
 
     public function showUserGAInfo(Request $request, User $user)

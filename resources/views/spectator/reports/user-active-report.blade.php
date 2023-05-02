@@ -13,6 +13,26 @@
                 <div class="card">
                     <div class="card-header">Users</div>
                     <div class="card-body">
+                        <form method="GET" id="searchForm">
+                            <div class="row">
+                                <div class="form-group col-md-2">
+                                    <label>
+                                        Start Date
+                                        <input type="date" name="start_date" value="{{  $start_date->todateString()}}"  class="form-control">
+                                    </label>   
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label>
+                                        End Date
+                                        <input type="date" name="end_date" value="{{ $end_date->todateString() }}"  class="form-control">
+                                    </label>   
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <br>
+                                    <button type="submit" class="btn btn-primary">Search</button>
+                                </div>
+                            </div>
+                        </form>
                         <div class="table-responsive">
                             <table aria-label="User Active Report" class="table table-hoved table-bordered" id="myTable">
                                 <thead>
@@ -168,7 +188,7 @@
                                                                 @if ($user->googleAccounts->count() > 0)
                                                                     <div class="mt-2 text-center">
                                                                         <small><a
-                                                                                href="{{ route('spectator.reports.user-ga-info.show', ['user' => $user->id]) }}"
+                                                                                href="{{ route('spectator.reports.user-ga-info.show', ['user' => $user->id]) }}" target="_blank"
                                                                                 class="text-primary">More info</a></small>
                                                                     </div>
                                                                 @endif
