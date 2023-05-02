@@ -12,6 +12,26 @@
                 <div class="card">
                     <div class="card-header">Users</div>
                     <div class="card-body">
+                        <form method="GET" id="searchForm">
+                            <div class="row">
+                                <div class="form-group col-md-2">
+                                    <label>
+                                        Start Date
+                                        <input type="date" name="start_date" value="{{  $start_date->todateString()}}"  class="form-control">
+                                    </label>   
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label>
+                                        End Date
+                                        <input type="date" name="end_date" value="{{ $end_date->todateString() }}"  class="form-control">
+                                    </label>   
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <br>
+                                    <button type="submit" class="btn btn-primary">Search</button>
+                                </div>
+                            </div>
+                        </form>
                         <div class="table-responsive">
                             <table aria-label="Users" class="table table-hoved table-bordered" id="myTable">
                                 <thead>
@@ -126,7 +146,7 @@
                                             <td>
                                                 {{ $user->last_api_called_at }} +
                                                 {{ $user->last90_days_api_annotation_created_logs_count }}
-                                                <a class="btn btn-default btn-sm"
+                                                <a class="btn btn-default btn-sm" target="_blank"
                                                     href="{{ route('admin.api-log.index', ['user_id' => $user->id]) }}"
                                                     >More info</a>
                                             </td>

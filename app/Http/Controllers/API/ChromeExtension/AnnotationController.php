@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\ChromeExtension;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\HomeController;
 use App\Http\Requests\AnnotationRequest;
 use App\Models\Annotation;
 use App\Models\AnnotationGaProperty;
@@ -173,9 +174,11 @@ class AnnotationController extends Controller
 
         $annotations = DB::select($annotationsQuery);
 
+        $homeController = new HomeController();
         return [
             'annotations' => $annotations,
             'user_annotation_color' => $user->userAnnotationColor,
+            'user' => $homeController->uiUserShow(),
         ];
     }
 
