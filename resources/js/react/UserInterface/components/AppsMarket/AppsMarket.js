@@ -1698,7 +1698,6 @@ class AppsMarket extends React.Component {
         })
             .then(
                 (resp) => {
-                    debugger;
                     if (e.target.name === 'wordpress_updates') {
                         Toast.fire({
                             icon: 'success',
