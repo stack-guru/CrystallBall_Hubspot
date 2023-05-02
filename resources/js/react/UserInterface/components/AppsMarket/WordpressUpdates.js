@@ -116,6 +116,16 @@ class WordpressUpdates extends React.Component {
                                     </div>
                                 </div>
                             </div>
+
+                            <div className="gray-box">
+                                {this.props.userDataSources.wordpress_updates.length ?
+                                    <h4 className='text-capitalize'>
+                                        Show last year only ({this.props.userDataSources.wordpress_updates[0].enabled ? 'Enabled' : 'Disabled'}) <span>{this.props.userDataSources.wordpress_updates[0].ga_property_name}</span>
+                                    </h4>
+                                : 
+                                    "" 
+                                }
+                            </div>
                         </div>
                     </>
                 }

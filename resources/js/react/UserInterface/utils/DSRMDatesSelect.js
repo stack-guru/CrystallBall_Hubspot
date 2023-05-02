@@ -222,8 +222,12 @@ export default class DSRMDatesSelect extends React.Component {
                                                 htmlFor="defaultCheck1" key={rmd.id}>
                                                 <input checked={userRMDIds.indexOf(rmd.id) !== -1} type="checkbox"
                                                        id={userRMDIds.indexOf(rmd.id) !== -1 ? userDSIds[userRMDIds.indexOf(rmd.id)] : null}
-                                                       onChange={this.handleClick} retail_marketing_id={rmd.id}/>
-                                                <span>{rmd.show_at} - {rmd.event_name}</span>
+                                                       onChange={this.handleClick} retail_ma
+                                                       rketing_id={rmd.id}/>
+                                                <span className="d-flex w-100 justify-content-between">
+                                                    <div>{rmd.show_at} - {rmd.event_name}</div>
+                                                    <div>{this.props.ds_data.find(ds => ds.retail_marketing_id === rmd.id)?.ga_property_name}</div>
+                                                </span>
                                             </label>
                                         );
                                     })}

@@ -191,7 +191,7 @@ export default class countries extends React.Component {
                                                     <input checked={userCountries.indexOf(country) !== -1 } type="checkbox" name={country} id={userCountries.indexOf(country) !== -1 ? this.props.ds_data[userCountries.indexOf(country)].id : null } onChange={ this.handleClick }/>
                                                     <span className="d-flex w-100 justify-content-between">
                                                         <div>{country}</div>
-                                                        <div>{this.props.ds_data.find(ds => ds.country_name === country).ga_property_name}</div>
+                                                        <div>{this.props.ds_data.find(ds => ds.country_name === country)?.ga_property_name}</div>
                                                     </span>
                                                 </label>
                                             );
