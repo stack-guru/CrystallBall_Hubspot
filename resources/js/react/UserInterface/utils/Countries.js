@@ -191,7 +191,29 @@ export default class countries extends React.Component {
                                                     <input checked={userCountries.indexOf(country) !== -1 } type="checkbox" name={country} id={userCountries.indexOf(country) !== -1 ? this.props.ds_data[userCountries.indexOf(country)].id : null } onChange={ this.handleClick }/>
                                                     <span className="d-flex w-100 justify-content-between">
                                                         <div>{country}</div>
-                                                        <div>{this.props.ds_data.find(ds => ds.country_name === country)?.ga_property_name}</div>
+                                                        {this.props.ds_data[userCountries.indexOf(country)].id === this.state.editSelected
+                                                            ?
+                                                            <GoogleAnalyticsPropertySelect
+                                                                className="w-175px themeNewselect hide-icon"
+                                                                name="ga_property_id"
+                                                                id="ga_property_id"
+                                                                currentPricePlan={this.props.user.price_plan}
+                                                                value={this.props.gaPropertyId}
+                                                                onChangeCallback={(gAP) => {
+                                                                    this.setState({ editSelected: '' })
+                                                                    this.props.userDataSourceUpdateHandler(this.props.ds_data[userCountries.indexOf(country)].id, gAP.target.value || null)
+                                                                }}
+                                                                placeholder="Select GA Properties"
+                                                                isClearable={true}
+                                                            />
+                                                            :
+                                                            <div>
+                                                                {this.props.ds_data[userCountries.indexOf(country)]?.ga_property_name}
+                                                                <i className="ml-2 icon fa" onClick={() => this.setState({ editSelected: this.props.ds_data[userCountries.indexOf(country)].id })}>
+                                                                    <img className="w-20px" src='/icon-edit.svg' />
+                                                                </i>
+                                                            </div>
+                                                        }
                                                     </span>
                                                 </label>
                                             );

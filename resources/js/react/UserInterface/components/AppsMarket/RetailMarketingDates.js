@@ -52,6 +52,7 @@ class RetailMarketingDates extends React.Component {
                     updateUserService={this.props.updateUserService}
                     onCheckCallback={this.props.userDataSourceAddHandler}
                     onUncheckCallback={this.props.userDataSourceDeleteHandler}
+                    userDataSourceUpdateHandler={this.props.userDataSourceUpdateHandler}
                     ds_data={this.props.userDataSources.retail_marketings}
                     ga_property_id={this.props.ga_property_id}
                     user={this.props.user}

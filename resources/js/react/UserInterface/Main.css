@@ -589,6 +589,10 @@ setting-menu-item.dropdown {
     max-width: 250px;
 } */
 
+.search-input-box.w-100 > div, .search-input-box.w-100 .themeNewselect {
+    width: 100%;
+}
+
 .search-input {
     border-radius: 20px !important;
 }
@@ -695,6 +699,16 @@ setting-menu-item.dropdown {
 
 .m-w-255px {
     max-width: 255px;
+}
+.w-175px {
+    width: 175px !important;
+}
+.w-20px {
+    width: 20px !important;
+}
+
+.d-content {
+    display: contents;
 }
 
 .sidebar-inner {
