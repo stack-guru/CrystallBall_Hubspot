@@ -112,12 +112,15 @@ export default class BitbucketTracking extends React.Component {
                                                 return (
                                                     <label className="themeNewCheckbox d-flex align-items-center justify-content-start textDark" htmlFor={userRepositories.indexOf(repository.slug) !== -1 ? this.props.ds_data[userRepositories.indexOf(repository.slug)].id : null} key={repository.uuid}>
                                                         <input checked={userRepositories.indexOf(repository.slug) !== -1} type="checkbox" name={repository.slug} data-workspace={workspace.slug} id={userRepositories.indexOf(repository.slug) !== -1 ? this.props.ds_data[userRepositories.indexOf(repository.slug)].id : null} onChange={this.handleClick}/>
-                                                        <span>{repository.name}</span>
-                                                        {
+                                                        <span className="d-flex w-100 justify-content-between">
+                                                            <div>{repository.name}</div>
+                                                            {/* {
                                                             userRepositories.indexOf(repository.slug) !== -1 &&
                                                                 <input className="themenewCountInput" type="text" placeholder="Set category name or Url" defaultValue={this.props.ds_data[userRepositories.indexOf(repository.slug)].ds_name} onChange={e => this.handleTextChange(e, this.props.ds_data[userRepositories.indexOf(repository.slug)].id)} />
 
-                                                        }
+                                                            } */}
+                                                            <div>{this.props.ds_data.find(ds => ds.value === repository.name)?.ga_property_name}</div>
+                                                        </span>
                                                     </label>
                                                 )
                                             }) : <p className='ml-1 pl-1 mb-0'>No repositories found</p>}

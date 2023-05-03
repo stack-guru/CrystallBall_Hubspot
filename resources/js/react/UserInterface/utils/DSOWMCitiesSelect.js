@@ -282,6 +282,8 @@ export default class DSOWMCitiesSelect extends React.Component {
                    
                     <div className="checkBoxList">
                         {this.props.ds_data.map((wAC) => {
+                            console.log(wAC)
+                            console.log(wAC.ga_property_name)
                                 return (
                                     <label
                                         className="themeNewCheckbox d-flex align-items-center justify-content-start"
@@ -303,7 +305,10 @@ export default class DSOWMCitiesSelect extends React.Component {
                                             onChange={this.handleClick}
                                             open_weather_map_city_id={wAC.open_weather_map_city_id}
                                         />
-                                        <span>{wAC.open_weather_map_city.name}</span>
+                                        <span className="d-flex w-100 justify-content-between">
+                                            <div>{wAC.open_weather_map_city.name}</div>
+                                            <div>{wAC.ga_property_name}</div>
+                                        </span>
                                     </label>
                                 );
                             })}
