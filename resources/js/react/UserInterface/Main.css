@@ -2129,7 +2129,7 @@ body {
 }
 
 .inputWithIcon .fa {
-    top: 10px;
+    top: 7px;
     right: 7px;
     z-index: 2;
     width: 25px;
@@ -2140,6 +2140,7 @@ body {
     align-items: center;
     background: #ffff;
 }
+
 
 .themeNewTitle,
 .apps-bodyContent > div h4.collapseable,
@@ -4881,6 +4882,7 @@ div[data-tour-elem="controls"]
 }
 
 .inviteForm fieldset .themeNewInputStyle.inputWithIcon .fa {
+    top: 10px;
     width: 38px;
     height: 38px;
 }
@@ -4994,11 +4996,14 @@ div[data-tour-elem="controls"]
     height: 36px;
 }
 
-.modal-createUser .inputWithIcon .fa,
-.modal-createAnnotation .inputWithIcon .fa {
-    height: 38px;
+.modal-createUser .inputWithIcon .fa
+/*.modal-createAnnotation .inputWithIcon .fa*/
+{
+    top: 10px;
     height: 38px;
 }
+
+
 
 .modal-createAnnotation .apps-modalHead h2 {
     color: #096db7;
