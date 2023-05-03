@@ -154,12 +154,14 @@ class AppsMarket extends React.Component {
         }
     }
 
-    loadUserDataSources(gaPropertyId) {
+    loadUserDataSources(gaPropertyId = '') {
         if (!this.state.isLoading) {
             this.setState({isLoading: true});
-            HttpClient.get(
-                `/data-source/user-data-source?ga_property_id=${gaPropertyId}`
-            )
+
+            let url = "/data-source/user-data-source"
+            if (gaPropertyId) url = url + `?ga_property_id=${gaPropertyId}`;
+
+            HttpClient.get(url)
                 .then(
                     (resp) => {
                         this.setState({
@@ -1247,6 +1249,7 @@ class AppsMarket extends React.Component {
                                 }
                                 serviceStatusHandler={this.serviceStatusHandler}
                                 changeShownHint={this.changeShownHint}
+                                updateUserService={this.updateUserService}
                                 sectionToggler={this.sectionToggler}
                                 userDataSourceAddHandler={
                                     this.userDataSourceAddHandler
@@ -1698,7 +1701,6 @@ class AppsMarket extends React.Component {
         })
             .then(
                 (resp) => {
-                    debugger;
                     if (e.target.name === 'wordpress_updates') {
                         Toast.fire({
                             icon: 'success',
@@ -2246,6 +2248,7 @@ class AppsMarket extends React.Component {
                         isBusy: false,
                         errors: undefined,
                     });
+                    this.loadUserDataSources();
                 },
                 (err) => {
                     this.setState({isBusy: false, errors: err.response.data});
