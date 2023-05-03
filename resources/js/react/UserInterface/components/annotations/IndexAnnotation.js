@@ -549,7 +549,7 @@ class IndexAnnotations extends React.Component {
                     </div>
 
 
-                    {!this.state.hideInfiniteScroll ? <InfiniteScroll
+                    <InfiniteScroll
                         pageStart={1}
                         loadMore={this.loadMoreAnnotations}
                         hasMore={this.state.hasMore}
@@ -760,7 +760,7 @@ class IndexAnnotations extends React.Component {
                             </>
                             {/* )} */}
                         </>
-                    </InfiniteScroll> : null}
+                    </InfiniteScroll>
                 </Container>
                 <AppsModal isOpen={!!this.state.editAnnotationId} popupSize={'md'} toggle={() => { this.setState({ editAnnotationId: '' }); }}>
                     <AnnotationsUpdate upgradePopup={this.props.upgradePopup} togglePopup={() => {
