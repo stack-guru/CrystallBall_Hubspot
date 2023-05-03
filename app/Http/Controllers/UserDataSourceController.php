@@ -26,7 +26,7 @@ class UserDataSourceController extends Controller
         if ($request->query('ga_property_id')) {
             return [
                 'user_data_sources' => [
-                    'holidays' => UserDataSource::select('id', 'ds_code', 'ds_name', 'country_name')->ofCurrentUser()->where('ga_property_id', $request->query('ga_property_id'))->where('ds_code', 'holidays')->orderBy('country_name')->get(),
+                    'holidays' => UserDataSource::select('id', 'ds_code', 'ds_name', 'country_name', 'ga_property_id')->ofCurrentUser()->where('ga_property_id', $request->query('ga_property_id'))->where('ds_code', 'holidays')->orderBy('country_name')->get(),
                     'retail_marketings' => UserDataSource::select('id', 'ds_code', 'ds_name', 'retail_marketing_id')->ofCurrentUser()->where('ga_property_id', $request->query('ga_property_id'))->where('ds_code', 'retail_marketings')->get(),
                     'open_weather_map_cities' => UserDataSource::select('id', 'ds_code', 'ds_name', 'open_weather_map_city_id')->ofCurrentUser()->where('ga_property_id', $request->query('ga_property_id'))->with('openWeatherMapCity')->where('ds_code', 'open_weather_map_cities')->get(),
                     'open_weather_map_events' => UserDataSource::select('id', 'ds_code', 'ds_name', 'open_weather_map_event')->ofCurrentUser()->where('ga_property_id', $request->query('ga_property_id'))->where('ds_code', 'open_weather_map_events')->get(),
@@ -42,17 +42,17 @@ class UserDataSourceController extends Controller
         }
         return [
             'user_data_sources' => [
-                'holidays' => UserDataSource::select('id', 'ds_code', 'ds_name', 'country_name')->ofCurrentUser()->whereNull('ga_property_id')->where('ds_code', 'holidays')->orderBy('country_name')->get(),
-                'retail_marketings' => UserDataSource::select('id', 'ds_code', 'ds_name', 'retail_marketing_id')->ofCurrentUser()->whereNull('ga_property_id')->where('ds_code', 'retail_marketings')->get(),
-                'open_weather_map_cities' => UserDataSource::select('id', 'ds_code', 'ds_name', 'open_weather_map_city_id')->ofCurrentUser()->whereNull('ga_property_id')->with('openWeatherMapCity')->where('ds_code', 'open_weather_map_cities')->get(),
-                'open_weather_map_events' => UserDataSource::select('id', 'ds_code', 'ds_name', 'open_weather_map_event')->ofCurrentUser()->whereNull('ga_property_id')->where('ds_code', 'open_weather_map_events')->get(),
-                'google_algorithm_update_dates' => UserDataSource::select('id', 'ds_code', 'ds_name', 'status')->ofCurrentUser()->whereNull('ga_property_id')->where('ds_code', 'google_algorithm_update_dates')->get(),
-                'google_alert_keywords' => UserDataSource::select('id', 'ds_code', 'ds_name', 'value')->ofCurrentUser()->whereNull('ga_property_id')->where('ds_code', 'google_alert_keywords')->get(),
-                'wordpress_updates' => UserDataSource::select('id', 'ds_code', 'ds_name', 'value')->ofCurrentUser()->whereNull('ga_property_id')->where('ds_code', 'wordpress_updates')->get(),
-                'keyword_tracking' => UserDataSource::select('id', 'ds_code', 'ds_name', 'value')->ofCurrentUser()->where('ga_property_id', $request->query('ga_property_id'))->where('ds_code', 'keyword_tracking')->get(),
-                'bitbucket_tracking' => UserDataSource::select('id', 'ds_code', 'ds_name', 'value')->ofCurrentUser()->where('ga_property_id', $request->query('ga_property_id'))->where('ds_code', 'bitbucket_tracking')->get(),
-                'github_tracking' => UserDataSource::select('id', 'ds_code', 'ds_name', 'value')->ofCurrentUser()->where('ga_property_id', $request->query('ga_property_id'))->where('ds_code', 'github_tracking')->get(),
-                'shopify_annotation' => UserDataSource::select('id', 'ds_code', 'ds_name', 'shopify_annotation_id')->ofCurrentUser()->where('ga_property_id', $request->query('ga_property_id'))->where('ds_code', 'shopify_annotation')->get(),
+                'holidays' => UserDataSource::select('user_data_sources.id', 'ds_code', 'ds_name', 'country_name', 'google_analytics_properties.name AS ga_property_name')->ofCurrentUser()->leftjoin('google_analytics_properties', 'google_analytics_properties.id', 'user_data_sources.ga_property_id')->where('ds_code', 'holidays')->orderBy('country_name')->get(),
+                'retail_marketings' => UserDataSource::select('user_data_sources.id', 'ds_code', 'ds_name', 'retail_marketing_id', 'google_analytics_properties.name AS ga_property_name')->ofCurrentUser()->leftjoin('google_analytics_properties', 'google_analytics_properties.id', 'user_data_sources.ga_property_id')->where('ds_code', 'retail_marketings')->get(),
+                'open_weather_map_cities' => UserDataSource::select('user_data_sources.id', 'ds_code', 'ds_name', 'open_weather_map_city_id', 'google_analytics_properties.name AS ga_property_name')->ofCurrentUser()->leftjoin('google_analytics_properties', 'google_analytics_properties.id', 'user_data_sources.ga_property_id')->with('openWeatherMapCity')->where('ds_code', 'open_weather_map_cities')->get(),
+                'open_weather_map_events' => UserDataSource::select('id', 'ds_code', 'ds_name', 'open_weather_map_event')->ofCurrentUser()->where('ds_code', 'open_weather_map_events')->get(),
+                'google_algorithm_update_dates' => UserDataSource::select('user_data_sources.id', 'ds_code', 'ds_name', 'status', 'google_analytics_properties.name AS ga_property_name')->ofCurrentUser()->leftjoin('google_analytics_properties', 'google_analytics_properties.id', 'user_data_sources.ga_property_id')->where('ds_code', 'google_algorithm_update_dates')->get(),
+                'google_alert_keywords' => UserDataSource::select('id', 'ds_code', 'ds_name', 'value')->ofCurrentUser()->where('ds_code', 'google_alert_keywords')->get(),
+                'wordpress_updates' => UserDataSource::select('user_data_sources.id', 'ds_code', 'ds_name', 'value', 'google_analytics_properties.name AS ga_property_name')->ofCurrentUser()->leftjoin('google_analytics_properties', 'google_analytics_properties.id', 'user_data_sources.ga_property_id')->where('ds_code', 'wordpress_updates')->get(),
+                'keyword_tracking' => UserDataSource::select('id', 'ds_code', 'ds_name', 'value')->ofCurrentUser()->where('ds_code', 'keyword_tracking')->get(),
+                'bitbucket_tracking' => UserDataSource::select('user_data_sources.id', 'ds_code', 'ds_name', 'value', 'google_analytics_properties.name AS ga_property_name')->ofCurrentUser()->leftjoin('google_analytics_properties', 'google_analytics_properties.id', 'user_data_sources.ga_property_id')->where('ds_code', 'bitbucket_tracking')->get(),
+                'github_tracking' => UserDataSource::select('user_data_sources.id', 'ds_code', 'ds_name', 'value', 'google_analytics_properties.name AS ga_property_name')->ofCurrentUser()->leftjoin('google_analytics_properties', 'google_analytics_properties.id', 'user_data_sources.ga_property_id')->where('ds_code', 'github_tracking')->get(),
+                'shopify_annotation' => UserDataSource::select('id', 'ds_code', 'ds_name', 'shopify_annotation_id')->ofCurrentUser()->where('ds_code', 'shopify_annotation')->get(),
             ],
         ];
     }

@@ -55,7 +55,7 @@ export default class GithubTracking extends React.Component {
 
         let isChecked = false;
         if( usedCredits > 0 ) isChecked = true;
-
+        
         this.props.updateTrackingStatus(isChecked)
         this.props.updateUserService({ target: {
             name: "is_ds_github_tracking_enabled",
@@ -79,7 +79,7 @@ export default class GithubTracking extends React.Component {
 
         return (
             <div className="apps-bodyContent">
-                {/*<label for="ga_property_id">Select Property</label>
+                <label for="ga_property_id">Select Property</label>
                 <div className="d-flex align-items-center w-100">
                     <GoogleAnalyticsPropertySelect
                         className="themeNewselect hide-icon"
@@ -93,23 +93,27 @@ export default class GithubTracking extends React.Component {
                         placeholder="Select GA Properties"
                         isClearable={true}
                     />
-                </div>*/}
+                </div>
                 <div className='white-box'>
                     {/* <h5 className="textblue mb-4">Github Commits Tracking</h5>
                     <strong className='d-block'>Credits: {this.state.used_credits}/{this.state.total_credits}</strong> */}
                     <strong className='d-block mb-4'>Repositories</strong>
                     <div className="checkBoxList d-flex flex-column">
                         {
-                            this.state.isBusy ? <div><i className="fa fa-spinner fa-spin mr-1"></i>We are fetching your account, just a moment</div> : repositories && repositories.length > 0 ? repositories.map(repository => {
+                            this.state.isBusy ? <div><i className="fa fa-spinner fa-spin mr-1"></i>We are fetching your account, just a moment</div> : repositories && repositories.length > 0 ? 
+                            repositories.map(repository => {
                                 if (repository !== null)
                                     return (
                                         <label className="themeNewCheckbox d-flex align-items-center justify-content-start textDark" htmlFor={userRepositories.indexOf(repository.name) !== -1 ? this.props.ds_data[userRepositories.indexOf(repository.name)].id : null} key={repository.id}>
                                             <input checked={userRepositories.indexOf(repository.name) !== -1} type="checkbox" name={repository.name} data-username={repository.owner.login} id={userRepositories.indexOf(repository.name) !== -1 ? this.props.ds_data[userRepositories.indexOf(repository.name)].id : null} onChange={this.handleClick}/>
-                                            <span>{repository.full_name}</span>
-                                            {
-                                                userRepositories.indexOf(repository.name) !== -1 &&
-                                                    <input className="themenewCountInput"  type="text" placeholder="Set category name or Url" defaultValue={this.props.ds_data[userRepositories.indexOf(repository.name)].ds_name} onChange={e => this.handleTextChange(e, this.props.ds_data[userRepositories.indexOf(repository.name)].id)} />
-                                            }
+                                            <span className="d-flex w-100 justify-content-between">
+                                                <div>{repository.full_name}</div>
+                                                {/* {
+                                                    userRepositories.indexOf(repository.name) !== -1 &&
+                                                        <input className="themenewCountInput"  type="text" placeholder="Set category name or Url" defaultValue={this.props.ds_data[userRepositories.indexOf(repository.name)].ds_name} onChange={e => this.handleTextChange(e, this.props.ds_data[userRepositories.indexOf(repository.name)].id)} />
+                                                } */}
+                                                <div>{this.props.ds_data.find(ds => ds.value === repository.name)?.ga_property_name}</div>
+                                            </span>
                                         </label>
                                     )
                             }) : <p className='ml-1 pl-1 mb-0'>No repositories found</p>

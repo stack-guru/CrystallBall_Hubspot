@@ -40,7 +40,7 @@ class UserDataSource extends Model
 
     public function scopeOfCurrentUser($query)
     {
-        return $query->where('user_id', Auth::id());
+        return $query->where('user_data_sources.user_id', Auth::id());
     }
 
     public function openWeatherMapCity()

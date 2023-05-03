@@ -133,12 +133,9 @@ class AnnotationQueryHelper
     public static function userAnnotationsQuery(User $user, array $userIdsArray, $showDisabled = false, string $googleAnalyticsPropertyId = null, string $userId = '*', string $showWebMonitoring = 'false', string $showManualAnnotations = 'false', string  $showCSVAnnotations = 'false', string $showAPIAnnotations = 'false')
     {
         $annotationsQuery = "";
-        $annotationsQuery .= "SELECT DISTINCT `annotations`.`is_enabled`, DATE(`show_at`) AS show_at, `annotations`.`id`, `category`, `event_name`, `url`, CONCAT('annotations', '~~~~', `annotations`.`id`,  '~~~~', CASE WHEN IFNULL(`annotations`.`added_by_name`, '') > '' THEN `annotations`.`added_by_name` ELSE `users`.`name` END, '~~~~', `annotations`.`added_by`) AS `added_by`, `description`, `users`.`name` AS `user_name`, `annotations`.`created_at`, NULL AS `table_ga_property_id` FROM `annotations`";
+        $annotationsQuery .= "SELECT DISTINCT `annotations`.`is_enabled`, DATE(`show_at`) AS show_at, `annotations`.`id`, `category`, `event_name`, `url`, CONCAT('annotations', '~~~~', `annotations`.`id`,  '~~~~', CASE WHEN IFNULL(`annotations`.`added_by_name`, '') > '' THEN `annotations`.`added_by_name` ELSE `users`.`name` END, '~~~~', `annotations`.`added_by`) AS `added_by`, `description`, `users`.`name` AS `user_name`, `annotations`.`created_at`, CONCAT((SELECT GROUP_CONCAT(`annotation_ga_properties`.`google_analytics_property_id`) FROM `annotation_ga_properties` WHERE `annotation_ga_properties`.`annotation_id` = `annotations`.`id` GROUP BY `annotation_ga_properties`.`annotation_id`), '~~~~', (SELECT GROUP_CONCAT(`google_analytics_properties`.`name`) FROM `annotation_ga_properties` LEFT JOIN `google_analytics_properties` ON `annotation_ga_properties`.`google_analytics_property_id` = `google_analytics_properties`.`id` WHERE `annotation_ga_properties`.`annotation_id` = `annotations`.`id` GROUP BY `annotation_ga_properties`.`annotation_id`)) AS `table_ga_property_id` FROM `annotations`";
         $annotationsQuery .= " LEFT JOIN `users` ON `annotations`.`user_id` = `users`.`id`";
-        if ($googleAnalyticsPropertyId && $googleAnalyticsPropertyId !== '*') {
-            $annotationsQuery .= " LEFT JOIN `annotation_ga_properties` ON `annotation_ga_properties`.`annotation_id` = `annotations`.`id`";
-        }
-
+        $annotationsQuery .= " LEFT JOIN `annotation_ga_properties` ON `annotation_ga_properties`.`annotation_id` = `annotations`.`id`";
 
         $annotationsQuery .= " WHERE (";
         if ($userId !== '*' && in_array($userId, $userIdsArray)) {
@@ -151,8 +148,7 @@ class AnnotationQueryHelper
 
         if ($googleAnalyticsPropertyId && $googleAnalyticsPropertyId !== '*') {
             $gaPropertyId = $googleAnalyticsPropertyId;
-            $annotationsQuery .= " AND (`annotation_ga_properties`.`google_analytics_property_id` IS NULL OR `annotation_ga_properties`.`google_analytics_property_id` = " . $gaPropertyId . ")";
-
+            $annotationsQuery .= " AND (LOCATE('" . $gaPropertyId . "', `table_ga_property_id`) > 0 OR `table_ga_property_id` IS NULL)";
             // Can't mark a property as in use without price plan restriction because of the rule:
             // A property that is already in use should not be validated with price plan limits/counts
             // If we mark properties as in use and don't make sure that the user is under limit, it

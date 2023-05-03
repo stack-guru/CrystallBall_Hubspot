@@ -61,7 +61,7 @@ class ApplePodcastService {
             $message = "Apple Podcast script is crashed. Please have a look into the code to fix!";
             Mail::to($admin)->send(new AdminFailedApplePodcastScriptMail($admin, $e));
             Log::error($e);
-            return false;
+            return $e;
         }
 
     

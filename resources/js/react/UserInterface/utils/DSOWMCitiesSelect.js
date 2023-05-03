@@ -63,7 +63,7 @@ export default class DSOWMCitiesSelect extends React.Component {
             this.props.updateUserService({ target: {
                     name: "is_ds_weather_alerts_enabled",
                     checked: true,
-                },
+                }, 
             });
         } else {
             this.props.onUncheckCallback(
@@ -89,7 +89,7 @@ export default class DSOWMCitiesSelect extends React.Component {
         this.props.updateUserService({ target: {
                 name: "is_ds_weather_alerts_enabled",
                 checked: true,
-            },
+            }, 
         });
     }
 
@@ -103,7 +103,7 @@ export default class DSOWMCitiesSelect extends React.Component {
         this.props.updateUserService({ target: {
                 name: "is_ds_weather_alerts_enabled",
                 checked: false,
-            },
+            }, 
         });
     }
 
@@ -216,7 +216,7 @@ export default class DSOWMCitiesSelect extends React.Component {
                                     })}
                             </select> */}
                         </div>
-                        {/*<div className="input-group search-input-box mb-3 d-flex justify-content-between">
+                        <div className="input-group search-input-box mb-3 d-flex justify-content-between">
                             <div className="betweentext align-self-center">for</div>
                             <GoogleAnalyticsPropertySelect
                                 className="themeNewselect hide-icon"
@@ -230,7 +230,7 @@ export default class DSOWMCitiesSelect extends React.Component {
                                 placeholder="Select GA Properties"
                                 isClearable={true}
                             />
-                        </div>*/}
+                        </div>
                         <div className="input-group search-input-box mb-3">
                             <input
                                 type="text"
@@ -277,11 +277,13 @@ export default class DSOWMCitiesSelect extends React.Component {
                         </div>
                     )}
                 </div>
-
+                    
                 { (this.props.showSelectedOnly) ? <>
-
+                   
                     <div className="checkBoxList">
                         {this.props.ds_data.map((wAC) => {
+                            console.log(wAC)
+                            console.log(wAC.ga_property_name)
                                 return (
                                     <label
                                         className="themeNewCheckbox d-flex align-items-center justify-content-start"
@@ -289,7 +291,7 @@ export default class DSOWMCitiesSelect extends React.Component {
                                         key={wAC.open_weather_map_city_id}
                                     >
                                         <input
-                                            checked
+                                            checked 
                                             id={
                                                 userOWMCIds.indexOf(wAC.open_weather_map_city_id) !== -1
                                                     ? userDSIds[
@@ -303,7 +305,10 @@ export default class DSOWMCitiesSelect extends React.Component {
                                             onChange={this.handleClick}
                                             open_weather_map_city_id={wAC.open_weather_map_city_id}
                                         />
-                                        <span>{wAC.open_weather_map_city.name}</span>
+                                        <span className="d-flex w-100 justify-content-between">
+                                            <div>{wAC.open_weather_map_city.name}</div>
+                                            <div>{wAC.ga_property_name}</div>
+                                        </span>
                                     </label>
                                 );
                             })}

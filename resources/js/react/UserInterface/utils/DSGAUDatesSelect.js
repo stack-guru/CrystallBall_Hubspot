@@ -57,7 +57,7 @@ export default class DSGAUDatesSelect extends React.Component {
                         </select>
                     </div>
 
-                    {/*<span className="betweentext">for</span>
+                    <span className="betweentext">for</span>
                     <GoogleAnalyticsPropertySelect
                         className="themeNewselect hide-icon"
                         name="ga_property_id"
@@ -80,7 +80,17 @@ export default class DSGAUDatesSelect extends React.Component {
                         }}
                         placeholder="Select GA Properties"
                         isClearable={true}
-                    />*/}
+                    />
+                </div>
+
+                <div className="gray-box">
+                    {this.props.ds_data.length ?
+                        <h4 className='text-capitalize'>
+                            {this.props.ds_data[0].status ? this.props.ds_data[0].status : 'Both'} <span>{this.props.ds_data[0].ga_property_name}</span>
+                        </h4>
+                    : 
+                        "" 
+                    }
                 </div>
 
                 <div className="checkBoxList d-flex flex-column">
