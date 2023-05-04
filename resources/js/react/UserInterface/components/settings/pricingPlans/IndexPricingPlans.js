@@ -189,7 +189,7 @@ export default class IndexPricingPlans extends React.Component {
                                                     <i><img src={'/tick-green.svg'} /></i><span>Data Studio Connector</span></li> : null}
                                                 <li className='d-flex align-items-center'>
                                                     <i><img src={'/tick-green.svg'} /></i>
-                                                    <span>{pricePlan.user_per_ga_account_count == 0 ? <>Unlimited Users</> : (pricePlan.user_per_ga_account_count == -1 ? <>Up to 1 User</> : (pricePlan.user_per_ga_account_count >= 1 ? <>Up to {pricePlan.user_per_ga_account_count + 1} User</> : (<></>)))}</span>
+                                                    <span>{pricePlan.user_per_ga_account_count == 0 ? <>Unlimited Users</> : (pricePlan.user_per_ga_account_count == -1 ? <>Up to 1 Users</> : (pricePlan.user_per_ga_account_count >= 1 ? <>Up to {pricePlan.user_per_ga_account_count + 1} Users</> : (<></>)))}</span>
                                                 </li>
 
                                                 {/*<li className='d-flex align-items-center'>
@@ -245,7 +245,7 @@ export default class IndexPricingPlans extends React.Component {
                                                 {pricePlan.linkedin_credits_count == -1 || pricePlan.linkedin_credits_count == null ? null : <li className='d-flex align-items-center'><i><img src={'/tick-green.svg'} /></i> <span>Linkedin: {pricePlan.linkedin_credits_count == 0 ? 'Unlimited' : pricePlan.linkedin_credits_count}</span> </li>}
                                                 {pricePlan.shopify_monitor_count == -1 || pricePlan.shopify_monitor_count == null ? null : <li className='d-flex align-items-center'><i><img src={'/tick-green.svg'} /></i> <span>Shopify: {pricePlan.shopify_monitor_count == 0 ? 'Unlimited' : pricePlan.shopify_monitor_count}</span> </li>}
                                                 {pricePlan.twitter_credits_count == -1 || pricePlan.twitter_credits_count == null ? null : <li className='d-flex align-items-center'><i><img src={'/tick-green.svg'} /></i> <span>Twitter: {pricePlan.twitter_credits_count == 0 ? 'Unlimited' : pricePlan.twitter_credits_count}</span> </li>}
-                                                {pricePlan.holiday_credits_count == -1 || pricePlan.holiday_credits_count == null ? null : <li className='d-flex align-items-center'><i><img src={'/tick-green.svg'} /></i> <span>Holiday: {pricePlan.holiday_credits_count == 0 ? 'Unlimited' : pricePlan.holiday_credits_count}</span> </li>}
+                                                {pricePlan.holiday_credits_count == -1 || pricePlan.holiday_credits_count == null ? null : <li className='d-flex align-items-center'><i><img src={'/tick-green.svg'} /></i> <span>Holidays: {pricePlan.holiday_credits_count == 0 ? 'Unlimited' : pricePlan.holiday_credits_count}</span> </li>}
                                             </ul>
                                         </div>}
                                     </div>

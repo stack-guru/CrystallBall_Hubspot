@@ -16,7 +16,7 @@ class Holidays extends React.Component {
     changeModal() {
         this.setState({isRead: true})
     }
-    
+
     updateTrackingStatus = status => {
         this.setState({ isActiveTracking: status })
     }
@@ -44,7 +44,7 @@ class Holidays extends React.Component {
                     serviceName={"Holidays"}
                     colorKeyName={"holidays"}
                     dsKeyName={"is_ds_holidays_enabled"}
-                    creditString={`${ this.props.userDataSources.holidays?.length } / ${ this.props.user.price_plan.holiday_credits_count == -1 ? 0 : this.props.user.price_plan.holiday_credits_count }`}
+                    creditString={`${ this.props.userDataSources.holidays?.length } / ${this.props.user.price_plan.holiday_credits_count == -1 ? 0 : this.props.user.price_plan.holiday_credits_count }`}
                 />
 
 
@@ -53,6 +53,7 @@ class Holidays extends React.Component {
                     updateUserService={this.props.updateUserService}
                     onCheckCallback={this.props.userDataSourceAddHandler}
                     onUncheckCallback={this.props.userDataSourceDeleteHandler}
+                    userDataSourceUpdateHandler={this.props.userDataSourceUpdateHandler}
                     ds_data={this.props.userDataSources.holidays}
                     ga_property_id={this.props.ga_property_id}
                     user={this.props.user}

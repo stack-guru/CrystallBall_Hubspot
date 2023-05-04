@@ -80,7 +80,7 @@ export default class BitbucketTracking extends React.Component {
         let userRepositories = this.props.ds_data.map(ds => ds.value);
         return (
             <div className="apps-bodyContent">
-                <div className="white-box">
+                {/* <div className="white-box">
                     <label for="ga_property_id">Select Property</label>
                     <div className="d-flex align-items-center w-100">
                         <GoogleAnalyticsPropertySelect
@@ -96,7 +96,7 @@ export default class BitbucketTracking extends React.Component {
                             isClearable={true}
                         />
                     </div>
-                </div>
+                </div> */}
                 {/* <div className='white-box'> */}
                     {/* <h5 className="textblue mb-4">Bitbucket Commits Tracking</h5>
                     <strong>Credits: {this.state.used_credits}/{this.state.total_credits}</strong> */}
@@ -110,15 +110,46 @@ export default class BitbucketTracking extends React.Component {
                                         <div className="checkBoxList d-flex flex-column">
                                             {workspace.repositories && workspace.repositories.length > 0 ? workspace.repositories.map(repository => { if (repository !== null)
                                                 return (
-                                                    <label className="themeNewCheckbox d-flex align-items-center justify-content-start textDark" htmlFor={userRepositories.indexOf(repository.slug) !== -1 ? this.props.ds_data[userRepositories.indexOf(repository.slug)].id : null} key={repository.uuid}>
-                                                        <input checked={userRepositories.indexOf(repository.slug) !== -1} type="checkbox" name={repository.slug} data-workspace={workspace.slug} id={userRepositories.indexOf(repository.slug) !== -1 ? this.props.ds_data[userRepositories.indexOf(repository.slug)].id : null} onChange={this.handleClick}/>
-                                                        <span>{repository.name}</span>
-                                                        {
-                                                            userRepositories.indexOf(repository.slug) !== -1 &&
-                                                                <input className="themenewCountInput" type="text" placeholder="Set category name or Url" defaultValue={this.props.ds_data[userRepositories.indexOf(repository.slug)].ds_name} onChange={e => this.handleTextChange(e, this.props.ds_data[userRepositories.indexOf(repository.slug)].id)} />
+                                                    <div className="d-flex justify-content-between">
+                                                        <label className="themeNewCheckbox d-flex align-items-center justify-content-start textDark" htmlFor={userRepositories.indexOf(repository.slug) !== -1 ? this.props.ds_data[userRepositories.indexOf(repository.slug)].id : null} key={repository.uuid}>
+                                                            <input checked={userRepositories.indexOf(repository.slug) !== -1} type="checkbox" name={repository.slug} data-workspace={workspace.slug} id={userRepositories.indexOf(repository.slug) !== -1 ? this.props.ds_data[userRepositories.indexOf(repository.slug)].id : null} onChange={this.handleClick}/>
+                                                            <span className="d-flex w-100 justify-content-between">
+                                                                <div>{repository.name}</div>
+                                                                {/* {
+                                                                userRepositories.indexOf(repository.slug) !== -1 &&
+                                                                    <input className="themenewCountInput" type="text" placeholder="Set category name or Url" defaultValue={this.props.ds_data[userRepositories.indexOf(repository.slug)].ds_name} onChange={e => this.handleTextChange(e, this.props.ds_data[userRepositories.indexOf(repository.slug)].id)} />
 
+                                                                } */}
+                                                            </span>
+                                                        </label>
+                                                        {userRepositories.indexOf(repository.slug) !== -1
+                                                         ?
+                                                            repository.slug === this.state.editSelected || !this.props.ds_data[userRepositories.indexOf(repository.slug)]?.ga_property_name
+                                                                ?
+                                                                    <GoogleAnalyticsPropertySelect
+                                                                        className="w-175px themeNewselect hide-icon"
+                                                                        name="ga_property_id"
+                                                                        id="ga_property_id"
+                                                                        currentPricePlan={this.props.user.price_plan}
+                                                                        value={this.props.gaPropertyId}
+                                                                        onChangeCallback={(gAP) => {
+                                                                            this.setState({ editSelected: '' })
+                                                                            this.props.userDataSourceUpdateHandler(this.props.ds_data[userRepositories.indexOf(repository.slug)]?.id, gAP.target.value || null)
+                                                                        }}
+                                                                        placeholder="Select GA Properties"
+                                                                        isClearable={true}
+                                                                    />
+                                                                :
+                                                                    <div>
+                                                                        {this.props.ds_data[userRepositories.indexOf(repository.slug)]?.ga_property_name}
+                                                                        <i className="ml-2 icon fa" onClick={() => this.setState({ editSelected: repository.slug })}>
+                                                                            <img className="w-20px" src='/icon-edit.svg' />
+                                                                        </i>
+                                                                    </div>
+                                                        :
+                                                            ''
                                                         }
-                                                    </label>
+                                                    </div>
                                                 )
                                             }) : <p className='ml-1 pl-1 mb-0'>No repositories found</p>}
                                         </div>

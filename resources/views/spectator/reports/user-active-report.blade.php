@@ -13,6 +13,26 @@
                 <div class="card">
                     <div class="card-header">Users</div>
                     <div class="card-body">
+                        <form method="GET" id="searchForm">
+                            <div class="row">
+                                <div class="form-group col-md-2">
+                                    <label>
+                                        Start Date
+                                        <input type="date" name="start_date" value="{{  $start_date->todateString()}}"  class="form-control">
+                                    </label>   
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label>
+                                        End Date
+                                        <input type="date" name="end_date" value="{{ $end_date->todateString() }}"  class="form-control">
+                                    </label>   
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <br>
+                                    <button type="submit" class="btn btn-primary">Search</button>
+                                </div>
+                            </div>
+                        </form>
                         <div class="table-responsive">
                             <table aria-label="User Active Report" class="table table-hoved table-bordered" id="myTable">
                                 <thead>
@@ -41,6 +61,10 @@
                                         <th scope="col">In Use Properties</th>
                                         <th scope="col">Is Google Analytics/Search Console Connected</th>
                                         <th scope="col">Has Data Studio connected?</th>
+                                        <th scope="col">Email Verification Tag</th>
+                                        <th scope="col">Phone Verification Tag</th>
+                                        <th scope="col">Google Account Tag</th>
+                                        <th scope="col">Extended Trail Tag</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -164,7 +188,7 @@
                                                                 @if ($user->googleAccounts->count() > 0)
                                                                     <div class="mt-2 text-center">
                                                                         <small><a
-                                                                                href="{{ route('spectator.reports.user-ga-info.show', ['user' => $user->id]) }}"
+                                                                                href="{{ route('spectator.reports.user-ga-info.show', ['user' => $user->id]) }}" target="_blank"
                                                                                 class="text-primary">More info</a></small>
                                                                     </div>
                                                                 @endif
@@ -180,7 +204,36 @@
                                                     Yes
                                                 @endif
                                             </td>
-                                            
+                                            <td>
+                                                @if($user->email_verified_at)
+                                                    <span class="badge badge-primary">Email verified at {{$user->email_verified_at->format(config('app.format.datetime'))}}</span>
+                                                @else 
+                                                    <span class="badge badge-danger">Email not verified</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if($user->phone_verified_at)
+                                                    <span class="badge badge-primary">Phone number verified at {{$user->phone_verified_at->format(config('app.format.datetime'))}}</span>
+                                                @else 
+                                                    <span class="badge badge-danger">Phone not verified</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if($user->password == \App\Models\User::EMPTY_PASSWORD)
+                                                    @if ($user->has_password == true)
+                                                        <span class="badge badge-danger">Password not set</span>
+                                                    @else 
+                                                        <span class="badge badge-success">Google Account</span>
+                                                    @endif
+                                                @else 
+                                                    <span class="badge badge-success">Password has been set</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($user->price_plan_settings && $user->price_plan_settings['extended_trial']['activation_count'] > 0)
+                                                <span class="badge badge-info">Trial Extended</span>
+                                                @endif
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>

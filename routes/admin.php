@@ -9,6 +9,7 @@ Route::resource('user', App\Http\Controllers\Admin\UserController::class)->excep
 Route::resource('spectator', App\Http\Controllers\Admin\SpectatorController::class)->except(['show']);
 Route::post('/user/{user}/login', [App\Http\Controllers\Admin\UserController::class, 'login'])->name('user.login');
 Route::put('/user/{user}/make-owner', [App\Http\Controllers\Admin\UserController::class, 'makeOwner'])->name('user.make-owner');
+Route::put('/user/{user}/email-verify', [App\Http\Controllers\Admin\UserController::class, 'emailVerify'])->name('user.email-verify');
 
 Route::group(['prefix' => 'data-source', 'as' => 'data-source.'], function () {
 

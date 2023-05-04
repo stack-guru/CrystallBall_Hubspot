@@ -1,6 +1,7 @@
 import React from "react";
 import HttpClient from "../utils/HttpClient";
 import GoogleAnalyticsPropertySelect from "../utils/GoogleAnalyticsPropertySelect";
+import Toast from "./Toast";
 
 export default class DSRMDatesSelect extends React.Component {
     constructor(props) {
@@ -20,14 +21,14 @@ export default class DSRMDatesSelect extends React.Component {
 
     componentDidMount() {
         if (!this.state.isBusy) {
-            this.setState({ isBusy: true });
+            this.setState({isBusy: true});
             HttpClient.get("data-source/retail-marketing-dates")
                 .then(
                     (resp) => {
                         this.setState({
                             isBusy: false,
                             retail_marketing_dates:
-                                resp.data.retail_marketing_dates,
+                            resp.data.retail_marketing_dates,
                         });
                     },
                     (err) => {
@@ -38,7 +39,7 @@ export default class DSRMDatesSelect extends React.Component {
                     }
                 )
                 .catch((err) => {
-                    this.setState({ isBusy: false, errors: err });
+                    this.setState({isBusy: false, errors: err});
                 });
         }
     }
@@ -49,7 +50,7 @@ export default class DSRMDatesSelect extends React.Component {
                 code: "retail_marketings",
                 name: "RetailMarketing",
                 country_name: null,
-                retail_marketing_id: e.target.getAttribute(
+                retail_marketing_id: e.target.retail_marketing_id || e.target.getAttribute(
                     "retail_marketing_id"
                 ),
             });
@@ -133,7 +134,9 @@ export default class DSRMDatesSelect extends React.Component {
                 <div className="d-flex align-items-center mb-3">
                     <div className="w-100 pr-2">
                         <div className="input-group search-input-box">
-                            <input type="text" className="form-control search-input" placeholder="Search" value={this.state.searchText} name="searchText" onChange={(e) => this.setState({ [e.target.name]: e.target.value, })} />
+                            <input type="text" className="form-control search-input" placeholder="Search"
+                                   value={this.state.searchText} name="searchText"
+                                   onChange={(e) => this.setState({[e.target.name]: e.target.value,})}/>
                             <div className="input-group-append"><i className="ti-search"></i></div>
                         </div>
                     </div>
@@ -148,6 +151,16 @@ export default class DSRMDatesSelect extends React.Component {
                             value={this.props.gaPropertyId}
                             onChangeCallback={(gAP) => {
                                 this.props.updateGAPropertyId(gAP.target.value || null)
+
+                                const currentValue = userRMDIds.length
+                                if (currentValue) {
+                                    this.handleClick({target: {checked: true, retail_marketing_id: userRMDIds[0]}});
+                                } else {
+                                    Toast.fire({
+                                        icon: 'success',
+                                        title: "Successfully saved dates for retail marketing settings.",
+                                    });
+                                }
                             }}
                             placeholder="Select GA Properties"
                             isClearable={true}
@@ -159,9 +172,11 @@ export default class DSRMDatesSelect extends React.Component {
                 <div className="grid2layout">
                     <div className="column">
                         <div className="white-box">
-                            <div className="boxTitleBtn d-flex justify-content-between align-items-center border-bottom pb-3 mb-3">
-                                <label className="themeNewCheckbox d-flex align-items-center justify-content-start m-0" htmlFor="check-all">
-                                    <input type="checkbox" id="check-all" onChange={this.selectAllShowing} />
+                            <div
+                                className="boxTitleBtn d-flex justify-content-between align-items-center border-bottom pb-3 mb-3">
+                                <label className="themeNewCheckbox d-flex align-items-center justify-content-start m-0"
+                                       htmlFor="check-all">
+                                    <input type="checkbox" id="check-all" onChange={this.selectAllShowing}/>
                                     <span>Select All</span>
                                 </label>
                                 <span className="btn-clearAll" onClick={this.clearAll}>Clear All</span>
@@ -174,8 +189,12 @@ export default class DSRMDatesSelect extends React.Component {
                                             return null;
                                         }
                                         return (
-                                            <label className="themeNewCheckbox d-flex align-items-center justify-content-start" htmlFor="defaultCheck1" key={rmd.id}>
-                                                <input checked={userRMDIds.indexOf(rmd.id) !== -1} type="checkbox" id={userRMDIds.indexOf(rmd.id) !== -1 ? userDSIds[userRMDIds.indexOf(rmd.id)] : null} onChange={this.handleClick} retail_marketing_id={rmd.id} />
+                                            <label
+                                                className="themeNewCheckbox d-flex align-items-center justify-content-start"
+                                                htmlFor="defaultCheck1" key={rmd.id}>
+                                                <input checked={userRMDIds.indexOf(rmd.id) !== -1} type="checkbox"
+                                                       id={userRMDIds.indexOf(rmd.id) !== -1 ? userDSIds[userRMDIds.indexOf(rmd.id)] : null}
+                                                       onChange={this.handleClick} retail_marketing_id={rmd.id}/>
                                                 <span>{rmd.show_at} -{" "}{rmd.event_name}</span>
                                             </label>
                                         );
@@ -198,9 +217,39 @@ export default class DSRMDatesSelect extends React.Component {
                                             return null;
                                         }
                                         return (
-                                            <label className="themeNewCheckbox d-flex align-items-center justify-content-start" htmlFor="defaultCheck1" key={rmd.id}>
-                                                <input checked={userRMDIds.indexOf(rmd.id) !== -1} type="checkbox" id={userRMDIds.indexOf(rmd.id) !== -1 ? userDSIds[userRMDIds.indexOf(rmd.id)] : null} onChange={this.handleClick} retail_marketing_id={rmd.id} />
-                                                <span>{rmd.show_at} - {rmd.event_name}</span>
+                                            <label
+                                                className="themeNewCheckbox d-flex align-items-center justify-content-start"
+                                                htmlFor="defaultCheck1" key={rmd.id}>
+                                                <input checked={userRMDIds.indexOf(rmd.id) !== -1} type="checkbox"
+                                                       id={userRMDIds.indexOf(rmd.id) !== -1 ? userDSIds[userRMDIds.indexOf(rmd.id)] : null}
+                                                       onChange={this.handleClick} retail_ma
+                                                       rketing_id={rmd.id}/>
+                                                <span className="d-flex w-100 justify-content-between">
+                                                    <div>{rmd.show_at} - {rmd.event_name}</div>
+                                                    {this.props.ds_data.find(ds => ds.retail_marketing_id === rmd.id).id === this.state.editSelected
+                                                        ?
+                                                        <GoogleAnalyticsPropertySelect
+                                                            className="w-175px themeNewselect hide-icon"
+                                                            name="ga_property_id"
+                                                            id="ga_property_id"
+                                                            currentPricePlan={this.props.user.price_plan}
+                                                            value={this.props.gaPropertyId}
+                                                            onChangeCallback={(gAP) => {
+                                                                this.setState({ editSelected: '' })
+                                                                this.props.userDataSourceUpdateHandler(this.props.ds_data.find(ds => ds.retail_marketing_id === rmd.id).id, gAP.target.value || null)
+                                                            }}
+                                                            placeholder="Select GA Properties"
+                                                            isClearable={true}
+                                                        />
+                                                        :
+                                                        <div className="d-content">
+                                                            {this.props.ds_data.find(ds => ds.retail_marketing_id === rmd.id)?.ga_property_name}
+                                                            <i className="ml-2 icon fa" onClick={() => this.setState({ editSelected: this.props.ds_data.find(ds => ds.retail_marketing_id === rmd.id).id })}>
+                                                                <img className="w-20px" src='/icon-edit.svg' />
+                                                            </i>
+                                                        </div>
+                                                    }
+                                                </span>
                                             </label>
                                         );
                                     })}

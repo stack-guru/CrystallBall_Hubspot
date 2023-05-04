@@ -238,6 +238,7 @@ const ApplePodcastConfig = (props) => {
                                         type="button"
                                         className="keywordTag"
                                         key={gAK.id}
+                                        title={gAK.google_analytics_property.name}
                                         user_data_source_id={gAK.id}
                                     >
                                         <span

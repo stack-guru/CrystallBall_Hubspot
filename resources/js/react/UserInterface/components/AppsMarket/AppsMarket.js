@@ -89,6 +89,7 @@ class AppsMarket extends React.Component {
         this.checkUserGithubAccount = this.checkUserGithubAccount.bind(this);
         this.updateUserService = this.updateUserService.bind(this);
         this.getRecommendedApps = this.getRecommendedApps.bind(this);
+        this.userDataSourceUpdateHandler = this.userDataSourceUpdateHandler.bind(this);
     }
 
     componentDidMount() {
@@ -155,12 +156,14 @@ class AppsMarket extends React.Component {
         }
     }
 
-    loadUserDataSources(gaPropertyId) {
+    loadUserDataSources(gaPropertyId = '') {
         if (!this.state.isLoading) {
             this.setState({isLoading: true});
-            HttpClient.get(
-                `/data-source/user-data-source?ga_property_id=${gaPropertyId}`
-            )
+
+            let url = "/data-source/user-data-source"
+            if (gaPropertyId) url = url + `?ga_property_id=${gaPropertyId}`;
+
+            HttpClient.get(url)
                 .then(
                     (resp) => {
                         this.setState({
@@ -1280,6 +1283,9 @@ class AppsMarket extends React.Component {
                                 userDataSourceDeleteHandler={
                                     this.userDataSourceDeleteHandler
                                 }
+                                userDataSourceUpdateHandler={
+                                    this.userDataSourceUpdateHandler
+                                }
                                 updateUserService={this.updateUserService}
                                 reloadWebMonitors={this.reloadWebMonitors}
                                 loadUserDataSources={this.loadUserDataSources}
@@ -1304,12 +1310,16 @@ class AppsMarket extends React.Component {
                                 }
                                 serviceStatusHandler={this.serviceStatusHandler}
                                 changeShownHint={this.changeShownHint}
+                                updateUserService={this.updateUserService}
                                 sectionToggler={this.sectionToggler}
                                 userDataSourceAddHandler={
                                     this.userDataSourceAddHandler
                                 }
                                 userDataSourceDeleteHandler={
                                     this.userDataSourceDeleteHandler
+                                }
+                                userDataSourceUpdateHandler={
+                                    this.userDataSourceUpdateHandler
                                 }
                                 reloadWebMonitors={this.reloadWebMonitors}
                                 loadUserDataSources={this.loadUserDataSources}
@@ -1342,6 +1352,9 @@ class AppsMarket extends React.Component {
                                 }
                                 userDataSourceDeleteHandler={
                                     this.userDataSourceDeleteHandler
+                                }
+                                userDataSourceUpdateHandler={
+                                    this.userDataSourceUpdateHandler
                                 }
                                 reloadWebMonitors={this.reloadWebMonitors}
                                 loadUserDataSources={this.loadUserDataSources}
@@ -1481,6 +1494,9 @@ class AppsMarket extends React.Component {
                                 userDataSourceDeleteHandler={
                                     this.userDataSourceDeleteHandler
                                 }
+                                userDataSourceUpdateHandler={
+                                    this.userDataSourceUpdateHandler
+                                }
                                 reloadWebMonitors={this.reloadWebMonitors}
                                 loadUserDataSources={this.loadUserDataSources}
                                 updateGAPropertyId={(value) => {
@@ -1513,6 +1529,9 @@ class AppsMarket extends React.Component {
                                 }
                                 userDataSourceDeleteHandler={
                                     this.userDataSourceDeleteHandler
+                                }
+                                userDataSourceUpdateHandler={
+                                    this.userDataSourceUpdateHandler
                                 }
                                 reloadWebMonitors={this.reloadWebMonitors}
                                 loadUserDataSources={this.loadUserDataSources}
@@ -1786,6 +1805,12 @@ class AppsMarket extends React.Component {
         })
             .then(
                 (resp) => {
+                    if (e.target.name === 'wordpress_updates') {
+                        Toast.fire({
+                            icon: 'success',
+                            title: "Successfully saved wordpress updates settings.",
+                        });
+                    }
                     switch (e.target.name) {
                         case "is_ds_twitter_tracking_enabled":
                             if (resp.data.twitter_accounts > 0) {
@@ -1897,8 +1922,7 @@ class AppsMarket extends React.Component {
     }
 
     serviceStatusHandler(e) {
-        if(this.props.user.price_plan.name == 'Trial Ended')
-        {
+        if (this.props.user.price_plan.name == 'Trial Ended') {
             if (e.target.name === 'is_ds_keyword_tracking_enabled') {
                 this.props.upgradePopup('rank-tracking-access')
             }
@@ -1938,12 +1962,12 @@ class AppsMarket extends React.Component {
                 this.props.upgradePopup('integrations')
             }
 
-        }else{
+        } else {
             if (this.props.user.price_plan.has_data_sources) {
                 if (e.persist) {
                     e.persist();
                 }
-    
+
                 if (e.target.name == "is_ds_holidays_enabled" && e.target.checked) {
                     this.sectionToggler("holidays");
                     this.updateUserService(e);
@@ -2019,7 +2043,7 @@ class AppsMarket extends React.Component {
                     this.sectionToggler(null);
                     this.updateUserService(e);
                 }
-    
+
                 if (
                     e.target.name == "is_ds_shopify_annotation_enabled" &&
                     e.target.checked
@@ -2059,7 +2083,7 @@ class AppsMarket extends React.Component {
                     this.sectionToggler(null);
                     this.updateUserService(e);
                 }
-    
+
                 if (
                     e.target.name == "is_ds_apple_podcast_annotation_enabled" &&
                     e.target.checked
@@ -2131,7 +2155,7 @@ class AppsMarket extends React.Component {
                     this.sectionToggler(null);
                     this.updateUserService(e);
                 }
-    
+
                 if (
                     e.target.name == "is_ds_bitbucket_tracking_enabled" &&
                     e.target.checked
@@ -2163,7 +2187,7 @@ class AppsMarket extends React.Component {
                     this.sectionToggler(null);
                     this.updateUserService(e);
                 }
-    
+
                 if (
                     e.target.name == "is_ds_github_tracking_enabled" &&
                     e.target.checked
@@ -2195,7 +2219,7 @@ class AppsMarket extends React.Component {
                     this.sectionToggler(null);
                     this.updateUserService(e);
                 }
-    
+
                 if (e.target.name == "is_ds_twitter_tracking_enabled") {
                     this.updateUserService(e);
                     this.sectionToggler(
@@ -2209,35 +2233,35 @@ class AppsMarket extends React.Component {
                 if (e.target.name === 'is_ds_google_alerts_enabled') {
                     this.props.upgradePopup('news-alert')
                 }
-    
+
                 if (e.target.name === 'is_ds_keyword_tracking_enabled') {
                     this.props.upgradePopup('rank-tracking-access')
                 }
-    
+
                 if (e.target.name === 'is_ds_weather_alerts_enabled' || e.target.name === 'is_ds_google_algorithm_updates_enabled') {
                     this.props.upgradePopup('integrations')
                 }
-    
+
                 if (e.target.name === 'is_ds_twitter_tracking_enabled') {
                     this.props.upgradePopup('social-media')
                 }
-    
+
                 if (e.target.name === 'is_ds_apple_podcast_annotation_enabled') {
                     this.props.upgradePopup('integrations')
                 }
-    
+
                 if (e.target.name === 'is_ds_github_tracking_enabled' || e.target.name === 'is_ds_bitbucket_tracking_enabled') {
                     this.props.upgradePopup('integrations')
                 }
-    
+
                 if (e.target.name === 'is_ds_retail_marketing_enabled' || e.target.name === 'is_ds_holidays_enabled') {
                     this.props.upgradePopup('integrations')
                 }
-    
+
                 if (e.target.name === 'is_ds_web_monitors_enabled') {
                     this.props.upgradePopup('website-monitoring-upgrade')
                 }
-    
+
                 if (e.target.name === 'is_ds_shopify_annotation_enabled') {
                     this.props.upgradePopup('integrations')
                 }
@@ -2278,6 +2302,34 @@ class AppsMarket extends React.Component {
                 (resp) => {
                     let uds = resp.data.user_data_source;
                     let ar = this.state.userDataSources[uds.ds_code];
+                    if (uds.ds_code == "wordpress_updates") {
+                        Toast.fire({
+                            icon: 'success',
+                            title: "Successfully saved wordpress updates settings.",
+                        });
+                    }
+
+                    if (uds.ds_code == "holidays") {
+                        Toast.fire({
+                            icon: 'success',
+                            title: "Successfully saved holidays settings.",
+                        });
+                    }
+
+                    if (uds.ds_code == "retail_marketings") {
+                        Toast.fire({
+                            icon: 'success',
+                            title: "Successfully saved dates for retail marketing settings.",
+                        });
+                    }
+
+                    if (uds.ds_code == "google_algorithm_update_dates") {
+                        Toast.fire({
+                            icon: 'success',
+                            title: "Successfully saved google update settings.",
+                        });
+                    }
+
                     if (uds.ds_code == "google_algorithm_update_dates") {
                         ar = [uds];
                     } else {
@@ -2300,6 +2352,7 @@ class AppsMarket extends React.Component {
                         isBusy: false,
                         errors: undefined,
                     });
+                    this.loadUserDataSources();
                 },
                 (err) => {
                     this.setState({isBusy: false, errors: err.response.data});
@@ -2348,12 +2401,36 @@ class AppsMarket extends React.Component {
             });
     }
 
+    userDataSourceUpdateHandler(userDataSourceId, gaPropertyId) {
+        this.setState({ isBusy: true });
+        HttpClient.put(`/data-source/user-data-source/${userDataSourceId}`, { gaPropertyId }).then(resp => {
+            this.loadUserDataSources();
+        }, (err) => {
+            this.setState({ isBusy: true, errors: err.response.data })
+        }).catch(err => {
+            this.setState({ isBusy: true, errors: err })
+        })
+    }
+
     userDataSourceDeleteHandler(userDataSourceId, dsCode) {
         this.setState({isBusy: true});
         HttpClient.delete(`/data-source/user-data-source/${userDataSourceId}`)
             .then(
                 (resp) => {
                     let ar = this.state.userDataSources[dsCode];
+                    if (dsCode == "wordpress_updates") {
+                        Toast.fire({
+                            icon: 'success',
+                            title: "Successfully saved wordpress updates settings.",
+                        });
+                    }
+                    if (dsCode == "google_algorithm_update_dates") {
+                        Toast.fire({
+                            icon: 'success',
+                            title: "Successfully saved google update settings.",
+                        });
+                    }
+
                     let newAr = ar.filter((a) => a.id != userDataSourceId);
                     if (
                         dsCode == "bitbucket_tracking" ||

@@ -14,6 +14,7 @@ export default class DSOWMCitiesSelect extends React.Component {
             errors: "",
             searchCountry: "",
             searchText: "",
+            editSelected: "",
         };
 
         this.handleClick = this.handleClick.bind(this);
@@ -216,8 +217,7 @@ export default class DSOWMCitiesSelect extends React.Component {
                                     })}
                             </select> */}
                         </div>
-                        <div className="input-group search-input-box mb-3 d-flex justify-content-between">
-                            <div className="betweentext align-self-center">for</div>
+                        <div className="input-group w-100 search-input-box mb-3 d-flex justify-content-between">
                             <GoogleAnalyticsPropertySelect
                                 className="themeNewselect hide-icon"
                                 name="ga_property_id"
@@ -303,7 +303,32 @@ export default class DSOWMCitiesSelect extends React.Component {
                                             onChange={this.handleClick}
                                             open_weather_map_city_id={wAC.open_weather_map_city_id}
                                         />
-                                        <span>{wAC.open_weather_map_city.name}</span>
+                                        <span className="d-flex w-100 justify-content-between">
+                                            <div>{wAC.open_weather_map_city.name}</div>
+                                            {wAC.open_weather_map_city_id === this.state.editSelected
+                                                ?
+                                                <GoogleAnalyticsPropertySelect
+                                                    className="w-175px themeNewselect hide-icon"
+                                                    name="ga_property_id"
+                                                    id="ga_property_id"
+                                                    currentPricePlan={this.props.user.price_plan}
+                                                    value={this.props.gaPropertyId}
+                                                    onChangeCallback={(gAP) => {
+                                                        this.setState({ editSelected: '' })
+                                                        this.props.userDataSourceUpdateHandler(wAC.id, gAP.target.value || null)
+                                                    }}
+                                                    placeholder="Select GA Properties"
+                                                    isClearable={true}
+                                                />
+                                                :
+                                                <div>
+                                                    {wAC.ga_property_name}
+                                                    <i className="ml-2 icon fa" onClick={() => this.setState({ editSelected: wAC.open_weather_map_city_id })}>
+                                                        <img className="w-20px" src='/icon-edit.svg' />
+                                                    </i>
+                                                </div>
+                                            }
+                                        </span>
                                     </label>
                                 );
                             })}
