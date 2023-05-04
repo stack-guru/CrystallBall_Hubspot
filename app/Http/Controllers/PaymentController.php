@@ -329,7 +329,7 @@ class PaymentController extends Controller
             $total_co_users = User::where('user_id',$user->id)->count();
             if(count($extra_users) > 0)
             {  
-                $text = "During the ".$user->pricePlan->name." ".$total_co_users." co-workers joined the account. Note that if you continue with ".$pricePlan->name." ".implode(", ",$extra_users)." will lose access";
+                $text = "During the ".$user->pricePlan->name." ".$total_co_users." co-workers joined the account. Note that if you continue with ".$pricePlan->name." ".implode(", ",$extra_users)." co-workers will lose access";
                 $showAlerts[] =  'extra-users-alert';
                 $alertText[] =  $text;
             }
@@ -341,7 +341,7 @@ class PaymentController extends Controller
            $notifications =  NotificationSetting::where('user_id', $user->id)->where('is_enabled',1)->get()->pluck('label')->toArray();
            if(count($notifications) > 0)
            {
-                $text = "During the ".$user->pricePlan->name." ".count($notifications)." notifications are enabled. Note that if you continue with ".$pricePlan->name." ".implode(", ",$notifications)." will be disabled.";
+                $text = "During the ".$user->pricePlan->name." ".count($notifications)." notifications are enabled. Note that if you continue with ".$pricePlan->name." ".implode(", ",$notifications)." notifications will be disabled.";
                 $showAlerts[] =  'notification-alert';
                 $alertText[] =  $text;
            }
