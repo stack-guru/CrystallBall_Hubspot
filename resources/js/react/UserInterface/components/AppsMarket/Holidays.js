@@ -53,6 +53,7 @@ class Holidays extends React.Component {
                     updateUserService={this.props.updateUserService}
                     onCheckCallback={this.props.userDataSourceAddHandler}
                     onUncheckCallback={this.props.userDataSourceDeleteHandler}
+                    userDataSourceUpdateHandler={this.props.userDataSourceUpdateHandler}
                     ds_data={this.props.userDataSources.holidays}
                     ga_property_id={this.props.ga_property_id}
                     user={this.props.user}

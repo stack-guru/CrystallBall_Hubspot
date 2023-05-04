@@ -88,6 +88,7 @@ class AppsMarket extends React.Component {
         this.checkUserGithubAccount = this.checkUserGithubAccount.bind(this);
         this.updateUserService = this.updateUserService.bind(this);
         this.getRecommendedApps = this.getRecommendedApps.bind(this);
+        this.userDataSourceUpdateHandler = this.userDataSourceUpdateHandler.bind(this);
     }
 
     componentDidMount() {
@@ -1225,6 +1226,9 @@ class AppsMarket extends React.Component {
                                 userDataSourceDeleteHandler={
                                     this.userDataSourceDeleteHandler
                                 }
+                                userDataSourceUpdateHandler={
+                                    this.userDataSourceUpdateHandler
+                                }
                                 updateUserService={this.updateUserService}
                                 reloadWebMonitors={this.reloadWebMonitors}
                                 loadUserDataSources={this.loadUserDataSources}
@@ -1257,6 +1261,9 @@ class AppsMarket extends React.Component {
                                 userDataSourceDeleteHandler={
                                     this.userDataSourceDeleteHandler
                                 }
+                                userDataSourceUpdateHandler={
+                                    this.userDataSourceUpdateHandler
+                                }
                                 reloadWebMonitors={this.reloadWebMonitors}
                                 loadUserDataSources={this.loadUserDataSources}
                                 updateGAPropertyId={(value) => {
@@ -1288,6 +1295,9 @@ class AppsMarket extends React.Component {
                                 }
                                 userDataSourceDeleteHandler={
                                     this.userDataSourceDeleteHandler
+                                }
+                                userDataSourceUpdateHandler={
+                                    this.userDataSourceUpdateHandler
                                 }
                                 reloadWebMonitors={this.reloadWebMonitors}
                                 loadUserDataSources={this.loadUserDataSources}
@@ -1427,6 +1437,9 @@ class AppsMarket extends React.Component {
                                 userDataSourceDeleteHandler={
                                     this.userDataSourceDeleteHandler
                                 }
+                                userDataSourceUpdateHandler={
+                                    this.userDataSourceUpdateHandler
+                                }
                                 reloadWebMonitors={this.reloadWebMonitors}
                                 loadUserDataSources={this.loadUserDataSources}
                                 updateGAPropertyId={(value) => {
@@ -1459,6 +1472,9 @@ class AppsMarket extends React.Component {
                                 }
                                 userDataSourceDeleteHandler={
                                     this.userDataSourceDeleteHandler
+                                }
+                                userDataSourceUpdateHandler={
+                                    this.userDataSourceUpdateHandler
                                 }
                                 reloadWebMonitors={this.reloadWebMonitors}
                                 loadUserDataSources={this.loadUserDataSources}
@@ -2295,6 +2311,17 @@ class AppsMarket extends React.Component {
             .catch((err) => {
                 this.setState({isBusy: false, errors: err});
             });
+    }
+
+    userDataSourceUpdateHandler(userDataSourceId, gaPropertyId) {
+        this.setState({ isBusy: true });
+        HttpClient.put(`/data-source/user-data-source/${userDataSourceId}`, { gaPropertyId }).then(resp => {
+            this.loadUserDataSources();
+        }, (err) => {
+            this.setState({ isBusy: true, errors: err.response.data })
+        }).catch(err => {
+            this.setState({ isBusy: true, errors: err })
+        })
     }
 
     userDataSourceDeleteHandler(userDataSourceId, dsCode) {

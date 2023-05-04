@@ -55,6 +55,7 @@ class Github extends React.Component {
                     ds_data={this.props.userDataSources.github_tracking}
                     onCheckCallback={this.props.userDataSourceAddHandler}
                     onUncheckCallback={this.props.userDataSourceDeleteHandler}
+                    userDataSourceUpdateHandler={this.props.userDataSourceUpdateHandler}
                     ga_property_id={this.props.ga_property_id}
                     reloadWebMonitors={this.props.reloadWebMonitors}
                     user={this.props.user}
