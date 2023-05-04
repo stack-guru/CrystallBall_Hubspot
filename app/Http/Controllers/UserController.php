@@ -88,8 +88,7 @@ class UserController extends Controller
             return response()->json([
                 'message' => 'To add more users, please upgrade your account.'
             ], 455);
-        }else if($parentUser->trailPlanStatus() == true)
-        {
+        } else if ($parentUser->trailPlanStatus() == true) {
             return response()->json([
                 'message' => 'Your trial is ended.To add more users, please upgrade your account.'
             ], 455);
@@ -102,7 +101,7 @@ class UserController extends Controller
         $user->price_plan_expiry_date = $parentUser->price_plan_expiry_date;
         $user->show_config_steps = 0;
         $user->startup_configuration_showed_at = Carbon::now();
-
+        $user->assigned_properties_id = implode(',', $request->google_analytics_property_id);
         if ($parentUser->is_ds_holidays_enabled) {
             $user->is_ds_holidays_enabled = 1;
         }
@@ -184,12 +183,12 @@ class UserController extends Controller
         Mail::to($user)->send(new UserInviteMail($user));
 
 
-        $gaAccountIds = [];
-        $gaProperties = GoogleAnalyticsProperty::whereIn('id', $request->google_analytics_property_id)->with(['googleAnalyticsAccount'])->get();
+//        $gaAccountIds = [];
+//        $gaProperties = GoogleAnalyticsProperty::whereIn('id', $request->google_analytics_property_id)->with(['googleAnalyticsAccount'])->get();
 
-        foreach ($gaProperties as $property) {
-            $gaAccountIds[] = $property->googleAnalyticsAccount->id;
-        }
+//        foreach ($gaProperties as $property) {
+//            $gaAccountIds[] = $property->googleAnalyticsAccount->id;
+//        }
 
 
 //        $gaAccountIds = [];
@@ -199,25 +198,26 @@ class UserController extends Controller
 //            $gaAccountIds[] = $property->google_analytics_account->id;
 //        }
 
-        if ($gaAccountIds !== null && !in_array("", $gaAccountIds)) {
-            foreach($gaAccountIds as $gAAId) {
-                $uGAA = new UserGaAccount;
-                $uGAA->user_id = $user->id;
-                $uGAA->google_analytics_account_id = $gAAId;
-                $uGAA->save();
-            }
-        } else {
-            $uGAA = new UserGaAccount;
-            $uGAA->user_id = $user->id;
-            $uGAA->google_analytics_account_id = null;
-            $uGAA->save();
-        }
+//        if ($gaAccountIds !== null && !in_array("", $gaAccountIds)) {
+//            foreach($gaAccountIds as $gAAId) {
+//                $uGAA = new UserGaAccount;
+//                $uGAA->user_id = $user->id;
+//                $uGAA->google_analytics_account_id = $gAAId;
+//                $uGAA->save();
+//            }
+//        } else {
+//            $uGAA = new UserGaAccount;
+//            $uGAA->user_id = $user->id;
+//            $uGAA->google_analytics_account_id = null;
+//            $uGAA->save();
+//        }
 
         event(new \App\Events\UserInvitedTeamMember($parentUser));
         return ['user' => $user];
     }
 
-    public function reInviteUser (Request $request) {
+    public function reInviteUser(Request $request)
+    {
         $user = User::find($request->userId);
         Mail::to($user)->send(new UserInviteMail($user));
         $user->created_at = Carbon::now();
@@ -249,37 +249,38 @@ class UserController extends Controller
         $user->user_id = $parentUser->id;
         $user->price_plan_id = $parentUser->price_plan_id;
         $user->price_plan_expiry_date = $parentUser->price_plan_expiry_date;
+        $user->assigned_properties_id = implode(',', $request->google_analytics_property_id);
         $user->save();
 
-        $uGAAs = $user->userGaAccounts;
-        $oldGAAIds = $uGAAs->pluck('google_analytics_account_id')->toArray();
-        $newGAAIds = $request->google_analytics_account_id;
-
-        foreach ($uGAAs as $uGAA) {
-            if (!in_array($uGAA->google_analytics_account_id, $newGAAIds)) {
-                $uGAA->delete();
-            }
-        }
-
-        if ($request->has('google_analytics_account_id')) {
-            if ($request->google_analytics_account_id !== null && !in_array("", $request->google_analytics_account_id)) {
-                foreach ($newGAAIds as $gAAId) {
-                    if (!in_array($gAAId, $oldGAAIds)) {
-                        $uGAA = new UserGaAccount;
-                        $uGAA->user_id = $user->id;
-                        $uGAA->google_analytics_account_id = $gAAId;
-                        $uGAA->save();
-                    }
-                }
-            } else {
-                if (!in_array("", $oldGAAIds)) {
-                    $uGAA = new UserGaAccount;
-                    $uGAA->user_id = $user->id;
-                    $uGAA->google_analytics_account_id = null;
-                    $uGAA->save();
-                }
-            }
-        }
+//        $uGAAs = $user->userGaAccounts;
+//        $oldGAAIds = $uGAAs->pluck('google_analytics_account_id')->toArray();
+//        $newGAAIds = $request->google_analytics_account_id;
+//
+//        foreach ($uGAAs as $uGAA) {
+//            if (!in_array($uGAA->google_analytics_account_id, $newGAAIds)) {
+//                $uGAA->delete();
+//            }
+//        }
+//
+//        if ($request->has('google_analytics_account_id')) {
+//            if ($request->google_analytics_account_id !== null && !in_array("", $request->google_analytics_account_id)) {
+//                foreach ($newGAAIds as $gAAId) {
+//                    if (!in_array($gAAId, $oldGAAIds)) {
+//                        $uGAA = new UserGaAccount;
+//                        $uGAA->user_id = $user->id;
+//                        $uGAA->google_analytics_account_id = $gAAId;
+//                        $uGAA->save();
+//                    }
+//                }
+//            } else {
+//                if (!in_array("", $oldGAAIds)) {
+//                    $uGAA = new UserGaAccount;
+//                    $uGAA->user_id = $user->id;
+//                    $uGAA->google_analytics_account_id = null;
+//                    $uGAA->save();
+//                }
+//            }
+//        }
 
         return ['user' => $user];
     }
