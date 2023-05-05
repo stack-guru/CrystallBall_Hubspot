@@ -53,7 +53,9 @@ export default class IndexAnalytics extends Component {
         this.fetchUsersDaysAnnotations = this.fetchUsersDaysAnnotations.bind(this);
         this.changeStatisticsPaddingDays = this.changeStatisticsPaddingDays.bind(this);
     }
-
+    componentDidMount() {
+        document.title = 'Analytic Dashboard';
+    }
     render() {
 
         if (!this.props.user.google_accounts_count) return <NoGoogleAccountConnectedPage />
