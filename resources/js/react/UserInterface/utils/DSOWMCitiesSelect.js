@@ -75,10 +75,11 @@ export default class DSOWMCitiesSelect extends React.Component {
     }
 
     selectAllShowing(e) {
-        let userOWMCityIds = this.props.ds_data.forEach(ds => ds.open_weather_map_city_id);
+        let userOWMCityIds = this.props.ds_data.map(ds => ds.open_weather_map_city.id);
+        const data = [];
         this.state.weather_alerts_cities.forEach(owmCity => {
             if (userOWMCityIds.indexOf(owmCity.id) == -1) {
-                this.props.onCheckCallback({
+                data.push({
                     code: "open_weather_map_cities",
                     name: "OpenWeatherMapCity",
                     country_name: null,
@@ -86,6 +87,8 @@ export default class DSOWMCitiesSelect extends React.Component {
                 });
             }
         });
+        
+        this.props.onCheckAllCallback(data);
         this.props.updateTrackingStatus(true);
         this.props.updateUserService({ target: {
                 name: "is_ds_weather_alerts_enabled",
@@ -97,9 +100,11 @@ export default class DSOWMCitiesSelect extends React.Component {
     clearAll(e) {
         let userOWMCityIds = this.props.ds_data.map(ds => ds.open_weather_map_city_id);
         let userDSEvents = this.props.ds_data.map(ds => ds.id);
+        const data = [];
         userOWMCityIds.forEach((owmEvent, index) => {
-            (this.props.onUncheckCallback)(userDSEvents[index], 'open_weather_map_cities')
+            data.push(userDSEvents[index])
         })
+        this.props.onUncheckAllCallback(data, 'open_weather_map_cities');
         this.props.updateTrackingStatus(false);
         this.props.updateUserService({ target: {
                 name: "is_ds_weather_alerts_enabled",
@@ -263,17 +268,12 @@ export default class DSOWMCitiesSelect extends React.Component {
                         </div>
                     ) : (
                         <div className="checkBoxList">
-                            <label
-                                className="themeNewCheckbox d-flex align-items-center justify-content-start"
-                                htmlFor="check-all"
+                            <span
+                                className="check-all cursor-pointer text-primary"
+                                onClick={this.selectAllShowing}
                             >
-                                <input
-                                    type="checkbox"
-                                    id="check-all"
-                                    onChange={this.selectAllShowing}
-                                />
-                                <span>Select All</span>
-                            </label>
+                                Select All
+                            </span>
                         </div>
                     )}
                 </div>

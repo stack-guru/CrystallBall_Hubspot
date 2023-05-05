@@ -54,6 +54,10 @@ class AppsMarket extends React.Component {
         };
         this.userDataSourceAddHandler =
             this.userDataSourceAddHandler.bind(this);
+        this.userDataSourceAddAllHandler =
+            this.userDataSourceAddAllHandler.bind(this);
+        this.onUncheckAllCallback =
+            this.onUncheckAllCallback.bind(this);
         this.userDataSourceDeleteHandler =
             this.userDataSourceDeleteHandler.bind(this);
         this.serviceStatusHandler = this.serviceStatusHandler.bind(this);
@@ -1223,11 +1227,17 @@ class AppsMarket extends React.Component {
                                 userDataSourceAddHandler={
                                     this.userDataSourceAddHandler
                                 }
+                                userDataSourceAddAllHandler={
+                                    this.userDataSourceAddAllHandler
+                                }
                                 userDataSourceDeleteHandler={
                                     this.userDataSourceDeleteHandler
                                 }
                                 userDataSourceUpdateHandler={
                                     this.userDataSourceUpdateHandler
+                                }
+                                onUncheckAllCallback={
+                                    this.onUncheckAllCallback
                                 }
                                 updateUserService={this.updateUserService}
                                 reloadWebMonitors={this.reloadWebMonitors}
@@ -1296,8 +1306,14 @@ class AppsMarket extends React.Component {
                                 userDataSourceDeleteHandler={
                                     this.userDataSourceDeleteHandler
                                 }
+                                onUncheckAllCallback={
+                                    this.onUncheckAllCallback
+                                }
                                 userDataSourceUpdateHandler={
                                     this.userDataSourceUpdateHandler
+                                }
+                                userDataSourceAddAllHandler={
+                                    this.userDataSourceAddAllHandler
                                 }
                                 reloadWebMonitors={this.reloadWebMonitors}
                                 loadUserDataSources={this.loadUserDataSources}
@@ -2194,6 +2210,28 @@ class AppsMarket extends React.Component {
         }
     }
 
+
+    userDataSourceAddAllHandler(dataSources, dsCode = null) {
+        this.setState({isBusy: true});
+
+        HttpClient.post("/data-source/user-data-sources", {data: dataSources, ga_property_id: this.state.ga_property_id})
+            .then(
+                (resp) => {
+                    Toast.fire({
+                        icon: 'success',
+                        title: "Successfully added.",
+                    });
+                    this.loadUserDataSources();
+                },
+                (err) => {
+                    this.setState({isBusy: false, errors: err.response.data});
+                }
+            )
+            .catch((err) => {
+                this.setState({isBusy: false, errors: err});
+            });
+    }
+
     userDataSourceAddHandler(dataSource) {
         this.setState({isBusy: true});
         let formData = {
@@ -2360,6 +2398,26 @@ class AppsMarket extends React.Component {
                         isBusy: false,
                         errors: undefined,
                     });
+                },
+                (err) => {
+                    this.setState({isBusy: false, errors: err.response.data});
+                }
+            )
+            .catch((err) => {
+                this.setState({isBusy: false, errors: err});
+            });
+    }
+
+    onUncheckAllCallback(userDataSourceIds, dsCode) {
+        this.setState({isBusy: true});
+        HttpClient.post(`/data-source/user-data-sources/delete`, {userDataSourceIds})
+            .then(
+                (resp) => {
+                    Toast.fire({
+                        icon: 'success',
+                        title: "Successfully removed.",
+                    });
+                    this.loadUserDataSources();
                 },
                 (err) => {
                     this.setState({isBusy: false, errors: err.response.data});
