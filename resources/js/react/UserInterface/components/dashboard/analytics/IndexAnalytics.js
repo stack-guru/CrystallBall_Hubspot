@@ -150,21 +150,6 @@ export default class IndexAnalytics extends Component {
                                     }
                                 </div>
                             </div>
-                            
-                            <div className="row ml-0 mr-0 mt-4">
-                                <div className="col-6 border">
-                                    <DeviceClicksImpressionsGraph devicesStatistics={this.state.devicesStatistics} />
-                                </div>
-                            </div>
-                            
-                            <div className="row ml-0 mr-0 mt-4 border-top border-bottom border-left">
-                                <div className="col-6 p-0">
-                                    <MapChart countriesStatistics={this.state.countriesStatistics} />
-                                </div>
-                                <div className="col-6 p-0 scrollable">
-                                    <CountriesTable countriesStatistics={this.state.countriesStatistics} />
-                                </div>
-                            </div>
                             <div className="row ml-0 mr-0 mt-3">
                                 <div style={{ maxWidth: '10%', width: '10%' }} >
                                     Property:
@@ -208,6 +193,20 @@ export default class IndexAnalytics extends Component {
                                             </div>
                                             <div className="col-6">
                                                 <DeviceUsersGraph deviceCategoriesStatistics={this.state.deviceCategoriesStatistics} />
+                                            </div>
+                                        </div>
+                                        <div className="row ml-0 mr-0 mt-4">
+                                            <div className="col-6 border">
+                                                <DeviceClicksImpressionsGraph devicesStatistics={this.state.devicesStatistics} />
+                                            </div>
+                                        </div>
+                                        
+                                        <div className="row ml-0 mr-0 mt-4 border-top border-bottom border-left">
+                                            <div className="col-6 p-0">
+                                                <MapChart countriesStatistics={this.state.countriesStatistics} />
+                                            </div>
+                                            <div className="col-6 p-0 scrollable">
+                                                <CountriesTable countriesStatistics={this.state.countriesStatistics} />
                                             </div>
                                         </div>
                                     </React.Fragment>
