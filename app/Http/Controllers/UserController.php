@@ -47,6 +47,16 @@ class UserController extends Controller
         $user = Auth::user();
         $users = $user->user_id ? $user->user->users : $user->users;
 
+        foreach($users as $user) {
+            $user->load('userGaAccounts');
+            $googleAnalyticProperties = [];
+            foreach ($user->userGaAccounts as $userGA) {
+                $googleGaAccount = GoogleAnalyticsProperty::where('google_analytics_account_id', $userGA->google_analytics_account_id)->first();
+                $googleAnalyticProperties[] = $googleGaAccount;
+            }
+            $user->analyticProperties = $googleAnalyticProperties;
+        }
+
         return ['users' => $users];
     }
 
@@ -60,6 +70,13 @@ class UserController extends Controller
         }
 
         $user->load('userGaAccounts');
+        $googleAnalyticProperties = [];
+        foreach ($user->userGaAccounts as $userGA) {
+            $googleGaAccount = GoogleAnalyticsProperty::where('google_analytics_account_id', $userGA->google_analytics_account_id)->first();
+            $googleAnalyticProperties[] = $googleGaAccount;
+        }
+        $user->analyticProperties = $googleAnalyticProperties;
+
         return ['user' => $user];
     }
 
@@ -101,7 +118,7 @@ class UserController extends Controller
         $user->price_plan_expiry_date = $parentUser->price_plan_expiry_date;
         $user->show_config_steps = 0;
         $user->startup_configuration_showed_at = Carbon::now();
-        $user->assigned_properties_id = implode(',', $request->google_analytics_property_id);
+//        $user->assigned_properties_id = implode(',', $request->google_analytics_property_id);
         if ($parentUser->is_ds_holidays_enabled) {
             $user->is_ds_holidays_enabled = 1;
         }
@@ -183,34 +200,26 @@ class UserController extends Controller
         Mail::to($user)->send(new UserInviteMail($user));
 
 
-//        $gaAccountIds = [];
-//        $gaProperties = GoogleAnalyticsProperty::whereIn('id', $request->google_analytics_property_id)->with(['googleAnalyticsAccount'])->get();
+        $gaAccountIds = [];
+        $gaProperties = GoogleAnalyticsProperty::whereIn('id', $request->google_analytics_property_id)->with(['googleAnalyticsAccount'])->get();
 
-//        foreach ($gaProperties as $property) {
-//            $gaAccountIds[] = $property->googleAnalyticsAccount->id;
-//        }
+        foreach ($gaProperties as $property) {
+            $gaAccountIds[] = $property->googleAnalyticsAccount->id;
+        }
 
-
-//        $gaAccountIds = [];
-//        $gaProperties = GoogleAnalyticsProperty::whereIn('id',$request->google_analytics_property_id)->with(['googleAnalyticsAccount'])->get();
-//        Log::info('Variable value: ');
-//        foreach($gaProperties as $property) {
-//            $gaAccountIds[] = $property->google_analytics_account->id;
-//        }
-
-//        if ($gaAccountIds !== null && !in_array("", $gaAccountIds)) {
-//            foreach($gaAccountIds as $gAAId) {
-//                $uGAA = new UserGaAccount;
-//                $uGAA->user_id = $user->id;
-//                $uGAA->google_analytics_account_id = $gAAId;
-//                $uGAA->save();
-//            }
-//        } else {
-//            $uGAA = new UserGaAccount;
-//            $uGAA->user_id = $user->id;
-//            $uGAA->google_analytics_account_id = null;
-//            $uGAA->save();
-//        }
+        if ($gaAccountIds !== null && !in_array("", $gaAccountIds)) {
+            foreach($gaAccountIds as $gAAId) {
+                $uGAA = new UserGaAccount;
+                $uGAA->user_id = $user->id;
+                $uGAA->google_analytics_account_id = $gAAId;
+                $uGAA->save();
+            }
+        } else {
+            $uGAA = new UserGaAccount;
+            $uGAA->user_id = $user->id;
+            $uGAA->google_analytics_account_id = null;
+            $uGAA->save();
+        }
 
         event(new \App\Events\UserInvitedTeamMember($parentUser));
         return ['user' => $user];
@@ -249,38 +258,38 @@ class UserController extends Controller
         $user->user_id = $parentUser->id;
         $user->price_plan_id = $parentUser->price_plan_id;
         $user->price_plan_expiry_date = $parentUser->price_plan_expiry_date;
-        $user->assigned_properties_id = implode(',', $request->google_analytics_property_id);
+//        $user->assigned_properties_id = implode(',', $request->google_analytics_property_id);
         $user->save();
 
-//        $uGAAs = $user->userGaAccounts;
-//        $oldGAAIds = $uGAAs->pluck('google_analytics_account_id')->toArray();
-//        $newGAAIds = $request->google_analytics_account_id;
-//
-//        foreach ($uGAAs as $uGAA) {
-//            if (!in_array($uGAA->google_analytics_account_id, $newGAAIds)) {
-//                $uGAA->delete();
-//            }
-//        }
-//
-//        if ($request->has('google_analytics_account_id')) {
-//            if ($request->google_analytics_account_id !== null && !in_array("", $request->google_analytics_account_id)) {
-//                foreach ($newGAAIds as $gAAId) {
-//                    if (!in_array($gAAId, $oldGAAIds)) {
-//                        $uGAA = new UserGaAccount;
-//                        $uGAA->user_id = $user->id;
-//                        $uGAA->google_analytics_account_id = $gAAId;
-//                        $uGAA->save();
-//                    }
-//                }
-//            } else {
-//                if (!in_array("", $oldGAAIds)) {
-//                    $uGAA = new UserGaAccount;
-//                    $uGAA->user_id = $user->id;
-//                    $uGAA->google_analytics_account_id = null;
-//                    $uGAA->save();
-//                }
-//            }
-//        }
+        $uGAAs = $user->userGaAccounts;
+        $oldGAAIds = $uGAAs->pluck('google_analytics_account_id')->toArray();
+        $newGAAIds = $request->google_analytics_account_id;
+
+        foreach ($uGAAs as $uGAA) {
+            if (!in_array($uGAA->google_analytics_account_id, $newGAAIds)) {
+                $uGAA->delete();
+            }
+        }
+
+        if ($request->has('google_analytics_account_id')) {
+            if ($request->google_analytics_account_id !== null && !in_array("", $request->google_analytics_account_id)) {
+                foreach ($newGAAIds as $gAAId) {
+                    if (!in_array($gAAId, $oldGAAIds)) {
+                        $uGAA = new UserGaAccount;
+                        $uGAA->user_id = $user->id;
+                        $uGAA->google_analytics_account_id = $gAAId;
+                        $uGAA->save();
+                    }
+                }
+            } else {
+                if (!in_array("", $oldGAAIds)) {
+                    $uGAA = new UserGaAccount;
+                    $uGAA->user_id = $user->id;
+                    $uGAA->google_analytics_account_id = null;
+                    $uGAA->save();
+                }
+            }
+        }
 
         return ['user' => $user];
     }
