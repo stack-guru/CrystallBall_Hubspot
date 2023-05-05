@@ -4370,9 +4370,9 @@ div[data-tour-elem="controls"]
 .dataTableAnalyticsAccount {
 }
 
-.dataTableAnalyticsAccount .form-control {
+/* .dataTableAnalyticsAccount .form-control {
     color: #f44c3d;
-}
+} */
 
 .dataTableAnalyticsAccount .selected {
     color: #666;

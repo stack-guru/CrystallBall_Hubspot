@@ -114,8 +114,8 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
 
     Route::view('dashboard', 'ui/app'); // obsolete
     Route::view('ga-accounts', 'ui/app');
-    Route::view('dashboard/analytics', 'ui/app');
-    Route::view('dashboard/search-console', 'ui/app');
+    // Route::view('dashboard/analytics', 'ui/app');
+    // Route::view('dashboard/search-console', 'ui/app');
 
     Route::resource('annotation', App\Http\Controllers\AnnotationController::class)->except(['store', 'show', 'update', 'destroy']);
 
