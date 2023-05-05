@@ -78,6 +78,7 @@ class GoogleAnalyticsPropertyController extends Controller
         $googleAnalyticsProperty->save();
 
         $googleAnalyticsProperty->load('googleAccount');
+        // $googleAnalyticsProperty->load('googleAnalyticsAccount');
         return ['google_analytics_property' => $googleAnalyticsProperty];
     }
 
