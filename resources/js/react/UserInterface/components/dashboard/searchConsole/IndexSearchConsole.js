@@ -51,7 +51,10 @@ export default class IndexSearchConsole extends Component {
         this.fetchStatistics = this.fetchStatistics.bind(this);
         this.changeStatisticsPaddingDays = this.changeStatisticsPaddingDays.bind(this);
     }
-
+    
+    componentDidMount() {
+        document.title = 'Console Dashboard';
+    }
     render() {
 
         if (!this.props.user.google_accounts_count) return <NoGoogleAccountConnectedPage />
