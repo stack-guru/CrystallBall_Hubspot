@@ -144,7 +144,7 @@ export default class IndexDashboard extends Component {
                                     <option value="google_search_console_site_id">Connected</option>
                                     <option value="is_in_use">In Use</option>
                                 </select>
-                            </FormGroup>
+                             </FormGroup>
 
                             <FormGroup className="filter-search position-relative">
                                 <Label className="sr-only" for="search">search</Label>
@@ -153,50 +153,51 @@ export default class IndexDashboard extends Component {
                                         searchText: ev.target.value
                                     })}} placeholder="Search..." />
                                     <button className="btn-searchIcon"><img className="d-block" src="/search-new.svg" width="16" height="16" alt="Search" /></button>
-                                    </FormGroup>
-                                    </form>
-                                    </div>
+                            </FormGroup>
+                        </form>
+                    </div>
 
-                                    <div className="dataTable dataTableAnalyticsAccount d-flex flex-column">
-                                    <div className="dataTableHolder">
-                                    <div className="tableHead singleRow justify-content-between align-items-center">
-                                    <div className="singleCol text-left">ID for API-Zapier</div>
-                                    <div className="singleCol text-left">Analytics Accounts</div>
-                                    <div className="singleCol text-left">Properties &amp; Apps</div>
-                                {/* <div className="singleCol text-left">Search Console <i className='fa fa-exclamation-circle ml-2' data-toggle="tooltip" data-placement="top" title="Please remove and reconnect account"></i></div> */}
+                    <div className="dataTable dataTableAnalyticsAccount d-flex flex-column">
+                        <div className="dataTableHolder">
+                            <div className="tableHead singleRow justify-content-between align-items-center">
+                                <div className="singleCol text-left">ID for API-Zapier</div>
+                                <div className="singleCol text-left">Analytics Accounts</div>
+                                <div className="singleCol text-left">Properties &amp; Apps</div>
+                                <div className="singleCol text-left">Search Console <i className='fa fa-exclamation-circle ml-2' data-toggle="tooltip" data-placement="top" title="Please remove and reconnect account"></i></div>
                                 <div className="singleCol text-left">Google Account</div>
                                 <div className="singleCol text-right">&nbsp;</div>
-                    </div>
-                    <div className="tableBody">
+                            </div>
+                            <div className="tableBody">
 
-                        {this.state.googleAnalyticsProperties.map(gAP => {
-                            if(this.state.searchText && (gAP.google_analytics_account || "").name.toLowerCase().indexOf(this.state.searchText.toLowerCase()) === -1 && (gAP.name || "").toLowerCase().indexOf(this.state.searchText.toLowerCase()) === -1) {
-                                return true;
-                            }
-                            return <div className="singleRow justify-content-between align-items-center" key={gAP.id}>
-                                <div className="singleCol text-left"><span>{gAP.id}</span></div>
-                                <div className="singleCol text-left">
-                                            <span className='w-100 d-flex justify-content-start'>
-                                                <span className={"text-truncate"}>{
-                                                    (gAP.google_analytics_account) ?
-                                                        gAP.google_analytics_account.name :
-                                                        ''
-                                                }</span>
-                                                {
-                                                    gAP.is_in_use ?
-                                                        <em className='tag-inuse'><i className='fa fa-check'></i><i>In
-                                                            use</i></em> :
-                                                        null
-                                                }
-                                            </span>
-                                </div>
-                                <div className="singleCol text-left">
+                                {this.state.googleAnalyticsProperties.map(gAP => {
+                                    if(this.state.searchText && (gAP.google_analytics_account || "").name.toLowerCase().indexOf(this.state.searchText.toLowerCase()) === -1 && (gAP.name || "").toLowerCase().indexOf(this.state.searchText.toLowerCase()) === -1) {
+                                        return true;
+                                    }
+                                    return 
+                                    <div className="singleRow justify-content-between align-items-center" key={gAP.id}>
+                                        <div className="singleCol text-left"><span>{gAP.id}</span></div>
+                                        <div className="singleCol text-left">
+                                                    <span className='w-100 d-flex justify-content-start'>
+                                                        <span className={"text-truncate"}>{
+                                                            (gAP.google_analytics_account) ?
+                                                                gAP.google_analytics_account.name :
+                                                                ''
+                                                        }</span>
+                                                        {
+                                                            gAP.is_in_use ?
+                                                                <em className='tag-inuse'><i className='fa fa-check'></i><i>In
+                                                                    use</i></em> :
+                                                                null
+                                                        }
+                                                    </span>
+                                        </div>
+                                        <div className="singleCol text-left">
                                             <span className='d-flex justify-content-between w-100'>
                                                 <span>{gAP.name}</span>
-                                                {/*{gAP.google_search_console_site_id ? <i><img src={'/icon-link-green.svg'} /></i> : null}*/}
+                                                {gAP.google_search_console_site_id ? <i><img src={'/icon-link-green.svg'} /></i> : null}
                                             </span>
-                                </div>
-                                {/* <div className="singleCol text-left d-flex flex-column">
+                                        </div>
+                                        <div className="singleCol text-left d-flex flex-column">
                                             <div className="themeNewInputStyle position-relative w-100">
                                                 <i className="btn-searchIcon right-0 fa fa-angle-down"></i>
                                                 <select name="" value={gAP.google_search_console_site_id} className={`form-control ${gAP.google_search_console_site_id ? 'selected' : null}`} onChange={(event) => this.handleGAPUpdate(gAP, { google_search_console_site_id: event.target.value })}>
@@ -207,33 +208,27 @@ export default class IndexDashboard extends Component {
                                                 </select>
                                                 <i className="btn-searchIcon left-0 fa fa-check-circle"></i>
                                             </div>
-                                        </div> */}
-                                <div className="singleCol text-left"><span>
-                                {
-                                    gAP.google_account ?
-                                        gAP.google_account.name :
-                                        null
-                                }
-                                   
-                                    </span></div>
-                                <div className="singleCol text-right">
-                                    <a href="javascript:void(0);" onClick={() => this.handleGAPDelete(gAP.id)}>
-                                        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"
-                                             xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M6.70312 18.2188C6.23047 18.2188 5.82599 18.0506 5.48969 17.7143C5.15281 17.3774 4.98438 16.9727 4.98438 16.5V5.32812H4.125V3.60938H8.42188V2.75H13.5781V3.60938H17.875V5.32812H17.0156V16.5C17.0156 16.9727 16.8475 17.3774 16.5112 17.7143C16.1743 18.0506 15.7695 18.2188 15.2969 18.2188H6.70312ZM15.2969 5.32812H6.70312V16.5H15.2969V5.32812ZM8.42188 14.7812H10.1406V7.04688H8.42188V14.7812ZM11.8594 14.7812H13.5781V7.04688H11.8594V14.7812ZM6.70312 5.32812V16.5V5.32812Z"
-                                                fill="#F44C3D"/>
-                                        </svg>
-                                    </a>
-                                    {/* <span><img src={`/icon-trash.svg`} onClick={() => this.handleGAPDelete(gAP.id)} /></span> */}
-                                </div>
+                                        </div>
+                                        <div className="singleCol text-left"><span>{
+                                                gAP.google_account ?
+                                                    gAP.google_account.name :
+                                                    null
+                                            }</span></div>
+                                        <div className="singleCol text-right">
+                                            <a href="javascript:void(0);" onClick={() => this.handleGAPDelete(gAP.id)} >
+                                                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M6.70312 18.2188C6.23047 18.2188 5.82599 18.0506 5.48969 17.7143C5.15281 17.3774 4.98438 16.9727 4.98438 16.5V5.32812H4.125V3.60938H8.42188V2.75H13.5781V3.60938H17.875V5.32812H17.0156V16.5C17.0156 16.9727 16.8475 17.3774 16.5112 17.7143C16.1743 18.0506 15.7695 18.2188 15.2969 18.2188H6.70312ZM15.2969 5.32812H6.70312V16.5H15.2969V5.32812ZM8.42188 14.7812H10.1406V7.04688H8.42188V14.7812ZM11.8594 14.7812H13.5781V7.04688H11.8594V14.7812ZM6.70312 5.32812V16.5V5.32812Z" fill="#F44C3D"/>
+                                                </svg>
+                                            </a>
+                                            {/* <span><img src={`/icon-trash.svg`} onClick={() => this.handleGAPDelete(gAP.id)} /></span> */}
+                                            </div>
+                                    </div>
+                                })}
                             </div>
-                        })}
+                        </div>
                     </div>
+                </Container>
             </div>
-        </div>
-    </Container>
-    </div>
     {/* <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper" >
                 <section className="ftco-section" id="inputs">
                     <div className="container-xl p-0">
