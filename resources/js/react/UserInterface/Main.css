@@ -700,9 +700,11 @@ setting-menu-item.dropdown {
 .m-w-255px {
     max-width: 255px;
 }
+
 .w-175px {
     width: 175px !important;
 }
+
 .w-20px {
     width: 20px !important;
 }
@@ -5962,4 +5964,30 @@ div[data-tour-elem="controls"]
 .dd-tooltip:hover .dd-tooltip-text {
     visibility: visible;
     opacity: 1;
+}
+
+.price-plan-discount-text {
+    margin: -5px 0 10px;
+}
+
+.price-plan-discount-text label {
+    background: #1bff06;
+    color: #000;
+}
+
+
+.price-plan-discount-strick {
+    text-decoration: line-through;
+    color: red;
+}
+
+.price-plan-discount-strick {
+    text-decoration: line-through;
+    color: red;
+}
+
+.price-plan-discount-strick label {
+    text-decoration: line-through;
+    color: #096db7;
+    font-size: 22px;
 }
