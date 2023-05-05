@@ -208,7 +208,14 @@ export default class IndexDashboard extends Component {
                                                 <i className="btn-searchIcon left-0 fa fa-check-circle"></i>
                                             </div>
                                         </div> */}
-                                {/* <div className="singleCol text-left"><span>{gAP.google_account.name}</span></div> */}
+                                <div className="singleCol text-left"><span>
+                                {
+                                    gAP.google_account ?
+                                        gAP.google_account.name :
+                                        null
+                                }
+                                   
+                                    </span></div>
                                 <div className="singleCol text-right">
                                     <a href="javascript:void(0);" onClick={() => this.handleGAPDelete(gAP.id)}>
                                         <svg width="22" height="22" viewBox="0 0 22 22" fill="none"

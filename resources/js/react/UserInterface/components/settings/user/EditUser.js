@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import Toast from "../../../utils/Toast";
 
 import HttpClient from '../../../utils/HttpClient'
@@ -14,14 +14,15 @@ export default class EditUser extends Component {
         this.state = {
             user: {
                 name: '', email: '', password: '', password_confirmation: '', user_level: 'admin', department: '',
-                google_analytics_account_id: [""],
                 google_analytics_property_id: [""], team_name: ""
             },
             showConfirmPassword: false,
             showPassword: false,
+            googleAnnotationProperties: [],
         }
         this.changeHandler = this.changeHandler.bind(this)
         this.submitHandler = this.submitHandler.bind(this)
+        this.gAPropertyChangeHandler = this.gAPropertyChangeHandler.bind(this)
 
     }
 
@@ -31,24 +32,53 @@ export default class EditUser extends Component {
             let userId = this.props.editUserId;
             HttpClient.get(`/settings/user/${userId}`)
                 .then(response => {
-                    let uGAAIds = response.data.user.user_ga_accounts.map(uGAAA => uGAAA.google_analytics_account_id);
-                    // let uGAAIds = response.data.user.user_ga_accounts.map(uGAAA => uGAAA.google_analytics_property_id);
+                    let uGAAIds = (response.data.user.assigned_properties_id || "").split(',');
+                    uGAAIds = uGAAIds.filter(str => str !== "");
+
+                    let gAPs = [];
+                    if (!uGAAIds.length) {
+                        gAPs = [];
+                    } else {
+                        gAPs = uGAAIds.map(aGAP => {
+                            return {value: aGAP, label: ''};
+                        });
+                    }
                     if (uGAAIds[0] == null) uGAAIds = [""];
-                    this.setState({ user: { ...response.data.user, google_analytics_account_id: uGAAIds } });
-                    // this.setState({ user: { ...response.data.user, google_analytics_property_id: uGAAIds } });
+
+                    this.setState({
+                        user: {...response.data.user, google_analytics_property_id: uGAAIds},
+                        googleAnnotationProperties: gAPs
+                    });
                     this.props.getUsers();
-                    console.log(response,'?????   in edit user script')
                 }, (err) => {
-                    this.setState({ errors: (err.response).data });
+                    this.setState({errors: (err.response).data});
                 }).catch(err => {
-                    this.setState({ errors: err });
-                });
+                this.setState({errors: err});
+            });
         }
     }
 
 
     changeHandler(e) {
-        this.setState({ user: { ...this.state.user, [e.target.name]: e.target.value } });
+        // this.setState({user: {...this.state.user, [e.target.name]: e.target.value}});
+        switch (e.target.name) {
+            case "google_analytics_property_id":
+                if ((this.props.user.price_plan.google_analytics_property_count < e.target.value.length) && (this.props.user.price_plan.google_analytics_property_count !== 0)) {
+                    // this.props.upgradePopup('add-more-property')
+                } else {
+                    this.setState({isDirty: true, user: {...this.state.user, [e.target.name]: e.target.value}});
+                }
+                break;
+            default:
+                this.setState({isDirty: true, user: {...this.state.user, [e.target.name]: e.target.value}});
+                break;
+        }
+    }
+
+    gAPropertyChangeHandler(aProperties) {
+        this.setState({
+            googleAnnotationProperties: aProperties
+        });
     }
 
     submitHandler(e) {
@@ -62,23 +92,25 @@ export default class EditUser extends Component {
                 });
                 this.props.toggle();
             }, (err) => {
-                this.setState({ errors: (err.response).data });
+                this.setState({errors: (err.response).data});
             }).catch(err => {
-                this.setState({ errors: err });
-            });
+            this.setState({errors: err});
+        });
     }
 
     render() {
         return (
             <div className="apps-bodyContent">
                 <form onSubmit={this.submitHandler} id="editUserForm">
-                    <ErrorAlert errors={this.state.errors} />
+                    <ErrorAlert errors={this.state.errors}/>
                     <div className='grid2layout'>
                         <div className="themeNewInputStyle">
-                            <input placeholder='Full name' type="text" className="form-control" value={this.state.user.name} onChange={this.changeHandler} id="name" name="name" />
+                            <input placeholder='Full name' type="text" className="form-control"
+                                   value={this.state.user.name} onChange={this.changeHandler} id="name" name="name"/>
                         </div>
                         <div className="themeNewInputStyle">
-                            <input placeholder='Email' type="text" className="form-control" value={this.state.user.email} onChange={this.changeHandler} id="email" name="email" />
+                            <input placeholder='Email' type="text" className="form-control"
+                                   value={this.state.user.email} onChange={this.changeHandler} id="email" name="email"/>
                         </div>
                     </div>
                     {/* <div className='grid2layout'>
@@ -93,39 +125,41 @@ export default class EditUser extends Component {
                     </div> */}
                     <div className='grid2layout'>
                         <div className="themeNewInputStyle">
-                            <select name="user_level" className="form-control" onChange={this.changeHandler} value={this.state.user.user_level}>
+                            <select name="user_level" className="form-control" onChange={this.changeHandler}
+                                    value={this.state.user.user_level}>
                                 <option value="admin">Admin</option>
                                 <option value="team">Read & Write</option>
                                 <option value="viewer">Read</option>
                             </select>
                         </div>
                         <div className="themeNewInputStyle">
-                            <input placeholder='Department' type="text" onChange={this.changeHandler} value={this.state.user.department} className="form-control" id="department" name="department" />
+                            <input placeholder='Department' type="text" onChange={this.changeHandler}
+                                   value={this.state.user.department} className="form-control" id="department"
+                                   name="department"/>
                         </div>
                     </div>
                     <div className='grid2layout'>
                         <div className="themeNewInputStyle">
-                            <GoogleAnalyticsPropertySelect name="google_analytics_property_id"
-                                                           id="google_analytics_property_id" className="gray_clr"
-                                                           // value={this.state.annotation.google_analytics_property_id}
-                                                           onChangeCallback={this.changeHandler}
-                                                           placeholder="Select Properties" components={{
+                            <GoogleAnalyticsPropertySelect
+                                name="google_analytics_property_id"
+                                id="google_analytics_property_id"
+                                className="gray_clr"
+                                aProperties={this.state.googleAnnotationProperties}
+                                value={this.state.user.google_analytics_property_id}
+                                onChangeCallback={this.changeHandler}
+                                onChangeCallback2={this.gAPropertyChangeHandler}
+                                placeholder="Select Properties" components={{
                                 DropdownIndicator: () => null,
                                 IndicatorSeparator: () => null
                             }}
-                                                           multiple
-                                                           // currentPricePlan={this.props.user.price_plan}
+                                multiple
+                                currentPricePlan={this.props.user.price_plan}
                             />
-                            {/*<GoogleAnalyticsAccountSelect*/}
-                            {/*name="google_analytics_account_id"*/}
-                            {/*id="google_analytics_account_id"*/}
-                            {/*value={this.state.user.google_analytics_account_id}*/}
-                            {/*onChangeCallback={this.changeHandler}*/}
-                            {/*placeholder="Select GA Accounts" multiple>*/}
-                            {/*</GoogleAnalyticsAccountSelect>*/}
                         </div>
                         <div className="themeNewInputStyle">
-                            <UserTeamNameSelect name="team_name" id="team_name" value={this.state.user.team_name} onChangeCallback={this.changeHandler} placeholder="Select Team or Create"></UserTeamNameSelect>
+                            <UserTeamNameSelect name="team_name" id="team_name" value={this.state.user.team_name}
+                                                onChangeCallback={this.changeHandler}
+                                                placeholder="Select Team or Create"></UserTeamNameSelect>
                         </div>
                     </div>
                     <div className="d-flex pt-3">
