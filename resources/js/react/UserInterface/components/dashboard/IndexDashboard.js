@@ -173,7 +173,7 @@ export default class IndexDashboard extends Component {
                                     if(this.state.searchText && (gAP.google_analytics_account || "").name.toLowerCase().indexOf(this.state.searchText.toLowerCase()) === -1 && (gAP.name || "").toLowerCase().indexOf(this.state.searchText.toLowerCase()) === -1) {
                                         return true;
                                     }
-                                    return 
+                                    return (
                                     <div className="singleRow justify-content-between align-items-center" key={gAP.id}>
                                         <div className="singleCol text-left"><span>{gAP.id}</span></div>
                                         <div className="singleCol text-left">
@@ -223,6 +223,7 @@ export default class IndexDashboard extends Component {
                                             {/* <span><img src={`/icon-trash.svg`} onClick={() => this.handleGAPDelete(gAP.id)} /></span> */}
                                             </div>
                                     </div>
+                                    )
                                 })}
                             </div>
                         </div>
