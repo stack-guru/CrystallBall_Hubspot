@@ -47,14 +47,9 @@ class UserController extends Controller
         $user = Auth::user();
         $users = $user->user_id ? $user->user->users : $user->users;
 
-        foreach($users as $user) {
-            $user->load('userGaAccounts');
-            $googleAnalyticProperties = [];
-            foreach ($user->userGaAccounts as $userGA) {
-                $googleGaAccount = GoogleAnalyticsProperty::where('google_analytics_account_id', $userGA->google_analytics_account_id)->first();
-                $googleAnalyticProperties[] = $googleGaAccount;
-            }
-            $user->analyticProperties = $googleAnalyticProperties;
+        // Append Google Analytics properties for each user
+        foreach ($users as $user) {
+            $user->google_analytics_properties = $this->getUniqueGoogleAnalyticsPropertiesByUser($user);
         }
 
         return ['users' => $users];
@@ -69,13 +64,7 @@ class UserController extends Controller
             abort(404, "Unable to find user with the given id.");
         }
 
-        $user->load('userGaAccounts');
-        $googleAnalyticProperties = [];
-        foreach ($user->userGaAccounts as $userGA) {
-            $googleGaAccount = GoogleAnalyticsProperty::where('google_analytics_account_id', $userGA->google_analytics_account_id)->first();
-            $googleAnalyticProperties[] = $googleGaAccount;
-        }
-        $user->analyticProperties = $googleAnalyticProperties;
+        $user->google_analytics_properties = $this->getUniqueGoogleAnalyticsPropertiesByUser($user);
 
         return ['user' => $user];
     }
@@ -549,6 +538,24 @@ class UserController extends Controller
 
         return round($total, 2);
 
+    }
+
+    public function getUniqueGoogleAnalyticsPropertiesByUser($user)
+    {
+        $googleAnalyticsPropertiesQuery = GoogleAnalyticsProperty::with(['googleAccount', 'googleAnalyticsAccount'])
+            ->select('id', 'name', 'google_account_id', 'google_analytics_account_id', 'was_last_data_fetching_successful', 'is_in_use')
+            ->with(['googleAccount:id,name', 'googleAnalyticsAccount:id,name'])
+            ->whereIn('user_id', [$user->user_id]);
+
+        $googleAnalyticsAccountIdsArray = $user->userGaAccounts->pluck('google_analytics_account_id')->toArray();
+        if ($googleAnalyticsAccountIdsArray != [null] && $googleAnalyticsAccountIdsArray != []) {
+            $googleAnalyticsPropertiesQuery->whereIn('google_analytics_account_id', $googleAnalyticsAccountIdsArray);
+            $googleAnalyticsProperties = $googleAnalyticsPropertiesQuery->get();
+            $uniqueGoogleAnalyticsProperties = collect($googleAnalyticsProperties)->unique('name')->values()->all();
+            return $uniqueGoogleAnalyticsProperties;
+        }
+
+        return [];
     }
 
 }
