@@ -186,7 +186,7 @@ class UserController extends Controller
 
         $user->save();
 
-        Mail::to($user)->send(new UserInviteMail($user));
+
 
 
         $gaAccountIds = [];
@@ -211,8 +211,9 @@ class UserController extends Controller
         }
 
         $user->google_analytics_properties = $this->getUniqueGoogleAnalyticsPropertiesByUser($user);
-
+        Mail::to($user)->send(new UserInviteMail($user));
         event(new \App\Events\UserInvitedTeamMember($parentUser));
+
         return ['user' => $user];
     }
 
