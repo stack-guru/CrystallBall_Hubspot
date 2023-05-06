@@ -142,7 +142,7 @@ export default class DSRMDatesSelect extends React.Component {
                     </div>
 
                     <div className="d-flex align-items-center w-100 justify-content-end">
-                        <span className="betweentext">for</span>
+                        {/*<span className="betweentext">for</span>
                         <GoogleAnalyticsPropertySelect
                             className="themeNewselect hide-icon"
                             name="ga_property_id"
@@ -165,7 +165,7 @@ export default class DSRMDatesSelect extends React.Component {
                             placeholder="Select GA Properties"
                             isClearable={true}
                             onDeleteCallback={this.props.onUncheckCallback}
-                        />
+                        />*/}
                     </div>
                 </div>
 
@@ -226,7 +226,7 @@ export default class DSRMDatesSelect extends React.Component {
                                                        rketing_id={rmd.id}/>
                                                 <span className="d-flex w-100 justify-content-between">
                                                     <div>{rmd.show_at} - {rmd.event_name}</div>
-                                                    {this.props.ds_data.find(ds => ds.retail_marketing_id === rmd.id).id === this.state.editSelected
+                                                    {/*{this.props.ds_data.find(ds => ds.retail_marketing_id === rmd.id).id === this.state.editSelected
                                                         ?
                                                         <GoogleAnalyticsPropertySelect
                                                             className="w-175px themeNewselect hide-icon"
@@ -248,7 +248,7 @@ export default class DSRMDatesSelect extends React.Component {
                                                                 <img className="w-20px" src='/icon-edit.svg' />
                                                             </i>
                                                         </div>
-                                                    }
+                                                    }*/}
                                                 </span>
                                             </label>
                                         );
