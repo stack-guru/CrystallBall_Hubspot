@@ -107,7 +107,7 @@ class UserController extends Controller
         $user->price_plan_expiry_date = $parentUser->price_plan_expiry_date;
         $user->show_config_steps = 0;
         $user->startup_configuration_showed_at = Carbon::now();
-//        $user->assigned_properties_id = implode(',', $request->google_analytics_property_id);
+        $user->assigned_properties_id = implode(',', $request->google_analytics_property_id);
         if ($parentUser->is_ds_holidays_enabled) {
             $user->is_ds_holidays_enabled = 1;
         }
@@ -197,7 +197,7 @@ class UserController extends Controller
         }
 
         if ($gaAccountIds !== null && !in_array("", $gaAccountIds)) {
-            foreach($gaAccountIds as $gAAId) {
+            foreach ($gaAccountIds as $gAAId) {
                 $uGAA = new UserGaAccount;
                 $uGAA->user_id = $user->id;
                 $uGAA->google_analytics_account_id = $gAAId;
@@ -209,6 +209,8 @@ class UserController extends Controller
             $uGAA->google_analytics_account_id = null;
             $uGAA->save();
         }
+
+        $user->google_analytics_properties = $this->getUniqueGoogleAnalyticsPropertiesByUser($user);
 
         event(new \App\Events\UserInvitedTeamMember($parentUser));
         return ['user' => $user];
@@ -235,7 +237,6 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, User $user)
     {
-
         $this->authorize('update', $user);
 
         $user->fill($request->validated());
@@ -247,38 +248,44 @@ class UserController extends Controller
         $user->user_id = $parentUser->id;
         $user->price_plan_id = $parentUser->price_plan_id;
         $user->price_plan_expiry_date = $parentUser->price_plan_expiry_date;
-//        $user->assigned_properties_id = implode(',', $request->google_analytics_property_id);
+        $user->assigned_properties_id = implode(',', $request->google_analytics_property_id);
         $user->save();
 
         $uGAAs = $user->userGaAccounts;
         $oldGAAIds = $uGAAs->pluck('google_analytics_account_id')->toArray();
-        $newGAAIds = $request->google_analytics_account_id;
 
+        // Remove empty strings from the array
+        $filteredPropertyIds = array_filter($request->google_analytics_property_id, function ($value) {
+            return $value !== "";
+        });
+
+        // Fetch the Google Analytics properties
+        $gaProperties = GoogleAnalyticsProperty::whereIn('id', $filteredPropertyIds)->with(['googleAnalyticsAccount'])->get();
+
+        // Get the new Google Analytics Account IDs
+        $newGAAIds = [];
+        foreach ($gaProperties as $property) {
+            $newGAAIds[] = $property->googleAnalyticsAccount->id;
+        }
+
+        // Delete old UserGaAccounts that are not in the new list
         foreach ($uGAAs as $uGAA) {
             if (!in_array($uGAA->google_analytics_account_id, $newGAAIds)) {
                 $uGAA->delete();
             }
         }
 
-        if ($request->has('google_analytics_account_id')) {
-            if ($request->google_analytics_account_id !== null && !in_array("", $request->google_analytics_account_id)) {
-                foreach ($newGAAIds as $gAAId) {
-                    if (!in_array($gAAId, $oldGAAIds)) {
-                        $uGAA = new UserGaAccount;
-                        $uGAA->user_id = $user->id;
-                        $uGAA->google_analytics_account_id = $gAAId;
-                        $uGAA->save();
-                    }
-                }
-            } else {
-                if (!in_array("", $oldGAAIds)) {
-                    $uGAA = new UserGaAccount;
-                    $uGAA->user_id = $user->id;
-                    $uGAA->google_analytics_account_id = null;
-                    $uGAA->save();
-                }
+        // Create new UserGaAccounts that are not in the old list
+        foreach ($newGAAIds as $gAAId) {
+            if (!in_array($gAAId, $oldGAAIds)) {
+                $uGAA = new UserGaAccount;
+                $uGAA->user_id = $user->id;
+                $uGAA->google_analytics_account_id = $gAAId;
+                $uGAA->save();
             }
         }
+
+        $user->google_analytics_properties = $this->getUniqueGoogleAnalyticsPropertiesByUser($user);
 
         return ['user' => $user];
     }
@@ -293,7 +300,7 @@ class UserController extends Controller
     {
         $this->authorize('delete', $user);
 
-        if($user->user_id) {
+        if ($user->user_id) {
             Annotation::where('user_id', $user->id)->update(['user_id' => $user->user_id, 'added_by_name' => $user->name]);
         }
         $user->email = Carbon::now()->format('Ymd') . '_' . $user->email;
@@ -353,11 +360,13 @@ class UserController extends Controller
         $new_paying_users_yesterday = PricePlanSubscription::whereHas('user', function ($query) {
             $query->where('name', 'NOT LIKE', '%test%');
         })->with('user', 'user.lastPricePlanSubscription', 'paymentDetail', 'pricePlan')->where('created_at', '>=', Carbon::now()->subDay(1)->format('Y-m-d'))->get();
-        foreach ($new_paying_users_yesterday as $user){
+        foreach ($new_paying_users_yesterday as $user) {
             try {
                 $user_total_subs = PricePlanSubscription::where('user_id', $user->user_id)->get();
-                if($user_total_subs->count() > 1){
-                    $user_collection_key = $new_paying_users_yesterday->search(function($user_price_plan) use ($user) {return $user_price_plan->user_id == $user->user_id;});
+                if ($user_total_subs->count() > 1) {
+                    $user_collection_key = $new_paying_users_yesterday->search(function ($user_price_plan) use ($user) {
+                        return $user_price_plan->user_id == $user->user_id;
+                    });
                     $new_paying_users_yesterday->forget($user_collection_key);
                 }
             } catch (Exception $ex) {
@@ -552,6 +561,10 @@ class UserController extends Controller
             $googleAnalyticsPropertiesQuery->whereIn('google_analytics_account_id', $googleAnalyticsAccountIdsArray);
             $googleAnalyticsProperties = $googleAnalyticsPropertiesQuery->get();
             $uniqueGoogleAnalyticsProperties = collect($googleAnalyticsProperties)->unique('name')->values()->all();
+            if ($user->assigned_properties_id != null) {
+                $assigned_properties_ids = explode(',', $user->assigned_properties_id);
+                $uniqueGoogleAnalyticsProperties = collect($uniqueGoogleAnalyticsProperties)->whereIn('id', $assigned_properties_ids)->values()->all();
+            }
             return $uniqueGoogleAnalyticsProperties;
         }
 

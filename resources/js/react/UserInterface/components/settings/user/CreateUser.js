@@ -17,7 +17,6 @@ export default class CreateUser extends Component {
         this.state = {
             user: {
                 name: '', email: '', password: '', password_confirmation: '', user_level: 'admin', department: '',
-                // google_analytics_account_id: [""],
                 google_analytics_property_id: [""],
                 team_name: ""
             },
