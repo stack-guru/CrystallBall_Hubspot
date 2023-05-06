@@ -18,7 +18,7 @@ class GoogleAnalyticsPropertyController extends Controller
             abort(400, "Please connect Google Analytics account before you use Google Analytics Properties.");
         }
 
-        $uniqueGoogleAnalyticsProperties = this->getUniqueGoogleAnalyticsPropertiesByUser($user);
+        $uniqueGoogleAnalyticsProperties = $this->getUniqueGoogleAnalyticsPropertiesByUser($user);
         return ['google_analytics_properties' => $uniqueGoogleAnalyticsProperties];
     }
 
