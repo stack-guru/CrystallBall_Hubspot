@@ -17,9 +17,8 @@ class GoogleAnalyticsPropertyController extends Controller
         if (!GoogleAccount::whereIn('user_id', $userIdsArray)->count()) {
             abort(400, "Please connect Google Analytics account before you use Google Analytics Properties.");
         }
-        $userController = new \App\Http\Controllers\API\UserController();
 
-        $uniqueGoogleAnalyticsProperties = $userController->getUniqueGoogleAnalyticsPropertiesByUser($user);
+        $uniqueGoogleAnalyticsProperties = this->getUniqueGoogleAnalyticsPropertiesByUser($user);
         return ['google_analytics_properties' => $uniqueGoogleAnalyticsProperties];
     }
 
@@ -45,5 +44,27 @@ class GoogleAnalyticsPropertyController extends Controller
     {
         $googleAnalyticsProperty->delete();
         return ['success' => true];
+    }
+
+    public function getUniqueGoogleAnalyticsPropertiesByUser($user)
+    {
+        $googleAnalyticsPropertiesQuery = GoogleAnalyticsProperty::with(['googleAccount', 'googleAnalyticsAccount'])
+            ->select('id', 'name', 'google_account_id', 'google_analytics_account_id', 'was_last_data_fetching_successful', 'is_in_use')
+            ->with(['googleAccount:id,name', 'googleAnalyticsAccount:id,name'])
+            ->whereIn('user_id', [$user->user_id]);
+
+        $googleAnalyticsAccountIdsArray = $user->userGaAccounts->pluck('google_analytics_account_id')->toArray();
+        if ($googleAnalyticsAccountIdsArray != [null] && $googleAnalyticsAccountIdsArray != []) {
+            $googleAnalyticsPropertiesQuery->whereIn('google_analytics_account_id', $googleAnalyticsAccountIdsArray);
+            $googleAnalyticsProperties = $googleAnalyticsPropertiesQuery->get();
+            $uniqueGoogleAnalyticsProperties = collect($googleAnalyticsProperties)->unique('name')->values()->all();
+            if ($user->assigned_properties_id != null) {
+                $assigned_properties_ids = explode(',', $user->assigned_properties_id);
+                $uniqueGoogleAnalyticsProperties = collect($uniqueGoogleAnalyticsProperties)->whereIn('id', $assigned_properties_ids)->values()->all();
+            }
+            return $uniqueGoogleAnalyticsProperties;
+        }
+
+        return [];
     }
 }
