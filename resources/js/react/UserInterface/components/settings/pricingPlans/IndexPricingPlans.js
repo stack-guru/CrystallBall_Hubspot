@@ -170,12 +170,18 @@ export default class IndexPricingPlans extends React.Component {
                                                         <>{Number(pricePlan.yearly_discount_percent)}% OFF</> :
                                                         pricePlan.short_description === "For Freelancers" ? <>Limited
                                                             time offer</> : null
-                                                    }</label></div> : null}
+                                                    }</label></div> : <div className="price-plan-discount-text">
+                                                    <label className="px-3">{" "}</label>
+                                                </div>}
                                             {pricePlan.short_description === "For Freelancers" ? <div>
                                                 <h3 className="price-plan-discount-strick">
                                                     <label><sup>$</sup> 29/m</label>
                                                 </h3>
-                                            </div> : null}
+                                            </div> :  <div>
+                                                <h3 className="price-plan-discount-strick">
+                                                    <label><sup>{" "}</sup></label>
+                                                </h3>
+                                            </div>}
                                             <h3>{userRegistrationOffer ? <><sup>$</sup>{pricePlan.price}</> : <>
                                                 <sup>$</sup>{calculatePricePlanPrice(pricePlan.price, this.state.planDuration, pricePlan.yearly_discount_percent, userRegistrationOffer)} /m</>}</h3>
                                             {this.state.planDuration == 12 ? <span>Billed Annually</span> :

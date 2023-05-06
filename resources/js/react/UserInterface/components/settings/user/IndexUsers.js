@@ -363,6 +363,7 @@ export default class IndexUsers extends Component {
 
                             <EditUser toggle={() => {
                                 this.setState({editUserId: '',});
+                                this.getUsers();
                             }} getUsers={this.getUsers} editUserId={this.state.editUserId} user={this.props.user}/>
                         </div>
                     </AppsModal>
