@@ -26,16 +26,9 @@ class GoogleAnalyticsPropertyController extends Controller
                 ->whereIn('user_id', $userIdsArray);
 
             // Check if the current user has any permission set over google analytics accounts
-            $googleAnalyticsAccountIdsArray = [];
-
-
-//            $user->userGaAccounts->pluck('google_analytics_account_id')->toArray();
-            if (!empty($user->assigned_properties_id)) {
-                $googleAnalyticsAccountIdsArray = array_map('intval', array_map('trim', explode(',', $user->assigned_properties_id)));
-            }
-            if (count($googleAnalyticsAccountIdsArray) > 0) {
-//                $googleAnalyticsPropertiesQuery->whereIn('google_analytics_account_id', $googleAnalyticsAccountIdsArray);
-                $googleAnalyticsPropertiesQuery->whereIn('id', $googleAnalyticsAccountIdsArray);
+            $googleAnalyticsAccountIdsArray = $user->userGaAccounts->pluck('google_analytics_account_id')->toArray();
+            if ($googleAnalyticsAccountIdsArray != [null] && $googleAnalyticsAccountIdsArray != []) {
+                $googleAnalyticsPropertiesQuery->whereIn('google_analytics_account_id', $googleAnalyticsAccountIdsArray);
             }
 
             // Check if the price plan has google analytics properties allowed
