@@ -33,11 +33,12 @@ class GoogleAnalyticsPropertyController extends Controller
             abort(404, 'Unable to find referenced Google Analytics Property.');
         }
 
-        if ($request->has('google_search_console_site_id')) $googleAnalyticsProperty->google_search_console_site_id = $request->google_search_console_site_id;
-        $googleAnalyticsProperty->save();
+        if ($request->has('google_search_console_site_id')) 
+            $googleAnalyticsProperty->google_search_console_site_id = $request->google_search_console_site_id;
+            $googleAnalyticsProperty->save();
 
         $googleAnalyticsProperty->load('googleAccount');
-        // $googleAnalyticsProperty->load('googleAnalyticsAccount');
+        $googleAnalyticsProperty->load('googleAnalyticsAccount');
         return ['google_analytics_property' => $googleAnalyticsProperty];
     }
 
