@@ -16,10 +16,6 @@ import UsersDaysWithAnnotationsGraph from './graphs/usersDaysWithAnnotationsGrap
 import NoGoogleAccountConnectedPage from '../subPages/NoGoogleAccountConnectedPage';
 import NoDataFoundPage from '../subPages/NoDataFoundPage';
 import TopStatistics from './utils/TopStatistics';
-import DeviceClicksImpressionsGraph from './graphs/deviceClicksImpressionsGraph';
-import MapChart from './graphs/WorldMap';
-import CountriesTable from './tables/countriesTable';
-
 
 export default class IndexAnalytics extends Component {
     constructor(props) {
@@ -39,8 +35,6 @@ export default class IndexAnalytics extends Component {
             annotations: [],
             mediaStatistics: [],
             sourcesStatistics: [],
-            devicesStatistics: [],
-            countriesStatistics: [],
             deviceCategoriesStatistics: [],
             startDate: moment().subtract(14, 'days').format('YYYY-MM-DD'),
             endDate: moment().subtract(1, 'days').format('YYYY-MM-DD'),
@@ -53,9 +47,7 @@ export default class IndexAnalytics extends Component {
         this.fetchUsersDaysAnnotations = this.fetchUsersDaysAnnotations.bind(this);
         this.changeStatisticsPaddingDays = this.changeStatisticsPaddingDays.bind(this);
     }
-    componentDidMount() {
-        document.title = 'Analytic Dashboard';
-    }
+
     render() {
 
         if (!this.props.user.google_accounts_count) return <NoGoogleAccountConnectedPage />
@@ -197,20 +189,6 @@ export default class IndexAnalytics extends Component {
                                                 <DeviceUsersGraph deviceCategoriesStatistics={this.state.deviceCategoriesStatistics} />
                                             </div>
                                         </div>
-                                        <div className="row ml-0 mr-0 mt-4">
-                                            <div className="col-6 border">
-                                                <DeviceClicksImpressionsGraph devicesStatistics={this.state.devicesStatistics} />
-                                            </div>
-                                        </div>
-                                        
-                                        <div className="row ml-0 mr-0 mt-4 border-top border-bottom border-left">
-                                            <div className="col-6 p-0">
-                                                <MapChart countriesStatistics={this.state.countriesStatistics} />
-                                            </div>
-                                            <div className="col-6 p-0 scrollable">
-                                                <CountriesTable countriesStatistics={this.state.countriesStatistics} />
-                                            </div>
-                                        </div>
                                     </React.Fragment>
                                     :
                                     <NoDataFoundPage googleAccount={this.state.googleAccount} />
@@ -259,22 +237,6 @@ export default class IndexAnalytics extends Component {
                 }).catch(err => {
                     this.setState({ isBusy: false, errors: err });
                 });
-            HttpClient.get(`/dashboard/analytics/device-by-impression?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}`)
-            .then(response => {
-                this.setState({ isBusy: false, devicesStatistics: response.data.statistics });
-            }, (err) => {
-                this.setState({ isBusy: false, errors: (err.response).data });
-            }).catch(err => {
-                this.setState({ isBusy: false, errors: err });
-            });
-            HttpClient.get(`/dashboard/analytics/countries?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}`)
-            .then(response => {
-                this.setState({ isBusy: false, countriesStatistics: response.data.statistics });
-            }, (err) => {
-                this.setState({ isBusy: false, errors: (err.response).data });
-            }).catch(err => {
-                this.setState({ isBusy: false, errors: err });
-            });
         }
     }
 

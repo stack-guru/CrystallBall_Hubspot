@@ -35,7 +35,7 @@ function splitDisplayString(displayString, maxLength = 300) {
 }
 
 
-export function CustomTooltip({ children, tooltipText, maxLength }) {
+function CustomTooltip({ children, tooltipText, maxLength }) {
     const lines = splitDisplayString(tooltipText, maxLength);
     const formattedTooltipText = lines.join("<br>");
     return (

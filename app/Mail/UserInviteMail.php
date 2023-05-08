@@ -38,7 +38,7 @@ class UserInviteMail extends Mailable
             'id'   => $this->user->getKey(),
             'hash' => sha1($this->user->getEmailForVerification()),
         ];
-        $link = URL::temporarySignedRoute('verification.verify', Carbon::now()->addDays(365), $data);
+        $link = URL::temporarySignedRoute('verification.verify', Carbon::now()->addDays(10), $data);
         return $this->view('mails/user/userInvite')
             ->subject($this->user->user->name . " has invited you to join them in " . config('app.name'))
             ->with('user', $this->user)
