@@ -2238,7 +2238,7 @@ class AppsMarket extends React.Component {
             });
     }
 
-    userDataSourceAddHandler(dataSource) {
+    userDataSourceAddHandler(dataSource, gaPropertyId = null) {
         this.setState({isBusy: true});
         let formData = {
             ds_code: dataSource.code,
@@ -2250,7 +2250,7 @@ class AppsMarket extends React.Component {
             status: dataSource.status,
             value: dataSource.value,
             is_enabled: 1,
-            ga_property_id: this.state.ga_property_id,
+            ga_property_id: gaPropertyId ? gaPropertyId : this.state.ga_property_id,
             workspace: dataSource.workspace,
         };
         HttpClient.post("/data-source/user-data-source", formData)
