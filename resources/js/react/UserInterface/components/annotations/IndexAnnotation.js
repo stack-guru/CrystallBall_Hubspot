@@ -38,7 +38,6 @@ function splitDisplayString(displayString, maxLength = 300) {
 function CustomTooltip({ children, tooltipText, maxLength }) {
     const lines = splitDisplayString(tooltipText, maxLength);
     const formattedTooltipText = lines.join("<br>");
-    debugger;
     return (
         <div className="dd-tooltip">
             {children}
