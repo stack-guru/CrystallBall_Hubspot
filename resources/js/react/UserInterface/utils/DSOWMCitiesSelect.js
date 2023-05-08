@@ -321,7 +321,7 @@ export default class DSOWMCitiesSelect extends React.Component {
                                                     isClearable={true}
                                                 />
                                                 :
-                                                <div>
+                                                <div className="d-flex text-nowrap">
                                                     {wAC.ga_property_name}
                                                     <i className="ml-2 icon fa" onClick={() => this.setState({ editSelected: wAC.open_weather_map_city_id })}>
                                                         <img className="w-20px" src='/icon-edit.svg' />

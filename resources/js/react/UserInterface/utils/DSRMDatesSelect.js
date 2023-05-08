@@ -254,8 +254,8 @@ export default class DSRMDatesSelect extends React.Component {
                                                             isClearable={true}
                                                         />
                                                         :
-                                                        <div className="d-content">
-                                                            {this.props.ds_data.find(ds => ds.retail_marketing_id === rmd.id)?.ga_property_name}
+                                                        <div className="d-flex text-nowrap">
+                                                            <div className="inline-block"> {this.props.ds_data.find(ds => ds.retail_marketing_id === rmd.id)?.ga_property_name}</div>
                                                             <i className="ml-2 icon fa" onClick={() => this.setState({ editSelected: this.props.ds_data.find(ds => ds.retail_marketing_id === rmd.id).id })}>
                                                                 <img className="w-20px" src='/icon-edit.svg' />
                                                             </i>

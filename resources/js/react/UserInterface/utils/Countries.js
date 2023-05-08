@@ -211,7 +211,7 @@ export default class countries extends React.Component {
                                                                 isClearable={true}
                                                             />
                                                             :
-                                                            <div>
+                                                            <div className="d-flex text-nowrap">
                                                                 {this.props.ds_data[userCountries.indexOf(country)]?.ga_property_name}
                                                                 <i className="ml-2 icon fa" onClick={() => this.setState({ editSelected: this.props.ds_data[userCountries.indexOf(country)].id })}>
                                                                     <img className="w-20px" src='/icon-edit.svg' />

@@ -707,10 +707,6 @@ setting-menu-item.dropdown {
     width: 20px !important;
 }
 
-.d-content {
-    display: contents;
-}
-
 .sidebar-inner {
     overflow: visible !important;
     border-right: 1px solid rgba(0, 0, 0, 0.0625);
