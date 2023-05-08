@@ -1274,6 +1274,12 @@ class AppsMarket extends React.Component {
                                 userDataSourceUpdateHandler={
                                     this.userDataSourceUpdateHandler
                                 }
+                                userDataSourceAddAllHandler={
+                                    this.userDataSourceAddAllHandler
+                                }
+                                onUncheckAllCallback={
+                                    this.onUncheckAllCallback
+                                }
                                 reloadWebMonitors={this.reloadWebMonitors}
                                 loadUserDataSources={this.loadUserDataSources}
                                 updateGAPropertyId={(value) => {
