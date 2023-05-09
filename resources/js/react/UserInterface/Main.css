@@ -710,6 +710,13 @@ setting-menu-item.dropdown {
     width: 16px !important;
 }
 
+.ellipsis-prop {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100px;
+}
+
 .sidebar-inner {
     overflow: visible !important;
     border-right: 1px solid rgba(0, 0, 0, 0.0625);

@@ -328,7 +328,9 @@ export default class DSOWMCitiesSelect extends React.Component {
                                                 </>
                                                 :
                                                 <> 
-                                                    {wAC.ga_property_name}
+                                                    <div className="ellipsis-prop" title={wAC.ga_property_name}>
+                                                        {wAC.ga_property_name}
+                                                    </div>
                                                     <i className="ml-2 icon fa" onClick={() => this.setState({ editSelected: wAC.open_weather_map_city_id })}>
                                                         <img className="w-20px" src='/icon-edit.svg' />
                                                     </i>

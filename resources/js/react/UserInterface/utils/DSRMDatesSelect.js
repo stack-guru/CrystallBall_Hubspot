@@ -261,7 +261,9 @@ export default class DSRMDatesSelect extends React.Component {
                                                                 </>
                                                             :
                                                             <>
-                                                                <div className="inline-block"> {this.props.ds_data.find(ds => ds.retail_marketing_id === rmd.id)?.ga_property_name}</div>
+                                                                <div className="ellipsis-prop" title={this.props.ds_data.find(ds => ds.retail_marketing_id === rmd.id)?.ga_property_name}>
+                                                                    {this.props.ds_data.find(ds => ds.retail_marketing_id === rmd.id)?.ga_property_name}
+                                                                </div>
                                                                 <i className="ml-2 icon fa" onClick={() => this.setState({ editSelected: this.props.ds_data.find(ds => ds.retail_marketing_id === rmd.id).id })}>
                                                                     <img className="w-20px" src='/icon-edit.svg' />
                                                                 </i>

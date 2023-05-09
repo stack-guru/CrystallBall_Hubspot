@@ -141,7 +141,9 @@ export default class GithubTracking extends React.Component {
                                                     </div>
                                                 :
                                                     <div className="d-flex text-nowrap">
-                                                        {this.props.ds_data[userRepositories.indexOf(repository.name)]?.ga_property_name}
+                                                        <div className="ellipsis-prop" title={this.props.ds_data[userRepositories.indexOf(repository.name)]?.ga_property_name}>
+                                                            {this.props.ds_data[userRepositories.indexOf(repository.name)]?.ga_property_name}
+                                                        </div>
                                                         <i className="ml-2 icon fa" onClick={() => this.setState({ editSelected: repository.name })}>
                                                             <img className="w-20px" src='/icon-edit.svg' />
                                                         </i>
