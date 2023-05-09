@@ -136,7 +136,6 @@ class AnnotationQueryHelper
         $annotationsQuery .= "SELECT DISTINCT `annotations`.`is_enabled`, DATE(`show_at`) AS show_at, `annotations`.`id`, `category`, `event_name`, `url`, CONCAT('annotations', '~~~~', `annotations`.`id`,  '~~~~', CASE WHEN IFNULL(`annotations`.`added_by_name`, '') > '' THEN `annotations`.`added_by_name` ELSE `users`.`name` END, '~~~~', `annotations`.`added_by`) AS `added_by`, `description`, `users`.`name` AS `user_name`, `annotations`.`created_at`, CONCAT((SELECT GROUP_CONCAT(`annotation_ga_properties`.`google_analytics_property_id`) FROM `annotation_ga_properties` WHERE `annotation_ga_properties`.`annotation_id` = `annotations`.`id` GROUP BY `annotation_ga_properties`.`annotation_id`), '~~~~', (SELECT GROUP_CONCAT(`google_analytics_properties`.`name`) FROM `annotation_ga_properties` LEFT JOIN `google_analytics_properties` ON `annotation_ga_properties`.`google_analytics_property_id` = `google_analytics_properties`.`id` WHERE `annotation_ga_properties`.`annotation_id` = `annotations`.`id` GROUP BY `annotation_ga_properties`.`annotation_id`)) AS `table_ga_property_id` FROM `annotations`";
         $annotationsQuery .= " LEFT JOIN `users` ON `annotations`.`user_id` = `users`.`id`";
         $annotationsQuery .= " LEFT JOIN `annotation_ga_properties` ON `annotation_ga_properties`.`annotation_id` = `annotations`.`id`";
-        $annotationsQuery .= " LEFT JOIN `google_analytics_properties` ON `annotation_ga_properties`.`google_analytics_property_id` = `google_analytics_properties`.`id`"; // Add this line
 
         $annotationsQuery .= " WHERE (";
         if ($userId !== '*' && in_array($userId, $userIdsArray)) {
@@ -147,18 +146,13 @@ class AnnotationQueryHelper
         if (!$showDisabled) $annotationsQuery .= " AND `annotations`.`is_enabled` = 1 ";
         $annotationsQuery .= " )";
 
-        if ($googleAnalyticsPropertyId && $googleAnalyticsPropertyId !== '*') {
+        if (($googleAnalyticsPropertyId && $googleAnalyticsPropertyId !== '*')) {
             $gaPropertyId = $googleAnalyticsPropertyId;
             $annotationsQuery .= " AND (LOCATE('" . $gaPropertyId . "', CONCAT(`annotation_ga_properties`.`google_analytics_property_id`, '~~~~', `google_analytics_properties`.`name`)) > 0 OR CONCAT(`annotation_ga_properties`.`google_analytics_property_id`, '~~~~', `google_analytics_properties`.`name`) IS NULL)";
         } else if($googleAnalyticsPropertyId && $googleAnalyticsPropertyId == '*' && $user->assigned_properties_id) {
-//            $gaPropertyId = $user->assigned_properties_id;
-//            dd($gaPropertyId);
-//            $annotationsQuery .= " AND (LOCATE('" . $gaPropertyId . "', CONCAT((SELECT GROUP_CONCAT(`annotation_ga_properties`.`google_analytics_property_id`) FROM `annotation_ga_properties` WHERE `annotation_ga_properties`.`annotation_id` = `annotations`.`id` GROUP BY `annotation_ga_properties`.`annotation_id`), '~~~~', (SELECT GROUP_CONCAT(`google_analytics_properties`.`name`) FROM `annotation_ga_properties` LEFT JOIN `google_analytics_properties` ON `annotation_ga_properties`.`google_analytics_property_id` = `google_analytics_properties`.`id` WHERE `annotation_ga_properties`.`annotation_id` = `annotations`.`id` GROUP BY `annotation_ga_properties`.`annotation_id`))) > 0 OR CONCAT((SELECT GROUP_CONCAT(`annotation_ga_properties`.`google_analytics_property_id`) FROM `annotation_ga_properties` WHERE `annotation_ga_properties`.`annotation_id` = `annotations`.`id` GROUP BY `annotation_ga_properties`.`annotation_id`), '~~~~', (SELECT GROUP_CONCAT(`google_analytics_properties`.`name`) FROM `annotation_ga_properties` LEFT JOIN `google_analytics_properties` ON `annotation_ga_properties`.`google_analytics_property_id` = `google_analytics_properties`.`id` WHERE `annotation_ga_properties`.`annotation_id` = `annotations`.`id` GROUP BY `annotation_ga_properties`.`annotation_id`)) IS NULL)";
-            $gaPropertyIdArray = $user->assigned_properties_id;
-            $annotationsQuery .= " AND (FIND_IN_SET(`annotation_ga_properties`.`google_analytics_property_id`, '" . $gaPropertyIdArray . "') OR `annotation_ga_properties`.`google_analytics_property_id` IS NULL)";
-
+            $gaPropertyId = $user->assigned_properties_id;
+            $annotationsQuery .= " AND (LOCATE('" . $gaPropertyId . "', CONCAT((SELECT GROUP_CONCAT(`annotation_ga_properties`.`google_analytics_property_id`) FROM `annotation_ga_properties` WHERE `annotation_ga_properties`.`annotation_id` = `annotations`.`id` GROUP BY `annotation_ga_properties`.`annotation_id`), '~~~~', (SELECT GROUP_CONCAT(`google_analytics_properties`.`name`) FROM `annotation_ga_properties` LEFT JOIN `google_analytics_properties` ON `annotation_ga_properties`.`google_analytics_property_id` = `google_analytics_properties`.`id` WHERE `annotation_ga_properties`.`annotation_id` = `annotations`.`id` GROUP BY `annotation_ga_properties`.`annotation_id`))) > 0 OR CONCAT((SELECT GROUP_CONCAT(`annotation_ga_properties`.`google_analytics_property_id`) FROM `annotation_ga_properties` WHERE `annotation_ga_properties`.`annotation_id` = `annotations`.`id` GROUP BY `annotation_ga_properties`.`annotation_id`), '~~~~', (SELECT GROUP_CONCAT(`google_analytics_properties`.`name`) FROM `annotation_ga_properties` LEFT JOIN `google_analytics_properties` ON `annotation_ga_properties`.`google_analytics_property_id` = `google_analytics_properties`.`id` WHERE `annotation_ga_properties`.`annotation_id` = `annotations`.`id` GROUP BY `annotation_ga_properties`.`annotation_id`)) IS NULL)";
         }
-
         if ($user->is_ds_web_monitors_enabled && $showWebMonitoring == 'false') {
             $annotationsQuery .= " AND annotations.category <> 'Website Monitoring'";
         }
@@ -202,7 +196,7 @@ class AnnotationQueryHelper
 
     public static function shopifyQuery(array $userIdsArray)
     {
-        return "select 1, published_at AS show_at, NULL, category, title AS event_name, NULL AS url, CONCAT('shopify_annotations', '~~~~', `shopify_annotations`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, body_html AS description, `users`.`name` AS `user_name`, NULL AS show_at, `shopify_monitors`.`ga_property_id` AS `table_ga_property_id` from `shopify_annotations` LEFT JOIN `shopify_monitors` ON `shopify_monitors`.`url` LIKE CONCAT('%', REPLACE(`shopify_annotations`.`vendor`, ' ', ''), '%') AND `shopify_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "') LEFT JOIN `users` ON `shopify_annotations`.`user_id` = `users`.`id` WHERE `shopify_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+        return "select 1, published_at AS show_at, NULL, category, title AS event_name, NULL AS url, CONCAT('shopify_annotations', '~~~~', `shopify_annotations`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, body_html AS description, `users`.`name` AS `user_name`, NULL AS show_at, `shopify_monitors`.`ga_property_id` AS `table_ga_property_id` from `shopify_annotations` LEFT JOIN `shopify_monitors` ON `shopify_monitors`.`url` LIKE CONCAT(REPLACE(`shopify_annotations`.`vendor`, ' ', ''), '%') AND `shopify_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "') LEFT JOIN `users` ON `shopify_annotations`.`user_id` = `users`.`id` WHERE `shopify_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
     }
 
     public static function holidaysQuery(array $userIdsArray, string $googleAnalyticsPropertyId)

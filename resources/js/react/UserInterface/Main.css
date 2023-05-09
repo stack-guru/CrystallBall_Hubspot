@@ -700,21 +700,17 @@ setting-menu-item.dropdown {
 .m-w-255px {
     max-width: 255px;
 }
+
 .w-175px {
     width: 175px !important;
 }
+
 .w-20px {
     width: 20px !important;
 }
-.w-16px {
-    width: 16px !important;
-}
 
-.ellipsis-prop {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: 100px;
+.d-content {
+    display: contents;
 }
 
 .sidebar-inner {
@@ -2298,7 +2294,7 @@ body {
     /*overflow-y: auto;*/
 }
 
-.annotionRow .properties p > span {
+.annotionRow .properties p > span, .singleCol .properties p > span {
     background: #F7F7F7;
     width: 22px;
     height: 22px;
@@ -2514,15 +2510,24 @@ body {
 }
 
 .dataTableusers .singleRow .singleCol {
-    width: 15%;
+    width: 13%;
+    flex-shrink: 0;
+    justify-content: start;
+    overflow: hidden;
+}
+
+.dataTableusers .singleRow .singleCol:first-child {
+    width: 17%;
     flex-shrink: 0;
     justify-content: start;
 }
 
-.dataTableusers .singleRow .singleCol:first-child {
-    width: 25%;
-    flex-shrink: 0;
-    justify-content: start;
+.dataTableusers .singleRow .singleCol:nth-child(3) {
+    width: 10%;
+    min-width: 110px;
+}
+.dataTableusers .singleRow .singleCol:nth-child(6) {
+    overflow: visible;
 }
 
 .dataTableusers .singleRow .singleCol:last-child {
@@ -3055,7 +3060,7 @@ body {
     font-size: 18px;
     font-weight: 600;
     line-height: 23px;
-    padding: 9px 24px;
+    padding: 10px 24px;
     background: #fff;
     border-radius: 100px;
     border: 2px solid #a6a6a6;
@@ -4374,9 +4379,9 @@ div[data-tour-elem="controls"]
 .dataTableAnalyticsAccount {
 }
 
-.dataTableAnalyticsAccount .form-control {
+/* .dataTableAnalyticsAccount .form-control {
     color: #f44c3d;
-}
+} */
 
 .dataTableAnalyticsAccount .selected {
     color: #666;
@@ -5033,8 +5038,8 @@ div[data-tour-elem="controls"]
 .modal-createUser .inputWithIcon .fa
     /*.modal-createAnnotation .inputWithIcon .fa*/
 {
-    top: 10px;
-    height: 38px;
+    top: 2px;
+    height: 35px;
 }
 
 
@@ -5994,8 +5999,4 @@ div[data-tour-elem="controls"]
     text-decoration: line-through;
     color: #096db7;
     font-size: 22px;
-}
-
-.pt-02px {
-    padding-bottom: 0.2rem !important;
 }
