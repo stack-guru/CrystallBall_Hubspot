@@ -124,8 +124,9 @@ export default class BitbucketTracking extends React.Component {
                                                         </label>
                                                         {userRepositories.indexOf(repository.slug) !== -1
                                                          ?
-                                                            repository.slug === this.state.editSelected || !this.props.ds_data[userRepositories.indexOf(repository.slug)]?.ga_property_name
+                                                            repository.slug === this.state.editSelected
                                                                 ?
+                                                                <div className="d-flex text-nowrap align-items-center">
                                                                     <GoogleAnalyticsPropertySelect
                                                                         className="w-175px themeNewselect hide-icon"
                                                                         name="ga_property_id"
@@ -139,6 +140,10 @@ export default class BitbucketTracking extends React.Component {
                                                                         placeholder="Select GA Properties"
                                                                         isClearable={true}
                                                                     />
+                                                                    <i className="ml-2 icon fa" onClick={() => this.setState({ editSelected: null })}>
+                                                                        <img className="w-16px" src='/close-icon.svg' />
+                                                                    </i>
+                                                                </div>
                                                                 :
                                                                     <div className="d-flex text-nowrap">
                                                                         {this.props.ds_data[userRepositories.indexOf(repository.slug)]?.ga_property_name}

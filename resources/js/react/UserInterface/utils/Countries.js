@@ -197,19 +197,24 @@ export default class countries extends React.Component {
                                                         <div>{country}</div>
                                                         {this.props.ds_data[userCountries.indexOf(country)].id === this.state.editSelected
                                                             ?
-                                                            <GoogleAnalyticsPropertySelect
-                                                                className="w-175px themeNewselect hide-icon"
-                                                                name="ga_property_id"
-                                                                id="ga_property_id"
-                                                                currentPricePlan={this.props.user.price_plan}
-                                                                value={this.props.gaPropertyId}
-                                                                onChangeCallback={(gAP) => {
-                                                                    this.setState({ editSelected: '' })
-                                                                    this.props.userDataSourceUpdateHandler(this.props.ds_data[userCountries.indexOf(country)].id, gAP.target.value || null)
-                                                                }}
-                                                                placeholder="Select GA Properties"
-                                                                isClearable={true}
-                                                            />
+                                                            <div className="d-flex text-nowrap align-items-center">
+                                                                <GoogleAnalyticsPropertySelect
+                                                                    className="w-175px themeNewselect hide-icon"
+                                                                    name="ga_property_id"
+                                                                    id="ga_property_id"
+                                                                    currentPricePlan={this.props.user.price_plan}
+                                                                    value={this.props.gaPropertyId}
+                                                                    onChangeCallback={(gAP) => {
+                                                                        this.setState({ editSelected: '' })
+                                                                        this.props.userDataSourceUpdateHandler(this.props.ds_data[userCountries.indexOf(country)].id, gAP.target.value || null)
+                                                                    }}
+                                                                    placeholder="Select GA Properties"
+                                                                    isClearable={true}
+                                                                />
+                                                                <i className="ml-2 icon fa" onClick={() => this.setState({ editSelected: null })}>
+                                                                    <img className="w-16px" src='/close-icon.svg' />
+                                                                </i>
+                                                            </div>
                                                             :
                                                             <div className="d-flex text-nowrap">
                                                                 {this.props.ds_data[userCountries.indexOf(country)]?.ga_property_name}

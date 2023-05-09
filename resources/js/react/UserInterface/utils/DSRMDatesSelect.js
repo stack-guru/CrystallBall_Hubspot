@@ -238,29 +238,36 @@ export default class DSRMDatesSelect extends React.Component {
                                                        rketing_id={rmd.id}/>
                                                 <span className="d-flex w-100 justify-content-between">
                                                     <div>{rmd.show_at} - {rmd.event_name}</div>
-                                                    {this.props.ds_data.find(ds => ds.retail_marketing_id === rmd.id)?.id === this.state.editSelected
-                                                        ?
-                                                        <GoogleAnalyticsPropertySelect
-                                                            className="w-175px themeNewselect hide-icon"
-                                                            name="ga_property_id"
-                                                            id="ga_property_id"
-                                                            currentPricePlan={this.props.user.price_plan}
-                                                            value={this.props.gaPropertyId}
-                                                            onChangeCallback={(gAP) => {
-                                                                this.setState({ editSelected: '' })
-                                                                this.props.userDataSourceUpdateHandler(this.props.ds_data.find(ds => ds.retail_marketing_id === rmd.id).id, gAP.target.value || null)
-                                                            }}
-                                                            placeholder="Select GA Properties"
-                                                            isClearable={true}
-                                                        />
-                                                        :
-                                                        <div className="d-flex text-nowrap">
-                                                            <div className="inline-block"> {this.props.ds_data.find(ds => ds.retail_marketing_id === rmd.id)?.ga_property_name}</div>
-                                                            <i className="ml-2 icon fa" onClick={() => this.setState({ editSelected: this.props.ds_data.find(ds => ds.retail_marketing_id === rmd.id).id })}>
-                                                                <img className="w-20px" src='/icon-edit.svg' />
-                                                            </i>
-                                                        </div>
-                                                    }
+                                                    <div className="d-flex text-nowrap align-items-center">
+                                                        {this.props.ds_data.find(ds => ds.retail_marketing_id === rmd.id)?.id === this.state.editSelected
+                                                            ?
+                                                            <>
+                                                                <GoogleAnalyticsPropertySelect
+                                                                    className="w-175px themeNewselect hide-icon"
+                                                                    name="ga_property_id"
+                                                                    id="ga_property_id"
+                                                                    currentPricePlan={this.props.user.price_plan}
+                                                                    value={this.props.gaPropertyId}
+                                                                    onChangeCallback={(gAP) => {
+                                                                        this.setState({ editSelected: '' })
+                                                                        this.props.userDataSourceUpdateHandler(this.props.ds_data.find(ds => ds.retail_marketing_id === rmd.id).id, gAP.target.value || null)
+                                                                    }}
+                                                                    placeholder="Select GA Properties"
+                                                                    isClearable={true}
+                                                                />
+                                                                <i className="ml-2 icon fa" onClick={() => this.setState({ editSelected: null })}>
+                                                                    <img className="w-16px" src='/close-icon.svg' />
+                                                                </i>
+                                                                </>
+                                                            :
+                                                            <>
+                                                                <div className="inline-block"> {this.props.ds_data.find(ds => ds.retail_marketing_id === rmd.id)?.ga_property_name}</div>
+                                                                <i className="ml-2 icon fa" onClick={() => this.setState({ editSelected: this.props.ds_data.find(ds => ds.retail_marketing_id === rmd.id).id })}>
+                                                                    <img className="w-20px" src='/icon-edit.svg' />
+                                                                </i>
+                                                            </>
+                                                        }
+                                                    </div>
                                                 </span>
                                             </label>
                                         );
