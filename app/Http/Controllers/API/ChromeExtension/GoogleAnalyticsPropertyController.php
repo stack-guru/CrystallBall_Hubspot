@@ -35,7 +35,7 @@ class GoogleAnalyticsPropertyController extends Controller
         $uniqueGoogleAnalyticsProperties = $this->getUniqueGoogleAnalyticsPropertiesByUser($user, $keword);
         return ['google_analytics_properties' => array_merge(
             [
-                ['id' => '*', 'name' => 'No Filter',  "google_account" => [
+                ['id' => '*', 'name' => 'Property: Auto detect',  "google_account" => [
                     "id" => null,
                     "name" => null
                 ]],
