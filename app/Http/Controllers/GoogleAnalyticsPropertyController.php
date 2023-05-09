@@ -17,7 +17,7 @@ class GoogleAnalyticsPropertyController extends Controller
         if (!GoogleAccount::whereIn('user_id', $userIdsArray)->count()) {
             abort(400, "Please connect Google Analytics account before you use Google Analytics Properties.");
         }
-        $uniqueGoogleAnalyticsProperties = \App\Http\Controllers\API\UserController::getUniqueGoogleAnalyticsPropertiesByUser($user);
+        $uniqueGoogleAnalyticsProperties = \App\Http\Controllers\UserController::getUniqueGoogleAnalyticsPropertiesByUser($user);
         return ['google_analytics_properties' => $uniqueGoogleAnalyticsProperties];
     }
 

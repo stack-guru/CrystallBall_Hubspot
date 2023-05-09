@@ -708,6 +708,16 @@ setting-menu-item.dropdown {
 .w-20px {
     width: 20px !important;
 }
+.w-16px {
+    width: 16px !important;
+}
+
+.ellipsis-prop {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100px;
+}
 
 .d-content {
     display: contents;
