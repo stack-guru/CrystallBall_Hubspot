@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import Toast from "../../utils/Toast";
-import {DateRangePicker} from 'react-date-range';
+import { DateRangePicker } from 'react-date-range';
 
 import HttpClient from '../../utils/HttpClient';
 import ErrorAlert from '../../utils/ErrorAlert';
-import {newStaticRanges} from '../../utils/CustomDateRange';
-import {timezoneToDateFormat} from '../../utils/TimezoneTodateFormat';
+import { newStaticRanges } from '../../utils/CustomDateRange';
+import { timezoneToDateFormat } from '../../utils/TimezoneTodateFormat';
 import GoogleSearchConsoleSiteSelect from '../../utils/GoogleSearchConsoleSiteSelect';
 import GoogleAnalyticsPropertySelect from '../../utils/GoogleAnalyticsPropertySelect';
 
@@ -25,7 +25,7 @@ import MediaGraph from './analytics/graphs/mediaGraph';
 import DeviceUsersGraph from './analytics/graphs/deviceUsersGraph';
 import UsersDaysWithAnnotationsGraph from './analytics/graphs/usersDaysWithAnnotationsGraph';
 import AnnotationsTable from './annotationsTable';
-import {Container, FormGroup, Input, Label} from 'reactstrap';
+import { Container, FormGroup, Input, Label } from 'reactstrap';
 
 const SimpleMasonry = (props) => {
     return <div className={"simple-masonary " + (props.className ?? "")}>
@@ -78,7 +78,6 @@ export default class IndexDashboard extends Component {
             statisticsPaddingDays: 3,
             errors: undefined,
             sortBy: "",
-            searchText: ""
         };
 
         this.searchConsoleFetchStatistics = this.searchConsoleFetchStatistics.bind(this);
@@ -110,14 +109,10 @@ export default class IndexDashboard extends Component {
         // if (!this.props.user.google_accounts_count) return <NoGoogleAccountConnectedPage />
 
         let searchConsoleData = {};
-        this.state.searchConsoleAnnotations.forEach(a => {
-            searchConsoleData[a.show_at] = a;
-        });
+        this.state.searchConsoleAnnotations.forEach(a => { searchConsoleData[a.show_at] = a; });
 
         let analyticsData = {};
-        this.state.analyticsAnnotations.forEach(a => {
-            analyticsData[a.show_at] = a;
-        });
+        this.state.analyticsAnnotations.forEach(a => { analyticsData[a.show_at] = a; });
 
         const allDates = [...new Set(Object.keys(searchConsoleData).concat(Object.keys(analyticsData)))];
 
@@ -130,29 +125,22 @@ export default class IndexDashboard extends Component {
                             <FormGroup className="filter-sort position-relative">
                                 <Label className="sr-only" for="dropdownFilters">sort by filter</Label>
                                 <i className="btn-searchIcon left-0">
-                                    <svg width="12" height="10" viewBox="0 0 12 10" fill="none"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M0 10V8.33333H4V10H0ZM0 5.83333V4.16667H8V5.83333H0ZM0 1.66667V0H12V1.66667H0Z"
-                                            fill="#666666"/>
+                                    <svg width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M0 10V8.33333H4V10H0ZM0 5.83333V4.16667H8V5.83333H0ZM0 1.66667V0H12V1.66667H0Z" fill="#666666" />
                                     </svg>
                                 </i>
                                 <i className="btn-searchIcon right-0 fa fa-angle-down"></i>
-                                <select name="sortBy" id="sort-by" value={this.state.sortBy} className="form-control"
-                                        onChange={this.sort}>
+                                <select name="sortBy" id="sort-by" value={this.state.sortBy} className="form-control" onChange={this.sort}>
                                     <option value="">Sort By</option>
                                     <option value="google_search_console_site_id">Connected</option>
                                     <option value="is_in_use">In Use</option>
                                 </select>
-                             </FormGroup>
+                            </FormGroup>
 
                             <FormGroup className="filter-search position-relative">
                                 <Label className="sr-only" for="search">search</Label>
-                                <Input name="searchText" value={this.state.searchText} onChange={(ev) => {
-                                    this.setState({
-                                        searchText: ev.target.value
-                                    })}} placeholder="Search..." />
-                                    <button className="btn-searchIcon"><img className="d-block" src="/search-new.svg" width="16" height="16" alt="Search" /></button>
+                                <Input name="searchText" value='' placeholder="Search..." />
+                                <button className="btn-searchIcon"><img className="d-block" src="/search-new.svg" width="16" height="16" alt="Search" /></button>
                             </FormGroup>
                         </form>
                     </div>
@@ -170,26 +158,21 @@ export default class IndexDashboard extends Component {
                             <div className="tableBody">
 
                                 {this.state.googleAnalyticsProperties.map(gAP => {
-                                    if(this.state.searchText && (gAP.google_analytics_account || "").name.toLowerCase().indexOf(this.state.searchText.toLowerCase()) === -1 && (gAP.name || "").toLowerCase().indexOf(this.state.searchText.toLowerCase()) === -1) {
-                                        return true;
-                                    }
-                                    return (
-                                    <div className="singleRow justify-content-between align-items-center" key={gAP.id}>
+                                    return <div className="singleRow justify-content-between align-items-center" key={gAP.id}>
                                         <div className="singleCol text-left"><span>{gAP.id}</span></div>
                                         <div className="singleCol text-left">
-                                                    <span className='w-100 d-flex justify-content-start'>
-                                                        <span className={"text-truncate"}>{
-                                                            (gAP.google_analytics_account) ?
-                                                                gAP.google_analytics_account.name :
-                                                                ''
-                                                        }</span>
-                                                        {
-                                                            gAP.is_in_use ?
-                                                                <em className='tag-inuse'><i className='fa fa-check'></i><i>In
-                                                                    use</i></em> :
-                                                                null
-                                                        }
-                                                    </span>
+                                            <span className='w-100 d-flex justify-content-start'>
+                                                <span className={"text-truncate"}>{
+                                                    (gAP.google_analytics_account) ?
+                                                        gAP.google_analytics_account.name :
+                                                        ''
+                                                }</span>
+                                                {
+                                                    gAP.is_in_use ?
+                                                        <em className='tag-inuse'><i className='fa fa-check'></i><i>In use</i></em> :
+                                                        null
+                                                }
+                                            </span>
                                         </div>
                                         <div className="singleCol text-left">
                                             <span className='d-flex justify-content-between w-100'>
@@ -224,14 +207,13 @@ export default class IndexDashboard extends Component {
                                             {/* <span><img src={`/icon-trash.svg`} onClick={() => this.handleGAPDelete(gAP.id)} /></span> */}
                                             </div>
                                     </div>
-                                    )
                                 })}
                             </div>
                         </div>
                     </div>
                 </Container>
             </div>
-    {/* <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper" >
+            {/* <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper" >
                 <section className="ftco-section" id="inputs">
                     <div className="container-xl p-0">
                         <div className="row ml-0 mr-0 mb-1">
@@ -442,10 +424,8 @@ export default class IndexDashboard extends Component {
                         </div>
                     </div>
                 </section>
-            </div > */
-    }
-    </React.Fragment>
-        ;
+            </div > */}
+        </React.Fragment>;
     }
 
     sort(e) {
@@ -456,81 +436,77 @@ export default class IndexDashboard extends Component {
 
     searchConsoleFetchStatistics(gSCSiteId) {
         if (!this.state.isBusy) {
-            this.setState({isBusy: true});
+            this.setState({ isBusy: true });
             HttpClient.get(`/dashboard/search-console/top-statistics?start_date=${this.state.startDate}&end_date=${this.state.endDate}&google_search_console_site_id=${gSCSiteId}`)
                 .then(response => {
-                    this.setState({isBusy: false, searchConsoleTopStatistics: response.data.statistics});
+                    this.setState({ isBusy: false, searchConsoleTopStatistics: response.data.statistics });
                 }, (err) => {
-                    this.setState({isBusy: false, errors: (err.response).data});
+                    this.setState({ isBusy: false, errors: (err.response).data });
                 }).catch(err => {
-                this.setState({isBusy: false, errors: err});
-            });
+                    this.setState({ isBusy: false, errors: err });
+                });
             HttpClient.get(`/dashboard/search-console/clicks-impressions-days-annotations?start_date=${this.state.startDate}&end_date=${this.state.endDate}&google_search_console_site_id=${gSCSiteId}&statistics_padding_days=${this.state.statisticsPaddingDays}`)
                 .then(response => {
-                    this.setState({isBusy: false, clicksImpressionsDaysStatistics: response.data.statistics});
+                    this.setState({ isBusy: false, clicksImpressionsDaysStatistics: response.data.statistics });
                 }, (err) => {
-                    this.setState({isBusy: false, errors: (err.response).data});
+                    this.setState({ isBusy: false, errors: (err.response).data });
                 }).catch(err => {
-                this.setState({isBusy: false, errors: err});
-            });
+                    this.setState({ isBusy: false, errors: err });
+                });
             HttpClient.get(`/dashboard/search-console/annotations-dates?start_date=${this.state.startDate}&end_date=${this.state.endDate}&google_search_console_site_id=${gSCSiteId}&statistics_padding_days=${this.state.statisticsPaddingDays}`)
                 .then(response => {
-                    this.setState({isBusy: false, searchConsoleAnnotations: response.data.annotations});
+                    this.setState({ isBusy: false, searchConsoleAnnotations: response.data.annotations });
                 }, (err) => {
-                    this.setState({isBusy: false, errors: (err.response).data});
+                    this.setState({ isBusy: false, errors: (err.response).data });
                 }).catch(err => {
-                this.setState({isBusy: false, errors: err});
-            });
+                    this.setState({ isBusy: false, errors: err });
+                });
             HttpClient.get(`/dashboard/search-console/queries?start_date=${this.state.startDate}&end_date=${this.state.endDate}&google_search_console_site_id=${gSCSiteId}`)
                 .then(response => {
-                    this.setState({
-                        isBusy: false,
-                        queriesStatistics: response.data.statistics,
-                        googleAccount: response.data.google_account
-                    });
+                    this.setState({ isBusy: false, queriesStatistics: response.data.statistics, googleAccount: response.data.google_account });
                 }, (err) => {
-                    this.setState({isBusy: false, errors: (err.response).data});
+                    this.setState({ isBusy: false, errors: (err.response).data });
                 }).catch(err => {
-                this.setState({isBusy: false, errors: err});
-            });
+                    this.setState({ isBusy: false, errors: err });
+                });
             HttpClient.get(`/dashboard/search-console/pages?start_date=${this.state.startDate}&end_date=${this.state.endDate}&google_search_console_site_id=${gSCSiteId}`)
                 .then(response => {
-                    this.setState({isBusy: false, pagesStatistics: response.data.statistics});
+                    this.setState({ isBusy: false, pagesStatistics: response.data.statistics });
                 }, (err) => {
-                    this.setState({isBusy: false, errors: (err.response).data});
+                    this.setState({ isBusy: false, errors: (err.response).data });
                 }).catch(err => {
-                this.setState({isBusy: false, errors: err});
-            });
+                    this.setState({ isBusy: false, errors: err });
+                });
             HttpClient.get(`/dashboard/search-console/countries?start_date=${this.state.startDate}&end_date=${this.state.endDate}&google_search_console_site_id=${gSCSiteId}`)
                 .then(response => {
-                    this.setState({isBusy: false, countriesStatistics: response.data.statistics});
+                    this.setState({ isBusy: false, countriesStatistics: response.data.statistics });
                 }, (err) => {
-                    this.setState({isBusy: false, errors: (err.response).data});
+                    this.setState({ isBusy: false, errors: (err.response).data });
                 }).catch(err => {
-                this.setState({isBusy: false, errors: err});
-            });
+                    this.setState({ isBusy: false, errors: err });
+                });
             HttpClient.get(`/dashboard/search-console/devices?start_date=${this.state.startDate}&end_date=${this.state.endDate}&google_search_console_site_id=${gSCSiteId}`)
                 .then(response => {
-                    this.setState({isBusy: false, devicesStatistics: response.data.statistics});
+                    this.setState({ isBusy: false, devicesStatistics: response.data.statistics });
                 }, (err) => {
-                    this.setState({isBusy: false, errors: (err.response).data});
+                    this.setState({ isBusy: false, errors: (err.response).data });
                 }).catch(err => {
-                this.setState({isBusy: false, errors: err});
-            });
+                    this.setState({ isBusy: false, errors: err });
+                });
             HttpClient.get(`/dashboard/search-console/search-appearances?start_date=${this.state.startDate}&end_date=${this.state.endDate}&google_search_console_site_id=${gSCSiteId}`)
                 .then(response => {
-                    this.setState({isBusy: false, searchApearancesStatistics: response.data.statistics});
+                    this.setState({ isBusy: false, searchApearancesStatistics: response.data.statistics });
                 }, (err) => {
-                    this.setState({isBusy: false, errors: (err.response).data});
+                    this.setState({ isBusy: false, errors: (err.response).data });
                 }).catch(err => {
-                this.setState({isBusy: false, errors: err});
-            });
+                    this.setState({ isBusy: false, errors: err });
+                });
         }
     }
 
     changeStatisticsPaddingDays(statisticsPaddingDays) {
         this.setState(
-            {statisticsPaddingDays: statisticsPaddingDays},
+            { statisticsPaddingDays: statisticsPaddingDays },
             () => {
                 this.searchConsoleFetchStatistics(this.state.google_search_console_site_id);
                 this.analyticsFetchUsersDaysAnnotations(this.state.ga_property_id);
@@ -541,59 +517,54 @@ export default class IndexDashboard extends Component {
 
     analyticsFetchStatistics(gaPropertyId) {
         if (!this.state.isBusy) {
-            this.setState({isBusy: true});
+            this.setState({ isBusy: true });
             this.analyticsFetchUsersDaysAnnotations(gaPropertyId);
             this.analyticsFetchAnnotationsMetricsDimensions(gaPropertyId);
             HttpClient.get(`/dashboard/analytics/top-statistics?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}`)
                 .then(response => {
-                    this.setState({isBusy: false, analyticsTopStatistics: response.data.statistics});
+                    this.setState({ isBusy: false, analyticsTopStatistics: response.data.statistics });
                 }, (err) => {
-                    this.setState({isBusy: false, errors: (err.response).data});
+                    this.setState({ isBusy: false, errors: (err.response).data });
                 }).catch(err => {
-                this.setState({isBusy: false, errors: err});
-            });
+                    this.setState({ isBusy: false, errors: err });
+                });
             HttpClient.get(`/dashboard/analytics/media?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}`)
                 .then(response => {
-                    this.setState({isBusy: false, mediaStatistics: response.data.statistics});
+                    this.setState({ isBusy: false, mediaStatistics: response.data.statistics });
                 }, (err) => {
-                    this.setState({isBusy: false, errors: (err.response).data});
+                    this.setState({ isBusy: false, errors: (err.response).data });
                 }).catch(err => {
-                this.setState({isBusy: false, errors: err});
-            });
+                    this.setState({ isBusy: false, errors: err });
+                });
             HttpClient.get(`/dashboard/analytics/sources?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}`)
                 .then(response => {
-                    this.setState({isBusy: false, sourcesStatistics: response.data.statistics});
+                    this.setState({ isBusy: false, sourcesStatistics: response.data.statistics });
                 }, (err) => {
-                    this.setState({isBusy: false, errors: (err.response).data});
+                    this.setState({ isBusy: false, errors: (err.response).data });
                 }).catch(err => {
-                this.setState({isBusy: false, errors: err});
-            });
+                    this.setState({ isBusy: false, errors: err });
+                });
             HttpClient.get(`/dashboard/analytics/device-categories?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}`)
                 .then(response => {
-                    this.setState({isBusy: false, deviceCategoriesStatistics: response.data.statistics});
+                    this.setState({ isBusy: false, deviceCategoriesStatistics: response.data.statistics });
                 }, (err) => {
-                    this.setState({isBusy: false, errors: (err.response).data});
+                    this.setState({ isBusy: false, errors: (err.response).data });
                 }).catch(err => {
-                this.setState({isBusy: false, errors: err});
-            });
+                    this.setState({ isBusy: false, errors: err });
+                });
         }
     }
 
     analyticsFetchUsersDaysAnnotations(gaPropertyId) {
         HttpClient.get(`/dashboard/analytics/users-days-annotations?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}&statistics_padding_days=${this.state.statisticsPaddingDays}`)
             .then(response => {
-                this.setState({
-                    isBusy: false,
-                    usersDaysStatistics: response.data.statistics,
-                    googleAccount: response.data.google_account
-                });
+                this.setState({ isBusy: false, usersDaysStatistics: response.data.statistics, googleAccount: response.data.google_account });
             }, (err) => {
-                this.setState({isBusy: false, errors: (err.response).data});
+                this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
-            this.setState({isBusy: false, errors: err});
-        });
+                this.setState({ isBusy: false, errors: err });
+            });
     }
-
     handleGAPDelete(gaPropertyId) {
         const Toast = Swal.mixin({
             toast: true,
@@ -606,7 +577,8 @@ export default class IndexDashboard extends Component {
                 toast.addEventListener("mouseleave", Swal.resumeTimer);
             },
         });
-        if (gaPropertyId) {
+        if(gaPropertyId)
+        {
             let params = {
                 property_id: gaPropertyId,
             };
@@ -614,24 +586,24 @@ export default class IndexDashboard extends Component {
                 "/settings/google-analytics-property/destroy",
                 params
             )
-                .then(
-                    (resp) => {
-                        this.componentDidMount();
-                        Toast.fire({
-                            icon: "success",
-                            title: "Deleted successfully!",
-                        });
-                    },
-                    (err) => {
-                        this.setState({
-                            isBusy: false,
-                            errors: err.response.data,
-                        });
-                    }
-                )
-                .catch((err) => {
-                    this.setState({isBusy: false, errors: err});
-                });
+            .then(
+                (resp) => {
+                    this.componentDidMount();
+                    Toast.fire({
+                        icon: "success",
+                        title: "Deleted successfully!",
+                    });
+                },
+                (err) => {
+                    this.setState({
+                        isBusy: false,
+                        errors: err.response.data,
+                    });
+                }
+            )
+            .catch((err) => {
+                this.setState({ isBusy: false, errors: err });
+            });
 
         }
     }
@@ -639,89 +611,89 @@ export default class IndexDashboard extends Component {
     analyticsFetchAnnotationsMetricsDimensions(gaPropertyId) {
         HttpClient.get(`/dashboard/analytics/annotations-metrics-dimensions?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}&statistics_padding_days=${this.state.statisticsPaddingDays}`)
             .then(response => {
-                this.setState({isBusy: false, analyticsAnnotations: response.data.annotations});
+                this.setState({ isBusy: false, analyticsAnnotations: response.data.annotations });
             }, (err) => {
-                this.setState({isBusy: false, errors: (err.response).data});
+                this.setState({ isBusy: false, errors: (err.response).data });
             }).catch(err => {
-            this.setState({isBusy: false, errors: err});
-        });
+                this.setState({ isBusy: false, errors: err });
+            });
     }
 
     fetchGAAccounts(id) {
-        this.setState({isBusy: true});
+        this.setState({ isBusy: true });
         return HttpClient.post(`/settings/google-analytics-account/google-account/${id}`).then(resp => {
             Toast.fire({
                 icon: 'success',
                 title: "Accounts fetched."
             });
-            this.setState({isBusy: false})
+            this.setState({ isBusy: false })
             return this.getGAAccounts() && this.getGAProperties();
         }, (err) => {
-            this.setState({isBusy: false, errors: (err.response).data});
+            this.setState({ isBusy: false, errors: (err.response).data });
             return false;
         }).catch(err => {
-            this.setState({isBusy: false, errors: err});
+            this.setState({ isBusy: false, errors: err });
             return false;
         });
     }
 
     getGAProperties() {
-        this.setState({isBusy: true});
+        this.setState({ isBusy: true });
         return HttpClient.get(`/settings/google-analytics-property?sortBy=${this.state.sortBy}`).then(response => {
-            this.setState({isBusy: false, googleAnalyticsProperties: response.data.google_analytics_properties})
+            this.setState({ isBusy: false, googleAnalyticsProperties: response.data.google_analytics_properties })
             return true;
         }, (err) => {
-            this.setState({isBusy: false, errors: (err.response).data});
+            this.setState({ isBusy: false, errors: (err.response).data });
             return false;
         }).catch(err => {
-            this.setState({isBusy: false, errors: err});
+            this.setState({ isBusy: false, errors: err });
             return false;
         });
     }
 
     getGoogleAccounts() {
-        this.setState({isBusy: true})
+        this.setState({ isBusy: true })
         HttpClient.get('/settings/google-account').then(resp => {
-            this.setState({googleAccounts: resp.data.google_accounts, isBusy: false});
+            this.setState({ googleAccounts: resp.data.google_accounts, isBusy: false });
         }, (err) => {
 
-            this.setState({isBusy: false, errors: (err.response).data});
+            this.setState({ isBusy: false, errors: (err.response).data });
         }).catch(err => {
 
-            this.setState({isBusy: false, errors: err});
+            this.setState({ isBusy: false, errors: err });
         });
     }
 
     getGAAccounts() {
-        this.setState({isBusy: true});
+        this.setState({ isBusy: true });
         return HttpClient.get(`/settings/google-analytics-account`).then(response => {
-            this.setState({isBusy: false, googleAnalyticsAccounts: response.data.google_analytics_accounts})
+            this.setState({ isBusy: false, googleAnalyticsAccounts: response.data.google_analytics_accounts })
             return true;
         }, (err) => {
-            this.setState({isBusy: false, errors: (err.response).data});
+            this.setState({ isBusy: false, errors: (err.response).data });
             return false;
         }).catch(err => {
-            this.setState({isBusy: false, errors: err});
+            this.setState({ isBusy: false, errors: err });
             return false;
         });
     }
 
     getGSCSites() {
-        this.setState({isBusy: true});
+        this.setState({ isBusy: true });
         return HttpClient.get(`/settings/google-search-console-site`).then(response => {
-            this.setState({isBusy: false, googleSearchConsoleSites: response.data.google_search_console_sites})
+            this.setState({ isBusy: false, googleSearchConsoleSites: response.data.google_search_console_sites })
             return true;
         }, (err) => {
-            this.setState({isBusy: false, errors: (err.response).data});
+            this.setState({ isBusy: false, errors: (err.response).data });
             return false;
         }).catch(err => {
-            this.setState({isBusy: false, errors: err});
+            this.setState({ isBusy: false, errors: err });
             return false;
         });
     }
 
     handleGAPUpdate(gAP, data) {
-        this.setState({isBusy: true});
+        this.setState({ isBusy: true });
         HttpClient.put(`/settings/google-analytics-property/${gAP.id}`, data).then(resp => {
             const updatedGAP = resp.data.google_analytics_property;
             Toast.fire({
@@ -733,9 +705,9 @@ export default class IndexDashboard extends Component {
                 googleAnalyticsProperties: this.state.googleAnalyticsProperties.map(g => g.id == updatedGAP.id ? updatedGAP : g)
             });
         }, (err) => {
-            this.setState({isBusy: false, errors: (err.response).data});
+            this.setState({ isBusy: false, errors: (err.response).data });
         }).catch(err => {
-            this.setState({isBusy: false, errors: err});
+            this.setState({ isBusy: false, errors: err });
         });
     }
 }

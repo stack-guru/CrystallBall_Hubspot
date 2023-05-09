@@ -147,7 +147,7 @@ class AnnotationQueryHelper
         if (!$showDisabled) $annotationsQuery .= " AND `annotations`.`is_enabled` = 1 ";
         $annotationsQuery .= " )";
 
-        if (($googleAnalyticsPropertyId && $googleAnalyticsPropertyId !== '*')) {
+        if ($googleAnalyticsPropertyId && $googleAnalyticsPropertyId !== '*') {
             $gaPropertyId = $googleAnalyticsPropertyId;
             $annotationsQuery .= " AND (LOCATE('" . $gaPropertyId . "', CONCAT(`annotation_ga_properties`.`google_analytics_property_id`, '~~~~', `google_analytics_properties`.`name`)) > 0 OR CONCAT(`annotation_ga_properties`.`google_analytics_property_id`, '~~~~', `google_analytics_properties`.`name`) IS NULL)";
         } else if($googleAnalyticsPropertyId && $googleAnalyticsPropertyId == '*' && $user->assigned_properties_id) {
@@ -158,6 +158,7 @@ class AnnotationQueryHelper
             $annotationsQuery .= " AND (FIND_IN_SET(`annotation_ga_properties`.`google_analytics_property_id`, '" . $gaPropertyIdArray . "') OR `annotation_ga_properties`.`google_analytics_property_id` IS NULL)";
 
         }
+
         if ($user->is_ds_web_monitors_enabled && $showWebMonitoring == 'false') {
             $annotationsQuery .= " AND annotations.category <> 'Website Monitoring'";
         }
@@ -201,7 +202,7 @@ class AnnotationQueryHelper
 
     public static function shopifyQuery(array $userIdsArray)
     {
-        return "select 1, published_at AS show_at, NULL, category, title AS event_name, NULL AS url, CONCAT('shopify_annotations', '~~~~', `shopify_annotations`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, body_html AS description, `users`.`name` AS `user_name`, NULL AS show_at, `shopify_monitors`.`ga_property_id` AS `table_ga_property_id` from `shopify_annotations` LEFT JOIN `shopify_monitors` ON `shopify_monitors`.`url` LIKE CONCAT(REPLACE(`shopify_annotations`.`vendor`, ' ', ''), '%') AND `shopify_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "') LEFT JOIN `users` ON `shopify_annotations`.`user_id` = `users`.`id` WHERE `shopify_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+        return "select 1, published_at AS show_at, NULL, category, title AS event_name, NULL AS url, CONCAT('shopify_annotations', '~~~~', `shopify_annotations`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, body_html AS description, `users`.`name` AS `user_name`, NULL AS show_at, `shopify_monitors`.`ga_property_id` AS `table_ga_property_id` from `shopify_annotations` LEFT JOIN `shopify_monitors` ON `shopify_monitors`.`url` LIKE CONCAT('%', REPLACE(`shopify_annotations`.`vendor`, ' ', ''), '%') AND `shopify_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "') LEFT JOIN `users` ON `shopify_annotations`.`user_id` = `users`.`id` WHERE `shopify_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
     }
 
     public static function holidaysQuery(array $userIdsArray, string $googleAnalyticsPropertyId)

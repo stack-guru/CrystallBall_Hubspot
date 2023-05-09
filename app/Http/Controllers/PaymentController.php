@@ -316,7 +316,7 @@ class PaymentController extends Controller
         $app_in_use = CheckUserUsageHelper::checkAppsInUse($user,$pricePlan);
         if(count($app_in_use) > 0)
         {  
-            $text = "During the ".$user->pricePlan->name." you activated ".implode(", ",$app_in_use).". Note that if you continue with ".$pricePlan->name.", we will deactivate the automations and you will no longer be able to view the annotations.";
+            $text = "During the ".$user->pricePlan->name." you activated ".implode(",",$app_in_use).". Note that if you continue with ".$pricePlan->name." we will deactivate the automations and you will no longer be able to view the annotations";
             $showAlerts[] =  'apps-in-use-alert';
             $alertText[] =  $text;
             // return response()->json(['success' => false, 'message' => $text], 422);
@@ -329,7 +329,7 @@ class PaymentController extends Controller
             $total_co_users = User::where('user_id',$user->id)->count();
             if(count($extra_users) > 0)
             {  
-                $text = "During the ".$user->pricePlan->name." ".$total_co_users." co-workers joined the account. Note that if you continue with ".$pricePlan->name.", ".implode(", ",$extra_users)."  will lose access.";
+                $text = "During the ".$user->pricePlan->name." ".$total_co_users." co-workers joined the account. Note that if you continue with ".$user->pricePlan->name." ".implode(",",$extra_users)." will lose access";
                 $showAlerts[] =  'extra-users-alert';
                 $alertText[] =  $text;
             }
@@ -341,7 +341,7 @@ class PaymentController extends Controller
            $notifications =  NotificationSetting::where('user_id', $user->id)->where('is_enabled',1)->get()->pluck('label')->toArray();
            if(count($notifications) > 0)
            {
-                $text = "During the ".$user->pricePlan->name." ".count($notifications)." notifications are enabled. Note that if you continue with ".$pricePlan->name.", ".implode(", ",$notifications)." notifications will be disabled.";
+                $text = "During the ".$user->pricePlan->name." ".count($notifications)." notifications are enabled. Note that if you continue with ".$user->pricePlan->name." ".implode(",",$notifications)." will be disabled.";
                 $showAlerts[] =  'notification-alert';
                 $alertText[] =  $text;
            }

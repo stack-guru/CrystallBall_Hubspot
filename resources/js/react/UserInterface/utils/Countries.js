@@ -123,7 +123,7 @@ export default class countries extends React.Component {
                     </div>
 
                     <div className="d-flex align-items-center w-100 justify-content-end">
-                        {/*<span className="betweentext">for</span>
+                        <span className="betweentext">for</span>
                         <GoogleAnalyticsPropertySelect
                             className="themeNewselect hide-icon"
                             name="ga_property_id"
@@ -146,7 +146,7 @@ export default class countries extends React.Component {
                             placeholder="Select GA Properties"
                             isClearable={true}
                             onDeleteCallback={this.props.onUncheckCallback}
-                        />*/}
+                        />
                     </div>
                 </div>
                 <div className="grid2layout">
@@ -195,29 +195,36 @@ export default class countries extends React.Component {
                                                     <input checked={userCountries.indexOf(country) !== -1 } type="checkbox" name={country} id={userCountries.indexOf(country) !== -1 ? this.props.ds_data[userCountries.indexOf(country)].id : null } onChange={ this.handleClick }/>
                                                     <span className="d-flex w-100 justify-content-between">
                                                         <div>{country}</div>
-                                                        {/*{this.props.ds_data[userCountries.indexOf(country)].id === this.state.editSelected
+                                                        {this.props.ds_data[userCountries.indexOf(country)].id === this.state.editSelected
                                                             ?
-                                                            <GoogleAnalyticsPropertySelect
-                                                                className="w-175px themeNewselect hide-icon"
-                                                                name="ga_property_id"
-                                                                id="ga_property_id"
-                                                                currentPricePlan={this.props.user.price_plan}
-                                                                value={this.props.gaPropertyId}
-                                                                onChangeCallback={(gAP) => {
-                                                                    this.setState({ editSelected: '' })
-                                                                    this.props.userDataSourceUpdateHandler(this.props.ds_data[userCountries.indexOf(country)].id, gAP.target.value || null)
-                                                                }}
-                                                                placeholder="Select GA Properties"
-                                                                isClearable={true}
-                                                            />
+                                                            <div className="d-flex text-nowrap align-items-center">
+                                                                <GoogleAnalyticsPropertySelect
+                                                                    className="w-175px themeNewselect hide-icon"
+                                                                    name="ga_property_id"
+                                                                    id="ga_property_id"
+                                                                    currentPricePlan={this.props.user.price_plan}
+                                                                    value={this.props.gaPropertyId}
+                                                                    onChangeCallback={(gAP) => {
+                                                                        this.setState({ editSelected: '' })
+                                                                        this.props.userDataSourceUpdateHandler(this.props.ds_data[userCountries.indexOf(country)].id, gAP.target.value || null)
+                                                                    }}
+                                                                    placeholder="Select GA Properties"
+                                                                    isClearable={true}
+                                                                />
+                                                                <i className="ml-2 icon fa" onClick={() => this.setState({ editSelected: null })}>
+                                                                    <img className="w-16px" src='/close-icon.svg' />
+                                                                </i>
+                                                            </div>
                                                             :
-                                                            <div>
-                                                                {this.props.ds_data[userCountries.indexOf(country)]?.ga_property_name}
+                                                            <div className="d-flex text-nowrap">
+                                                                <div className="ellipsis-prop" title={this.props.ds_data[userCountries.indexOf(country)]?.ga_property_name}>
+                                                                    {this.props.ds_data[userCountries.indexOf(country)]?.ga_property_name}
+                                                                </div>
                                                                 <i className="ml-2 icon fa" onClick={() => this.setState({ editSelected: this.props.ds_data[userCountries.indexOf(country)].id })}>
                                                                     <img className="w-20px" src='/icon-edit.svg' />
                                                                 </i>
                                                             </div>
-                                                        }*/}
+                                                        }
                                                     </span>
                                                 </label>
                                             );

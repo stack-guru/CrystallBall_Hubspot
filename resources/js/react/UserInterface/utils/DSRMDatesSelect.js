@@ -71,18 +71,28 @@ export default class DSRMDatesSelect extends React.Component {
 
     selectAllShowing(e) {
         let userRMDateIds = this.props.ds_data.map(ds => ds.retail_marketing_id);
+        const data = [];
         this.state.retail_marketing_dates.forEach(rmDate => {
             if (rmDate.event_name.toLowerCase().indexOf(this.state.searchText) > -1 || this.state.searchText.length == 0) {
                 if (userRMDateIds.indexOf(rmDate.id) == -1) {
-                    this.props.onCheckCallback({
+                    data.push({
                         code: "retail_marketings",
                         name: "RetailMarketing",
                         country_name: null,
                         retail_marketing_id: rmDate.id,
                     });
+
+                    // this.props.onCheckCallback({
+                    //     code: "retail_marketings",
+                    //     name: "RetailMarketing",
+                    //     country_name: null,
+                    //     retail_marketing_id: rmDate.id,
+                    // });
                 }
             }
         });
+
+        this.props.onCheckAllCallback(data);
         this.props.updateTrackingStatus(true)
         this.props.updateUserService({
             target: {
@@ -95,9 +105,11 @@ export default class DSRMDatesSelect extends React.Component {
     clearAll(e) {
         let userRMDateIds = this.props.ds_data.map(ds => ds.retail_marketing_id);
         let userDSEvents = this.props.ds_data.map(ds => ds.id);
+        const data = [];
         userRMDateIds.forEach((rmDate, index) => {
-            (this.props.onUncheckCallback)(userDSEvents[index], 'retail_marketings')
+            data.push(userDSEvents[index])
         })
+        this.props.onUncheckAllCallback(data, 'retail_marketings');
         this.props.updateTrackingStatus(false)
         this.props.updateUserService({
             target: {
@@ -154,12 +166,12 @@ export default class DSRMDatesSelect extends React.Component {
 
                                 const currentValue = userRMDIds.length
                                 if (currentValue) {
-                                    this.handleClick({target: {checked: true, retail_marketing_id: userRMDIds[0]}});
+                                    // this.handleClick({target: {checked: true, retail_marketing_id: userRMDIds[0]}});
                                 } else {
-                                    Toast.fire({
-                                        icon: 'success',
-                                        title: "Successfully saved dates for retail marketing settings.",
-                                    });
+                                    // Toast.fire({
+                                    //     icon: 'success',
+                                    //     title: "Successfully saved dates for retail marketing settings.",
+                                    // });
                                 }
                             }}
                             placeholder="Select GA Properties"
@@ -226,29 +238,38 @@ export default class DSRMDatesSelect extends React.Component {
                                                        rketing_id={rmd.id}/>
                                                 <span className="d-flex w-100 justify-content-between">
                                                     <div>{rmd.show_at} - {rmd.event_name}</div>
-                                                    {/*{this.props.ds_data.find(ds => ds.retail_marketing_id === rmd.id).id === this.state.editSelected
-                                                        ?
-                                                        <GoogleAnalyticsPropertySelect
-                                                            className="w-175px themeNewselect hide-icon"
-                                                            name="ga_property_id"
-                                                            id="ga_property_id"
-                                                            currentPricePlan={this.props.user.price_plan}
-                                                            value={this.props.gaPropertyId}
-                                                            onChangeCallback={(gAP) => {
-                                                                this.setState({ editSelected: '' })
-                                                                this.props.userDataSourceUpdateHandler(this.props.ds_data.find(ds => ds.retail_marketing_id === rmd.id).id, gAP.target.value || null)
-                                                            }}
-                                                            placeholder="Select GA Properties"
-                                                            isClearable={true}
-                                                        />
-                                                        :
-                                                        <div className="d-content">
-                                                            {this.props.ds_data.find(ds => ds.retail_marketing_id === rmd.id)?.ga_property_name}
-                                                            <i className="ml-2 icon fa" onClick={() => this.setState({ editSelected: this.props.ds_data.find(ds => ds.retail_marketing_id === rmd.id).id })}>
-                                                                <img className="w-20px" src='/icon-edit.svg' />
-                                                            </i>
-                                                        </div>
-                                                    }*/}
+                                                    <div className="d-flex text-nowrap align-items-center">
+                                                        {this.props.ds_data.find(ds => ds.retail_marketing_id === rmd.id)?.id === this.state.editSelected
+                                                            ?
+                                                            <>
+                                                                <GoogleAnalyticsPropertySelect
+                                                                    className="w-175px themeNewselect hide-icon"
+                                                                    name="ga_property_id"
+                                                                    id="ga_property_id"
+                                                                    currentPricePlan={this.props.user.price_plan}
+                                                                    value={this.props.gaPropertyId}
+                                                                    onChangeCallback={(gAP) => {
+                                                                        this.setState({ editSelected: '' })
+                                                                        this.props.userDataSourceUpdateHandler(this.props.ds_data.find(ds => ds.retail_marketing_id === rmd.id).id, gAP.target.value || null)
+                                                                    }}
+                                                                    placeholder="Select GA Properties"
+                                                                    isClearable={true}
+                                                                />
+                                                                <i className="ml-2 icon fa" onClick={() => this.setState({ editSelected: null })}>
+                                                                    <img className="w-16px" src='/close-icon.svg' />
+                                                                </i>
+                                                                </>
+                                                            :
+                                                            <>
+                                                                <div className="ellipsis-prop" title={this.props.ds_data.find(ds => ds.retail_marketing_id === rmd.id)?.ga_property_name}>
+                                                                    {this.props.ds_data.find(ds => ds.retail_marketing_id === rmd.id)?.ga_property_name}
+                                                                </div>
+                                                                <i className="ml-2 icon fa" onClick={() => this.setState({ editSelected: this.props.ds_data.find(ds => ds.retail_marketing_id === rmd.id).id })}>
+                                                                    <img className="w-20px" src='/icon-edit.svg' />
+                                                                </i>
+                                                            </>
+                                                        }
+                                                    </div>
                                                 </span>
                                             </label>
                                         );

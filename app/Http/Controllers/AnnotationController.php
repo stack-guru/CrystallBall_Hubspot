@@ -94,7 +94,7 @@ class AnnotationController extends Controller
                     }
                     $googleAnalyticsProperty->is_in_use = true;
                     $googleAnalyticsProperty->save();
-
+                    
                     $annotation = new Annotation;
                     $annotation->fill($request->validated());
                     $annotation->show_at = $request->show_at ? Carbon::parse($request->show_at) : Carbon::now();
@@ -110,7 +110,7 @@ class AnnotationController extends Controller
                     $aGAP->save();
                 }
             }
-        }
+        } 
         if(!$is_annotation_create)
         {
             $annotation = new Annotation;

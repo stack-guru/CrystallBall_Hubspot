@@ -700,17 +700,21 @@ setting-menu-item.dropdown {
 .m-w-255px {
     max-width: 255px;
 }
-
 .w-175px {
     width: 175px !important;
 }
-
 .w-20px {
     width: 20px !important;
 }
+.w-16px {
+    width: 16px !important;
+}
 
-.d-content {
-    display: contents;
+.ellipsis-prop {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100px;
 }
 
 .sidebar-inner {
@@ -2294,7 +2298,7 @@ body {
     /*overflow-y: auto;*/
 }
 
-.annotionRow .properties p > span, .singleCol .properties p > span {
+.annotionRow .properties p > span {
     background: #F7F7F7;
     width: 22px;
     height: 22px;
@@ -2510,24 +2514,15 @@ body {
 }
 
 .dataTableusers .singleRow .singleCol {
-    width: 13%;
+    width: 15%;
     flex-shrink: 0;
     justify-content: start;
-    overflow: hidden;
 }
 
 .dataTableusers .singleRow .singleCol:first-child {
-    width: 17%;
+    width: 25%;
     flex-shrink: 0;
     justify-content: start;
-}
-
-.dataTableusers .singleRow .singleCol:nth-child(3) {
-    width: 10%;
-    min-width: 110px;
-}
-.dataTableusers .singleRow .singleCol:nth-child(6) {
-    overflow: visible;
 }
 
 .dataTableusers .singleRow .singleCol:last-child {
@@ -5038,8 +5033,8 @@ div[data-tour-elem="controls"]
 .modal-createUser .inputWithIcon .fa
     /*.modal-createAnnotation .inputWithIcon .fa*/
 {
-    top: 2px;
-    height: 35px;
+    top: 10px;
+    height: 38px;
 }
 
 

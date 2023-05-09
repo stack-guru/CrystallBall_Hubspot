@@ -45,7 +45,7 @@ class FetchGoogleAnalyticsMetricsAndDimensions extends Command
             // "Date <your reduced date> precedes Google Analytics launch date 2005-01-01"
             $startDate = '2021-01-01';
         } else {
-            $startDate = Carbon::now()->subDays(20)->format('Y-m-d');
+            $startDate = Carbon::now()->subDays(3)->format('Y-m-d');
         }
         $endDate = Carbon::now()->format('Y-m-d');
 
