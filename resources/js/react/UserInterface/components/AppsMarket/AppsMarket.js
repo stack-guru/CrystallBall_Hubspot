@@ -16,6 +16,7 @@ import Wordpress from "./Wordpress";
 import RankTracking from "./RankTracking";
 import Bitbucket from "./Bitbucket";
 import Facebook from "./Facebook";
+import Instagram from "./Instagram";
 import Github from "./Github";
 import Apple from "./Apple";
 import Twitter from "./Twitter";
@@ -118,6 +119,11 @@ class AppsMarket extends React.Component {
         if (urlSearchParams.has('show_twitter_popup')) {
             this.setState({
                 dsKey: "is_ds_twitter_tracking_enabled",
+            });
+        }
+        if (urlSearchParams.has('show_instagram_popup')) {
+            this.setState({
+                dsKey: "is_ds_instagram_tracking_enabled",
             });
         }
         let alertMessage = new URLSearchParams(window.location.search).get(
@@ -498,28 +504,28 @@ class AppsMarket extends React.Component {
                 width: 160,
                 height: 56,
             },
-            {
-                id: "29",
-                background: "#0A0A0A",
-                dsKey: "is_ds_tiktok_tracking_enabled",
-                connected: this.state.userServices["is_ds_tiktok_tracking_enabled"],
-                premium: false,
-                brandName: "Tiktok",
-                brandLogo: "/tiktok.svg",
-                width: 110,
-                height: 32,
-            },
-            {
-                id: "30",
-                background: "#006192",
-                dsKey: "is_ds_linkedin_tracking_enabled",
-                connected: this.state.userServices["is_ds_linkedin_tracking_enabled"],
-                premium: false,
-                brandName: "linkedin",
-                brandLogo: "/linkedin.svg",
-                width: 116,
-                height: 28,
-            },
+            // {
+            //     id: "29",
+            //     background: "#0A0A0A",
+            //     dsKey: "is_ds_tiktok_tracking_enabled",
+            //     connected: this.state.userServices["is_ds_tiktok_tracking_enabled"],
+            //     premium: false,
+            //     brandName: "Tiktok",
+            //     brandLogo: "/tiktok.svg",
+            //     width: 110,
+            //     height: 32,
+            // },
+            // {
+            //     id: "30",
+            //     background: "#006192",
+            //     dsKey: "is_ds_linkedin_tracking_enabled",
+            //     connected: this.state.userServices["is_ds_linkedin_tracking_enabled"],
+            //     premium: false,
+            //     brandName: "linkedin",
+            //     brandLogo: "/linkedin.svg",
+            //     width: 116,
+            //     height: 28,
+            // },
         ]),
         ];
     }
@@ -955,18 +961,18 @@ class AppsMarket extends React.Component {
                                 //     width: 142,
                                 //     height: 32,
                                 // },
-                                // {
-                                //     id: "29",
-                                //     background: "#0A0A0A",
-                                //     dsKey: "",
-                                //     enabled: false,
-                                //     premium: false,
-                                //     commingSoon: true,
-                                //     brandName: "TikTok",
-                                //     brandLogo: "/tiktok.svg",
-                                //     width: 110,
-                                //     height: 32,
-                                // },
+                                {
+                                    id: "29",
+                                    background: "#0A0A0A",
+                                    dsKey: "",
+                                    enabled: false,
+                                    premium: false,
+                                    commingSoon: true,
+                                    brandName: "TikTok",
+                                    brandLogo: "/tiktok.svg",
+                                    width: 110,
+                                    height: 32,
+                                },
                                 {
                                     id: "26",
                                     background: "null",
@@ -1039,18 +1045,18 @@ class AppsMarket extends React.Component {
                                     width: 104,
                                     height: 30,
                                 },
-                                // {
-                                //     id: "13",
-                                //     background: "#006192",
-                                //     dsKey: "",
-                                //     enabled: false,
-                                //     premium: false,
-                                //     commingSoon: true,
-                                //     brandName: "Linkedin",
-                                //     brandLogo: "/linkedin.svg",
-                                //     width: 116,
-                                //     height: 28,
-                                // },
+                                {
+                                    id: "13",
+                                    background: "#006192",
+                                    dsKey: "",
+                                    enabled: false,
+                                    premium: false,
+                                    commingSoon: true,
+                                    brandName: "Linkedin",
+                                    brandLogo: "/linkedin.svg",
+                                    width: 116,
+                                    height: 28,
+                                },
                                 {
                                     id: "14",
                                     background: "#03363D",
@@ -1636,8 +1642,8 @@ class AppsMarket extends React.Component {
                                 }}
                             />
                         ) : this.state.dsKey ===
-                        "is_ds_create_annotation_enabled" ? (
-                            <Twitter
+                        "is_ds_instagram_tracking_enabled" ? (
+                            <Instagram
                                 {...this.state}
                                 {...this.props}
                                 closeModal={() => {
