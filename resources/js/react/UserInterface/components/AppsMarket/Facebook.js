@@ -46,7 +46,7 @@ class Facebook extends React.Component {
                     serviceName={"Facebook Tracking"}
                     colorKeyName={"facebook_tracking"}
                     dsKeyName={"is_ds_facebook_tracking_enabled"}
-                    creditString={`${ this.props.userDataSources.facebook_tracking?.length } / ${ this.props.user.price_plan.facebook_credits_count == -1 ? 0 : this.props.user.price_plan.facebook_credits_count}`}
+                    creditString={`${ this.props.userDataSources.facebook_tracking?.length } / ${ !this.props.user.price_plan.facebook_credits_count ? 0 : this.props.user.price_plan.facebook_credits_count}`}
                 />
 
                 <FacebookTracking

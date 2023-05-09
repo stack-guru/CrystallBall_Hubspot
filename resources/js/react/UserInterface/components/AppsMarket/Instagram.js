@@ -43,7 +43,7 @@ class Instagram extends React.Component {
                     serviceName={"instagram Tracking"}
                     colorKeyName={"instagram_tracking"}
                     dsKeyName={"is_ds_instagram_tracking_enabled"}
-                    creditString={`${ this.props.userDataSources.instagram_tracking?.length } / ${ this.props.user.price_plan.instagram_credits_count == -1 ? 0 : this.props.user.price_plan.instagram_credits_count}`}
+                    creditString={`${ this.props.userDataSources.instagram_tracking?.length } / ${ !this.props.user.price_plan.instagram_credits_count ? 0 : this.props.user.price_plan.instagram_credits_count}`}
                 />
 
                 <InstagramTracking

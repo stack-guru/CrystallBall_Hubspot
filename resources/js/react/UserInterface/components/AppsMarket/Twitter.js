@@ -38,7 +38,7 @@ class Twitter extends React.Component {
                     serviceName={"Twitter Tracking"}
                     colorKeyName={"twitter_tracking"}
                     dsKeyName={"is_ds_twitter_tracking_enabled"}
-                    creditString={`${ this.props.userDataSources.twitter_tracking?.length } / ${ this.props.user.price_plan.twitter_credits_count == -1 ? 0 : this.props.user.price_plan.twitter_credits_count}`}
+                    creditString={`${ this.props.userDataSources.twitter_tracking?.length } / ${ !this.props.user.price_plan.twitter_credits_count ? 0 : this.props.user.price_plan.twitter_credits_count}`}
                 />
 
                 <TwitterTracking />
