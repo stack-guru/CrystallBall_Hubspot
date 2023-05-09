@@ -130,7 +130,7 @@ class AnalyticsController extends Controller
             'ga_property_id' => 'bail | required | numeric | exists:google_analytics_properties,id'
         ]);
 
-        $this->authorize('viewAny', Annotation::class);
+        // $this->authorize('viewAny', Annotation::class);
         $statisticsPaddingDays = $request->query('statistics_padding_days');
         $startDate = $request->query('start_date');
         $endDate = $request->query('end_date');

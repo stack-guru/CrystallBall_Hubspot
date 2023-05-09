@@ -151,8 +151,8 @@ export default class IndexDashboard extends Component {
                                 <div className="singleCol text-left">ID for API-Zapier</div>
                                 <div className="singleCol text-left">Analytics Accounts</div>
                                 <div className="singleCol text-left">Properties &amp; Apps</div>
-                                {/* <div className="singleCol text-left">Search Console <i className='fa fa-exclamation-circle ml-2' data-toggle="tooltip" data-placement="top" title="Please remove and reconnect account"></i></div> */}
                                 <div className="singleCol text-left">Google Account</div>
+                                <div className="singleCol text-left">Search Console <i className='fa fa-exclamation-circle ml-2' data-toggle="tooltip" data-placement="top" title="Please remove and reconnect account"></i></div>
                                 <div className="singleCol text-right">&nbsp;</div>
                             </div>
                             <div className="tableBody">
@@ -177,22 +177,27 @@ export default class IndexDashboard extends Component {
                                         <div className="singleCol text-left">
                                             <span className='d-flex justify-content-between w-100'>
                                                 <span>{gAP.name}</span>
-                                                {/*{gAP.google_search_console_site_id ? <i><img src={'/icon-link-green.svg'} /></i> : null}*/}
                                             </span>
                                         </div>
-                                        {/* <div className="singleCol text-left d-flex flex-column">
-                                            <div className="themeNewInputStyle position-relative w-100">
-                                                <i className="btn-searchIcon right-0 fa fa-angle-down"></i>
-                                                <select name="" value={gAP.google_search_console_site_id} className={`form-control ${gAP.google_search_console_site_id ? 'selected' : null}`} onChange={(event) => this.handleGAPUpdate(gAP, { google_search_console_site_id: event.target.value })}>
-                                                    <option value="">Select website</option>
-                                                    {
-                                                        this.state.googleSearchConsoleSites.map(gSCS => <option value={gSCS.id} key={gSCS.id}>{gSCS.site_url} from {gSCS.google_account.name}</option>)
-                                                    }
-                                                </select>
-                                                <i className="btn-searchIcon left-0 fa fa-check-circle"></i>
+                                        <div className="singleCol text-left"><span>{
+                                                gAP.google_account ?
+                                                    gAP.google_account.name :
+                                                    null
+                                            }
+                                            {gAP.google_search_console_site_id ? <i><img src={'/icon-link-green.svg'} /></i> :  <i><img src={'/icon-unlink-red.svg'} /></i>}
+                                            </span></div>
+                                            <div className="singleCol text-left d-flex flex-column">
+                                                <div className="themeNewInputStyle position-relative w-100">
+                                                    <i className="btn-searchIcon right-0 fa fa-angle-down"></i>
+                                                    <select name="" value={gAP.google_search_console_site_id} className={`form-control ${gAP.google_search_console_site_id ? 'selected' : null}`} onChange={(event) => this.handleGAPUpdate(gAP, { google_search_console_site_id: event.target.value })}>
+                                                        <option value="">Select website</option>
+                                                        {
+                                                            this.state.googleSearchConsoleSites.map(gSCS => <option value={gSCS.id} key={gSCS.id}>{gSCS.site_url} from {gSCS.google_account.name}</option>)
+                                                        }
+                                                    </select>
+                                                    <i className="btn-searchIcon left-0 fa fa-check-circle"></i>
+                                                </div>
                                             </div>
-                                        </div> */}
-                                        {/* <div className="singleCol text-left"><span>{gAP.google_account.name}</span></div> */}
                                         <div className="singleCol text-right">
                                             <a href="javascript:void(0);" onClick={() => this.handleGAPDelete(gAP.id)} >
                                                 <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">

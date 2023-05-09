@@ -150,8 +150,28 @@ export default class IndexPricingPlans extends React.Component {
                                         <div className='planhead d-flex flex-column text-center'>
                                             <h3>{pricePlan.name}</h3>
                                             <p>{pricePlan.short_description.length > 35 ? <>{pricePlan.short_description}</> : pricePlan.short_description.length == 0 ? <></> : <>{pricePlan.short_description}</>}</p>
-                                            <h3>{userRegistrationOffer ? <><sup>$</sup>{pricePlan.price}</> : <><sup>$</sup>{calculatePricePlanPrice(pricePlan.price, this.state.planDuration, pricePlan.yearly_discount_percent, userRegistrationOffer)} /m</>}</h3>
-                                            {this.state.planDuration == 12 ? <span>Billed Annually</span> : <span>Billed Monthly</span>}
+                                            {pricePlan.yearly_discount_percent ?
+                                                <div className="price-plan-discount-text">
+                                                    <label className="px-3">{this.state.planDuration == 12 && pricePlan.short_description !== "For Freelancers" ?
+                                                        <>{Number(pricePlan.yearly_discount_percent)}% OFF</> :
+                                                        pricePlan.short_description === "For Freelancers" ? <>Limited
+                                                            time offer</> : null
+                                                    }</label></div> : <div className="price-plan-discount-text">
+                                                    <label className="px-3">{" "}</label>
+                                                </div>}
+                                            {pricePlan.short_description === "For Freelancers" ? <div>
+                                                <h3 className="price-plan-discount-strick pt-02px">
+                                                    <label><sup>$</sup> 29/m</label>
+                                                </h3>
+                                            </div> :  <div>
+                                                <h3 className="price-plan-discount-strick py-2">
+                                                    <label><sup>{" "}</sup></label>
+                                                </h3>
+                                            </div>}
+                                            <h3>{userRegistrationOffer ? <><sup>$</sup>{pricePlan.price}</> : <>
+                                                <sup>$</sup>{calculatePricePlanPrice(pricePlan.price, this.state.planDuration, pricePlan.yearly_discount_percent, userRegistrationOffer)} /m</>}</h3>
+                                            {this.state.planDuration == 12 ? <span>Billed Annually</span> :
+                                                <span>Billed Monthly</span>}
 
                                             {<>
                                                 {this.props.user.price_plan.name == 'Trial' && pricePlan.price == 0 ?

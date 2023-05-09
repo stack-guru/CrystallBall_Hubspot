@@ -3055,7 +3055,7 @@ body {
     font-size: 18px;
     font-weight: 600;
     line-height: 23px;
-    padding: 10px 24px;
+    padding: 9px 24px;
     background: #fff;
     border-radius: 100px;
     border: 2px solid #a6a6a6;
@@ -5968,4 +5968,34 @@ div[data-tour-elem="controls"]
 .dd-tooltip:hover .dd-tooltip-text {
     visibility: visible;
     opacity: 1;
+}
+
+.price-plan-discount-text {
+    margin: -5px 0 10px;
+}
+
+.price-plan-discount-text label {
+    background: #1bff06;
+    color: #000;
+}
+
+
+.price-plan-discount-strick {
+    text-decoration: line-through;
+    color: red;
+}
+
+.price-plan-discount-strick {
+    text-decoration: line-through;
+    color: red;
+}
+
+.price-plan-discount-strick label {
+    text-decoration: line-through;
+    color: #096db7;
+    font-size: 22px;
+}
+
+.pt-02px {
+    padding-bottom: 0.2rem !important;
 }

@@ -154,7 +154,7 @@ export default class DSRMDatesSelect extends React.Component {
                     </div>
 
                     <div className="d-flex align-items-center w-100 justify-content-end">
-                        <span className="betweentext">for</span>
+                        {/*<span className="betweentext">for</span>
                         <GoogleAnalyticsPropertySelect
                             className="themeNewselect hide-icon"
                             name="ga_property_id"
@@ -177,7 +177,7 @@ export default class DSRMDatesSelect extends React.Component {
                             placeholder="Select GA Properties"
                             isClearable={true}
                             onDeleteCallback={this.props.onUncheckCallback}
-                        />
+                        />*/}
                     </div>
                 </div>
 
