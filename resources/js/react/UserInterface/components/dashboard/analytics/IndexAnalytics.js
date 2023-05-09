@@ -16,9 +16,15 @@ import UsersDaysWithAnnotationsGraph from './graphs/usersDaysWithAnnotationsGrap
 import NoGoogleAccountConnectedPage from '../subPages/NoGoogleAccountConnectedPage';
 import NoDataFoundPage from '../subPages/NoDataFoundPage';
 import TopStatistics from './utils/TopStatistics';
+import ConsoleTopStatistics from './utils/ConsoleTopStatistics';
 import DeviceClicksImpressionsGraph from './graphs/deviceClicksImpressionsGraph';
 import MapChart from './graphs/WorldMap';
 import CountriesTable from './tables/countriesTable';
+import ConsoleAnnotationsTable from './tables/consoleAnnotationsTable';
+import ClicksImpressionsDaysGraph from './graphs/clicksImpressionsDaysGraph';
+import QueriesTable from './tables/queriesTable';
+import PagesTable from './tables/pagesTable';
+
 
 
 export default class IndexAnalytics extends Component {
@@ -29,14 +35,25 @@ export default class IndexAnalytics extends Component {
             isBusy: false,
             showDateRangeSelect: false,
             googleAccount: undefined,
+            consoleGoogleAccount: undefined,
             topStatistics: {
                 "sum_users_count": "∞",
                 "sum_sessions_count": "∞",
                 "sum_events_count": "∞",
-                "sum_conversions_count": "∞"
+                "sum_conversions_count": "∞",
+            },
+            consoleTopStatistics: {
+                "sum_clicks_count": "∞",
+                "sum_impressions_count": "∞",
+                "max_ctr_count": "∞",
+                "min_position_rank": "∞"
             },
             usersDaysStatistics: [],
             annotations: [],
+            console_annotations: [],
+            clicksImpressionsDaysStatistics: [],
+            pagesStatistics: [],
+            queriesStatistics: [],
             mediaStatistics: [],
             sourcesStatistics: [],
             devicesStatistics: [],
@@ -62,6 +79,7 @@ export default class IndexAnalytics extends Component {
 
         return <React.Fragment>
             <TopStatistics topStatistics={this.state.topStatistics} />
+            <ConsoleTopStatistics topStatistics={this.state.consoleTopStatistics} />
             <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper" >
                 <section className="ftco-section" id="inputs">
                     <div className="container-xl p-0">
@@ -197,12 +215,23 @@ export default class IndexAnalytics extends Component {
                                                 <DeviceUsersGraph deviceCategoriesStatistics={this.state.deviceCategoriesStatistics} />
                                             </div>
                                         </div>
+                                    </React.Fragment>
+                                    :
+                                    <NoDataFoundPage googleAccount={this.state.googleAccount} />
+                            }
+                            {
+                                this.state.clicksImpressionsDaysStatistics.length ?
+                                    <React.Fragment>
+                                        <ClicksImpressionsDaysGraph statistics={this.state.clicksImpressionsDaysStatistics} />
+                                        <ConsoleAnnotationsTable user={this.props.user} annotations={this.state.console_annotations} satisticsPaddingDaysCallback={this.changeStatisticsPaddingDays} statisticsPaddingDays={this.state.statisticsPaddingDays} />
                                         <div className="row ml-0 mr-0 mt-4">
-                                            <div className="col-6 border">
-                                                <DeviceClicksImpressionsGraph devicesStatistics={this.state.devicesStatistics} />
+                                            <div className="col-6 p-0 scrollable border">
+                                                <QueriesTable queriesStatistics={this.state.queriesStatistics} />
+                                            </div>
+                                            <div className="col-6 p-0 scrollable border-bottom">
+                                                <PagesTable pagesStatistics={this.state.pagesStatistics} />
                                             </div>
                                         </div>
-                                        
                                         <div className="row ml-0 mr-0 mt-4 border-top border-bottom border-left">
                                             <div className="col-6 p-0">
                                                 <MapChart countriesStatistics={this.state.countriesStatistics} />
@@ -211,9 +240,14 @@ export default class IndexAnalytics extends Component {
                                                 <CountriesTable countriesStatistics={this.state.countriesStatistics} />
                                             </div>
                                         </div>
+                                        <div className="row ml-0 mr-0 mt-4">
+                                            <div className="col-6 border">
+                                                <DeviceClicksImpressionsGraph devicesStatistics={this.state.devicesStatistics} />
+                                            </div>
+                                        </div>
                                     </React.Fragment>
                                     :
-                                    <NoDataFoundPage googleAccount={this.state.googleAccount} />
+                                    <NoDataFoundPage googleAccount={this.state.consoleGoogleAccount} />
                             }
                         </div>
                     </div>
@@ -275,6 +309,46 @@ export default class IndexAnalytics extends Component {
             }).catch(err => {
                 this.setState({ isBusy: false, errors: err });
             });
+            HttpClient.get(`/dashboard/search-console/top-statistics?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}`)
+                .then(response => {
+                    this.setState({ isBusy: false, consoleTopStatistics: response.data.statistics });
+                }, (err) => {
+                    this.setState({ isBusy: false, errors: (err.response).data });
+                }).catch(err => {
+                    this.setState({ isBusy: false, errors: err });
+                });
+            HttpClient.get(`/dashboard/search-console/clicks-impressions-days-annotations?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}&statistics_padding_days=${this.state.statisticsPaddingDays}`)
+                .then(response => {
+                    this.setState({ isBusy: false, clicksImpressionsDaysStatistics: response.data.statistics });
+                }, (err) => {
+                    this.setState({ isBusy: false, errors: (err.response).data });
+                }).catch(err => {
+                    this.setState({ isBusy: false, errors: err });
+                });
+            HttpClient.get(`/dashboard/search-console/annotations-dates?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}&statistics_padding_days=${this.state.statisticsPaddingDays}`)
+                .then(response => {
+                    this.setState({ isBusy: false, console_annotations: response.data.annotations });
+                }, (err) => {
+                    this.setState({ isBusy: false, errors: (err.response).data });
+                }).catch(err => {
+                    this.setState({ isBusy: false, errors: err });
+                });
+            HttpClient.get(`/dashboard/search-console/queries?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}`)
+                .then(response => {
+                    this.setState({ isBusy: false, queriesStatistics: response.data.statistics, consoleGoogleAccount: response.data.google_account });
+                }, (err) => {
+                    this.setState({ isBusy: false, errors: (err.response).data });
+                }).catch(err => {
+                    this.setState({ isBusy: false, errors: err });
+                });
+            HttpClient.get(`/dashboard/search-console/pages?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}`)
+                .then(response => {
+                    this.setState({ isBusy: false, pagesStatistics: response.data.statistics });
+                }, (err) => {
+                    this.setState({ isBusy: false, errors: (err.response).data });
+                }).catch(err => {
+                    this.setState({ isBusy: false, errors: err });
+                });
         }
     }
 
