@@ -3060,7 +3060,7 @@ body {
     font-size: 18px;
     font-weight: 600;
     line-height: 23px;
-    padding: 10px 24px;
+    padding: 9px 24px;
     background: #fff;
     border-radius: 100px;
     border: 2px solid #a6a6a6;
@@ -4379,9 +4379,9 @@ div[data-tour-elem="controls"]
 .dataTableAnalyticsAccount {
 }
 
-/* .dataTableAnalyticsAccount .form-control {
+.dataTableAnalyticsAccount .form-control {
     color: #f44c3d;
-} */
+}
 
 .dataTableAnalyticsAccount .selected {
     color: #666;
@@ -5999,4 +5999,8 @@ div[data-tour-elem="controls"]
     text-decoration: line-through;
     color: #096db7;
     font-size: 22px;
+}
+
+.pt-02px {
+    padding-bottom: 0.2rem !important;
 }

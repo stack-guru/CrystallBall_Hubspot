@@ -123,7 +123,7 @@ export default class countries extends React.Component {
                     </div>
 
                     <div className="d-flex align-items-center w-100 justify-content-end">
-                        <span className="betweentext">for</span>
+                        {/*<span className="betweentext">for</span>
                         <GoogleAnalyticsPropertySelect
                             className="themeNewselect hide-icon"
                             name="ga_property_id"
@@ -146,7 +146,7 @@ export default class countries extends React.Component {
                             placeholder="Select GA Properties"
                             isClearable={true}
                             onDeleteCallback={this.props.onUncheckCallback}
-                        />
+                        />*/}
                     </div>
                 </div>
                 <div className="grid2layout">
@@ -195,7 +195,7 @@ export default class countries extends React.Component {
                                                     <input checked={userCountries.indexOf(country) !== -1 } type="checkbox" name={country} id={userCountries.indexOf(country) !== -1 ? this.props.ds_data[userCountries.indexOf(country)].id : null } onChange={ this.handleClick }/>
                                                     <span className="d-flex w-100 justify-content-between">
                                                         <div>{country}</div>
-                                                        {this.props.ds_data[userCountries.indexOf(country)].id === this.state.editSelected
+                                                        {/*{this.props.ds_data[userCountries.indexOf(country)].id === this.state.editSelected
                                                             ?
                                                             <GoogleAnalyticsPropertySelect
                                                                 className="w-175px themeNewselect hide-icon"
@@ -217,7 +217,7 @@ export default class countries extends React.Component {
                                                                     <img className="w-20px" src='/icon-edit.svg' />
                                                                 </i>
                                                             </div>
-                                                        }
+                                                        }*/}
                                                     </span>
                                                 </label>
                                             );
