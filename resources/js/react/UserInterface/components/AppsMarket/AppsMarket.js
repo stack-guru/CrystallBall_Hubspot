@@ -46,6 +46,7 @@ class AppsMarket extends React.Component {
             editKeyword_keyword_configuration_id: "",
             userFacebookAccountsExists: false,
             userInstagramAccountsExists: false,
+            userTwitterAccountsExists: false,
             userBitbucketAccountsExists: false,
             userGithubAccountsExists: false,
             dsKey: "",
@@ -1727,6 +1728,30 @@ class AppsMarket extends React.Component {
                 this.setState({isBusy: false, errors: err});
                 status = false;
             });
+
+        //userTwitterAccountsExists
+        this.setState({isBusy: true});
+        HttpClient.get("/data-source/user-twitter-accounts-exists", {})
+            .then(
+                (resp) => {
+                    if (resp.data.exists) {
+                        this.setState({
+                            isBusy: false,
+                            errors: undefined,
+                            userTwitterAccountsExists: true,
+                        });
+                    }
+                },
+                (err) => {
+                    this.setState({isBusy: false, errors: err.response.data});
+                    status = false;
+                },
+                this
+            )
+            .catch((err) => {
+                this.setState({isBusy: false, errors: err});
+                status = false;
+            });
     }
 
     checkUserBitbucketAccount() {
@@ -1928,6 +1953,8 @@ class AppsMarket extends React.Component {
     }
 
     serviceStatusHandler(e) {
+
+        console.log('test')
         if (this.props.user.price_plan.name == 'Trial Ended') {
             if (e.target.name === 'is_ds_keyword_tracking_enabled') {
                 this.props.upgradePopup('rank-tracking-access')
@@ -2226,12 +2253,44 @@ class AppsMarket extends React.Component {
                     this.updateUserService(e);
                 }
 
-                if (e.target.name == "is_ds_twitter_tracking_enabled") {
+                if (
+                    e.target.name == "is_ds_twitter_tracking_enabled" &&
+                    e.target.checked
+                ) {
+                    console.log(111)
+                    if (this.state.userTwitterAccountsExists) {
+                        this.sectionToggler("twitter_tracking");
+                        this.updateUserService(e, this);
+                    } else {
+                        console.log(123)
+                        swal.fire({
+                            customClass: {
+                                htmlContainer: "py-3",
+                            },
+                            showCloseButton: true,
+                            title: "Connect with Twitter",
+                            text: "Connect your Twitter account to create automatic annotations for new posts; when you reach a post goal or run campaigns..",
+                            confirmButtonClass:
+                                "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                            confirmButtonText:
+                                "<a href='/socialite/twitter' class='text-white'><i class='mr-2 fa fa-twitter'> </i>" +
+                                "Connect Twitter Account</a>",
+                        });
+                    }
+                } else if (
+                    e.target.name == "is_ds_twitter_tracking_enabled" &&
+                    !e.target.checked
+                ) {
+                    console.log(2)
+                    this.sectionToggler(null);
                     this.updateUserService(e);
-                    this.sectionToggler(
-                        e.target.checked ? "twitter_tracking" : null
-                    );
                 }
+                // if (e.target.name == "is_ds_twitter_tracking_enabled") {
+                //     this.updateUserService(e);
+                //     this.sectionToggler(
+                //         e.target.checked ? "twitter_tracking" : null
+                //     );
+                // }
             } else {
                 if (e.target.name === 'is_ds_keyword_tracking_enabled') {
                     this.props.upgradePopup('rank-tracking-access')
