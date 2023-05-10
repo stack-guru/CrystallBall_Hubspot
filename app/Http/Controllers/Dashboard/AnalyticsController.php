@@ -279,13 +279,17 @@ class AnalyticsController extends Controller
         $userIdsArray = (Auth::user())->getAllGroupUserIdsArray();
 
         $gAProperty = GoogleAnalyticsProperty::findOrFail($request->query('ga_property_id'));
+        if(!$gAProperty->google_search_console_site_id)
+        {
+            return ['statistics' => [],'upgradePopup' => true];
+        }
         if (!in_array($gAProperty->user_id, $userIdsArray) || !$gAProperty->google_search_console_site_id) {
             // abort(404, "Unable to find Google Analytics Property for the given id.");
-            return ['statistics' => []];
+            return ['statistics' => [],'upgradePopup' => false];
         }
         $gSCSite = GoogleSearchConsoleSite::findOrFail($gAProperty->google_search_console_site_id);
         if (!in_array($gSCSite->user_id, $userIdsArray)) {
-            return ['statistics' => []];
+            return ['statistics' => [],'upgradePopup' => false];
             // abort(404, "Unable to find Google Search Console Site for the given id.");
         }
         $statistics = GoogleSearchConsoleStatistics::selectRaw('device, SUM(clicks_count) as sum_clicks_count, SUM(impressions_count) as sum_impressions_count')
@@ -294,7 +298,7 @@ class AnalyticsController extends Controller
             ->where('google_search_console_site_id', $gSCSite->id)
             ->get();
 
-        return ['statistics' => $statistics];
+        return ['statistics' => $statistics,'upgradePopup' => false];
     }
     public function usersDaysIndex(Request $request)
     {

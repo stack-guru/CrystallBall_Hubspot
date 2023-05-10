@@ -52,7 +52,7 @@ class GoogleAnalyticsPropertyController extends Controller
     {
         $userIdsArray = $user->getAllGroupUserIdsArray();
         $googleAnalyticsPropertiesQuery = GoogleAnalyticsProperty::with(['googleAccount', 'googleAnalyticsAccount']);
-        $googleAnalyticsPropertiesQuery->select('id', 'name', 'google_account_id', 'google_analytics_account_id', 'was_last_data_fetching_successful', 'is_in_use')
+        $googleAnalyticsPropertiesQuery->select('id', 'name', 'google_account_id', 'google_analytics_account_id', 'was_last_data_fetching_successful', 'is_in_use','google_search_console_site_id')
             ->with(['googleAccount:id,name', 'googleAnalyticsAccount:id,name'])
             ->where('name', 'LIKE', '%' . $keword . '%')
             ->whereIn('user_id', $userIdsArray);

@@ -196,13 +196,13 @@ export default class IndexDashboard extends Component {
                                                 <span>{gAP.name}</span>
                                             </span>
                                         </div>
-                                        <div className="singleCol text-left"><span>{
+                                        <div className="singleCol"><span className="text-left">{
                                                 gAP.google_account ?
                                                     gAP.google_account.name :
                                                     null
                                             }
-                                            {gAP.google_search_console_site_id ? <i><img src={'/icon-link-green.svg'} /></i> :  <i><img src={'/icon-unlink-red.svg'} /></i>}
-                                            </span></div>
+                                            </span>
+                                            <span className="text-right">{gAP.google_search_console_site_id ? <i><img src={'/icon-link-green.svg'} /></i> :  <i><img src={'/icon-unlink-red.svg'} /></i>}</span></div>
                                             <div className="singleCol text-left d-flex flex-column">
                                                 <div className="themeNewInputStyle position-relative w-100">
                                                     <i className="btn-searchIcon right-0 fa fa-angle-down"></i>
