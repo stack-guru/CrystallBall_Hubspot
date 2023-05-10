@@ -39,13 +39,13 @@ export function CustomTooltip({ children, tooltipText, maxLength }) {
     const lines = splitDisplayString(tooltipText, maxLength);
     const formattedTooltipText = lines.join("<br>");
     return (
-        <div className="dd-tooltip">
+        <>
             {children}
             <div
                 className="dd-tooltip-text"
                 dangerouslySetInnerHTML={{ __html: formattedTooltipText }}
             />
-        </div>
+        </>
     );
 }
 
@@ -747,7 +747,7 @@ class IndexAnnotations extends React.Component {
 
                                                 <div className="flex-grow-1 d-flex justify-content-between align-items-center">
                                                     <ul className="d-flex list-unstyled">
-                                                        <li><span className="properties">{anno.google_analytics_property_name ? <CustomTooltip tooltipText={annoPropertyString} maxLength={50}><p dangerouslySetInnerHTML={{__html: displayString}}></p></CustomTooltip> : "All Properties"}</span></li>
+                                                        <li><span className="properties dd-tooltip">{anno.google_analytics_property_name ? <CustomTooltip tooltipText={annoPropertyString} maxLength={50}><p dangerouslySetInnerHTML={{__html: displayString}}></p></CustomTooltip> : "All Properties"}</span></li>
                                                         <li><span>{capitalize(added_by[2])}</span></li>
                                                         <li><time dateTime={moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}>{moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}</time></li>
                                                         {/* <li>
