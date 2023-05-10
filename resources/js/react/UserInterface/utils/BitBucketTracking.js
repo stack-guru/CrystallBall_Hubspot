@@ -146,8 +146,8 @@ export default class BitbucketTracking extends React.Component {
                                                                 </div>
                                                                 :
                                                                     <div className="d-flex text-nowrap">
-                                                                        <div className="ellipsis-prop" title={this.props.ds_data[userRepositories.indexOf(repository.slug)]?.ga_property_name}>
-                                                                        {this.props.ds_data[userRepositories.indexOf(repository.slug)]?.ga_property_name}
+                                                                        <div className="w-150px ellipsis-prop" title={this.props.ds_data[userRepositories.indexOf(repository.slug)]?.ga_property_name ?? "All Properties"}>
+                                                                        {this.props.ds_data[userRepositories.indexOf(repository.slug)]?.ga_property_name ?? "All Properties"}
                                                                         </div>
                                                                         <i className="ml-2 icon fa" onClick={() => this.setState({ editSelected: repository.slug })}>
                                                                             <img className="w-20px" src='/icon-edit.svg' />

@@ -3,6 +3,7 @@ import HttpClient from "../utils/HttpClient";
 import ErrorAlert from "../utils/ErrorAlert";
 import Select from "react-select";
 import GoogleAnalyticsPropertySelect from "../utils/GoogleAnalyticsPropertySelect";
+import {CustomTooltip} from "../components/annotations/IndexAnnotation";
 
 export default class DSOWMCitiesSelect extends React.Component {
     constructor(props) {
@@ -328,8 +329,15 @@ export default class DSOWMCitiesSelect extends React.Component {
                                                 </>
                                                 :
                                                 <> 
-                                                    <div className="ellipsis-prop" title={wAC.ga_property_name}>
-                                                        {wAC.ga_property_name}
+                                                    <div className="dd-tooltip d-flex">
+                                                        <CustomTooltip tooltipText={wAC.ga_property_name ?? "All Properties"}
+                                                                        maxLength={50}>
+                                                            <span
+                                                                style={{background: "#2d9cdb"}}
+                                                                className="dot"
+                                                            ></span>
+                                                            <div className="pl-2 ellipsis-prop">{wAC.ga_property_name ?? "All Properties"}</div>
+                                                        </CustomTooltip>
                                                     </div>
                                                     <i className="ml-2 icon fa" onClick={() => this.setState({ editSelected: wAC.open_weather_map_city_id })}>
                                                         <img className="w-20px" src='/icon-edit.svg' />

@@ -103,7 +103,6 @@ export default class DSGoogleAlertsSelect extends React.Component {
                                         id={"gAK-" + gAK.id}
                                         type="button"
                                         className="keywordTag dd-tooltip d-flex"
-                                        title={gAK.ga_property_name}
                                         key={gAK.id}
                                         user_data_source_id={gAK.id}
                                     >

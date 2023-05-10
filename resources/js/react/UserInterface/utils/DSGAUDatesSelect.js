@@ -83,7 +83,7 @@ export default class DSGAUDatesSelect extends React.Component {
                     />
                 </div>
 
-                {/*<div className="gray-box">
+                <div className="gray-box">
                     {this.props.ds_data.length ?
                         <h4 className='text-capitalize'>
                             {this.props.ds_data[0].status ? this.props.ds_data[0].status : 'Both'} <span>{this.props.ds_data[0].ga_property_name}</span>
@@ -91,7 +91,7 @@ export default class DSGAUDatesSelect extends React.Component {
                     :
                         ""
                     }
-                </div>*/}
+                </div>
 
                 <div className="checkBoxList d-flex flex-column">
                     {

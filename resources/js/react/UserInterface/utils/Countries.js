@@ -2,6 +2,7 @@ import React from "react";
 import HttpClient from "../utils/HttpClient";
 import GoogleAnalyticsPropertySelect from "../utils/GoogleAnalyticsPropertySelect";
 import Toast from "./Toast";
+import {CustomTooltip} from "../components/annotations/IndexAnnotation";
 
 export default class countries extends React.Component {
     constructor(props) {
@@ -189,13 +190,18 @@ export default class countries extends React.Component {
                             </div>
                             <div className="checkBoxList">
                                 {countries ? ( countries.map((country) => { if (userCountries.indexOf(country) === -1) { return null; }
-                                    if (country !== null)
+                                    if (country !== null) {
+                                            let gaProperty = this.props.ds_data[userCountries.indexOf(country)]
+                                            let gaPropertyName = gaProperty?.ga_property_name
+                                            if (!gaPropertyName) {
+                                                gaPropertyName = 'All Properties';
+                                            }
                                             return (
                                                 <label className="themeNewCheckbox d-flex align-items-center justify-content-start" htmlFor="defaultCheck1" key={country}>
-                                                    <input checked={userCountries.indexOf(country) !== -1 } type="checkbox" name={country} id={userCountries.indexOf(country) !== -1 ? this.props.ds_data[userCountries.indexOf(country)].id : null } onChange={ this.handleClick }/>
+                                                    <input checked={userCountries.indexOf(country) !== -1 } type="checkbox" name={country} id={userCountries.indexOf(country) !== -1 ? gaProperty.id : null } onChange={ this.handleClick }/>
                                                     <span className="d-flex w-100 justify-content-between">
                                                         <div>{country}</div>
-                                                        {this.props.ds_data[userCountries.indexOf(country)].id === this.state.editSelected
+                                                        {gaProperty.id === this.state.editSelected
                                                             ?
                                                             <div className="d-flex text-nowrap align-items-center">
                                                                 <GoogleAnalyticsPropertySelect
@@ -206,7 +212,7 @@ export default class countries extends React.Component {
                                                                     value={this.props.gaPropertyId}
                                                                     onChangeCallback={(gAP) => {
                                                                         this.setState({ editSelected: '' })
-                                                                        this.props.userDataSourceUpdateHandler(this.props.ds_data[userCountries.indexOf(country)].id, gAP.target.value || null)
+                                                                        this.props.userDataSourceUpdateHandler(gaProperty.id, gAP.target.value || null)
                                                                     }}
                                                                     placeholder="Select GA Properties"
                                                                     isClearable={true}
@@ -217,10 +223,17 @@ export default class countries extends React.Component {
                                                             </div>
                                                             :
                                                             <div className="d-flex text-nowrap">
-                                                                <div className="ellipsis-prop" title={this.props.ds_data[userCountries.indexOf(country)]?.ga_property_name}>
-                                                                    {this.props.ds_data[userCountries.indexOf(country)]?.ga_property_name}
+                                                                <div className="dd-tooltip d-flex">
+                                                                    <CustomTooltip tooltipText={gaPropertyName}
+                                                                                    maxLength={50}>
+                                                                        <span
+                                                                            style={{background: "#2d9cdb"}}
+                                                                            className="dot"
+                                                                        ></span>
+                                                                        <div className="pl-2 ellipsis-prop">{gaPropertyName}</div>
+                                                                    </CustomTooltip>
                                                                 </div>
-                                                                <i className="ml-2 icon fa" onClick={() => this.setState({ editSelected: this.props.ds_data[userCountries.indexOf(country)].id })}>
+                                                                <i className="ml-2 icon fa" onClick={() => this.setState({ editSelected: gaProperty.id })}>
                                                                     <img className="w-20px" src='/icon-edit.svg' />
                                                                 </i>
                                                             </div>
@@ -228,6 +241,7 @@ export default class countries extends React.Component {
                                                     </span>
                                                 </label>
                                             );
+                                        }
                                     })
                                 ) : (
 

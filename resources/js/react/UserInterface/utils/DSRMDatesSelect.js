@@ -2,6 +2,7 @@ import React from "react";
 import HttpClient from "../utils/HttpClient";
 import GoogleAnalyticsPropertySelect from "../utils/GoogleAnalyticsPropertySelect";
 import Toast from "./Toast";
+import {CustomTooltip} from "../components/annotations/IndexAnnotation";
 
 export default class DSRMDatesSelect extends React.Component {
     constructor(props) {
@@ -154,7 +155,7 @@ export default class DSRMDatesSelect extends React.Component {
                     </div>
 
                     <div className="d-flex align-items-center w-100 justify-content-end">
-                        {/*<span className="betweentext">for</span>
+                        <span className="betweentext">for</span>
                         <GoogleAnalyticsPropertySelect
                             className="themeNewselect hide-icon"
                             name="ga_property_id"
@@ -177,7 +178,7 @@ export default class DSRMDatesSelect extends React.Component {
                             placeholder="Select GA Properties"
                             isClearable={true}
                             onDeleteCallback={this.props.onUncheckCallback}
-                        />*/}
+                        />
                     </div>
                 </div>
 
@@ -228,6 +229,12 @@ export default class DSRMDatesSelect extends React.Component {
                                         if (userRMDIds.indexOf(rmd.id) === -1) {
                                             return null;
                                         }
+                                        let gaProperty = this.props.ds_data.find(ds => ds.retail_marketing_id === rmd.id)
+                                        let gaPropertyName = gaProperty?.ga_property_name
+                                        if (!gaPropertyName) {
+                                            gaPropertyName = 'All Properties';
+                                        }
+
                                         return (
                                             <label
                                                 className="themeNewCheckbox d-flex align-items-center justify-content-start"
@@ -238,8 +245,8 @@ export default class DSRMDatesSelect extends React.Component {
                                                        rketing_id={rmd.id}/>
                                                 <span className="d-flex w-100 justify-content-between">
                                                     <div>{rmd.show_at} - {rmd.event_name}</div>
-                                                    <div className="d-flex text-nowrap align-items-center">
-                                                        {this.props.ds_data.find(ds => ds.retail_marketing_id === rmd.id)?.id === this.state.editSelected
+                                                    <div className={`d-flex text-nowrap ${this.state.editSelected ? "align-items-center" : ""}`}>
+                                                        {gaProperty?.id === this.state.editSelected
                                                             ?
                                                             <>
                                                                 <GoogleAnalyticsPropertySelect
@@ -250,7 +257,7 @@ export default class DSRMDatesSelect extends React.Component {
                                                                     value={this.props.gaPropertyId}
                                                                     onChangeCallback={(gAP) => {
                                                                         this.setState({ editSelected: '' })
-                                                                        this.props.userDataSourceUpdateHandler(this.props.ds_data.find(ds => ds.retail_marketing_id === rmd.id).id, gAP.target.value || null)
+                                                                        this.props.userDataSourceUpdateHandler(gaProperty.id, gAP.target.value || null)
                                                                     }}
                                                                     placeholder="Select GA Properties"
                                                                     isClearable={true}
@@ -261,10 +268,17 @@ export default class DSRMDatesSelect extends React.Component {
                                                                 </>
                                                             :
                                                             <>
-                                                                <div className="ellipsis-prop" title={this.props.ds_data.find(ds => ds.retail_marketing_id === rmd.id)?.ga_property_name}>
-                                                                    {this.props.ds_data.find(ds => ds.retail_marketing_id === rmd.id)?.ga_property_name}
+                                                                <div className="dd-tooltip d-flex">
+                                                                    <CustomTooltip tooltipText={gaPropertyName}
+                                                                                    maxLength={50}>
+                                                                        <span
+                                                                            style={{background: "#2d9cdb"}}
+                                                                            className="dot"
+                                                                        ></span>
+                                                                        <div className="pl-2 ellipsis-prop">{gaPropertyName}</div>
+                                                                    </CustomTooltip>
                                                                 </div>
-                                                                <i className="ml-2 icon fa" onClick={() => this.setState({ editSelected: this.props.ds_data.find(ds => ds.retail_marketing_id === rmd.id).id })}>
+                                                                <i className="ml-2 icon fa" onClick={() => this.setState({ editSelected: gaProperty.id })}>
                                                                     <img className="w-20px" src='/icon-edit.svg' />
                                                                 </i>
                                                             </>
