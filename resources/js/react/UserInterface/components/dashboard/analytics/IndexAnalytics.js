@@ -295,6 +295,10 @@ export default class IndexAnalytics extends Component {
                 });
             HttpClient.get(`/dashboard/analytics/device-by-impression?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}`)
             .then(response => {
+                if(response.upgradePopup)
+                {
+                    // this.props.upgradePopup('console-modal');
+                }
                 this.setState({ isBusy: false, devicesStatistics: response.data.statistics });
             }, (err) => {
                 this.setState({ isBusy: false, errors: (err.response).data });
