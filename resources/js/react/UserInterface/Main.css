@@ -708,8 +708,11 @@ setting-menu-item.dropdown {
 .w-20px {
     width: 20px !important;
 }
-.w-16px {
-    width: 16px !important;
+.w-14px {
+    width: 14px !important;
+}
+.w-150px {
+    width: 150px !important;
 }
 
 .ellipsis-prop {

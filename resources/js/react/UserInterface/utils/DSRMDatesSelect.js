@@ -256,7 +256,7 @@ export default class DSRMDatesSelect extends React.Component {
                                                                     isClearable={true}
                                                                 />
                                                                 <i className="ml-2 icon fa" onClick={() => this.setState({ editSelected: null })}>
-                                                                    <img className="w-16px" src='/close-icon.svg' />
+                                                                    <img className="w-14px" src='/close-icon.svg' />
                                                                 </i>
                                                                 </>
                                                             :
