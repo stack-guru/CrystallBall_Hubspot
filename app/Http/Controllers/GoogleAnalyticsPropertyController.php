@@ -44,4 +44,35 @@ class GoogleAnalyticsPropertyController extends Controller
         $googleAnalyticsProperty->delete();
         return ['success' => true];
     }
+
+    public function getUniqueGoogleAnalyticsPropertiesByUser($user, $keword)
+    {
+        $userIdsArray = $user->getAllGroupUserIdsArray();
+        $googleAnalyticsPropertiesQuery = GoogleAnalyticsProperty::with(['googleAccount', 'googleAnalyticsAccount']);
+        $googleAnalyticsPropertiesQuery->select('id', 'name', 'google_account_id', 'google_analytics_account_id', 'was_last_data_fetching_successful', 'is_in_use','google_search_console_site_id')
+            ->with(['googleAccount:id,name', 'googleAnalyticsAccount:id,name'])
+            ->where('name', 'LIKE', '%' . $keword . '%')
+            ->whereIn('user_id', $userIdsArray);
+
+        $googleAnalyticsAccountIdsArray = $user->userGaAccounts->pluck('google_analytics_account_id')->toArray();
+        // Check if the price plan has google analytics properties allowed
+        if ($user->pricePlan->google_analytics_property_count == -1) {
+            abort(402, "Please upgrade your plan to use Google Analytics Properties.");
+        }
+
+        if ($googleAnalyticsAccountIdsArray != [null] && $googleAnalyticsAccountIdsArray != []) {
+            $googleAnalyticsPropertiesQuery->whereIn('google_analytics_account_id', $googleAnalyticsAccountIdsArray);
+            $googleAnalyticsProperties = $googleAnalyticsPropertiesQuery->get();
+            $uniqueGoogleAnalyticsProperties = collect($googleAnalyticsProperties)->unique('name')->values()->all();
+            if ($user->assigned_properties_id != null) {
+                $assigned_properties_ids = explode(',', $user->assigned_properties_id);
+                $uniqueGoogleAnalyticsProperties = collect($uniqueGoogleAnalyticsProperties)->whereIn('id', $assigned_properties_ids)->values()->all();
+            }
+            return $uniqueGoogleAnalyticsProperties;
+        } else {
+            $googleAnalyticsProperties = $googleAnalyticsPropertiesQuery->get();
+            $uniqueGoogleAnalyticsProperties = collect($googleAnalyticsProperties)->unique('name')->values()->all();
+            return $uniqueGoogleAnalyticsProperties;
+        }
+    }
 }
