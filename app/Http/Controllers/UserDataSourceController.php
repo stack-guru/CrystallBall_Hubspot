@@ -146,6 +146,48 @@ class UserDataSourceController extends Controller
         return ['user_data_source' => $userDataSource];
     }
 
+
+    // for checkall
+    public function storeAll(Request $request) {
+        $data = $request->input('data');
+        $ga_property_id = $request->input('ga_property_id');
+
+        $result = [];
+        foreach($data as $dt) {
+
+            $user = Auth::user();
+
+            $userDataSource = new UserDataSource;
+            $dt = (object) $dt;
+            $userDataSource->country_name = $dt->country_name;
+            $userDataSource->ds_code = $dt->code;
+            $userDataSource->ds_name = $dt->name;
+            if(@$dt->open_weather_map_city_id) {
+                $userDataSource->open_weather_map_city_id = $dt->open_weather_map_city_id;
+            }
+            if(@$dt->retail_marketing_id) {
+                $userDataSource->retail_marketing_id = $dt->retail_marketing_id;
+            }
+            $userDataSource->ga_property_id = $ga_property_id;
+            $userDataSource->is_enabled = 1;
+            $userDataSource->user_id = $user->id;
+            $userDataSource->save();
+            $userDataSource->load('openWeatherMapCity');
+
+            $result[] = $userDataSource;
+        }
+        return $result;
+    }
+
+    public function deleteAll(Request $request)
+    {
+
+        $userDataSourceIds = $request->input('userDataSourceIds');
+        UserDataSource::whereIn('id', $userDataSourceIds)->delete();
+
+        return ['success' => true];
+    }
+
     /**
      * Update a newly created resource in storage.
      *

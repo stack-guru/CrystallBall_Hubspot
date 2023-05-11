@@ -41,9 +41,9 @@ class FetchGoogleSearchConsoleSitesStatistics extends Command
     public function handle()
     {
         if ($this->option('from-past')) {
-            $startDate = '2021-01-01';
+            $startDate = Carbon::now()->subDays(20)->format('Y-m-d');
         } else {
-            $startDate = Carbon::now()->subDays(3)->format('Y-m-d');
+            $startDate = Carbon::now()->subDays(20)->format('Y-m-d');
         }
         $endDate = Carbon::now()->format('Y-m-d');
 

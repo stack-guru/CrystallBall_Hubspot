@@ -57,6 +57,10 @@ class AppsMarket extends React.Component {
         };
         this.userDataSourceAddHandler =
             this.userDataSourceAddHandler.bind(this);
+        this.userDataSourceAddAllHandler =
+            this.userDataSourceAddAllHandler.bind(this);
+        this.onUncheckAllCallback =
+            this.onUncheckAllCallback.bind(this);
         this.userDataSourceDeleteHandler =
             this.userDataSourceDeleteHandler.bind(this);
         this.serviceStatusHandler = this.serviceStatusHandler.bind(this);
@@ -1287,11 +1291,17 @@ class AppsMarket extends React.Component {
                                 userDataSourceAddHandler={
                                     this.userDataSourceAddHandler
                                 }
+                                userDataSourceAddAllHandler={
+                                    this.userDataSourceAddAllHandler
+                                }
                                 userDataSourceDeleteHandler={
                                     this.userDataSourceDeleteHandler
                                 }
                                 userDataSourceUpdateHandler={
                                     this.userDataSourceUpdateHandler
+                                }
+                                onUncheckAllCallback={
+                                    this.onUncheckAllCallback
                                 }
                                 updateUserService={this.updateUserService}
                                 reloadWebMonitors={this.reloadWebMonitors}
@@ -1328,6 +1338,12 @@ class AppsMarket extends React.Component {
                                 userDataSourceUpdateHandler={
                                     this.userDataSourceUpdateHandler
                                 }
+                                userDataSourceAddAllHandler={
+                                    this.userDataSourceAddAllHandler
+                                }
+                                onUncheckAllCallback={
+                                    this.onUncheckAllCallback
+                                }
                                 reloadWebMonitors={this.reloadWebMonitors}
                                 loadUserDataSources={this.loadUserDataSources}
                                 updateGAPropertyId={(value) => {
@@ -1360,8 +1376,14 @@ class AppsMarket extends React.Component {
                                 userDataSourceDeleteHandler={
                                     this.userDataSourceDeleteHandler
                                 }
+                                onUncheckAllCallback={
+                                    this.onUncheckAllCallback
+                                }
                                 userDataSourceUpdateHandler={
                                     this.userDataSourceUpdateHandler
+                                }
+                                userDataSourceAddAllHandler={
+                                    this.userDataSourceAddAllHandler
                                 }
                                 reloadWebMonitors={this.reloadWebMonitors}
                                 loadUserDataSources={this.loadUserDataSources}
@@ -1393,6 +1415,9 @@ class AppsMarket extends React.Component {
                                 }
                                 userDataSourceDeleteHandler={
                                     this.userDataSourceDeleteHandler
+                                }
+                                userDataSourceUpdateHandler={
+                                    this.userDataSourceUpdateHandler
                                 }
                                 reloadWebMonitors={this.reloadWebMonitors}
                                 loadUserDataSources={this.loadUserDataSources}
@@ -2346,7 +2371,29 @@ class AppsMarket extends React.Component {
         }
     }
 
-    userDataSourceAddHandler(dataSource) {
+
+    userDataSourceAddAllHandler(dataSources, dsCode = null) {
+        this.setState({isBusy: true});
+
+        HttpClient.post("/data-source/user-data-sources", {data: dataSources, ga_property_id: this.state.ga_property_id})
+            .then(
+                (resp) => {
+                    Toast.fire({
+                        icon: 'success',
+                        title: "Successfully added.",
+                    });
+                    this.loadUserDataSources();
+                },
+                (err) => {
+                    this.setState({isBusy: false, errors: err.response.data});
+                }
+            )
+            .catch((err) => {
+                this.setState({isBusy: false, errors: err});
+            });
+    }
+
+    userDataSourceAddHandler(dataSource, gaPropertyId = null) {
         this.setState({isBusy: true});
         let formData = {
             ds_code: dataSource.code,
@@ -2358,7 +2405,7 @@ class AppsMarket extends React.Component {
             status: dataSource.status,
             value: dataSource.value,
             is_enabled: 1,
-            ga_property_id: this.state.ga_property_id,
+            ga_property_id: gaPropertyId ? gaPropertyId : this.state.ga_property_id,
             workspace: dataSource.workspace,
         };
         HttpClient.post("/data-source/user-data-source", formData)
@@ -2512,6 +2559,26 @@ class AppsMarket extends React.Component {
                         isBusy: false,
                         errors: undefined,
                     });
+                },
+                (err) => {
+                    this.setState({isBusy: false, errors: err.response.data});
+                }
+            )
+            .catch((err) => {
+                this.setState({isBusy: false, errors: err});
+            });
+    }
+
+    onUncheckAllCallback(userDataSourceIds, dsCode) {
+        this.setState({isBusy: true});
+        HttpClient.post(`/data-source/user-data-sources/delete`, {userDataSourceIds})
+            .then(
+                (resp) => {
+                    Toast.fire({
+                        icon: 'success',
+                        title: "Successfully removed.",
+                    });
+                    this.loadUserDataSources();
                 },
                 (err) => {
                     this.setState({isBusy: false, errors: err.response.data});

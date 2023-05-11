@@ -11,6 +11,8 @@ use App\Models\GoogleAnalyticsProperty;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Carbon;
 use App\Helpers\AnnotationQueryHelper;
+use App\Models\GoogleSearchConsoleSite;
+use App\Models\GoogleSearchConsoleStatistics;
 
 class AnalyticsController extends Controller
 {
@@ -130,7 +132,7 @@ class AnalyticsController extends Controller
             'ga_property_id' => 'bail | required | numeric | exists:google_analytics_properties,id'
         ]);
 
-        $this->authorize('viewAny', Annotation::class);
+        // $this->authorize('viewAny', Annotation::class);
         $statisticsPaddingDays = $request->query('statistics_padding_days');
         $startDate = $request->query('start_date');
         $endDate = $request->query('end_date');
@@ -260,6 +262,37 @@ class AnalyticsController extends Controller
         return ['statistics' => $statistics];
     }
 
+    public function devicesIndexByImpression(Request $request)
+    {
+        
+        $this->validate($request, [
+            'start_date' => 'required|date|after:2005-01-01|before:today|before:end_date',
+            'end_date' => 'required|date|after:2005-01-01|after:start_date',
+            'ga_property_id' => 'required'
+        ]);
+
+        $userIdsArray = (Auth::user())->getAllGroupUserIdsArray();
+
+        $gAProperty = GoogleAnalyticsProperty::findOrFail($request->query('ga_property_id'));
+        if (!in_array($gAProperty->user_id, $userIdsArray)) {
+            abort(404, "Unable to find Google Analytics Property for the given id.");
+        }
+        if(!$gAProperty->google_search_console_site_id)
+        {
+            abort(404, "Unable to find Google Search Console Site for the given id.");
+        }
+        $gSCSite = GoogleSearchConsoleSite::findOrFail($gAProperty->google_search_console_site_id);
+        if (!in_array($gSCSite->user_id, $userIdsArray)) {
+            abort(404, "Unable to find Google Search Console Site for the given id.");
+        }
+        $statistics = GoogleSearchConsoleStatistics::selectRaw('device, SUM(clicks_count) as sum_clicks_count, SUM(impressions_count) as sum_impressions_count')
+            ->groupBy('device')
+            ->whereBetween('statistics_date', [$request->query('start_date'), $request->query('end_date')])
+            ->where('google_search_console_site_id', $gSCSite->id)
+            ->get();
+
+        return ['statistics' => $statistics];
+    }
     public function usersDaysIndex(Request $request)
     {
         $this->validate($request, [
@@ -282,5 +315,108 @@ class AnalyticsController extends Controller
             ->get();
 
         return ['statistics' => $statistics];
+    }
+    public function countriesIndex(Request $request)
+    {
+        $this->validate($request, [
+            'start_date' => 'required|date|after:2005-01-01|before:today|before:end_date',
+            'end_date' => 'required|date|after:2005-01-01|after:start_date',
+            'ga_property_id' => 'required'
+        ]);
+
+        $userIdsArray = (Auth::user())->getAllGroupUserIdsArray();
+
+        $gAProperty = GoogleAnalyticsProperty::findOrFail($request->query('ga_property_id'));
+        if (!in_array($gAProperty->user_id, $userIdsArray)) {
+            abort(404, "Unable to find Google Analytics Property for the given id.");
+        }
+        if(!$gAProperty->google_search_console_site_id)
+        {
+            abort(404, "Unable to find Google Search Console Site for the given id.");
+        }
+        $gSCSite = GoogleSearchConsoleSite::findOrFail($gAProperty->google_search_console_site_id);
+        if (!in_array($gSCSite->user_id, $userIdsArray)) {
+            abort(404, "Unable to find Google Search Console Site for the given id.");
+        }
+        $statistics = GoogleSearchConsoleStatistics::selectRaw('country, SUM(clicks_count) as sum_clicks_count, SUM(impressions_count) as sum_impressions_count')
+            ->groupBy('country')
+            ->whereBetween('statistics_date', [$request->query('start_date'), $request->query('end_date')])
+            ->where('google_search_console_site_id', $gSCSite->id)
+            ->orderBy('sum_clicks_count', 'DESC')
+            ->get();
+
+        return ['statistics' => $statistics];
+    }
+    public function export(Request $request)
+    {
+        $user = Auth::user();
+        $userIdsArray = $user->getAllGroupUserIdsArray();
+        $gAProperty = GoogleAnalyticsProperty::findOrFail($request->query('ga_property_id'));
+        if (in_array($gAProperty->user_id, $userIdsArray)) {
+            $annotationsQuery = "SELECT `TempTable`.* FROM (";
+            $annotationsQuery .= AnnotationQueryHelper::allAnnotationsUnionQueryString($user, $request->query('ga_property_id'), $userIdsArray);
+            $annotationsQuery .= ") AS TempTable";
+            $annotationsQuery .= " LEFT JOIN annotation_ga_properties ON TempTable.id = annotation_ga_properties.annotation_id";
+            if ($request->query('ga_property_id') && $request->query('ga_property_id') !== '*') {
+                $annotationsQuery .= " and (annotation_ga_properties.google_analytics_property_id IS NULL OR annotation_ga_properties.google_analytics_property_id = " . $request->query('ga_property_id') . ") ";
+            }
+            $annotationsQuery .= " ORDER BY TempTable.show_at DESC";
+            if ($user->pricePlan->annotations_count > 0) {
+                $annotationsQuery .= " LIMIT " . $user->pricePlan->annotations_count;
+            }
+            $statisticsQuery = "SELECT statistics_date, SUM(sum_users_count) as sum_users_count, SUM(sum_sessions_count) as sum_sessions_count, SUM(sum_events_count) as sum_events_count, SUM(sum_conversions_count) as sum_conversions_count  FROM (";
+            for ($i = 0; ($i < $request->statistics_padding_days) || ($i == 0); $i++) {
+                if ($i > 0) $statisticsQuery .= " UNION ALL ";
+                $statisticsQuery .= "SELECT DATE_SUB(statistics_date, INTERVAL $i DAY) AS statistics_date, SUM(users_count) as sum_users_count, SUM(sessions_count) as sum_sessions_count, SUM(events_count) as sum_events_count, SUM(conversions_count) as sum_conversions_count  FROM google_analytics_metric_dimensions
+                    WHERE ga_property_id = $gAProperty->id
+                    GROUP BY statistics_date";
+            }
+            $statisticsQuery .= ") AS T4
+            GROUP BY statistics_date";
+            $annotations = DB::select("SELECT T2.event_name, T2.category, T2.show_at, T2.description, T3.*
+                    FROM ($annotationsQuery) AS T2
+                    INNER JOIN (
+                        $statisticsQuery
+                    ) AS T3 ON T2.show_at = T3.statistics_date
+                    WHERE T2.show_at BETWEEN '$request->start_date' AND '$request->end_date';");
+            $statistics = DB::select("SELECT T2.event_name, T2.category, T2.show_at, T2.description, T3.* FROM ($annotationsQuery) AS T2 RIGHT JOIN (
+                SELECT statistics_date, DATE_SUB(statistics_date, INTERVAL $request->statistics_padding_days DAY) as seven_day_old_date, SUM(users_count) as sum_users_count FROM google_analytics_metric_dimensions
+                WHERE ga_property_id = $gAProperty->id
+                GROUP BY statistics_date
+            ) AS T3 ON T2.show_at = T3.seven_day_old_date
+            WHERE T3.statistics_date BETWEEN '$request->start_date' AND '$request->end_date'
+            ORDER BY T3.statistics_date;");
+            $dateIndexedStatistics = [];
+            foreach ($statistics as $statistic) {
+                $dateIndexedStatistics[Carbon::parse($statistic->statistics_date)->format('Ymd')] = $statistic;
+            }
+
+            $filledStatistics = [];
+            $daysDiffCount = Carbon::parse($request->start_date)->diffInDays(Carbon::parse($request->end_date)) + 1;
+            for ($i = 0; $i < $daysDiffCount; $i++) {
+                if (array_key_exists(Carbon::parse($request->start_date)->addDays($i)->format('Ymd'), $dateIndexedStatistics)) {
+                    $filledStatistics[] = [
+                        "event_name" => $dateIndexedStatistics[Carbon::parse($request->start_date)->addDays($i)->format('Ymd')]->event_name,
+                        "category" => $dateIndexedStatistics[Carbon::parse($request->start_date)->addDays($i)->format('Ymd')]->category,
+                        "show_at" => $dateIndexedStatistics[Carbon::parse($request->start_date)->addDays($i)->format('Ymd')]->show_at,
+                        "description" => $dateIndexedStatistics[Carbon::parse($request->start_date)->addDays($i)->format('Ymd')]->description,
+                        "statistics_date" => $dateIndexedStatistics[Carbon::parse($request->start_date)->addDays($i)->format('Ymd')]->statistics_date,
+                        "seven_day_old_date" => $dateIndexedStatistics[Carbon::parse($request->start_date)->addDays($i)->format('Ymd')]->seven_day_old_date,
+                        "sum_users_count" => $dateIndexedStatistics[Carbon::parse($request->start_date)->addDays($i)->format('Ymd')]->sum_users_count,
+                    ];
+                } else {
+                    $filledStatistics[] = [
+                        "event_name" => null,
+                        "category" => null,
+                        "show_at" => null,
+                        "description" => null,
+                        "statistics_date" => Carbon::parse($request->start_date)->addDays($i)->format('Y-m-d'),
+                        "seven_day_old_date" => Carbon::parse($request->start_date)->addDays($i)->addDays($request->statistics_padding_days)->format('Y-m-d'),
+                        "sum_users_count" => "0"
+                    ];
+                }
+            }
+        }
+        dd($filledStatistics);
     }
 }

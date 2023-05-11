@@ -39,7 +39,7 @@ export default class DSGAUDatesSelect extends React.Component {
 
     selectedStatusChanged(e) {
         this.setState({ [e.target.name]: e.target.value });
-        (this.props.onCheckCallback)({ code: 'google_algorithm_update_dates', name: 'GoogleAlgorithmUpdateDate', country_name: null, status: e.target.value })
+        (this.props.onCheckCallback)({ code: 'google_algorithm_update_dates', name: 'GoogleAlgorithmUpdateDate', country_name: null, status: e.target.value}, e.target.gaPropertyId )
         this.fetchUpdatesList(e.target.value);
     }
 
@@ -70,7 +70,7 @@ export default class DSGAUDatesSelect extends React.Component {
 
                             const currentValue = this.props.ds_data.length ? (this.props.ds_data[0].status ? this.props.ds_data[0].status : "") : ""
                             if (currentValue) {
-                                this.selectedStatusChanged({ target: { name: 'searchStatus', value: currentValue } });
+                                this.selectedStatusChanged({ target: { name: 'searchStatus', value: currentValue, gaPropertyId: gAP.target.value } });
                             } else {
                                 Toast.fire({
                                     icon: 'success',
@@ -88,8 +88,8 @@ export default class DSGAUDatesSelect extends React.Component {
                         <h4 className='text-capitalize'>
                             {this.props.ds_data[0].status ? this.props.ds_data[0].status : 'Both'} <span>{this.props.ds_data[0].ga_property_name}</span>
                         </h4>
-                    : 
-                        "" 
+                    :
+                        ""
                     }
                 </div>
 

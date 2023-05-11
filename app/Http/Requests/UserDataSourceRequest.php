@@ -22,7 +22,7 @@ class UserDataSourceRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'ds_code' => 'required|string',

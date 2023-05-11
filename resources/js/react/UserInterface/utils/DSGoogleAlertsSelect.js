@@ -1,6 +1,7 @@
 import React from "react";
-import { Popover, PopoverBody } from "reactstrap";
+import {Popover, PopoverBody} from "reactstrap";
 import GoogleAnalyticsPropertySelect from "./GoogleAnalyticsPropertySelect";
+import {CustomTooltip} from "../components/annotations/IndexAnnotation";
 
 export default class DSGoogleAlertsSelect extends React.Component {
     constructor(props) {
@@ -17,7 +18,7 @@ export default class DSGoogleAlertsSelect extends React.Component {
     }
 
     addKeyword(e) {
-        this.setState({ keyword: "" });
+        this.setState({keyword: ""});
         this.props.onCheckCallback({
             code: "google_alert_keywords",
             name: "GoogleAlertKeyword",
@@ -82,7 +83,7 @@ export default class DSGoogleAlertsSelect extends React.Component {
                             placeholder="Select GA Properties"
                             isClearable={true}
                             onDeleteCallback={this.props.onUncheckCallback}
-                            />
+                        />
                     </div>
                 </div>
                 <div className="gray-box">
@@ -101,16 +102,19 @@ export default class DSGoogleAlertsSelect extends React.Component {
                                         }
                                         id={"gAK-" + gAK.id}
                                         type="button"
-                                        className="keywordTag"
-                                        title={gAK.ga_property_name}
+                                        className="keywordTag dd-tooltip d-flex"
                                         key={gAK.id}
                                         user_data_source_id={gAK.id}
                                     >
-                                        <span
-                                            style={{ background: "#2d9cdb" }}
-                                            className="dot"
-                                        ></span>
-                                        {gAK.value}
+
+                                        <CustomTooltip tooltipText={`${gAK.ga_property_name} - ${gAK.value}`}
+                                                       maxLength={50}>
+                                            <span
+                                                style={{background: "#2d9cdb"}}
+                                                className="dot"
+                                            ></span>
+                                            {gAK.value}
+                                        </CustomTooltip>
                                     </button>
 
                                     <Popover

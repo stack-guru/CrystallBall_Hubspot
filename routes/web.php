@@ -114,8 +114,8 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
 
     Route::view('dashboard', 'ui/app'); // obsolete
     Route::view('ga-accounts', 'ui/app');
-    Route::view('dashboard/analytics', 'ui/app');
-    Route::view('dashboard/search-console', 'ui/app');
+    // Route::view('dashboard/analytics', 'ui/app');
+    // Route::view('dashboard/search-console', 'ui/app');
 
     Route::resource('annotation', App\Http\Controllers\AnnotationController::class)->except(['store', 'show', 'update', 'destroy']);
 
@@ -169,6 +169,8 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
                 Route::get('media', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'mediaIndex']);
                 Route::get('sources', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'sourcesIndex']);
                 Route::get('device-categories', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'deviceCategoriesIndex']);
+                Route::get('device-by-impression', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'devicesIndexByImpression']);
+                Route::get('countries', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'countriesIndex']);
             });
 
             Route::group(['prefix' => 'search-console'], function () {
@@ -214,6 +216,8 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
             Route::put('mark-google-accounts-tour', [App\Http\Controllers\HomeController::class, 'markGoogleAccountsTourDone']);
 
             Route::resource('user-data-source', App\Http\Controllers\UserDataSourceController::class)->only(['index', 'store', 'update', 'destroy']);
+            Route::post('user-data-sources', [App\Http\Controllers\UserDataSourceController::class, 'storeAll']);
+            Route::post('user-data-sources/delete', [App\Http\Controllers\UserDataSourceController::class, 'deleteAll']);
 
             Route::get('user-facebook-accounts-exists', [FacebookAutomationController::class, 'userFacebookAccountsExists']);
             Route::get('user-twitter-accounts-exists', [TwitterController::class, 'usertwitterAccountsExists']);
