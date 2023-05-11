@@ -2257,7 +2257,6 @@ class AppsMarket extends React.Component {
                     e.target.name == "is_ds_twitter_tracking_enabled" &&
                     e.target.checked
                 ) {
-                    console.log(111)
                     if (this.state.userTwitterAccountsExists) {
                         this.sectionToggler("twitter_tracking");
                         this.updateUserService(e, this);

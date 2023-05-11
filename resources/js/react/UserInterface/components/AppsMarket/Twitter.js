@@ -25,6 +25,7 @@ class Twitter extends React.Component {
                     description={`Here is an automation tool designed to see your Twitter stats. See your numbers on likes, retweets, and impressions on a single dashboard. Switch on and add your page link to get started.`}
                     userServices={this.props.userServices}
                     closeModal={this.props.closeModal}
+                    userAccountsExists={this.props.userTwitterAccountsExists}
 
                 /> :
                 <>
