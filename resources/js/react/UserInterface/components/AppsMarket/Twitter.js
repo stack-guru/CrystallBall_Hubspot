@@ -49,7 +49,20 @@ class Twitter extends React.Component {
                     creditString={`${ this.props.userDataSources.twitter_tracking?.length } / ${ !this.props.user.price_plan.twitter_credits_count ? 0 : this.props.user.price_plan.twitter_credits_count}`}
                 />
 
-                <TwitterTracking />
+                <TwitterTracking 
+                    updateUserService={this.props.updateUserService}
+                    updateTrackingStatus={this.updateTrackingStatus.bind(this)}
+                    used_credits={this.props.userDataSources.twitter_tracking?.length}
+                    total_credits={this.props.user.price_plan.twitter_credits_count}
+                    ds_data={this.props.userDataSources.twitter_tracking}
+                    onCheckCallback={this.props.userDataSourceAddHandler}
+                    onUncheckCallback={this.props.userDataSourceDeleteHandler}
+                    ga_property_id={this.props.ga_property_id}
+                    reloadWebMonitors={this.props.reloadWebMonitors}
+                    user={this.props.user}
+                    loadUserDataSources={this.props.loadUserDataSources}
+                    updateGAPropertyId={this.props.updateGAPropertyId}
+                />
                 </>
                 }
 

@@ -45,11 +45,11 @@ class FacebookTrackingConfigurationController extends Controller
             ]
         );
 
-        $gaPropertyName = GoogleAnalyticsProperty::find((int)$request->ga_property_id)->name;
+        $gaProperty = GoogleAnalyticsProperty::find((int)$request->ga_property_id);
 
         return response()->json([
             'message' => 'Settings Updated',
-            'gaPropertyName' => $gaPropertyName
+            'gaPropertyName' => $gaProperty ? $gaProperty->name : ''
         ]);
     }
 
@@ -62,7 +62,7 @@ class FacebookTrackingConfigurationController extends Controller
         $FacebookTrackingConfiguration = FacebookTrackingConfiguration::where('user_id', Auth::user()->id)->first();
         if ($FacebookTrackingConfiguration){
             return response()->json([
-                'configuration_id' => true,
+                'configuration_id' => $FacebookTrackingConfiguration->ga_property_id || false,
 
                 'when_new_post_on_facebook' => (bool)$FacebookTrackingConfiguration->when_new_post_on_facebook,
                 'when_new_ad_compaign_launched' => (bool)$FacebookTrackingConfiguration->when_new_ad_compaign_launched,
@@ -80,7 +80,7 @@ class FacebookTrackingConfigurationController extends Controller
                 'is_post_shares_tracking_on' => (int)$FacebookTrackingConfiguration->is_post_shares_tracking_on,
 
                 'ga_property_id' => (int)$FacebookTrackingConfiguration->ga_property_id,
-                'gaPropertyName' => GoogleAnalyticsProperty::find((int)$FacebookTrackingConfiguration->ga_property_id)->name,
+                'gaPropertyName' => $FacebookTrackingConfiguration->ga_property_id ? GoogleAnalyticsProperty::find((int)$FacebookTrackingConfiguration->ga_property_id)->name : "",
 
                 'selected_pages' => unserialize($FacebookTrackingConfiguration->selected_pages) ?? [],
             ]);
