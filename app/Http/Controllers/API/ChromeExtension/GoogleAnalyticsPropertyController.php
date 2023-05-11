@@ -15,18 +15,18 @@ class GoogleAnalyticsPropertyController extends Controller
 {
     public function index(Request $request)
     {
-//        if ($request->has('keyword')) {
-//            $keyword = $request->query('keyword');
-//            return [
-//                'google_analytics_properties' => GoogleAnalyticsProperty::ofCurrentUser()
-//                    ->where(function ($query) use ($keyword) {
-//                        $query->where('property_id', 'LIKE', "%$keyword%")
-//                            ->orWhere('internal_property_id', 'LIKE', "%$keyword%")
-//                            ->orWhere('default_profile_id', 'LIKE', "%$keyword%");
-//                    })
-//                    ->get(['id'])
-//            ];
-//        }
+       if ($request->has('keyword')) {
+           $keyword = $request->query('keyword');
+           return [
+               'google_analytics_properties' => GoogleAnalyticsProperty::ofCurrentUser()
+                   ->where(function ($query) use ($keyword) {
+                       $query->where('property_id', 'LIKE', "%$keyword%")
+                           ->orWhere('internal_property_id', 'LIKE', "%$keyword%")
+                           ->orWhere('default_profile_id', 'LIKE', "%$keyword%");
+                   })
+                   ->get(['id'])
+           ];
+       }
 
         $user = Auth::user();
 //        $userIdsArray = $user->getAllGroupUserIdsArray();
