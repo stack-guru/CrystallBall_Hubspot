@@ -24,13 +24,13 @@ class Instagram extends React.Component {
     render() {
         return (
             <div className="popupContent modal-instagram">
-                {(!this.props.userinstagramAccountsExists || !this.props.userServices['is_ds_instagram_tracking_enabled']) && this.state.showDescription ? 
+                {(!this.props.userInstagramAccountsExists || !this.props.userServices['is_ds_instagram_tracking_enabled']) && this.state.showDescription ? 
                 <DescriptionModal
                     serviceName={"Instagram"}
                     closeModal={this.props.closeModal}
                     description={"For every project completed or modified on instagram, our automation tool enables you to monitor basic with basic details. instagram Tracking watches every commit on your provided repository."}
                     changeModal={this.changeModal.bind(this)}
-                    userAccountsExists={this.props.userinstagramAccountsExists}
+                    userAccountsExists={this.props.userInstagramAccountsExists}
                 />
                 : <>
                 <ModalHeader

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\FacebookTrackingConfiguration;
+use App\Models\GoogleAnalyticsProperty;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -39,12 +40,17 @@ class FacebookTrackingConfigurationController extends Controller
                 'is_post_views_tracking_on' => (int)$request->is_post_views_tracking_on,
                 'is_post_shares_tracking_on' => (int)$request->is_post_shares_tracking_on,
 
+                'ga_property_id' => (int)$request->ga_property_id,
                 'selected_pages' => serialize($request->selected_facebook_pages),
+                'configuration_id' => true,
             ]
         );
 
+        $gaPropertyName = GoogleAnalyticsProperty::find((int)$request->ga_property_id)->name;
+
         return response()->json([
-            'message' => 'Settings Updated'
+            'message' => 'Settings Updated',
+            'gaPropertyName' => $gaPropertyName
         ]);
     }
 
@@ -57,6 +63,8 @@ class FacebookTrackingConfigurationController extends Controller
         $FacebookTrackingConfiguration = FacebookTrackingConfiguration::where('user_id', Auth::user()->id)->first();
         if ($FacebookTrackingConfiguration){
             return response()->json([
+                'configuration_id' => true,
+
                 'when_new_post_on_facebook' => (bool)$FacebookTrackingConfiguration->when_new_post_on_facebook,
                 'when_new_ad_compaign_launched' => (bool)$FacebookTrackingConfiguration->when_new_ad_compaign_launched,
                 'when_ad_compaign_ended' => (bool)$FacebookTrackingConfiguration->when_ad_compaign_ended,
@@ -72,11 +80,15 @@ class FacebookTrackingConfigurationController extends Controller
                 'is_post_views_tracking_on' => (int)$FacebookTrackingConfiguration->is_post_views_tracking_on,
                 'is_post_shares_tracking_on' => (int)$FacebookTrackingConfiguration->is_post_shares_tracking_on,
 
+                'ga_property_id' => (int)$FacebookTrackingConfiguration->ga_property_id,
+                'gaPropertyName' => GoogleAnalyticsProperty::find((int)$FacebookTrackingConfiguration->ga_property_id)->name,
+
                 'selected_pages' => unserialize($FacebookTrackingConfiguration->selected_pages) ?? [],
             ]);
         }
         else{
             return response()->json([
+                'configuration_id' => null,
                 'when_new_post_on_facebook' => true,
                 'when_new_ad_compaign_launched' => true,
                 'when_ad_compaign_ended' => true,
@@ -91,6 +103,9 @@ class FacebookTrackingConfigurationController extends Controller
                 'when_post_reach_comments' => 1000,
                 'when_post_reach_shares' => 1000,
                 'when_post_reach_views' => 1000,
+
+                'ga_property_id' => null,
+
                 'selected_pages' => [],
             ]);
         }

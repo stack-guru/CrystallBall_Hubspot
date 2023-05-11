@@ -23,8 +23,6 @@ class Facebook extends React.Component {
     }
 
     render() {
-
-        console.log(this.props.userDataSources)
         return (
             <div className="popupContent modal-facebook">
                 {(!this.props.userFacebookAccountsExists || !this.props.userServices['is_ds_facebook_tracking_enabled']) && this.state.showDescription ? 

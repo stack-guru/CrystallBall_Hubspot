@@ -5,20 +5,26 @@ import ModalHeader from "./common/ModalHeader";
 
 class Twitter extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
+
         this.state = {
-            isRead: false,
+            isActiveTracking: false,
+            showDescription: true
         }
     }
 
-    changeModal() {
-        this.setState({isRead: true})
+    updateTrackingStatus = status => {
+        this.setState({ isActiveTracking: status })
+    }
+
+    changeModal = () => {
+        this.setState({ showDescription: false })
     }
 
     render() {
         return (
             <div className='popupContent modal-twitter'>
-                { !this.state.isRead && !this.props.userServices['is_ds_twitter_tracking_enabled'] && !(this.props.dsKeySkip === 'is_ds_twitter_tracking_enabled')?
+                {(!this.props.userTwitterAccountsExists || !this.props.userServices['is_ds_twitter_tracking_enabled']) && this.state.showDescription ? 
                 <DescrptionModalNormal
                     changeModal = {this.changeModal.bind(this)}
                     serviceName={"Twitter Tracking"}
@@ -30,6 +36,7 @@ class Twitter extends React.Component {
                 /> :
                 <>
                 <ModalHeader
+                    isActiveTracking={this.state.isActiveTracking}
                     description={'Trigger latest 100 tweets from account timeline'}
                     userAnnotationColors={this.props.userAnnotationColors}
                     updateUserAnnotationColors={ this.props.updateUserAnnotationColors }

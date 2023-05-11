@@ -2286,7 +2286,6 @@ class AppsMarket extends React.Component {
                         this.sectionToggler("twitter_tracking");
                         this.updateUserService(e, this);
                     } else {
-                        console.log(123)
                         swal.fire({
                             customClass: {
                                 htmlContainer: "py-3",
@@ -2305,7 +2304,6 @@ class AppsMarket extends React.Component {
                     e.target.name == "is_ds_twitter_tracking_enabled" &&
                     !e.target.checked
                 ) {
-                    console.log(2)
                     this.sectionToggler(null);
                     this.updateUserService(e);
                 }
