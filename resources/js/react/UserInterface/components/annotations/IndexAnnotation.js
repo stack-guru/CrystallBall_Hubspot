@@ -12,7 +12,7 @@ import AnnotationsUpdate from './EditAnnotation';
 import ShowChartAnnotation from './ShowChartAnnotation';
 import Toast from "../../utils/Toast";
 import axios from 'axios';
-import InfiniteScroll from 'react-infinite-scroller';
+import InfiniteScroll from '../../helpers/InfiniteScroll';
 import { capitalize, uniqBy } from "lodash";
 
 
