@@ -35,7 +35,7 @@
                                     {{$paymentDetail->country}}
                                 </td>
                                 <td>{{$paymentDetail->bluesnap_vaulted_shopper_id}}</td>
-                                <td>{{$paymentDetail->user->email}}</td>
+                                <td>{{@$paymentDetail->user->email}}</td>
                                 <td>{{$paymentDetail->created_at}}</td>
                                 <td>
                                     <a href="{{ route('admin.deduct-payment.create', ['user_id' => $paymentDetail->user_id, 'payment_detail_id' => $paymentDetail->id]) }}" class="btn btn-primary">Charge</a>
