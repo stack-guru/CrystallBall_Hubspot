@@ -42,7 +42,6 @@ class FacebookTrackingConfigurationController extends Controller
 
                 'ga_property_id' => (int)$request->ga_property_id,
                 'selected_pages' => serialize($request->selected_facebook_pages),
-                'configuration_id' => true,
             ]
         );
 

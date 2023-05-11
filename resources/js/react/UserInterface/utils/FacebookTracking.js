@@ -64,7 +64,7 @@ export default class FacebookTracking extends React.Component {
                 is_post_views_tracking_on: resp.data.is_post_views_tracking_on,
                 is_post_shares_tracking_on: resp.data.is_post_shares_tracking_on,
                 gaPropertyId: resp.data.ga_property_id,
-                gaPropertyName: resp.data.ga_property_name,
+                gaPropertyName: resp.data.gaPropertyName,
                 configuration_id: resp.data.configuration_id
 
             });
@@ -110,7 +110,7 @@ export default class FacebookTracking extends React.Component {
             ga_property_id: this.state.gaPropertyId,
         }
         HttpClient.post('/data-source/save-facebook-tracking-configurations', form_data).then(resp => {
-            this.setState({facebook_pages: resp.data.facebook_pages, isBusy: false, gaPropertyId: resp.data.gaPropertyName, configuration_id: true});
+            this.setState({facebook_pages: resp.data.facebook_pages, isBusy: false, gaPropertyName: resp.data.gaPropertyName, configuration_id: true, editProperty: false});
             const Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',
@@ -147,14 +147,16 @@ export default class FacebookTracking extends React.Component {
                     <h4 className="gaa-text-primary">Configure Facebook</h4>
                     <label>Select Facebook Pages</label>
                     <div className="d-flex align-items-center">
+                        <div className="w-50">
                         {/*<Select options={this.state.facebook_pages} isMulti onChange={this.pagesOnChangeHandler} value={this.selected_facebook_pages} />*/}
                         <FacebookPagesSelect className="gray_clr" multiple name="facebook_page" id="facebook_page"
                             value={this.state.selected_facebook_pages}
                             onChangeCallback={this.changePageHandler}
                             placeholder="Select Facebook Page"/>
+                        </div>
+                        <div className="w-50 text-right">
                         {!this.state.configuration_id || this.state.editProperty
                         ?
-                        <>
                             <div className="d-flex align-items-center w-100">
                                 <span className="betweentext">for</span>
                                 <GoogleAnalyticsPropertySelect
@@ -169,23 +171,24 @@ export default class FacebookTracking extends React.Component {
                                     placeholder="Select GA Properties"
                                     isClearable={true}
                                 />
-                            </div>
                             {
                                 this.state.editProperty
-                                ??
+                                ?
                                 <i className="ml-2 icon fa" onClick={() => this.setState({ editProperty: false })}>
                                     <img className="w-14px" src='/close-icon.svg' />
                                 </i>
+                                : ""
                             }
-                        </>
+                            </div>
                         :
                             <>
-                            <span>{this.state.gaPropertyName}</span>
+                            <span>{this.state.gaPropertyName ? this.state.gaPropertyName : "All Properties"}</span>
                             <i className="ml-2 icon fa" onClick={() => this.setState({ editProperty: true })}>
                                 <img className="w-20px" src='/icon-edit.svg' />
                             </i>
                             </>
                         }
+                        </div>
                     </div>
 
 
