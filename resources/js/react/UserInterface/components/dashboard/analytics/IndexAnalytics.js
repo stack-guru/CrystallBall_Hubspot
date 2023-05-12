@@ -6,6 +6,7 @@ import { newStaticRanges } from '../../../utils/CustomDateRange';
 import { timezoneToDateFormat } from '../../../utils/TimezoneTodateFormat';
 import ErrorAlert from '../../../utils/ErrorAlert';
 import GoogleAnalyticsPropertySelect from './utils/GoogleAnalyticsPropertySelect';
+import { Redirect } from 'react-router';
 
 import AnnotationsTable from './tables/annotationsTable';
 
@@ -33,6 +34,7 @@ export default class IndexAnalytics extends Component {
 
         this.state = {
             isBusy: false,
+            redirectTo: null,
             showDateRangeSelect: false,
             googleAccount: undefined,
             consoleGoogleAccount: undefined,
@@ -69,6 +71,7 @@ export default class IndexAnalytics extends Component {
         this.fetchStatistics = this.fetchStatistics.bind(this);
         this.fetchUsersDaysAnnotations = this.fetchUsersDaysAnnotations.bind(this);
         this.changeStatisticsPaddingDays = this.changeStatisticsPaddingDays.bind(this);
+        this.exportExcel = this.exportExcel.bind(this);
     }
     componentDidMount() {
         document.title = 'Analytic Dashboard';
@@ -76,7 +79,6 @@ export default class IndexAnalytics extends Component {
     render() {
 
         if (!this.props.user.google_accounts_count) return <NoGoogleAccountConnectedPage />
-
         return <React.Fragment>
             <TopStatistics topStatistics={this.state.topStatistics} />
             <ConsoleTopStatistics topStatistics={this.state.consoleTopStatistics} />
@@ -114,6 +116,12 @@ export default class IndexAnalytics extends Component {
                                         jsPDF: { unit: 'in', format: 'A4', orientation: 'landscape' }
                                     });
                                 }}><i className="fa fa-file-pdf-o"></i> Download</button>
+
+                            </div>
+                        </div>
+                        <div className="row ml-0 mr-0 mb-2">
+                            <div className="col-md-12 text-right">
+                                <button className="btn gaa-btn-primary btn-sm" onClick={() => this.exportExcel(this.state.redirectTo)}><i className="fa fa-file-excel-o"></i> Download Excel</button>
                             </div>
                         </div>
                         <div id="dashboard-index-container">
@@ -353,6 +361,7 @@ export default class IndexAnalytics extends Component {
                 }).catch(err => {
                     this.setState({ isBusy: false, errors: err });
                 });
+            this.setState({redirectTo:`/export-statistics?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}&statistics_padding_days=${this.state.statisticsPaddingDays}`});
         }
     }
 
@@ -386,5 +395,9 @@ export default class IndexAnalytics extends Component {
                 this.fetchAnnotationsMetricsDimensions(this.state.ga_property_id);
             }
         );
+    }
+    
+    exportExcel(redirectTo) {
+        window.location.replace(redirectTo);
     }
 }
