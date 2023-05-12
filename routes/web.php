@@ -220,6 +220,7 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
             Route::post('user-data-sources/delete', [App\Http\Controllers\UserDataSourceController::class, 'deleteAll']);
 
             Route::get('user-facebook-accounts-exists', [FacebookAutomationController::class, 'userFacebookAccountsExists']);
+            Route::get('user-twitter-accounts-exists', [TwitterController::class, 'usertwitterAccountsExists']);
             Route::get('user-instagram-accounts-exists', [InstagramAutomationController::class, 'userInstagramAccountsExists']);
             Route::get('user-bitbucket-accounts-exists', [BitbucketAutomationController::class, 'userBitbucketAccountsExists']);
             Route::get('user-github-accounts-exists', [GithubAutomationController::class, 'userGithubAccountsExists']);

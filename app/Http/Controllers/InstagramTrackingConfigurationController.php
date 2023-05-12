@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\GoogleAnalyticsProperty;
 use App\Models\InstagramTrackingConfiguration;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -35,12 +36,15 @@ class InstagramTrackingConfigurationController extends Controller
                 'is_post_comments_tracking_on' => (int)$request->is_post_comments_tracking_on,
                 'is_post_views_tracking_on' => (int)$request->is_post_views_tracking_on,
                 'is_post_shares_tracking_on' => (int)$request->is_post_shares_tracking_on,
+                'ga_property_id' => (int)$request->ga_property_id,
 
             ]
         );
 
+        $gaProperty = GoogleAnalyticsProperty::find((int)$request->ga_property_id);
         return response()->json([
-            'message' => 'Settings Updated'
+            'message' => 'Settings Updated',
+            'gaPropertyName' => $gaProperty ? $gaProperty->name : ''
         ]);
     }
 
@@ -53,6 +57,7 @@ class InstagramTrackingConfigurationController extends Controller
         $InstagramTrackingConfiguration = InstagramTrackingConfiguration::where('user_id', Auth::user()->id)->first();
         if ($InstagramTrackingConfiguration){
             return response()->json([
+                'configuration_id' => $InstagramTrackingConfiguration->ga_property_id || false,
                 'when_new_post_on_instagram' => (bool)$InstagramTrackingConfiguration->when_new_post_on_instagram,
 
                 'when_post_reach_likes' => (int)$InstagramTrackingConfiguration->when_post_reach_likes,
@@ -64,10 +69,14 @@ class InstagramTrackingConfigurationController extends Controller
                 'is_post_comments_tracking_on' => (int)$InstagramTrackingConfiguration->is_post_comments_tracking_on,
                 'is_post_views_tracking_on' => (int)$InstagramTrackingConfiguration->is_post_views_tracking_on,
                 'is_post_shares_tracking_on' => (int)$InstagramTrackingConfiguration->is_post_shares_tracking_on,
+
+                'ga_property_id' => (int)$InstagramTrackingConfiguration->ga_property_id,
+                'gaPropertyName' => $InstagramTrackingConfiguration->ga_property_id ? GoogleAnalyticsProperty::find((int)$InstagramTrackingConfiguration->ga_property_id)->name : "",
             ]);
         }
         else{
             return response()->json([
+                'configuration_id' => null,
                 'when_new_post_on_instagram' => true,
 
                 'is_post_likes_tracking_on' => true,
@@ -79,6 +88,7 @@ class InstagramTrackingConfigurationController extends Controller
                 'when_post_reach_comments' => 1000,
                 'when_post_reach_shares' => 1000,
                 'when_post_reach_views' => 1000,
+                'ga_property_id' => null,
             ]);
         }
     }

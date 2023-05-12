@@ -15,6 +15,8 @@ import WordpressUpdates from "./WordpressUpdates";
 import Wordpress from "./Wordpress";
 import RankTracking from "./RankTracking";
 import Bitbucket from "./Bitbucket";
+import Facebook from "./Facebook";
+import Instagram from "./Instagram";
 import Github from "./Github";
 import Apple from "./Apple";
 import Twitter from "./Twitter";
@@ -44,6 +46,7 @@ class AppsMarket extends React.Component {
             editKeyword_keyword_configuration_id: "",
             userFacebookAccountsExists: false,
             userInstagramAccountsExists: false,
+            userTwitterAccountsExists: false,
             userBitbucketAccountsExists: false,
             userGithubAccountsExists: false,
             dsKey: "",
@@ -121,6 +124,11 @@ class AppsMarket extends React.Component {
         if (urlSearchParams.has('show_twitter_popup')) {
             this.setState({
                 dsKey: "is_ds_twitter_tracking_enabled",
+            });
+        }
+        if (urlSearchParams.has('show_instagram_popup')) {
+            this.setState({
+                dsKey: "is_ds_instagram_tracking_enabled",
             });
         }
         let alertMessage = new URLSearchParams(window.location.search).get(
@@ -467,7 +475,63 @@ class AppsMarket extends React.Component {
                 brandLogo: "/weatherAlerts.svg",
                 width: 160,
                 height: 56,
-            }]),
+            },
+            {
+                id: "26",
+                background: "#004F9D",
+                dsKey: "is_ds_facebook_tracking_enabled",
+                connected: this.state.userServices["is_ds_facebook_tracking_enabled"],
+                premium: false,
+                brandName: "Facebook Ads",
+                brandLogo: "/facebookAds.svg",
+                width: 140,
+                height: 19,
+            },
+            {
+                id: "27",
+                background: "radial-gradient(126.96% 126.96% at 6.47% 97.81%, #FA8F21 9%, #D82D7E 78%)",
+                dsKey: "is_ds_instagram_tracking_enabled",
+                connected: this.state.userServices["is_ds_instagram_tracking_enabled"],
+                premium: false,
+                brandName: "Instagram",
+                brandLogo: "/instagram.svg",
+                width: 142,
+                height: 32,
+            },
+            {
+                id: "28",
+                background: "#1DA1F2",
+                dsKey: "is_ds_twitter_tracking_enabled",
+                connected: this.state.userServices["is_ds_twitter_tracking_enabled"],
+                premium: false,
+                brandName: "Twitter",
+                brandLogo: "/twitter.svg",
+                width: 160,
+                height: 56,
+            },
+            // {
+            //     id: "29",
+            //     background: "#0A0A0A",
+            //     dsKey: "is_ds_tiktok_tracking_enabled",
+            //     connected: this.state.userServices["is_ds_tiktok_tracking_enabled"],
+            //     premium: false,
+            //     brandName: "Tiktok",
+            //     brandLogo: "/tiktok.svg",
+            //     width: 110,
+            //     height: 32,
+            // },
+            // {
+            //     id: "30",
+            //     background: "#006192",
+            //     dsKey: "is_ds_linkedin_tracking_enabled",
+            //     connected: this.state.userServices["is_ds_linkedin_tracking_enabled"],
+            //     premium: false,
+            //     brandName: "linkedin",
+            //     brandLogo: "/linkedin.svg",
+            //     width: 116,
+            //     height: 28,
+            // },
+        ]),
         ];
     }
 
@@ -800,7 +864,7 @@ class AppsMarket extends React.Component {
                                    key={itemKey}
                                    style={{
                                        background: item.background || "#fff",
-                                       "border-color":
+                                       "borderColor":
                                            item.background || "#e0e0e0",
                                    }}
                                 >
@@ -844,7 +908,7 @@ class AppsMarket extends React.Component {
                                 key={itemKey}
                                 style={{
                                     background: item.background || "#fff",
-                                    "border-color":
+                                    "borderColor":
                                         item.background || "#e0e0e0",
                                 }}
                             >
@@ -878,30 +942,30 @@ class AppsMarket extends React.Component {
                                     width: 108,
                                     height: 32,
                                 },
-                                {
-                                    id: "07",
-                                    background: "#004F9D",
-                                    dsKey: "",
-                                    enabled: false,
-                                    premium: false,
-                                    commingSoon: true,
-                                    brandName: "Facebook Ads",
-                                    brandLogo: "/facebookAds.svg",
-                                    width: 140,
-                                    height: 19,
-                                },
-                                {
-                                    id: "08",
-                                    background: "radial-gradient(126.96% 126.96% at 6.47% 97.81%, #FA8F21 9%, #D82D7E 78%)",
-                                    dsKey: "",
-                                    enabled: false,
-                                    premium: false,
-                                    commingSoon: true,
-                                    brandName: "Instagram",
-                                    brandLogo: "/instagram.svg",
-                                    width: 142,
-                                    height: 32,
-                                },
+                                // {
+                                //     id: "07",
+                                //     background: "#004F9D",
+                                //     dsKey: "",
+                                //     enabled: false,
+                                //     premium: false,
+                                //     commingSoon: true,
+                                //     brandName: "Facebook Ads",
+                                //     brandLogo: "/facebookAds.svg",
+                                //     width: 140,
+                                //     height: 19,
+                                // },
+                                // {
+                                //     id: "08",
+                                //     background: "radial-gradient(126.96% 126.96% at 6.47% 97.81%, #FA8F21 9%, #D82D7E 78%)",
+                                //     dsKey: "",
+                                //     enabled: false,
+                                //     premium: false,
+                                //     commingSoon: true,
+                                //     brandName: "Instagram",
+                                //     brandLogo: "/instagram.svg",
+                                //     width: 142,
+                                //     height: 32,
+                                // },
                                 {
                                     id: "29",
                                     background: "#0A0A0A",
@@ -1046,22 +1110,22 @@ class AppsMarket extends React.Component {
                                     width: 114,
                                     height: 30,
                                 },
-                                {
-                                    id: "09",
-                                    background: "#1DA1F2",
-                                    dsKey: "is_ds_twitter_tracking_enabled",
-                                    connected: this.state.userServices["is_ds_twitter_tracking_enabled"],
-                                    premium: false,
-                                    commingSoon: true,
-                                    brandName: "Twitter",
-                                    brandLogo: "/twitter.svg",
-                                    width: 100,
-                                    height: 26,
-                                },
+                                // {
+                                //     id: "09",
+                                //     background: "#1DA1F2",
+                                //     dsKey: "is_ds_twitter_tracking_enabled",
+                                //     connected: this.state.userServices["is_ds_twitter_tracking_enabled"],
+                                //     premium: false,
+                                //     commingSoon: true,
+                                //     brandName: "Twitter",
+                                //     brandLogo: "/twitter.svg",
+                                //     width: 100,
+                                //     height: 26,
+                                // },
                             ].map((item, itemKey) => (
                                 <div className="item" key={itemKey} style={{
                                     background: item.background || "#fff",
-                                    "border-color": item.background || "#e0e0e0",
+                                    "borderColor": item.background || "#e0e0e0",
                                 }}>
                                     {item.enabled ? (<i className="active fa fa-check-circle"></i>) : null}
                                     <img src={item.brandLogo} alt={item.brandName} className="svg-inject"
@@ -1573,8 +1637,39 @@ class AppsMarket extends React.Component {
                                 }}
                             />
                         ) : this.state.dsKey ===
-                        "is_ds_create_annotation_enabled" ? (
-                            <Twitter
+                        "is_ds_facebook_tracking_enabled" ? (
+                            <Facebook
+                                {...this.state}
+                                {...this.props}
+                                closeModal={() => {
+                                    this.setState({
+                                        dsKey: "",
+                                        dsKeySkip: ""
+                                    });
+                                }}
+                                updateUserAnnotationColors={
+                                    this.updateUserAnnotationColors
+                                }
+                                serviceStatusHandler={this.serviceStatusHandler}
+                                changeShownHint={this.changeShownHint}
+                                sectionToggler={this.sectionToggler}
+                                userDataSourceAddHandler={
+                                    this.userDataSourceAddHandler
+                                }
+                                userDataSourceDeleteHandler={
+                                    this.userDataSourceDeleteHandler
+                                }
+                                reloadWebMonitors={this.reloadWebMonitors}
+                                loadUserDataSources={this.loadUserDataSources}
+                                updateGAPropertyId={(value) => {
+                                    this.setState({
+                                        ga_property_id: value,
+                                    });
+                                }}
+                            />
+                        ) : this.state.dsKey ===
+                        "is_ds_instagram_tracking_enabled" ? (
+                            <Instagram
                                 {...this.state}
                                 {...this.props}
                                 closeModal={() => {
@@ -1645,6 +1740,30 @@ class AppsMarket extends React.Component {
                             isBusy: false,
                             errors: undefined,
                             userInstagramAccountsExists: true,
+                        });
+                    }
+                },
+                (err) => {
+                    this.setState({isBusy: false, errors: err.response.data});
+                    status = false;
+                },
+                this
+            )
+            .catch((err) => {
+                this.setState({isBusy: false, errors: err});
+                status = false;
+            });
+
+        //userTwitterAccountsExists
+        this.setState({isBusy: true});
+        HttpClient.get("/data-source/user-twitter-accounts-exists", {})
+            .then(
+                (resp) => {
+                    if (resp.data.exists) {
+                        this.setState({
+                            isBusy: false,
+                            errors: undefined,
+                            userTwitterAccountsExists: true,
                         });
                     }
                 },
@@ -1859,6 +1978,8 @@ class AppsMarket extends React.Component {
     }
 
     serviceStatusHandler(e) {
+
+        console.log('test')
         if (this.props.user.price_plan.name == 'Trial Ended') {
             if (e.target.name === 'is_ds_keyword_tracking_enabled') {
                 this.props.upgradePopup('rank-tracking-access')
@@ -2157,12 +2278,41 @@ class AppsMarket extends React.Component {
                     this.updateUserService(e);
                 }
 
-                if (e.target.name == "is_ds_twitter_tracking_enabled") {
+                if (
+                    e.target.name == "is_ds_twitter_tracking_enabled" &&
+                    e.target.checked
+                ) {
+                    if (this.state.userTwitterAccountsExists) {
+                        this.sectionToggler("twitter_tracking");
+                        this.updateUserService(e, this);
+                    } else {
+                        swal.fire({
+                            customClass: {
+                                htmlContainer: "py-3",
+                            },
+                            showCloseButton: true,
+                            title: "Connect with Twitter",
+                            text: "Connect your Twitter account to create automatic annotations for new posts; when you reach a post goal or run campaigns..",
+                            confirmButtonClass:
+                                "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                            confirmButtonText:
+                                "<a href='/socialite/twitter' class='text-white'><i class='mr-2 fa fa-twitter'> </i>" +
+                                "Connect Twitter Account</a>",
+                        });
+                    }
+                } else if (
+                    e.target.name == "is_ds_twitter_tracking_enabled" &&
+                    !e.target.checked
+                ) {
+                    this.sectionToggler(null);
                     this.updateUserService(e);
-                    this.sectionToggler(
-                        e.target.checked ? "twitter_tracking" : null
-                    );
                 }
+                // if (e.target.name == "is_ds_twitter_tracking_enabled") {
+                //     this.updateUserService(e);
+                //     this.sectionToggler(
+                //         e.target.checked ? "twitter_tracking" : null
+                //     );
+                // }
             } else {
                 if (e.target.name === 'is_ds_keyword_tracking_enabled') {
                     this.props.upgradePopup('rank-tracking-access')
