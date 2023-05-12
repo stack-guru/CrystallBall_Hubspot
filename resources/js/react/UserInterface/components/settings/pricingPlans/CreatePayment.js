@@ -507,7 +507,7 @@ export default class CreatePayment extends Component {
                                             <button className="btn-apply" type="button" onClick={this.applyCoupon}>Apply</button>
                                         </div>
 
-                                        <button type="submit" data-bluesnap="submitButton" className={`btn-payNow ${this.state.isBusy ? "disabled" : ''}`}>{this.state.isBusy ? 'Please Wait !! ' : 'Pay now'}</button>
+                                        <button type="submit" data-bluesnap="submitButton" className={`btn-payNow ${this.state.isBusy ? "disabled" : ''}`}>{this.state.isBusy ? 'Processing payment, please wait !! ' : 'Pay now'}</button>
                                         <div className='d-flex justify-content-center'>
                                             {/* <img className='d-block' src='/images/blueSnap.svg'/> */}
                                             <a target="_blank" href="https://home.bluesnap.com/"><img className='d-block' style={{width: 200}} src="/images/blueSnap.png" /></a>

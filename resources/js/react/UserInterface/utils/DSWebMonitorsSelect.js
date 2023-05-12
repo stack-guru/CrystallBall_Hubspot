@@ -2,6 +2,7 @@ import React from "react";
 import HttpClient from "../utils/HttpClient";
 import ErrorAlert from "../utils/ErrorAlert";
 import GoogleAnalyticsPropertySelect from "./GoogleAnalyticsPropertySelect";
+import {CustomTooltip} from "../components/annotations/IndexAnnotation";
 import {
     Button,
     Popover,
@@ -308,7 +309,7 @@ export default class DSWebMonitorsSelect extends React.Component {
                                     <>
                                         <button
                                             type="button"
-                                            className="keywordTag"
+                                            className="keywordTag dd-tooltip d-flex"
                                             key={wM.id}
                                             id={"wM-" + wM.id}
                                             user_data_source_id={wM.id}
@@ -328,8 +329,10 @@ export default class DSWebMonitorsSelect extends React.Component {
                                                 <i className="icon"><img src={'/icon-chain.svg'} /></i>
                                             </a>
                                             &nbsp;
-                                            {wM.name}
-
+                                            <CustomTooltip tooltipText={wM.google_analytics_property.name}
+                                                            maxLength={50}>
+                                                {wM.name}
+                                            </CustomTooltip>
                                         </button>
 
                                         <Popover

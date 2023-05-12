@@ -109,12 +109,12 @@ Route::group(['prefix' => 'app-sumo', 'as' => 'app-sumo.', 'middleware' => ['aut
 });
 Route::post('ui/generate-password', [App\Http\Controllers\ConfirmPasswordController::class, 'generatePassword'])->name('generate-password');
 Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], function () {
-
+    Route::get('export-statistics',[App\Http\Controllers\Dashboard\AnalyticsController::class, 'export']);
     Route::delete('user', [App\Http\Controllers\HomeController::class, 'deleteAccount'])->withoutMiddleware('only.non.empty.password');
 
     Route::view('dashboard', 'ui/app'); // obsolete
     Route::view('ga-accounts', 'ui/app');
-    Route::view('dashboard/analytics', 'ui/app');
+    // Route::view('dashboard/analytics', 'ui/app');
     // Route::view('dashboard/search-console', 'ui/app');
 
     Route::resource('annotation', App\Http\Controllers\AnnotationController::class)->except(['store', 'show', 'update', 'destroy']);
@@ -163,7 +163,6 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
             Route::group(['prefix' => 'analytics'], function () {
                 Route::get('top-statistics', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'topStatisticsIndex']);
                 Route::get('annotations-metrics-dimensions', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'annotationsMetricsDimensionsIndex']);
-                Route::get('users-days', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'usersDaysIndex']);
                 Route::get('users-days', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'usersDaysIndex']);
                 Route::get('users-days-annotations', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'usersDaysAnnotationsIndex']);
                 Route::get('media', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'mediaIndex']);
@@ -216,8 +215,11 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
             Route::put('mark-google-accounts-tour', [App\Http\Controllers\HomeController::class, 'markGoogleAccountsTourDone']);
 
             Route::resource('user-data-source', App\Http\Controllers\UserDataSourceController::class)->only(['index', 'store', 'update', 'destroy']);
+            Route::post('user-data-sources', [App\Http\Controllers\UserDataSourceController::class, 'storeAll']);
+            Route::post('user-data-sources/delete', [App\Http\Controllers\UserDataSourceController::class, 'deleteAll']);
 
             Route::get('user-facebook-accounts-exists', [FacebookAutomationController::class, 'userFacebookAccountsExists']);
+            Route::get('user-twitter-accounts-exists', [TwitterController::class, 'usertwitterAccountsExists']);
             Route::get('user-instagram-accounts-exists', [InstagramAutomationController::class, 'userInstagramAccountsExists']);
             Route::get('user-bitbucket-accounts-exists', [BitbucketAutomationController::class, 'userBitbucketAccountsExists']);
             Route::get('user-github-accounts-exists', [GithubAutomationController::class, 'userGithubAccountsExists']);

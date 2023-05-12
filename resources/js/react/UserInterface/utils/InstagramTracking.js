@@ -1,6 +1,7 @@
 import React from "react";
 import Select from 'react-select'
 import HttpClient from "./HttpClient";
+import GoogleAnalyticsPropertySelect from "./GoogleAnalyticsPropertySelect";
 
 export default class InstagramTracking extends React.Component {
     constructor(props) {
@@ -9,7 +10,10 @@ export default class InstagramTracking extends React.Component {
             
             isBusy: false,
             errors: "",
-            
+            gaPropertyId: null,
+            gaPropertyName: null,
+            editProperty: null,
+            configuration_id: null,
             when_new_post_on_instagram: true,
 
             is_post_likes_tracking_on: true,
@@ -51,6 +55,10 @@ export default class InstagramTracking extends React.Component {
                 is_post_views_tracking_on: resp.data.is_post_views_tracking_on,
                 is_post_shares_tracking_on: resp.data.is_post_shares_tracking_on,
 
+                gaPropertyId: resp.data.ga_property_id,
+                gaPropertyName: resp.data.gaPropertyName,
+                configuration_id: resp.data.configuration_id
+
             });
             document.getElementById('when_new_post_on_instagram').checked = resp.data.when_new_post_on_instagram;
             document.getElementById('post_likes').value = resp.data.when_post_reach_likes;
@@ -83,9 +91,11 @@ export default class InstagramTracking extends React.Component {
             is_post_comments_tracking_on: this.state.is_post_comments_tracking_on,
             is_post_views_tracking_on: this.state.is_post_views_tracking_on,
             is_post_shares_tracking_on: this.state.is_post_shares_tracking_on,
+
+            ga_property_id: this.state.gaPropertyId,
         }
         HttpClient.post('/data-source/save-instagram-tracking-configurations', form_data).then(resp => {
-            this.setState({facebook_pages: resp.data.facebook_pages, isBusy: false});
+            this.setState({isBusy: false, gaPropertyName: resp.data.gaPropertyName, configuration_id: true, editProperty: false});
             const Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',
@@ -114,6 +124,39 @@ export default class InstagramTracking extends React.Component {
             <div className="apps-bodyContent switch-wrapper">
                 <div className="weather_alert_cities-form">
                     <h4 className="gaa-text-primary">Configure Instagram</h4>
+
+                    {!this.state.configuration_id || this.state.editProperty
+                        ?
+                            <div className="d-flex align-items-center w-100">
+                                <GoogleAnalyticsPropertySelect
+                                    className="themeNewselect hide-icon"
+                                    name="ga_property_id"
+                                    id="ga_property_id"
+                                    currentPricePlan={this.props.user.price_plan}
+                                    value={this.state.gaPropertyId}
+                                    onChangeCallback={(gAP) => {
+                                        this.setState({gaPropertyId: gAP.target.value || null})
+                                    }}
+                                    placeholder="Select GA Properties"
+                                    isClearable={true}
+                                />
+                            {
+                                this.state.editProperty
+                                ?
+                                <i className="ml-2 icon fa" onClick={() => this.setState({ editProperty: false })}>
+                                    <img className="w-14px" src='/close-icon.svg' />
+                                </i>
+                                : ""
+                            }
+                            </div>
+                        :
+                            <>
+                            <span>{this.state.gaPropertyName ? this.state.gaPropertyName : "All Properties"}</span>
+                            <i className="ml-2 icon fa" onClick={() => this.setState({ editProperty: true })}>
+                                <img className="w-20px" src='/icon-edit.svg' />
+                            </i>
+                            </>
+                        }
                     
                     <h5 className="gaa-text-primary"><b>Create Annotation When:</b></h5>
 

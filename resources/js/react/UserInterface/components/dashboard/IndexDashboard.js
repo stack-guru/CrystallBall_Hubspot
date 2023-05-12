@@ -163,8 +163,8 @@ export default class IndexDashboard extends Component {
                                 <div className="singleCol text-left">ID for API-Zapier</div>
                                 <div className="singleCol text-left">Analytics Accounts</div>
                                 <div className="singleCol text-left">Properties &amp; Apps</div>
+                                {/* <div className="singleCol text-left">Search Console <i className='fa fa-exclamation-circle ml-2' data-toggle="tooltip" data-placement="top" title="Please remove and reconnect account"></i></div> */}
                                 <div className="singleCol text-left">Google Account</div>
-                                <div className="singleCol text-left">Search Console <i className='fa fa-exclamation-circle ml-2' data-toggle="tooltip" data-placement="top" title="Please remove and reconnect account"></i></div>
                                 <div className="singleCol text-right">&nbsp;</div>
                             </div>
                             <div className="tableBody">
@@ -194,6 +194,7 @@ export default class IndexDashboard extends Component {
                                         <div className="singleCol text-left">
                                             <span className='d-flex justify-content-between w-100'>
                                                 <span>{gAP.name}</span>
+                                                {/* {gAP.google_search_console_site_id ? <i><img src={'/icon-link-green.svg'} /></i> : null} */}
                                             </span>
                                         </div>
                                         <div className="singleCol"><span className="text-left">{

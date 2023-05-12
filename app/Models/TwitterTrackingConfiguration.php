@@ -21,6 +21,7 @@ class TwitterTrackingConfiguration extends Model
         'when_tweet_reach_likes',
         'is_tweets_retweets_tracking_on',
         'when_tweet_reach_retweets',
+        'ga_property_id',
     ];
 
     /**
