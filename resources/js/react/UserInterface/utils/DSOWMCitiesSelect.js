@@ -3,6 +3,7 @@ import HttpClient from "../utils/HttpClient";
 import ErrorAlert from "../utils/ErrorAlert";
 import Select from "react-select";
 import GoogleAnalyticsPropertySelect from "../utils/GoogleAnalyticsPropertySelect";
+import {CustomTooltip} from "../components/annotations/IndexAnnotation";
 
 export default class DSOWMCitiesSelect extends React.Component {
     constructor(props) {
@@ -75,10 +76,11 @@ export default class DSOWMCitiesSelect extends React.Component {
     }
 
     selectAllShowing(e) {
-        let userOWMCityIds = this.props.ds_data.forEach(ds => ds.open_weather_map_city_id);
+        let userOWMCityIds = this.props.ds_data.map(ds => ds.open_weather_map_city.id);
+        const data = [];
         this.state.weather_alerts_cities.forEach(owmCity => {
             if (userOWMCityIds.indexOf(owmCity.id) == -1) {
-                this.props.onCheckCallback({
+                data.push({
                     code: "open_weather_map_cities",
                     name: "OpenWeatherMapCity",
                     country_name: null,
@@ -86,6 +88,8 @@ export default class DSOWMCitiesSelect extends React.Component {
                 });
             }
         });
+        
+        this.props.onCheckAllCallback(data);
         this.props.updateTrackingStatus(true);
         this.props.updateUserService({ target: {
                 name: "is_ds_weather_alerts_enabled",
@@ -97,9 +101,11 @@ export default class DSOWMCitiesSelect extends React.Component {
     clearAll(e) {
         let userOWMCityIds = this.props.ds_data.map(ds => ds.open_weather_map_city_id);
         let userDSEvents = this.props.ds_data.map(ds => ds.id);
+        const data = [];
         userOWMCityIds.forEach((owmEvent, index) => {
-            (this.props.onUncheckCallback)(userDSEvents[index], 'open_weather_map_cities')
+            data.push(userDSEvents[index])
         })
+        this.props.onUncheckAllCallback(data, 'open_weather_map_cities');
         this.props.updateTrackingStatus(false);
         this.props.updateUserService({ target: {
                 name: "is_ds_weather_alerts_enabled",
@@ -263,17 +269,12 @@ export default class DSOWMCitiesSelect extends React.Component {
                         </div>
                     ) : (
                         <div className="checkBoxList">
-                            <label
-                                className="themeNewCheckbox d-flex align-items-center justify-content-start"
-                                htmlFor="check-all"
+                            <span
+                                className="check-all cursor-pointer text-primary"
+                                onClick={this.selectAllShowing}
                             >
-                                <input
-                                    type="checkbox"
-                                    id="check-all"
-                                    onChange={this.selectAllShowing}
-                                />
-                                <span>Select All</span>
-                            </label>
+                                Select All
+                            </span>
                         </div>
                     )}
                 </div>
@@ -305,29 +306,45 @@ export default class DSOWMCitiesSelect extends React.Component {
                                         />
                                         <span className="d-flex w-100 justify-content-between">
                                             <div>{wAC.open_weather_map_city.name}</div>
-                                            {/*{wAC.open_weather_map_city_id === this.state.editSelected
+                                            <div className="d-flex text-nowrap align-items-center">
+                                            {wAC.open_weather_map_city_id === this.state.editSelected
                                                 ?
-                                                <GoogleAnalyticsPropertySelect
-                                                    className="w-175px themeNewselect hide-icon"
-                                                    name="ga_property_id"
-                                                    id="ga_property_id"
-                                                    currentPricePlan={this.props.user.price_plan}
-                                                    value={this.props.gaPropertyId}
-                                                    onChangeCallback={(gAP) => {
-                                                        this.setState({ editSelected: '' })
-                                                        this.props.userDataSourceUpdateHandler(wAC.id, gAP.target.value || null)
-                                                    }}
-                                                    placeholder="Select GA Properties"
-                                                    isClearable={true}
-                                                />
+                                                <>
+                                                    <GoogleAnalyticsPropertySelect
+                                                        className="w-175px themeNewselect hide-icon"
+                                                        name="ga_property_id"
+                                                        id="ga_property_id"
+                                                        currentPricePlan={this.props.user.price_plan}
+                                                        value={this.props.gaPropertyId}
+                                                        onChangeCallback={(gAP) => {
+                                                            this.setState({ editSelected: '' })
+                                                            this.props.userDataSourceUpdateHandler(wAC.id, gAP.target.value || null)
+                                                        }}
+                                                        placeholder="Select GA Properties"
+                                                        isClearable={true}
+                                                    />
+                                                    <i className="ml-2 icon fa" onClick={() => this.setState({ editSelected: null })}>
+                                                        <img className="w-14px" src='/close-icon.svg' />
+                                                    </i>
+                                                </>
                                                 :
-                                                <div>
-                                                    {wAC.ga_property_name}
+                                                <> 
+                                                    <div className="dd-tooltip d-flex">
+                                                        <CustomTooltip tooltipText={wAC.ga_property_name ?? "All Properties"}
+                                                                        maxLength={50}>
+                                                            <span
+                                                                style={{background: "#2d9cdb"}}
+                                                                className="dot"
+                                                            ></span>
+                                                            <div className="pl-2 ellipsis-prop">{wAC.ga_property_name ?? "All Properties"}</div>
+                                                        </CustomTooltip>
+                                                    </div>
                                                     <i className="ml-2 icon fa" onClick={() => this.setState({ editSelected: wAC.open_weather_map_city_id })}>
                                                         <img className="w-20px" src='/icon-edit.svg' />
                                                     </i>
-                                                </div>
-                                            }*/}
+                                                </>
+                                            }
+                                            </div>
                                         </span>
                                     </label>
                                 );

@@ -1,6 +1,7 @@
 import React from "react";
 import HttpClient from "./HttpClient";
 import Toast from "../utils/Toast";
+import GoogleAnalyticsPropertySelect from "./GoogleAnalyticsPropertySelect";
 
 export default class FacebookTracking extends React.Component {
     constructor(props) {
@@ -8,7 +9,10 @@ export default class FacebookTracking extends React.Component {
         this.state = {
             isBusy: false,
             errors: "",
-
+            gaPropertyId: null,
+            gaPropertyName: null,
+            editProperty: null,
+            configuration_id: null,
             is_tweets_likes_tracking_on: false,
             when_tweet_reach_likes: 0,
             is_tweets_retweets_tracking_on: false,
@@ -40,6 +44,9 @@ export default class FacebookTracking extends React.Component {
                             resp.data.is_tweets_retweets_tracking_on,
                         when_tweet_reach_retweets:
                             resp.data.when_tweet_reach_retweets,
+                        gaPropertyId: resp.data.ga_property_id,
+                        gaPropertyName: resp.data.gaPropertyName,
+                        configuration_id: resp.data.configuration_id
                     });
                     document.getElementById(
                         "is_tweets_likes_tracking_on_checkbox"
@@ -68,6 +75,8 @@ export default class FacebookTracking extends React.Component {
             is_tweets_retweets_tracking_on:
                 this.state.is_tweets_retweets_tracking_on,
             when_tweet_reach_retweets: this.state.when_tweet_reach_retweets,
+            ga_property_id: this.state.gaPropertyId,
+
         };
         HttpClient.post(
             "/data-source/save-twitter-tracking-configurations",
@@ -75,6 +84,7 @@ export default class FacebookTracking extends React.Component {
         )
             .then(
                 (resp) => {
+                    this.setState({isBusy: false, gaPropertyName: resp.data.gaPropertyName, configuration_id: true, editProperty: false});
                     Toast.fire({
                         icon: "success",
                         title: "Stored successfully!",
@@ -93,6 +103,42 @@ export default class FacebookTracking extends React.Component {
         return (
             <div className="apps-bodyContent">
                 <div className="white-box">
+
+                <h4 className="gaa-text-primary">Configure Instagram</h4>
+
+                {!this.state.configuration_id || this.state.editProperty
+                    ?
+                        <div className="d-flex align-items-center w-100">
+                            <GoogleAnalyticsPropertySelect
+                                className="themeNewselect hide-icon"
+                                name="ga_property_id"
+                                id="ga_property_id"
+                                currentPricePlan={this.props.user.price_plan}
+                                value={this.state.gaPropertyId}
+                                onChangeCallback={(gAP) => {
+                                    this.setState({gaPropertyId: gAP.target.value || null})
+                                }}
+                                placeholder="Select GA Properties"
+                                isClearable={true}
+                            />
+                        {
+                            this.state.editProperty
+                            ?
+                            <i className="ml-2 icon fa" onClick={() => this.setState({ editProperty: false })}>
+                                <img className="w-14px" src='/close-icon.svg' />
+                            </i>
+                            : ""
+                        }
+                        </div>
+                    :
+                        <div className="d-flex align-text-center">
+                        <span>{this.state.gaPropertyName ? this.state.gaPropertyName : "All Properties"}</span>
+                        <i className="ml-2 icon fa" onClick={() => this.setState({ editProperty: true })}>
+                            <img className="w-20px" src='/icon-edit.svg' />
+                        </i>
+                        </div>
+                    }
+
                     <h4 className="">Create Annotation When</h4>
 
                     <div className="checkBoxList d-flex flex-column">

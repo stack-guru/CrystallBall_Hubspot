@@ -298,7 +298,7 @@ export default class IndexUsers extends Component {
                                                 </div>
                                                 <div className="singleCol text-left"><span>{user.team_name}</span></div>
                                                 <div className="singleCol text-left">
-                                                    <span className="properties">{hasProperties ? <CustomTooltip tooltipText={annoPropertyString} maxLength={50}><p dangerouslySetInnerHTML={{__html: displayString}}></p></CustomTooltip> : "All Properties"}</span>
+                                                    <span className="properties dd-tooltip">{hasProperties ? <CustomTooltip tooltipText={annoPropertyString} maxLength={50}><p dangerouslySetInnerHTML={{__html: displayString}}></p></CustomTooltip> : "All Properties"}</span>
                                                 </div>
                                                 <div className="singleCol text-right">
                                                     <span>{this.props.user.user_level == "admin" ? (

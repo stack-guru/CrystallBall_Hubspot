@@ -17,7 +17,7 @@ class WebMonitorController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->query('ga_property_id') !== "null") {
+        if (!!$request->query('ga_property_id')) {
             return ['web_monitors' => WebMonitor::ofCurrentUser()->with('googleAnalyticsProperty')->where('ga_property_id', $request->query('ga_property_id'))->get()];
         }
         return ['web_monitors' => WebMonitor::ofCurrentUser()->with('googleAnalyticsProperty')->get()];

@@ -17,9 +17,7 @@ class GoogleAnalyticsPropertyController extends Controller
         if (!GoogleAccount::whereIn('user_id', $userIdsArray)->count()) {
             abort(400, "Please connect Google Analytics account before you use Google Analytics Properties.");
         }
-
-        $keword = $request->keyword;
-        $uniqueGoogleAnalyticsProperties = $this->getUniqueGoogleAnalyticsPropertiesByUser($user, $keword);
+        $uniqueGoogleAnalyticsProperties = \App\Http\Controllers\UserController::getUniqueGoogleAnalyticsPropertiesByUser($user);
         return ['google_analytics_properties' => $uniqueGoogleAnalyticsProperties];
     }
 
@@ -33,12 +31,11 @@ class GoogleAnalyticsPropertyController extends Controller
             abort(404, 'Unable to find referenced Google Analytics Property.');
         }
 
-        if ($request->has('google_search_console_site_id')) 
-            $googleAnalyticsProperty->google_search_console_site_id = $request->google_search_console_site_id;
-            $googleAnalyticsProperty->save();
+        if ($request->has('google_search_console_site_id')) $googleAnalyticsProperty->google_search_console_site_id = $request->google_search_console_site_id;
+        $googleAnalyticsProperty->save();
 
         $googleAnalyticsProperty->load('googleAccount');
-        $googleAnalyticsProperty->load('googleAnalyticsAccount');
+        // $googleAnalyticsProperty->load('googleAnalyticsAccount');
         return ['google_analytics_property' => $googleAnalyticsProperty];
     }
 
