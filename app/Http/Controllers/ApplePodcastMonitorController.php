@@ -18,7 +18,7 @@ class ApplePodcastMonitorController extends Controller
 
     public function index(Request $request)
     {
-        if ($request->query('ga_property_id') !== "null") {
+        if ($request->query('ga_property_id') !== "null" && $request->query('ga_property_id')) {
             return ['apple_podcast_monitors' => ApplePodcastMonitor::ofCurrentUser()->with('googleAnalyticsProperty')->where('ga_property_id', $request->query('ga_property_id'))->get()];
         }
         return ['apple_podcast_monitors' => ApplePodcastMonitor::ofCurrentUser()->with('googleAnalyticsProperty')->get()];

@@ -12,9 +12,42 @@ import AnnotationsUpdate from './EditAnnotation';
 import ShowChartAnnotation from './ShowChartAnnotation';
 import Toast from "../../utils/Toast";
 import axios from 'axios';
-import InfiniteScroll from 'react-infinite-scroller';
+import InfiniteScroll from '../../helpers/InfiniteScroll';
 import { capitalize, uniqBy } from "lodash";
 
+
+function splitDisplayString(displayString, maxLength = 300) {
+    const items = displayString.split(",");
+    let lines = [];
+    let currentLine = items[0];
+
+    for (let i = 1; i < items.length; i++) {
+        if (currentLine.length + items[i].length + 1 <= maxLength) {
+            currentLine += "," + items[i];
+        } else {
+            lines.push(currentLine);
+            currentLine = items[i];
+        }
+    }
+
+    lines.push(currentLine);
+    return lines;
+}
+
+
+export function CustomTooltip({ children, tooltipText, maxLength }) {
+    const lines = splitDisplayString(tooltipText, maxLength);
+    const formattedTooltipText = lines.join("<br>");
+    return (
+        <>
+            {children}
+            <div
+                className="dd-tooltip-text"
+                dangerouslySetInnerHTML={{ __html: formattedTooltipText }}
+            />
+        </>
+    );
+}
 
 function stripHtmlTags(str) {
     if (!str) {
@@ -549,7 +582,7 @@ class IndexAnnotations extends React.Component {
                     </div>
 
 
-                    {!this.state.hideInfiniteScroll ? <InfiniteScroll
+                    <InfiniteScroll
                         pageStart={1}
                         loadMore={this.loadMoreAnnotations}
                         hasMore={this.state.hasMore}
@@ -566,6 +599,17 @@ class IndexAnnotations extends React.Component {
                                     .map((anno, idx) => {
                                         let borderLeftColor = "rgba(0,0,0,.0625)";
                                         let selectedIcon = anno.category || '';
+                                        const annoPropertyString = (anno.table_ga_property_id || "").split("~~~~")?.[1] || "";
+                                        const propertyNames = annoPropertyString.split(",");
+
+                                        let displayString = "";
+                                        if (propertyNames.length > 0) {
+                                            displayString = propertyNames[0];
+
+                                            if (propertyNames.length > 1) {
+                                                displayString += ` <span>+${propertyNames.length - 1}<span>`;
+                                            }
+                                        }
 
                                         anno.description = anno.description || anno.event_name
                                         const added_by = (anno.added_by || "").split('~~~~');
@@ -703,7 +747,7 @@ class IndexAnnotations extends React.Component {
 
                                                 <div className="flex-grow-1 d-flex justify-content-between align-items-center">
                                                     <ul className="d-flex list-unstyled">
-                                                        <li><span className="properties">{anno.google_analytics_property_name ? anno.google_analytics_property_name : "All Properties"}</span></li>
+                                                        <li><span className="properties dd-tooltip">{anno.google_analytics_property_name ? <CustomTooltip tooltipText={annoPropertyString} maxLength={50}><p dangerouslySetInnerHTML={{__html: displayString}}></p></CustomTooltip> : "All Properties"}</span></li>
                                                         <li><span>{capitalize(added_by[2])}</span></li>
                                                         <li><time dateTime={moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}>{moment(anno.show_at).format(timezoneToDateFormat(this.props.user.timezone))}</time></li>
                                                         {/* <li>
@@ -760,7 +804,7 @@ class IndexAnnotations extends React.Component {
                             </>
                             {/* )} */}
                         </>
-                    </InfiniteScroll> : null}
+                    </InfiniteScroll>
                 </Container>
                 <AppsModal isOpen={!!this.state.editAnnotationId} popupSize={'md'} toggle={() => { this.setState({ editAnnotationId: '' }); }}>
                     <AnnotationsUpdate upgradePopup={this.props.upgradePopup} togglePopup={() => {

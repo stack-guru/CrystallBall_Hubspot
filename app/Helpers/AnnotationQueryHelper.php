@@ -133,12 +133,10 @@ class AnnotationQueryHelper
     public static function userAnnotationsQuery(User $user, array $userIdsArray, $showDisabled = false, string $googleAnalyticsPropertyId = null, string $userId = '*', string $showWebMonitoring = 'false', string $showManualAnnotations = 'false', string  $showCSVAnnotations = 'false', string $showAPIAnnotations = 'false')
     {
         $annotationsQuery = "";
-        $annotationsQuery .= "SELECT DISTINCT `annotations`.`is_enabled`, DATE(`show_at`) AS show_at, `annotations`.`id`, `category`, `event_name`, `url`, CONCAT('annotations', '~~~~', `annotations`.`id`,  '~~~~', CASE WHEN IFNULL(`annotations`.`added_by_name`, '') > '' THEN `annotations`.`added_by_name` ELSE `users`.`name` END, '~~~~', `annotations`.`added_by`) AS `added_by`, `description`, `users`.`name` AS `user_name`, `annotations`.`created_at`, NULL AS `table_ga_property_id` FROM `annotations`";
+        $annotationsQuery .= "SELECT DISTINCT `annotations`.`is_enabled`, DATE(`show_at`) AS show_at, `annotations`.`id`, `category`, `event_name`, `url`, CONCAT('annotations', '~~~~', `annotations`.`id`,  '~~~~', CASE WHEN IFNULL(`annotations`.`added_by_name`, '') > '' THEN `annotations`.`added_by_name` ELSE `users`.`name` END, '~~~~', `annotations`.`added_by`) AS `added_by`, `description`, `users`.`name` AS `user_name`, `annotations`.`created_at`, CONCAT((SELECT GROUP_CONCAT(`annotation_ga_properties`.`google_analytics_property_id`) FROM `annotation_ga_properties` WHERE `annotation_ga_properties`.`annotation_id` = `annotations`.`id` GROUP BY `annotation_ga_properties`.`annotation_id`), '~~~~', (SELECT GROUP_CONCAT(`google_analytics_properties`.`name`) FROM `annotation_ga_properties` LEFT JOIN `google_analytics_properties` ON `annotation_ga_properties`.`google_analytics_property_id` = `google_analytics_properties`.`id` WHERE `annotation_ga_properties`.`annotation_id` = `annotations`.`id` GROUP BY `annotation_ga_properties`.`annotation_id`)) AS `table_ga_property_id` FROM `annotations`";
         $annotationsQuery .= " LEFT JOIN `users` ON `annotations`.`user_id` = `users`.`id`";
-        if ($googleAnalyticsPropertyId && $googleAnalyticsPropertyId !== '*') {
-            $annotationsQuery .= " LEFT JOIN `annotation_ga_properties` ON `annotation_ga_properties`.`annotation_id` = `annotations`.`id`";
-        }
-
+        $annotationsQuery .= " LEFT JOIN `annotation_ga_properties` ON `annotation_ga_properties`.`annotation_id` = `annotations`.`id`";
+        $annotationsQuery .= " LEFT JOIN `google_analytics_properties` ON `annotation_ga_properties`.`google_analytics_property_id` = `google_analytics_properties`.`id`"; // Add this line
 
         $annotationsQuery .= " WHERE (";
         if ($userId !== '*' && in_array($userId, $userIdsArray)) {
@@ -149,25 +147,13 @@ class AnnotationQueryHelper
         if (!$showDisabled) $annotationsQuery .= " AND `annotations`.`is_enabled` = 1 ";
         $annotationsQuery .= " )";
 
-        if ($googleAnalyticsPropertyId && $googleAnalyticsPropertyId !== '*') {
+        if (($googleAnalyticsPropertyId && $googleAnalyticsPropertyId !== '*')) {
             $gaPropertyId = $googleAnalyticsPropertyId;
-            $annotationsQuery .= " AND (`annotation_ga_properties`.`google_analytics_property_id` IS NULL OR `annotation_ga_properties`.`google_analytics_property_id` = " . $gaPropertyId . ")";
-
-            // Can't mark a property as in use without price plan restriction because of the rule:
-            // A property that is already in use should not be validated with price plan limits/counts
-            // If we mark properties as in use and don't make sure that the user is under limit, it
-            // will make a loop hole in the implementation of price plan limits.
-
-            // $googleAnalyticsProperty = GoogleAnalyticsProperty::find($gaPropertyId);
-            // if (!$googleAnalyticsProperty->is_in_use) {
-            //     if ($user->isPricePlanGoogleAnalyticsPropertyLimitReached()) {
-            //         abort(402, 'You\'ve reached the maximum properties for this plan. <a href="' . route('settings.price-plans') . '">Upgrade your plan.</a>');
-            //     }
-            // }
-            // $googleAnalyticsProperty->is_in_use = true;
-            // $googleAnalyticsProperty->save();
+            $annotationsQuery .= " AND (LOCATE('" . $gaPropertyId . "', CONCAT(`annotation_ga_properties`.`google_analytics_property_id`, '~~~~', `google_analytics_properties`.`name`)) > 0 OR CONCAT(`annotation_ga_properties`.`google_analytics_property_id`, '~~~~', `google_analytics_properties`.`name`) IS NULL)";
+        } else if($googleAnalyticsPropertyId && $googleAnalyticsPropertyId == '*' && $user->assigned_properties_id) {
+            $gaPropertyId = $user->assigned_properties_id;
+            $annotationsQuery .= " AND (LOCATE('" . $gaPropertyId . "', CONCAT((SELECT GROUP_CONCAT(`annotation_ga_properties`.`google_analytics_property_id`) FROM `annotation_ga_properties` WHERE `annotation_ga_properties`.`annotation_id` = `annotations`.`id` GROUP BY `annotation_ga_properties`.`annotation_id`), '~~~~', (SELECT GROUP_CONCAT(`google_analytics_properties`.`name`) FROM `annotation_ga_properties` LEFT JOIN `google_analytics_properties` ON `annotation_ga_properties`.`google_analytics_property_id` = `google_analytics_properties`.`id` WHERE `annotation_ga_properties`.`annotation_id` = `annotations`.`id` GROUP BY `annotation_ga_properties`.`annotation_id`))) > 0 OR CONCAT((SELECT GROUP_CONCAT(`annotation_ga_properties`.`google_analytics_property_id`) FROM `annotation_ga_properties` WHERE `annotation_ga_properties`.`annotation_id` = `annotations`.`id` GROUP BY `annotation_ga_properties`.`annotation_id`), '~~~~', (SELECT GROUP_CONCAT(`google_analytics_properties`.`name`) FROM `annotation_ga_properties` LEFT JOIN `google_analytics_properties` ON `annotation_ga_properties`.`google_analytics_property_id` = `google_analytics_properties`.`id` WHERE `annotation_ga_properties`.`annotation_id` = `annotations`.`id` GROUP BY `annotation_ga_properties`.`annotation_id`)) IS NULL)";
         }
-
         if ($user->is_ds_web_monitors_enabled && $showWebMonitoring == 'false') {
             $annotationsQuery .= " AND annotations.category <> 'Website Monitoring'";
         }
@@ -256,22 +242,22 @@ class AnnotationQueryHelper
 
     public static function facebookTrackingQuery(array $userIdsArray)
     {
-        return "select 1, facebook_tracking_annotations.created_at, NULL, category, event_name, facebook_tracking_annotations.url, CONCAT('facebook_tracking_annotations', '~~~~', `facebook_tracking_annotations`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, `users`.`name` AS `user_name`, facebook_tracking_annotations.created_at, `uds`.`ga_property_id` AS `table_ga_property_id` from `facebook_tracking_annotations` LEFT JOIN `user_data_sources` AS uds ON `uds`.`ds_code` = 'facebook_tracking' AND `facebook_tracking_annotations`.`url` LIKE CONCAT('%', `uds`.`workspace`, '%') AND `uds`.`user_id` IN ('" . implode("', '", $userIdsArray) . "') LEFT JOIN `users` ON `facebook_tracking_annotations`.`user_id` = `users`.`id` WHERE `facebook_tracking_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+        return "select 1, facebook_tracking_annotations.created_at, NULL, category, event_name, facebook_tracking_annotations.url, CONCAT('facebook_tracking_annotations', '~~~~', `facebook_tracking_annotations`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, `users`.`name` AS `user_name`, facebook_tracking_annotations.created_at, `ftc`.`ga_property_id` AS `table_ga_property_id` from `facebook_tracking_annotations` LEFT JOIN `facebook_tracking_configurations` AS ftc ON `ftc`.`id` = `facebook_tracking_annotations`.`configuration_id` LEFT JOIN `users` ON `facebook_tracking_annotations`.`user_id` = `users`.`id` WHERE `facebook_tracking_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
     }
 
     public static function instagramTrackingQuery(array $userIdsArray)
     {
-        return "select 1, instagram_tracking_annotations.created_at, NULL, category, event_name, instagram_tracking_annotations.url, CONCAT('instagram_tracking_annotations', '~~~~', `instagram_tracking_annotations`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, `users`.`name` AS `user_name`, instagram_tracking_annotations.created_at, `uds`.`ga_property_id` AS `table_ga_property_id` from `instagram_tracking_annotations` LEFT JOIN `user_data_sources` AS uds ON `uds`.`ds_code` = 'instagram_tracking' AND `instagram_tracking_annotations`.`url` LIKE CONCAT('%', `uds`.`workspace`, '%') AND `uds`.`user_id` IN ('" . implode("', '", $userIdsArray) . "') LEFT JOIN `users` ON `instagram_tracking_annotations`.`user_id` = `users`.`id` WHERE `instagram_tracking_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+        return "select 1, instagram_tracking_annotations.created_at, NULL, category, event_name, instagram_tracking_annotations.url, CONCAT('instagram_tracking_annotations', '~~~~', `instagram_tracking_annotations`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, `users`.`name` AS `user_name`, instagram_tracking_annotations.created_at, `itc`.`ga_property_id` AS `table_ga_property_id` from `instagram_tracking_annotations` LEFT JOIN `instagram_tracking_configurations` AS itc ON `itc`.`id` = `instagram_tracking_annotations`.`configuration_id` LEFT JOIN `users` ON `instagram_tracking_annotations`.`user_id` = `users`.`id` WHERE `instagram_tracking_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
     }
 
     public static function twitterTrackingQuery(array $userIdsArray)
     {
-        return "select 1, twitter_tracking_annotations.created_at, NULL, category, event_name, twitter_tracking_annotations.url, CONCAT('twitter_tracking_annotations', '~~~~', `twitter_tracking_annotations`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, `users`.`name` AS `user_name`, twitter_tracking_annotations.created_at, `uds`.`ga_property_id` AS `table_ga_property_id` from `twitter_tracking_annotations` LEFT JOIN `user_data_sources` AS uds ON `uds`.`ds_code` = 'twitter_tracking' AND `twitter_tracking_annotations`.`url` LIKE CONCAT('%', `uds`.`workspace`, '%') AND `uds`.`user_id` IN ('" . implode("', '", $userIdsArray) . "') LEFT JOIN `users` ON `twitter_tracking_annotations`.`user_id` = `users`.`id` WHERE `twitter_tracking_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+        return "select 1, twitter_tracking_annotations.created_at, NULL, category, event_name, twitter_tracking_annotations.url, CONCAT('twitter_tracking_annotations', '~~~~', `twitter_tracking_annotations`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, `users`.`name` AS `user_name`, twitter_tracking_annotations.created_at, `ttc`.`ga_property_id` AS `table_ga_property_id` from `twitter_tracking_annotations` LEFT JOIN `twitter_tracking_configurations` AS ttc ON `ttc`.`id` = `twitter_tracking_annotations`.`configuration_id` LEFT JOIN `users` ON `twitter_tracking_annotations`.`user_id` = `users`.`id` WHERE `twitter_tracking_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
     }
 
     public static function bitbucketCommitQuery(array $userIdsArray)
     {
-        return "select 1, bitbucket_commit_annotations.created_at, NULL, category, event_name, bitbucket_commit_annotations.url, CONCAT('bitbucket_commit_annotations', '~~~~', `bitbucket_commit_annotations`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, `users`.`name` AS `user_name`, bitbucket_commit_annotations.created_at, `uds`.`ga_property_id` AS `table_ga_property_id` from `bitbucket_commit_annotations` LEFT JOIN `user_data_sources` AS uds ON `uds`.`ds_code` = 'bitbucket_tracking' AND `bitbucket_commit_annotations`.`url` LIKE CONCAT('%', `uds`.`workspace`, '%') AND `uds`.`user_id` IN ('" . implode("', '", $userIdsArray) . "') LEFT JOIN `users` ON `bitbucket_commit_annotations`.`user_id` = `users`.`id` WHERE `bitbucket_commit_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+        return "select 1, bitbucket_commit_annotations.created_at, NULL, category, event_name, bitbucket_commit_annotations.url, CONCAT('bitbucket_commit_annotations', '~~~~', `bitbucket_commit_annotations`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, `users`.`name` AS `user_name`, bitbucket_commit_annotations.created_at, `uds`.`ga_property_id` AS `table_ga_property_id` from `bitbucket_commit_annotations` LEFT JOIN `user_data_sources` AS uds ON `uds`.`ds_code` = 'bitbucket_tracking' AND `bitbucket_commit_annotations`.`url` LIKE CONCAT('%', `uds`.`workspace`, '%') AND `bitbucket_commit_annotations`.`url` LIKE CONCAT('%', `uds`.`value`, '%') AND `uds`.`user_id` IN ('" . implode("', '", $userIdsArray) . "') LEFT JOIN `users` ON `bitbucket_commit_annotations`.`user_id` = `users`.`id` WHERE `bitbucket_commit_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
     }
 
     public static function gitHubCommitQuery(array $userIdsArray)

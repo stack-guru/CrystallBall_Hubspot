@@ -51,7 +51,10 @@ class RetailMarketingDates extends React.Component {
                     updateTrackingStatus={this.updateTrackingStatus.bind(this)}
                     updateUserService={this.props.updateUserService}
                     onCheckCallback={this.props.userDataSourceAddHandler}
+                    onCheckAllCallback={this.props.userDataSourceAddAllHandler}
+                    onUncheckAllCallback={this.props.onUncheckAllCallback}
                     onUncheckCallback={this.props.userDataSourceDeleteHandler}
+                    userDataSourceUpdateHandler={this.props.userDataSourceUpdateHandler}
                     ds_data={this.props.userDataSources.retail_marketings}
                     ga_property_id={this.props.ga_property_id}
                     user={this.props.user}

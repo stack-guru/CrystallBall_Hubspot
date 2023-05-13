@@ -64,14 +64,32 @@ class WeatherAlerts extends React.Component {
                         <DSOWMCitiesSelect 
                             updateTrackingStatus={this.updateTrackingStatus.bind(this)}
                             updateUserService={this.props.updateUserService}
-                            onCheckCallback={this.props.userDataSourceAddHandler } onUncheckCallback={this.props.userDataSourceDeleteHandler } ds_data={this.props.userDataSources.open_weather_map_cities } ga_property_id={this.props.ga_property_id} reloadWebMonitors={this.props.reloadWebMonitors} user={this.props.user} loadUserDataSources={this.props.loadUserDataSources} updateGAPropertyId={this.props.updateGAPropertyId}/>
+                            onCheckAllCallback={ this.props.userDataSourceAddAllHandler } 
+                            onCheckCallback={this.props.userDataSourceAddHandler } 
+                            onUncheckCallback={this.props.userDataSourceDeleteHandler } 
+                            ds_data={this.props.userDataSources.open_weather_map_cities } 
+                            ga_property_id={this.props.ga_property_id} 
+                            reloadWebMonitors={this.props.reloadWebMonitors} 
+                            user={this.props.user} 
+                            loadUserDataSources={this.props.loadUserDataSources} 
+                            updateGAPropertyId={this.props.updateGAPropertyId}/>
                     </div>
                     <div className="column">
                         <DSOWMEventsSelect onCheckCallback={this.props.userDataSourceAddHandler} onUncheckCallback={this.props.userDataSourceDeleteHandler } ds_data={this.props.userDataSources.open_weather_map_events } showSelectedOnly={true}/>
                         <DSOWMCitiesSelect 
                                 updateTrackingStatus={this.updateTrackingStatus.bind(this)}
                                 updateUserService={this.props.updateUserService}
-                                onCheckCallback={ this.props.userDataSourceAddHandler } onUncheckCallback={ this.props.userDataSourceDeleteHandler } ds_data={ this.props.userDataSources.open_weather_map_cities } ga_property_id={this.props.ga_property_id} reloadWebMonitors={this.props.reloadWebMonitors} user={this.props.user} loadUserDataSources={this.props.loadUserDataSources} updateGAPropertyId={this.props.updateGAPropertyId} showSelectedOnly={true}/>
+                                onCheckCallback={ this.props.userDataSourceAddHandler } 
+                                onUncheckAllCallback={ this.props.onUncheckAllCallback } 
+                                userDataSourceUpdateHandler={ this.props.userDataSourceUpdateHandler } 
+                                onUncheckCallback={ this.props.userDataSourceDeleteHandler } 
+                                ds_data={ this.props.userDataSources.open_weather_map_cities }
+                                ga_property_id={this.props.ga_property_id} 
+                                reloadWebMonitors={this.props.reloadWebMonitors} 
+                                user={this.props.user} 
+                                loadUserDataSources={this.props.loadUserDataSources} 
+                                updateGAPropertyId={this.props.updateGAPropertyId} 
+                                showSelectedOnly={true}/>
                     </div>
                 </div>
                 </>

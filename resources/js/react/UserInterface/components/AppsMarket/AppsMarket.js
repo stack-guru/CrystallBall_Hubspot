@@ -15,6 +15,8 @@ import WordpressUpdates from "./WordpressUpdates";
 import Wordpress from "./Wordpress";
 import RankTracking from "./RankTracking";
 import Bitbucket from "./Bitbucket";
+import Facebook from "./Facebook";
+import Instagram from "./Instagram";
 import Github from "./Github";
 import Apple from "./Apple";
 import Twitter from "./Twitter";
@@ -44,6 +46,7 @@ class AppsMarket extends React.Component {
             editKeyword_keyword_configuration_id: "",
             userFacebookAccountsExists: false,
             userInstagramAccountsExists: false,
+            userTwitterAccountsExists: false,
             userBitbucketAccountsExists: false,
             userGithubAccountsExists: false,
             dsKey: "",
@@ -54,6 +57,10 @@ class AppsMarket extends React.Component {
         };
         this.userDataSourceAddHandler =
             this.userDataSourceAddHandler.bind(this);
+        this.userDataSourceAddAllHandler =
+            this.userDataSourceAddAllHandler.bind(this);
+        this.onUncheckAllCallback =
+            this.onUncheckAllCallback.bind(this);
         this.userDataSourceDeleteHandler =
             this.userDataSourceDeleteHandler.bind(this);
         this.serviceStatusHandler = this.serviceStatusHandler.bind(this);
@@ -88,6 +95,7 @@ class AppsMarket extends React.Component {
         this.checkUserGithubAccount = this.checkUserGithubAccount.bind(this);
         this.updateUserService = this.updateUserService.bind(this);
         this.getRecommendedApps = this.getRecommendedApps.bind(this);
+        this.userDataSourceUpdateHandler = this.userDataSourceUpdateHandler.bind(this);
     }
 
     componentDidMount() {
@@ -116,6 +124,11 @@ class AppsMarket extends React.Component {
         if (urlSearchParams.has('show_twitter_popup')) {
             this.setState({
                 dsKey: "is_ds_twitter_tracking_enabled",
+            });
+        }
+        if (urlSearchParams.has('show_instagram_popup')) {
+            this.setState({
+                dsKey: "is_ds_instagram_tracking_enabled",
             });
         }
         let alertMessage = new URLSearchParams(window.location.search).get(
@@ -154,12 +167,14 @@ class AppsMarket extends React.Component {
         }
     }
 
-    loadUserDataSources(gaPropertyId) {
+    loadUserDataSources(gaPropertyId = '') {
         if (!this.state.isLoading) {
             this.setState({isLoading: true});
-            HttpClient.get(
-                `/data-source/user-data-source?ga_property_id=${gaPropertyId}`
-            )
+
+            let url = "/data-source/user-data-source"
+            if (gaPropertyId) url = url + `?ga_property_id=${gaPropertyId}`;
+
+            HttpClient.get(url)
                 .then(
                     (resp) => {
                         this.setState({
@@ -460,7 +475,63 @@ class AppsMarket extends React.Component {
                 brandLogo: "/weatherAlerts.svg",
                 width: 160,
                 height: 56,
-            }]),
+            },
+            {
+                id: "26",
+                background: "#004F9D",
+                dsKey: "is_ds_facebook_tracking_enabled",
+                connected: this.state.userServices["is_ds_facebook_tracking_enabled"],
+                premium: false,
+                brandName: "Facebook Ads",
+                brandLogo: "/facebookAds.svg",
+                width: 140,
+                height: 19,
+            },
+            {
+                id: "27",
+                background: "radial-gradient(126.96% 126.96% at 6.47% 97.81%, #FA8F21 9%, #D82D7E 78%)",
+                dsKey: "is_ds_instagram_tracking_enabled",
+                connected: this.state.userServices["is_ds_instagram_tracking_enabled"],
+                premium: false,
+                brandName: "Instagram",
+                brandLogo: "/instagram.svg",
+                width: 142,
+                height: 32,
+            },
+            {
+                id: "28",
+                background: "#1DA1F2",
+                dsKey: "is_ds_twitter_tracking_enabled",
+                connected: this.state.userServices["is_ds_twitter_tracking_enabled"],
+                premium: false,
+                brandName: "Twitter",
+                brandLogo: "/twitter.svg",
+                width: 160,
+                height: 56,
+            },
+            // {
+            //     id: "29",
+            //     background: "#0A0A0A",
+            //     dsKey: "is_ds_tiktok_tracking_enabled",
+            //     connected: this.state.userServices["is_ds_tiktok_tracking_enabled"],
+            //     premium: false,
+            //     brandName: "Tiktok",
+            //     brandLogo: "/tiktok.svg",
+            //     width: 110,
+            //     height: 32,
+            // },
+            // {
+            //     id: "30",
+            //     background: "#006192",
+            //     dsKey: "is_ds_linkedin_tracking_enabled",
+            //     connected: this.state.userServices["is_ds_linkedin_tracking_enabled"],
+            //     premium: false,
+            //     brandName: "linkedin",
+            //     brandLogo: "/linkedin.svg",
+            //     width: 116,
+            //     height: 28,
+            // },
+        ]),
         ];
     }
 
@@ -793,7 +864,7 @@ class AppsMarket extends React.Component {
                                    key={itemKey}
                                    style={{
                                        background: item.background || "#fff",
-                                       "border-color":
+                                       "borderColor":
                                            item.background || "#e0e0e0",
                                    }}
                                 >
@@ -837,7 +908,7 @@ class AppsMarket extends React.Component {
                                 key={itemKey}
                                 style={{
                                     background: item.background || "#fff",
-                                    "border-color":
+                                    "borderColor":
                                         item.background || "#e0e0e0",
                                 }}
                             >
@@ -871,30 +942,30 @@ class AppsMarket extends React.Component {
                                     width: 108,
                                     height: 32,
                                 },
-                                {
-                                    id: "07",
-                                    background: "#004F9D",
-                                    dsKey: "",
-                                    enabled: false,
-                                    premium: false,
-                                    commingSoon: true,
-                                    brandName: "Facebook Ads",
-                                    brandLogo: "/facebookAds.svg",
-                                    width: 140,
-                                    height: 19,
-                                },
-                                {
-                                    id: "08",
-                                    background: "radial-gradient(126.96% 126.96% at 6.47% 97.81%, #FA8F21 9%, #D82D7E 78%)",
-                                    dsKey: "",
-                                    enabled: false,
-                                    premium: false,
-                                    commingSoon: true,
-                                    brandName: "Instagram",
-                                    brandLogo: "/instagram.svg",
-                                    width: 142,
-                                    height: 32,
-                                },
+                                // {
+                                //     id: "07",
+                                //     background: "#004F9D",
+                                //     dsKey: "",
+                                //     enabled: false,
+                                //     premium: false,
+                                //     commingSoon: true,
+                                //     brandName: "Facebook Ads",
+                                //     brandLogo: "/facebookAds.svg",
+                                //     width: 140,
+                                //     height: 19,
+                                // },
+                                // {
+                                //     id: "08",
+                                //     background: "radial-gradient(126.96% 126.96% at 6.47% 97.81%, #FA8F21 9%, #D82D7E 78%)",
+                                //     dsKey: "",
+                                //     enabled: false,
+                                //     premium: false,
+                                //     commingSoon: true,
+                                //     brandName: "Instagram",
+                                //     brandLogo: "/instagram.svg",
+                                //     width: 142,
+                                //     height: 32,
+                                // },
                                 {
                                     id: "29",
                                     background: "#0A0A0A",
@@ -1039,22 +1110,22 @@ class AppsMarket extends React.Component {
                                     width: 114,
                                     height: 30,
                                 },
-                                {
-                                    id: "09",
-                                    background: "#1DA1F2",
-                                    dsKey: "is_ds_twitter_tracking_enabled",
-                                    connected: this.state.userServices["is_ds_twitter_tracking_enabled"],
-                                    premium: false,
-                                    commingSoon: true,
-                                    brandName: "Twitter",
-                                    brandLogo: "/twitter.svg",
-                                    width: 100,
-                                    height: 26,
-                                },
+                                // {
+                                //     id: "09",
+                                //     background: "#1DA1F2",
+                                //     dsKey: "is_ds_twitter_tracking_enabled",
+                                //     connected: this.state.userServices["is_ds_twitter_tracking_enabled"],
+                                //     premium: false,
+                                //     commingSoon: true,
+                                //     brandName: "Twitter",
+                                //     brandLogo: "/twitter.svg",
+                                //     width: 100,
+                                //     height: 26,
+                                // },
                             ].map((item, itemKey) => (
                                 <div className="item" key={itemKey} style={{
                                     background: item.background || "#fff",
-                                    "border-color": item.background || "#e0e0e0",
+                                    "borderColor": item.background || "#e0e0e0",
                                 }}>
                                     {item.enabled ? (<i className="active fa fa-check-circle"></i>) : null}
                                     <img src={item.brandLogo} alt={item.brandName} className="svg-inject"
@@ -1220,8 +1291,17 @@ class AppsMarket extends React.Component {
                                 userDataSourceAddHandler={
                                     this.userDataSourceAddHandler
                                 }
+                                userDataSourceAddAllHandler={
+                                    this.userDataSourceAddAllHandler
+                                }
                                 userDataSourceDeleteHandler={
                                     this.userDataSourceDeleteHandler
+                                }
+                                userDataSourceUpdateHandler={
+                                    this.userDataSourceUpdateHandler
+                                }
+                                onUncheckAllCallback={
+                                    this.onUncheckAllCallback
                                 }
                                 updateUserService={this.updateUserService}
                                 reloadWebMonitors={this.reloadWebMonitors}
@@ -1247,12 +1327,22 @@ class AppsMarket extends React.Component {
                                 }
                                 serviceStatusHandler={this.serviceStatusHandler}
                                 changeShownHint={this.changeShownHint}
+                                updateUserService={this.updateUserService}
                                 sectionToggler={this.sectionToggler}
                                 userDataSourceAddHandler={
                                     this.userDataSourceAddHandler
                                 }
                                 userDataSourceDeleteHandler={
                                     this.userDataSourceDeleteHandler
+                                }
+                                userDataSourceUpdateHandler={
+                                    this.userDataSourceUpdateHandler
+                                }
+                                userDataSourceAddAllHandler={
+                                    this.userDataSourceAddAllHandler
+                                }
+                                onUncheckAllCallback={
+                                    this.onUncheckAllCallback
                                 }
                                 reloadWebMonitors={this.reloadWebMonitors}
                                 loadUserDataSources={this.loadUserDataSources}
@@ -1286,6 +1376,15 @@ class AppsMarket extends React.Component {
                                 userDataSourceDeleteHandler={
                                     this.userDataSourceDeleteHandler
                                 }
+                                onUncheckAllCallback={
+                                    this.onUncheckAllCallback
+                                }
+                                userDataSourceUpdateHandler={
+                                    this.userDataSourceUpdateHandler
+                                }
+                                userDataSourceAddAllHandler={
+                                    this.userDataSourceAddAllHandler
+                                }
                                 reloadWebMonitors={this.reloadWebMonitors}
                                 loadUserDataSources={this.loadUserDataSources}
                                 updateGAPropertyId={(value) => {
@@ -1316,6 +1415,9 @@ class AppsMarket extends React.Component {
                                 }
                                 userDataSourceDeleteHandler={
                                     this.userDataSourceDeleteHandler
+                                }
+                                userDataSourceUpdateHandler={
+                                    this.userDataSourceUpdateHandler
                                 }
                                 reloadWebMonitors={this.reloadWebMonitors}
                                 loadUserDataSources={this.loadUserDataSources}
@@ -1424,6 +1526,9 @@ class AppsMarket extends React.Component {
                                 userDataSourceDeleteHandler={
                                     this.userDataSourceDeleteHandler
                                 }
+                                userDataSourceUpdateHandler={
+                                    this.userDataSourceUpdateHandler
+                                }
                                 reloadWebMonitors={this.reloadWebMonitors}
                                 loadUserDataSources={this.loadUserDataSources}
                                 updateGAPropertyId={(value) => {
@@ -1456,6 +1561,9 @@ class AppsMarket extends React.Component {
                                 }
                                 userDataSourceDeleteHandler={
                                     this.userDataSourceDeleteHandler
+                                }
+                                userDataSourceUpdateHandler={
+                                    this.userDataSourceUpdateHandler
                                 }
                                 reloadWebMonitors={this.reloadWebMonitors}
                                 loadUserDataSources={this.loadUserDataSources}
@@ -1529,8 +1637,39 @@ class AppsMarket extends React.Component {
                                 }}
                             />
                         ) : this.state.dsKey ===
-                        "is_ds_create_annotation_enabled" ? (
-                            <Twitter
+                        "is_ds_facebook_tracking_enabled" ? (
+                            <Facebook
+                                {...this.state}
+                                {...this.props}
+                                closeModal={() => {
+                                    this.setState({
+                                        dsKey: "",
+                                        dsKeySkip: ""
+                                    });
+                                }}
+                                updateUserAnnotationColors={
+                                    this.updateUserAnnotationColors
+                                }
+                                serviceStatusHandler={this.serviceStatusHandler}
+                                changeShownHint={this.changeShownHint}
+                                sectionToggler={this.sectionToggler}
+                                userDataSourceAddHandler={
+                                    this.userDataSourceAddHandler
+                                }
+                                userDataSourceDeleteHandler={
+                                    this.userDataSourceDeleteHandler
+                                }
+                                reloadWebMonitors={this.reloadWebMonitors}
+                                loadUserDataSources={this.loadUserDataSources}
+                                updateGAPropertyId={(value) => {
+                                    this.setState({
+                                        ga_property_id: value,
+                                    });
+                                }}
+                            />
+                        ) : this.state.dsKey ===
+                        "is_ds_instagram_tracking_enabled" ? (
+                            <Instagram
                                 {...this.state}
                                 {...this.props}
                                 closeModal={() => {
@@ -1601,6 +1740,30 @@ class AppsMarket extends React.Component {
                             isBusy: false,
                             errors: undefined,
                             userInstagramAccountsExists: true,
+                        });
+                    }
+                },
+                (err) => {
+                    this.setState({isBusy: false, errors: err.response.data});
+                    status = false;
+                },
+                this
+            )
+            .catch((err) => {
+                this.setState({isBusy: false, errors: err});
+                status = false;
+            });
+
+        //userTwitterAccountsExists
+        this.setState({isBusy: true});
+        HttpClient.get("/data-source/user-twitter-accounts-exists", {})
+            .then(
+                (resp) => {
+                    if (resp.data.exists) {
+                        this.setState({
+                            isBusy: false,
+                            errors: undefined,
+                            userTwitterAccountsExists: true,
                         });
                     }
                 },
@@ -1698,6 +1861,12 @@ class AppsMarket extends React.Component {
         })
             .then(
                 (resp) => {
+                    if (e.target.name === 'wordpress_updates') {
+                        Toast.fire({
+                            icon: 'success',
+                            title: "Successfully saved wordpress updates settings.",
+                        });
+                    }
                     switch (e.target.name) {
                         case "is_ds_twitter_tracking_enabled":
                             if (resp.data.twitter_accounts > 0) {
@@ -1809,8 +1978,9 @@ class AppsMarket extends React.Component {
     }
 
     serviceStatusHandler(e) {
-        if(this.props.user.price_plan.name == 'Trial Ended')
-        {
+
+        console.log('test')
+        if (this.props.user.price_plan.name == 'Trial Ended') {
             if (e.target.name === 'is_ds_keyword_tracking_enabled') {
                 this.props.upgradePopup('rank-tracking-access')
             }
@@ -1850,12 +2020,12 @@ class AppsMarket extends React.Component {
                 this.props.upgradePopup('integrations')
             }
 
-        }else{
+        } else {
             if (this.props.user.price_plan.has_data_sources) {
                 if (e.persist) {
                     e.persist();
                 }
-    
+
                 if (e.target.name == "is_ds_holidays_enabled" && e.target.checked) {
                     this.sectionToggler("holidays");
                     this.updateUserService(e);
@@ -1931,7 +2101,7 @@ class AppsMarket extends React.Component {
                     this.sectionToggler(null);
                     this.updateUserService(e);
                 }
-    
+
                 if (
                     e.target.name == "is_ds_shopify_annotation_enabled" &&
                     e.target.checked
@@ -1971,7 +2141,7 @@ class AppsMarket extends React.Component {
                     this.sectionToggler(null);
                     this.updateUserService(e);
                 }
-    
+
                 if (
                     e.target.name == "is_ds_apple_podcast_annotation_enabled" &&
                     e.target.checked
@@ -2043,7 +2213,7 @@ class AppsMarket extends React.Component {
                     this.sectionToggler(null);
                     this.updateUserService(e);
                 }
-    
+
                 if (
                     e.target.name == "is_ds_bitbucket_tracking_enabled" &&
                     e.target.checked
@@ -2075,7 +2245,7 @@ class AppsMarket extends React.Component {
                     this.sectionToggler(null);
                     this.updateUserService(e);
                 }
-    
+
                 if (
                     e.target.name == "is_ds_github_tracking_enabled" &&
                     e.target.checked
@@ -2107,13 +2277,42 @@ class AppsMarket extends React.Component {
                     this.sectionToggler(null);
                     this.updateUserService(e);
                 }
-    
-                if (e.target.name == "is_ds_twitter_tracking_enabled") {
+
+                if (
+                    e.target.name == "is_ds_twitter_tracking_enabled" &&
+                    e.target.checked
+                ) {
+                    if (this.state.userTwitterAccountsExists) {
+                        this.sectionToggler("twitter_tracking");
+                        this.updateUserService(e, this);
+                    } else {
+                        swal.fire({
+                            customClass: {
+                                htmlContainer: "py-3",
+                            },
+                            showCloseButton: true,
+                            title: "Connect with Twitter",
+                            text: "Connect your Twitter account to create automatic annotations for new posts; when you reach a post goal or run campaigns..",
+                            confirmButtonClass:
+                                "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+                            confirmButtonText:
+                                "<a href='/socialite/twitter' class='text-white'><i class='mr-2 fa fa-twitter'> </i>" +
+                                "Connect Twitter Account</a>",
+                        });
+                    }
+                } else if (
+                    e.target.name == "is_ds_twitter_tracking_enabled" &&
+                    !e.target.checked
+                ) {
+                    this.sectionToggler(null);
                     this.updateUserService(e);
-                    this.sectionToggler(
-                        e.target.checked ? "twitter_tracking" : null
-                    );
                 }
+                // if (e.target.name == "is_ds_twitter_tracking_enabled") {
+                //     this.updateUserService(e);
+                //     this.sectionToggler(
+                //         e.target.checked ? "twitter_tracking" : null
+                //     );
+                // }
             } else {
                 if (e.target.name === 'is_ds_keyword_tracking_enabled') {
                     this.props.upgradePopup('rank-tracking-access')
@@ -2121,35 +2320,35 @@ class AppsMarket extends React.Component {
                 if (e.target.name === 'is_ds_google_alerts_enabled') {
                     this.props.upgradePopup('news-alert')
                 }
-    
+
                 if (e.target.name === 'is_ds_keyword_tracking_enabled') {
                     this.props.upgradePopup('rank-tracking-access')
                 }
-    
+
                 if (e.target.name === 'is_ds_weather_alerts_enabled' || e.target.name === 'is_ds_google_algorithm_updates_enabled') {
                     this.props.upgradePopup('integrations')
                 }
-    
+
                 if (e.target.name === 'is_ds_twitter_tracking_enabled') {
                     this.props.upgradePopup('social-media')
                 }
-    
+
                 if (e.target.name === 'is_ds_apple_podcast_annotation_enabled') {
                     this.props.upgradePopup('integrations')
                 }
-    
+
                 if (e.target.name === 'is_ds_github_tracking_enabled' || e.target.name === 'is_ds_bitbucket_tracking_enabled') {
                     this.props.upgradePopup('integrations')
                 }
-    
+
                 if (e.target.name === 'is_ds_retail_marketing_enabled' || e.target.name === 'is_ds_holidays_enabled') {
                     this.props.upgradePopup('integrations')
                 }
-    
+
                 if (e.target.name === 'is_ds_web_monitors_enabled') {
                     this.props.upgradePopup('website-monitoring-upgrade')
                 }
-    
+
                 if (e.target.name === 'is_ds_shopify_annotation_enabled') {
                     this.props.upgradePopup('integrations')
                 }
@@ -2170,7 +2369,29 @@ class AppsMarket extends React.Component {
         }
     }
 
-    userDataSourceAddHandler(dataSource) {
+
+    userDataSourceAddAllHandler(dataSources, dsCode = null) {
+        this.setState({isBusy: true});
+
+        HttpClient.post("/data-source/user-data-sources", {data: dataSources, ga_property_id: this.state.ga_property_id})
+            .then(
+                (resp) => {
+                    Toast.fire({
+                        icon: 'success',
+                        title: "Successfully added.",
+                    });
+                    this.loadUserDataSources();
+                },
+                (err) => {
+                    this.setState({isBusy: false, errors: err.response.data});
+                }
+            )
+            .catch((err) => {
+                this.setState({isBusy: false, errors: err});
+            });
+    }
+
+    userDataSourceAddHandler(dataSource, gaPropertyId = null) {
         this.setState({isBusy: true});
         let formData = {
             ds_code: dataSource.code,
@@ -2182,7 +2403,7 @@ class AppsMarket extends React.Component {
             status: dataSource.status,
             value: dataSource.value,
             is_enabled: 1,
-            ga_property_id: this.state.ga_property_id,
+            ga_property_id: gaPropertyId ? gaPropertyId : this.state.ga_property_id,
             workspace: dataSource.workspace,
         };
         HttpClient.post("/data-source/user-data-source", formData)
@@ -2190,6 +2411,34 @@ class AppsMarket extends React.Component {
                 (resp) => {
                     let uds = resp.data.user_data_source;
                     let ar = this.state.userDataSources[uds.ds_code];
+                    if (uds.ds_code == "wordpress_updates") {
+                        Toast.fire({
+                            icon: 'success',
+                            title: "Successfully saved wordpress updates settings.",
+                        });
+                    }
+
+                    if (uds.ds_code == "holidays") {
+                        Toast.fire({
+                            icon: 'success',
+                            title: "Successfully saved holidays settings.",
+                        });
+                    }
+
+                    if (uds.ds_code == "retail_marketings") {
+                        Toast.fire({
+                            icon: 'success',
+                            title: "Successfully saved dates for retail marketing settings.",
+                        });
+                    }
+
+                    if (uds.ds_code == "google_algorithm_update_dates") {
+                        Toast.fire({
+                            icon: 'success',
+                            title: "Successfully saved google update settings.",
+                        });
+                    }
+
                     if (uds.ds_code == "google_algorithm_update_dates") {
                         ar = [uds];
                     } else {
@@ -2212,6 +2461,7 @@ class AppsMarket extends React.Component {
                         isBusy: false,
                         errors: undefined,
                     });
+                    this.loadUserDataSources();
                 },
                 (err) => {
                     this.setState({isBusy: false, errors: err.response.data});
@@ -2260,12 +2510,36 @@ class AppsMarket extends React.Component {
             });
     }
 
+    userDataSourceUpdateHandler(userDataSourceId, gaPropertyId) {
+        this.setState({ isBusy: true });
+        HttpClient.put(`/data-source/user-data-source/${userDataSourceId}`, { gaPropertyId }).then(resp => {
+            this.loadUserDataSources();
+        }, (err) => {
+            this.setState({ isBusy: true, errors: err.response.data })
+        }).catch(err => {
+            this.setState({ isBusy: true, errors: err })
+        })
+    }
+
     userDataSourceDeleteHandler(userDataSourceId, dsCode) {
         this.setState({isBusy: true});
         HttpClient.delete(`/data-source/user-data-source/${userDataSourceId}`)
             .then(
                 (resp) => {
                     let ar = this.state.userDataSources[dsCode];
+                    if (dsCode == "wordpress_updates") {
+                        Toast.fire({
+                            icon: 'success',
+                            title: "Successfully saved wordpress updates settings.",
+                        });
+                    }
+                    if (dsCode == "google_algorithm_update_dates") {
+                        Toast.fire({
+                            icon: 'success',
+                            title: "Successfully saved google update settings.",
+                        });
+                    }
+
                     let newAr = ar.filter((a) => a.id != userDataSourceId);
                     if (
                         dsCode == "bitbucket_tracking" ||
@@ -2283,6 +2557,26 @@ class AppsMarket extends React.Component {
                         isBusy: false,
                         errors: undefined,
                     });
+                },
+                (err) => {
+                    this.setState({isBusy: false, errors: err.response.data});
+                }
+            )
+            .catch((err) => {
+                this.setState({isBusy: false, errors: err});
+            });
+    }
+
+    onUncheckAllCallback(userDataSourceIds, dsCode) {
+        this.setState({isBusy: true});
+        HttpClient.post(`/data-source/user-data-sources/delete`, {userDataSourceIds})
+            .then(
+                (resp) => {
+                    Toast.fire({
+                        icon: 'success',
+                        title: "Successfully removed.",
+                    });
+                    this.loadUserDataSources();
                 },
                 (err) => {
                     this.setState({isBusy: false, errors: err.response.data});

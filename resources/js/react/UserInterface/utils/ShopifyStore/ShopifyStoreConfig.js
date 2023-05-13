@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Toast from "../../utils/Toast";
 import HttpClient from "../HttpClient";
 import "./ShopifyStoreConfig.css";
+import {CustomTooltip} from "../../components/annotations/IndexAnnotation";
 
 import {
     Button,
@@ -160,15 +161,18 @@ const ShopifyStoreConfig = (props) => {
                                     }}
                                     id={"gAK-" + gAK.id}
                                     type="button"
-                                    className="keywordTag"
+                                    className="keywordTag dd-tooltip d-flex"
                                     key={gAK.id}
                                     user_data_source_id={gAK.id}
                                 >
-                                    <span
-                                        style={{ background: "#2d9cdb" }}
-                                        className="dot"
-                                    ></span>
-                                    {gAK.url}
+                                    <CustomTooltip tooltipText={`${gAK.google_analytics_property.name} - ${gAK.url}`}
+                                                       maxLength={50}>
+                                        <span
+                                            style={{background: "#2d9cdb"}}
+                                            className="dot"
+                                        ></span>
+                                        {gAK.url}
+                                    </CustomTooltip>
                                 </button>
 
                                 <Popover

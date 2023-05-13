@@ -11,7 +11,7 @@ export default function TopNoticeBar(props) {
                 backgroundImage: props.backgroundColor,
                 textAlign: "center",
                 padding: "5px",
-                top: "0px",
+                top: "-7px",
                 left: "0px",
                 position: "fixed",
                 zIndex: 800,

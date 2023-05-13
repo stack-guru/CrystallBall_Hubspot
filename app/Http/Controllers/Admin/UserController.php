@@ -22,20 +22,20 @@ class UserController extends Controller
 
         if (request()->ajax()) {
             $table = User::select([
-                'id',
-                'team_name',
-                'department',
-                'name',
-                'email',
-                'price_plan_id',
-                'price_plan_expiry_date',
-                'user_id',
-                'created_at',
-                'email_verified_at',
-                'phone_verified_at',
-                'password',
-                'has_password',
-                'price_plan_settings',
+                'users.id',
+                'users.name',
+                'users.created_at',
+                'users.team_name',
+                'users.department',
+                'users.email',
+                'users.price_plan_id',
+                'users.price_plan_expiry_date',
+                'users.user_id',
+                'users.email_verified_at',
+                'users.phone_verified_at',
+                'users.password',
+                'users.has_password',
+                'users.price_plan_settings',
             ])->with([
                 'pricePlan:id,name',
                 'user:id,email',
@@ -126,6 +126,14 @@ class UserController extends Controller
                             <button type="button"
                                 onclick="document.getElementById('makeOwnerUserForm<?=$row->id?>').submit()"
                                 class="btn btn-secondary m-2">Make Owner</button>
+                            <form id="verifyUserForm<?=$row->id?>" method="POST"
+                                action="<?=route('admin.user.email-verify', $row->id)?>">
+                                <?=csrf_field()?>
+                                <?=method_field("PUT")?>
+                            </form>
+                            <button type="button"
+                                onclick="document.getElementById('verifyUserForm<?=$row->id?>').submit()"
+                                class="btn btn-info m-2">Verify Email</button>
                         </div>
                     <?php
                     return ob_get_clean();
@@ -231,6 +239,16 @@ class UserController extends Controller
             'user_id' => $newOwnerId,
         ]);
 
+        return redirect()->route('admin.user.index')->with('success', true);
+    }
+    public function emailVerify(User $user)
+    {
+        if ($user->email_verified_at) {
+            return redirect()->route('admin.user.index')->with('error', "User Email is already verified");
+        }
+        User::where('id', $user->id)->update([
+            'email_verified_at' => Carbon::now(),
+        ]);
         return redirect()->route('admin.user.index')->with('success', true);
     }
 }

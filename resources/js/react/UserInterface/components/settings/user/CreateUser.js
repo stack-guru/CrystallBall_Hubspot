@@ -4,11 +4,11 @@ import {Redirect} from 'react-router-dom'
 
 import ErrorAlert from '../../../utils/ErrorAlert'
 import HttpClient from '../../../utils/HttpClient'
-import GoogleAnalyticsAccountSelect from "../../../utils/GoogleAnalyticsAccountSelect";
 import UserTeamNameSelect from "../../../utils/UserTeamNameSelect";
 import SpinningLoader from '../../../utils/SpinningLoader'
 import {Button} from 'reactstrap';
 import CreatableSelect from "react-select/creatable";
+import GoogleAnalyticsPropertySelect from "../../../utils/GoogleAnalyticsPropertySelect";
 
 export default class CreateUser extends Component {
     constructor(props) {
@@ -17,7 +17,8 @@ export default class CreateUser extends Component {
         this.state = {
             user: {
                 name: '', email: '', password: '', password_confirmation: '', user_level: 'admin', department: '',
-                google_analytics_account_id: [""], team_name: ""
+                google_analytics_property_id: [""],
+                team_name: ""
             },
             errors: undefined,
             redirectTo: null,
@@ -56,18 +57,23 @@ export default class CreateUser extends Component {
 
     getUsers() {
         HttpClient.get(`/settings/user`)
+            // HttpClient.get('/ui/settings/google-analytics-property?keyword=' + keyword)
             .then(
                 (response) => {
                     // filter out unique department names from response.data.users
                     let departmentNames = response.data.users.map(user => user.department).filter((value, index, self) => self.indexOf(value) === index);
-                    this.setState({ departmentNames: departmentNames.map(tN => { return { label: tN, value: tN } }) });
+                    this.setState({
+                        departmentNames: departmentNames.map(tN => {
+                            return {label: tN, value: tN}
+                        })
+                    });
                 },
                 (err) => {
-                    this.setState({ errors: err.response.data });
+                    this.setState({errors: err.response.data});
                 }
             )
             .catch((err) => {
-                this.setState({ errors: err });
+                this.setState({errors: err});
             });
     }
 
@@ -85,7 +91,8 @@ export default class CreateUser extends Component {
                     this.setDefaultState();
                 });
 
-                if(!this.props.userStartupConfig) {
+                // console.log("responce >>>>>>>>>>>",response)
+                if (!this.props.userStartupConfig) {
                     // this.setState({redirectTo: "/settings/user"})
                     this.props.getUsers();
                     this.props.toggle();
@@ -154,11 +161,14 @@ export default class CreateUser extends Component {
                             <CreatableSelect
                                 name={"department"}
                                 disabled={false}
-                                value={this.state.user.department ? { label: this.state.user.department, value: this.state.user.department }: []}
+                                value={this.state.user.department ? {
+                                    label: this.state.user.department,
+                                    value: this.state.user.department
+                                } : []}
                                 id={"department"}
                                 isMulti={false}
                                 onChange={(sOption) => {
-                                    this.changeHandler({ target: { name: 'department', value: sOption.value } });
+                                    this.changeHandler({target: {name: 'department', value: sOption.value}});
                                 }}
                                 options={this.state.departmentNames}
                                 placeholder={"Department"}
@@ -169,12 +179,18 @@ export default class CreateUser extends Component {
 
                     <div className='grid2layout'>
                         <div className="themeNewInputStyle">
-                            <GoogleAnalyticsAccountSelect name="google_analytics_account_id"
-                                                          id="google_analytics_account_id"
-                                                          value={this.state.user.google_analytics_account_id}
-                                                          onChangeCallback={this.changeHandler}
-                                                          placeholder="Select Properties"
-                                                          multiple></GoogleAnalyticsAccountSelect>
+                            <GoogleAnalyticsPropertySelect
+                                name="google_analytics_property_id"
+                                id="google_analytics_property_id" className="gray_clr"
+                                onChangeCallback={this.changeHandler}
+                                placeholder="Select Properties" components={{
+                                DropdownIndicator: () => null,
+                                IndicatorSeparator: () => null
+                            }}
+                                multiple
+                                currentPricePlan={this.props.user.price_plan}
+                            />
+
                         </div>
 
                         <div className="themeNewInputStyle">

@@ -3,12 +3,16 @@ import Select from 'react-select'
 import HttpClient from "./HttpClient";
 import SearchEngineSelect from "./SearchEngineSelect";
 import FacebookPagesSelect from "./FacebookPagesSelect";
+import GoogleAnalyticsPropertySelect from "./GoogleAnalyticsPropertySelect";
 
 export default class FacebookTracking extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             isBusy: false,
+            gaPropertyId: null,
+            gaPropertyName: null,
+            editProperty: null,
             errors: "",
             facebook_pages: [],
             selected_facebook_pages: [],
@@ -21,6 +25,7 @@ export default class FacebookTracking extends React.Component {
             is_post_comments_tracking_on: true,
             is_post_views_tracking_on: true,
             is_post_shares_tracking_on: true,
+            configuration_id: null,
 
             when_post_reach_likes: 1000,
             when_post_reach_comments: 1000,
@@ -58,6 +63,9 @@ export default class FacebookTracking extends React.Component {
                 is_post_comments_tracking_on: resp.data.is_post_comments_tracking_on,
                 is_post_views_tracking_on: resp.data.is_post_views_tracking_on,
                 is_post_shares_tracking_on: resp.data.is_post_shares_tracking_on,
+                gaPropertyId: resp.data.ga_property_id,
+                gaPropertyName: resp.data.gaPropertyName,
+                configuration_id: resp.data.configuration_id
 
             });
             document.getElementById('when_new_post_on_facebook').checked = resp.data.when_new_post_on_facebook;
@@ -98,9 +106,11 @@ export default class FacebookTracking extends React.Component {
             is_post_comments_tracking_on: this.state.is_post_comments_tracking_on,
             is_post_views_tracking_on: this.state.is_post_views_tracking_on,
             is_post_shares_tracking_on: this.state.is_post_shares_tracking_on,
+
+            ga_property_id: this.state.gaPropertyId,
         }
         HttpClient.post('/data-source/save-facebook-tracking-configurations', form_data).then(resp => {
-            this.setState({facebook_pages: resp.data.facebook_pages, isBusy: false});
+            this.setState({facebook_pages: resp.data.facebook_pages, isBusy: false, gaPropertyName: resp.data.gaPropertyName, configuration_id: true, editProperty: false});
             const Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',
@@ -136,13 +146,51 @@ export default class FacebookTracking extends React.Component {
                 <div className="weather_alert_cities-form">
                     <h4 className="gaa-text-primary">Configure Facebook</h4>
                     <label>Select Facebook Pages</label>
-                    <div className="w-100 mb-3">
+                    <div className="d-flex align-items-center">
+                        <div className="w-50">
                         {/*<Select options={this.state.facebook_pages} isMulti onChange={this.pagesOnChangeHandler} value={this.selected_facebook_pages} />*/}
                         <FacebookPagesSelect className="gray_clr" multiple name="facebook_page" id="facebook_page"
-                                             value={this.state.selected_facebook_pages}
-                                             onChangeCallback={this.changePageHandler}
-                                             placeholder="Select Facebook Page"/>
+                            value={this.state.selected_facebook_pages}
+                            onChangeCallback={this.changePageHandler}
+                            placeholder="Select Facebook Page"/>
+                        </div>
+                        <div className="w-50 text-right">
+                        {!this.state.configuration_id || this.state.editProperty
+                        ?
+                            <div className="d-flex align-items-center w-100">
+                                <span className="betweentext">for</span>
+                                <GoogleAnalyticsPropertySelect
+                                    className="themeNewselect hide-icon"
+                                    name="ga_property_id"
+                                    id="ga_property_id"
+                                    currentPricePlan={this.props.user.price_plan}
+                                    value={this.state.gaPropertyId}
+                                    onChangeCallback={(gAP) => {
+                                        this.setState({gaPropertyId: gAP.target.value || null})
+                                    }}
+                                    placeholder="Select GA Properties"
+                                    isClearable={true}
+                                />
+                            {
+                                this.state.editProperty
+                                ?
+                                <i className="ml-2 icon fa" onClick={() => this.setState({ editProperty: false })}>
+                                    <img className="w-14px" src='/close-icon.svg' />
+                                </i>
+                                : ""
+                            }
+                            </div>
+                        :
+                            <>
+                            <span>{this.state.gaPropertyName ? this.state.gaPropertyName : "All Properties"}</span>
+                            <i className="ml-2 icon fa" onClick={() => this.setState({ editProperty: true })}>
+                                <img className="w-20px" src='/icon-edit.svg' />
+                            </i>
+                            </>
+                        }
+                        </div>
                     </div>
+
 
                     <h5 className="gaa-text-primary"><b>Create Annotation When:</b></h5>
 

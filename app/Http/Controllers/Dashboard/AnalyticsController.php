@@ -11,6 +11,10 @@ use App\Models\GoogleAnalyticsProperty;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Carbon;
 use App\Helpers\AnnotationQueryHelper;
+use App\Exports\AnalyticFullExport;
+use App\Models\GoogleSearchConsoleSite;
+use App\Models\GoogleSearchConsoleStatistics;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AnalyticsController extends Controller
 {
@@ -56,7 +60,8 @@ class AnalyticsController extends Controller
 
         $gAProperty = GoogleAnalyticsProperty::findOrFail($request->query('ga_property_id'));
         if (!in_array($gAProperty->user_id, $userIdsArray)) {
-            abort(404, "Unable to find Google Analytics Property for the given id.");
+            return ['statistics' => [], 'google_account' => []];
+            // abort(404, "Unable to find Google Analytics Property for the given id.");
         }
 
         $user = Auth::user();
@@ -130,7 +135,7 @@ class AnalyticsController extends Controller
             'ga_property_id' => 'bail | required | numeric | exists:google_analytics_properties,id'
         ]);
 
-        $this->authorize('viewAny', Annotation::class);
+        // $this->authorize('viewAny', Annotation::class);
         $statisticsPaddingDays = $request->query('statistics_padding_days');
         $startDate = $request->query('start_date');
         $endDate = $request->query('end_date');
@@ -140,7 +145,8 @@ class AnalyticsController extends Controller
 
         $gAProperty = GoogleAnalyticsProperty::findOrFail($request->query('ga_property_id'));
         if (!in_array($gAProperty->user_id, $userIdsArray)) {
-            abort(404, "Unable to find Google Analytics Property for the given id.");
+            return ['annotations' => []];
+            // abort(404, "Unable to find Google Analytics Property for the given id.");
         }
         $annotationsQuery = "SELECT `TempTable`.* FROM (";
         $annotationsQuery .= AnnotationQueryHelper::allAnnotationsUnionQueryString($user, $request->query('ga_property_id'), $userIdsArray);
@@ -202,7 +208,8 @@ class AnalyticsController extends Controller
 
         $gAProperty = GoogleAnalyticsProperty::findOrFail($request->query('ga_property_id'));
         if (!in_array($gAProperty->user_id, $userIdsArray)) {
-            abort(404, "Unable to find Google Analytics Property for the given id.");
+            return ['statistics' => []];
+            // abort(404, "Unable to find Google Analytics Property for the given id.");
         }
         $statistics = GoogleAnalyticsMetricDimension::selectRaw('medium_name, SUM(users_count) as sum_users_count')
             ->groupBy('medium_name')
@@ -225,7 +232,8 @@ class AnalyticsController extends Controller
 
         $gAProperty = GoogleAnalyticsProperty::findOrFail($request->query('ga_property_id'));
         if (!in_array($gAProperty->user_id, $userIdsArray)) {
-            abort(404, "Unable to find Google Analytics Property for the given id.");
+            return ['statistics' => []];
+            // abort(404, "Unable to find Google Analytics Property for the given id.");
         }
         $statistics = GoogleAnalyticsMetricDimension::selectRaw('source_name, SUM(users_count) as sum_users_count, SUM(events_count) as sum_events_count, SUM(conversions_count) as sum_conversions_count')
             ->groupBy('source_name')
@@ -249,7 +257,8 @@ class AnalyticsController extends Controller
 
         $gAProperty = GoogleAnalyticsProperty::findOrFail($request->query('ga_property_id'));
         if (!in_array($gAProperty->user_id, $userIdsArray)) {
-            abort(404, "Unable to find Google Analytics Property for the given id.");
+            return ['statistics' => []];
+            // abort(404, "Unable to find Google Analytics Property for the given id.");
         }
         $statistics = GoogleAnalyticsMetricDimension::selectRaw('device_category, SUM(users_count) as sum_users_count, SUM(events_count) as sum_events_count, SUM(conversions_count) as sum_conversions_count')
             ->groupBy('device_category')
@@ -260,6 +269,39 @@ class AnalyticsController extends Controller
         return ['statistics' => $statistics];
     }
 
+    public function devicesIndexByImpression(Request $request)
+    {
+        
+        $this->validate($request, [
+            'start_date' => 'required|date|after:2005-01-01|before:today|before:end_date',
+            'end_date' => 'required|date|after:2005-01-01|after:start_date',
+            'ga_property_id' => 'required'
+        ]);
+
+        $userIdsArray = (Auth::user())->getAllGroupUserIdsArray();
+
+        $gAProperty = GoogleAnalyticsProperty::findOrFail($request->query('ga_property_id'));
+        if(!$gAProperty->google_search_console_site_id)
+        {
+            return ['statistics' => [],'upgradePopup' => true];
+        }
+        if (!in_array($gAProperty->user_id, $userIdsArray) || !$gAProperty->google_search_console_site_id) {
+            // abort(404, "Unable to find Google Analytics Property for the given id.");
+            return ['statistics' => [],'upgradePopup' => false];
+        }
+        $gSCSite = GoogleSearchConsoleSite::findOrFail($gAProperty->google_search_console_site_id);
+        if (!in_array($gSCSite->user_id, $userIdsArray)) {
+            return ['statistics' => [],'upgradePopup' => false];
+            // abort(404, "Unable to find Google Search Console Site for the given id.");
+        }
+        $statistics = GoogleSearchConsoleStatistics::selectRaw('device, SUM(clicks_count) as sum_clicks_count, SUM(impressions_count) as sum_impressions_count')
+            ->groupBy('device')
+            ->whereBetween('statistics_date', [$request->query('start_date'), $request->query('end_date')])
+            ->where('google_search_console_site_id', $gSCSite->id)
+            ->get();
+
+        return ['statistics' => $statistics,'upgradePopup' => false];
+    }
     public function usersDaysIndex(Request $request)
     {
         $this->validate($request, [
@@ -272,7 +314,8 @@ class AnalyticsController extends Controller
 
         $gAProperty = GoogleAnalyticsProperty::findOrFail($request->query('ga_property_id'));
         if (!in_array($gAProperty->user_id, $userIdsArray)) {
-            abort(404, "Unable to find Google Analytics Property for the given id.");
+            return ['statistics' => []];
+            // abort(404, "Unable to find Google Analytics Property for the given id.");
         }
         $statistics = GoogleAnalyticsMetricDimension::selectRaw('statistics_date, SUM(users_count) as sum_users_count')
             ->groupBy('statistics_date')
@@ -282,5 +325,53 @@ class AnalyticsController extends Controller
             ->get();
 
         return ['statistics' => $statistics];
+    }
+    public function countriesIndex(Request $request)
+    {
+        $this->validate($request, [
+            'start_date' => 'required|date|after:2005-01-01|before:today|before:end_date',
+            'end_date' => 'required|date|after:2005-01-01|after:start_date',
+            'ga_property_id' => 'required'
+        ]);
+
+        $userIdsArray = (Auth::user())->getAllGroupUserIdsArray();
+
+        $gAProperty = GoogleAnalyticsProperty::findOrFail($request->query('ga_property_id'));
+        if (!in_array($gAProperty->user_id, $userIdsArray) || !$gAProperty->google_search_console_site_id) {
+            return ['statistics' => []];
+            // abort(404, "Unable to find Google Analytics Property for the given id.");
+        }
+        $gSCSite = GoogleSearchConsoleSite::findOrFail($gAProperty->google_search_console_site_id);
+        if (!in_array($gSCSite->user_id, $userIdsArray)) {
+            return ['statistics' => []];
+            // abort(404, "Unable to find Google Search Console Site for the given id.");
+        }
+        $statistics = GoogleSearchConsoleStatistics::selectRaw('country, SUM(clicks_count) as sum_clicks_count, SUM(impressions_count) as sum_impressions_count')
+            ->groupBy('country')
+            ->whereBetween('statistics_date', [$request->query('start_date'), $request->query('end_date')])
+            ->where('google_search_console_site_id', $gSCSite->id)
+            ->orderBy('sum_clicks_count', 'DESC')
+            ->get();
+
+        return ['statistics' => $statistics];
+    }
+    public function export(Request $request)
+    {
+        $data = [];
+        $data['topStatisticsIndex'] = $this->topStatisticsIndex($request);
+        $data['usersDaysAnnotationsIndex'] = $this->usersDaysAnnotationsIndex($request);
+        $data['annotationsMetricsDimensionsIndex'] = $this->annotationsMetricsDimensionsIndex($request);
+        $data['mediaIndex'] = $this->mediaIndex($request);
+        $data['sourcesIndex'] = $this->sourcesIndex($request);
+        $data['deviceCategoriesIndex'] = $this->deviceCategoriesIndex($request);
+        $data['devicesIndexByImpression'] = $this->devicesIndexByImpression($request);
+        $data['countriesIndex'] = $this->countriesIndex($request);
+        $searchConsole = new SearchConsoleController();
+        $data['consoletopStatisticsIndex'] = $searchConsole->topStatisticsIndex($request);
+        $data['clicksImpressionsDaysAnnotationsIndex'] = $searchConsole->clicksImpressionsDaysAnnotationsIndex($request);
+        $data['annotationsDatesIndex'] = $searchConsole->annotationsDatesIndex($request);
+        $data['queriesIndex'] = $searchConsole->queriesIndex($request);
+        $data['pagesIndex'] = $searchConsole->pagesIndex($request);
+        return Excel::download(new AnalyticFullExport($data), 'anyaltic_and_console_report.xlsx');
     }
 }
