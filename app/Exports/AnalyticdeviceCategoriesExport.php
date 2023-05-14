@@ -12,7 +12,7 @@ class AnalyticdeviceCategoriesExport implements FromCollection, WithTitle, WithH
 
     public function __construct($collection)
     {
-        $this->collection = $collection;
+        $this->collection = collect($collection);
     }
 
     public function collection()

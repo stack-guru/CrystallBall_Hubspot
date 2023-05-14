@@ -12,7 +12,7 @@ class AnalyticMediaExport implements FromCollection, WithTitle, WithHeadings
 
     public function __construct($collection)
     {
-        $this->collection = $collection;
+        $this->collection = collect($collection);
     }
 
     public function collection()
