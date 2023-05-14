@@ -18,10 +18,10 @@ class ConsoleTopStatisticsExport implements FromCollection, WithTitle, WithHeadi
 
     public function getArray($data)
     {
-        $collection[0]['Total Clicks'] = $data->sum_clicks_count;
-        $collection[0]['Total Impressions'] = $data->sum_impressions_count;
-        $collection[0]['Max Click Through Rate'] = $data->max_ctr_count;
-        $collection[0]['Min Position Rank'] = $data->min_position_rank;
+        $collection[0]['Total Clicks'] = $data->sum_clicks_count ?? 0;
+        $collection[0]['Total Impressions'] = $data->sum_impressions_count ?? 0;
+        $collection[0]['Max Click Through Rate'] = $data->max_ctr_count ?? 0;
+        $collection[0]['Min Position Rank'] = $data->min_position_rank ?? 0;
         $this->collection = collect($collection);
     }
     public function collection()
