@@ -12,7 +12,7 @@ class ConsoleQueriesIndexExport implements FromCollection, WithTitle, WithHeadin
 
     public function __construct($collection)
     {
-        $this->collection = $collection;
+        $this->collection = collect($collection);
     }
 
     public function collection()
