@@ -226,6 +226,7 @@ class FacebookAutomationRepository
                                         // check configuration if it's enabled to create annotation
                                         if ($configuraion->when_new_post_on_facebook) {
                                             $data = @$response['page_posts'][0]['attachments']['data'][0];
+                                            $data['configuration_id'] = $configuraion->id;
                                             $this->createAutomationAnnotation('when_new_post_on_facebook', $user, $data);
                                         }
                                     }
@@ -255,7 +256,8 @@ class FacebookAutomationRepository
                                                         if ($likes_fb >= $when_post_reach_likes){
                                                             $data = [
                                                                 "likes" => $likes_fb,
-                                                                "url" => @$facebook_page_post_from_facebook['attachments']['data'][0]['url']
+                                                                "url" => @$facebook_page_post_from_facebook['attachments']['data'][0]['url'],
+                                                                'configuration_id' => $configuraion->id
                                                             ];
                                                             $this->createAutomationAnnotation('when_post_reach_likes', $user, $data);
                                                         }
@@ -268,7 +270,8 @@ class FacebookAutomationRepository
                                                         if ($comments_fb >= $when_post_reach_comments){
                                                             $data = [
                                                                 "comments" => $comments_fb,
-                                                                "url" => @$facebook_page_post_from_facebook['attachments']['data'][0]['url']
+                                                                "url" => @$facebook_page_post_from_facebook['attachments']['data'][0]['url'],
+                                                                'configuration_id' => $configuraion->id
                                                             ];
                                                             $this->createAutomationAnnotation('when_post_reach_comments', $user, $data);
                                                         }
@@ -281,7 +284,8 @@ class FacebookAutomationRepository
                                                         if ($views_fb >= $when_post_reach_views){
                                                             $data = [
                                                                 "views" => $views_fb,
-                                                                "url" => @$facebook_page_post_from_facebook['attachments']['data'][0]['url']
+                                                                "url" => @$facebook_page_post_from_facebook['attachments']['data'][0]['url'],
+                                                                'configuration_id' => $configuraion->id
                                                             ];
                                                             $this->createAutomationAnnotation('when_post_reach_views', $user, $data);
                                                         }
@@ -294,7 +298,8 @@ class FacebookAutomationRepository
                                                         if ($shares_fb >= $when_post_reach_shares){
                                                             $data = [
                                                                 "shares" => $shares_fb,
-                                                                "url" => @$facebook_page_post_from_facebook['attachments']['data'][0]['url']
+                                                                "url" => @$facebook_page_post_from_facebook['attachments']['data'][0]['url'],
+                                                                'configuration_id' => $configuraion->id
                                                             ];
                                                             $this->createAutomationAnnotation('when_post_reach_shares', $user, $data);
                                                         }

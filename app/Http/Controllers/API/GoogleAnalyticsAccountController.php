@@ -13,7 +13,7 @@ class GoogleAnalyticsAccountController extends Controller
 
         return ['google_analytics_accounts' => array_merge(
             [
-                ['id' => '*', 'name' => 'No Filter'],
+                ['id' => '*', 'name' => 'All Users'],
             ],
             GoogleAnalyticsAccount::select('google_analytics_accounts.id', 'name')->ofCurrentUser()
                 ->distinct()

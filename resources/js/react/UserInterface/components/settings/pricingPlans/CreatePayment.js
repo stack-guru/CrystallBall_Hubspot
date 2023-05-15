@@ -40,6 +40,7 @@ export default class CreatePayment extends Component {
             },
             isBusy: false,
             isLoading: false,
+            loadingText: 'Processing payment, please wait!',
             isDirty: false,
             redirectTo: null,
             validation: {},
@@ -347,7 +348,7 @@ export default class CreatePayment extends Component {
                        <DowngradedPopup show={true} text={extra_alert} />
                     ))} */}
                     <Container>
-                        <LoaderAnimation show={this.state.isLoading} />
+                        <LoaderAnimation text={this.state.loadingText}  show={this.state.isLoading} />
                         <div className="pageHeader checkoutPageHead">
                             <h2 className="pageTitle">Checkout</h2>
                         </div>
@@ -507,7 +508,7 @@ export default class CreatePayment extends Component {
                                             <button className="btn-apply" type="button" onClick={this.applyCoupon}>Apply</button>
                                         </div>
 
-                                        <button type="submit" data-bluesnap="submitButton" className={`btn-payNow ${this.state.isBusy ? "disabled" : ''}`}>{this.state.isBusy ? 'Please Wait !! ' : 'Pay now'}</button>
+                                        <button type="submit" data-bluesnap="submitButton" className={`btn-payNow ${this.state.isBusy ? "disabled" : ''}`}>{this.state.isBusy ? 'Processing payment, please wait !! ' : 'Pay now'}</button>
                                         <div className='d-flex justify-content-center'>
                                             {/* <img className='d-block' src='/images/blueSnap.svg'/> */}
                                             <a target="_blank" href="https://home.bluesnap.com/"><img className='d-block' style={{width: 200}} src="/images/blueSnap.png" /></a>

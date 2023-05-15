@@ -39,7 +39,7 @@ export default class DSGAUDatesSelect extends React.Component {
 
     selectedStatusChanged(e) {
         this.setState({ [e.target.name]: e.target.value });
-        (this.props.onCheckCallback)({ code: 'google_algorithm_update_dates', name: 'GoogleAlgorithmUpdateDate', country_name: null, status: e.target.value })
+        (this.props.onCheckCallback)({ code: 'google_algorithm_update_dates', name: 'GoogleAlgorithmUpdateDate', country_name: null, status: e.target.value}, e.target.gaPropertyId )
         this.fetchUpdatesList(e.target.value);
     }
 
@@ -57,7 +57,7 @@ export default class DSGAUDatesSelect extends React.Component {
                         </select>
                     </div>
 
-                    <span className="betweentext">for</span>
+                    {/*<span className="betweentext">for</span>
                     <GoogleAnalyticsPropertySelect
                         className="themeNewselect hide-icon"
                         name="ga_property_id"
@@ -70,7 +70,7 @@ export default class DSGAUDatesSelect extends React.Component {
 
                             const currentValue = this.props.ds_data.length ? (this.props.ds_data[0].status ? this.props.ds_data[0].status : "") : ""
                             if (currentValue) {
-                                this.selectedStatusChanged({ target: { name: 'searchStatus', value: currentValue } });
+                                this.selectedStatusChanged({ target: { name: 'searchStatus', value: currentValue, gaPropertyId: gAP.target.value } });
                             } else {
                                 Toast.fire({
                                     icon: 'success',
@@ -80,7 +80,7 @@ export default class DSGAUDatesSelect extends React.Component {
                         }}
                         placeholder="Select GA Properties"
                         isClearable={true}
-                    />
+                    />*/}
                 </div>
 
                 {/*<div className="gray-box">

@@ -10,6 +10,7 @@ use App\Models\Annotation;
 use App\Models\GoogleSearchConsoleSite;
 use App\Http\Controllers\Controller;
 use App\Helpers\AnnotationQueryHelper;
+use App\Models\GoogleAnalyticsProperty;
 use Illuminate\Support\Carbon;
 
 class SearchConsoleController extends Controller
@@ -20,9 +21,24 @@ class SearchConsoleController extends Controller
         $this->validate($request, [
             'start_date' => 'required|date|after:2005-01-01|before:today|before:end_date',
             'end_date' => 'required|date|after:2005-01-01|after:start_date',
-            'google_search_console_site_id' => 'bail|required|numeric|exists:google_search_console_sites,id',
+            'ga_property_id' => 'required'
+            // 'google_search_console_site_id' => 'bail|required|numeric|exists:google_search_console_sites,id',
         ]);
-        $gSCSiteId = $request->google_search_console_site_id;
+        $userIdsArray = (Auth::user())->getAllGroupUserIdsArray();
+
+        $gAProperty = GoogleAnalyticsProperty::findOrFail($request->query('ga_property_id'));
+        if (!in_array($gAProperty->user_id, $userIdsArray) || !$gAProperty->google_search_console_site_id) {
+            $statistics[] = [
+                "sum_clicks_count" => "∞",
+                "sum_impressions_count" => "∞",
+                "max_ctr_count" => "∞",
+                "min_position_rank" => "∞",
+            ];
+            return ['statistics' => $statistics];
+        }
+        // abort(404, "Unable to find Google Search Console Site for the given id.");
+
+        $gSCSiteId = $gAProperty->google_search_console_site_id;
         $startDate = $request->start_date;
         $endDate = $request->end_date;
 
@@ -43,32 +59,47 @@ class SearchConsoleController extends Controller
         $this->validate($request, [
             'start_date' => 'required|date|after:2005-01-01|before:today|before:end_date',
             'end_date' => 'required|date|after:2005-01-01|after:start_date',
-            'google_search_console_site_id' => 'required',
+            'ga_property_id' => 'required',
             'statistics_padding_days' => 'required|numeric|between:0,7',
         ]);
 
+        
         $this->authorize('viewAny', Annotation::class);
         $startDate = $request->query('start_date');
         $endDate = $request->query('end_date');
         $statisticsPaddingDays = $request->query('statistics_padding_days');
 
         $userIdsArray = (Auth::user())->getAllGroupUserIdsArray();
-
-        $gSCSite = GoogleSearchConsoleSite::findOrFail($request->query('google_search_console_site_id'));
-        if (!in_array($gSCSite->user_id, $userIdsArray)) {
-            abort(404, "Unable to find Google Search Console Site for the given id.");
+        
+        $gAProperty = GoogleAnalyticsProperty::findOrFail($request->query('ga_property_id'));
+        if (!in_array($gAProperty->user_id, $userIdsArray) || !$gAProperty->google_search_console_site_id) {
+            $filledStatistics[] = [
+                "event_name" => null,
+                "category" => null,
+                "show_at" => null,
+                "description" => null,
+                "statistics_date" => null,
+                "seven_day_old_date" => null,
+                "sum_clicks_count" => "0",
+                "sum_impressions_count" => "0"
+            ];
+            return ['statistics' => $filledStatistics];
         }
-
+        $gSCSiteId = $gAProperty->google_search_console_site_id;
+        $gSCSite = GoogleSearchConsoleSite::findOrFail($gSCSiteId);
+        if (!in_array($gSCSite->user_id, $userIdsArray)) {
+            return ['statistics' => []];
+        }
         $user = Auth::user();
 
         $annotationsQuery = "SELECT `TempTable`.* FROM (";
-        $annotationsQuery .= AnnotationQueryHelper::allAnnotationsUnionQueryString($user, $request->query('google_search_console_site_id'), $userIdsArray);
+        $annotationsQuery .= AnnotationQueryHelper::allAnnotationsUnionQueryString($user, $gSCSiteId, $userIdsArray);
         $annotationsQuery .= ") AS TempTable";
         // LEFT JOIN to load all properties selected in annotations
         $annotationsQuery .= " LEFT JOIN annotation_ga_properties ON TempTable.id = annotation_ga_properties.annotation_id";
         // Apply google analytics property filter if the value for filter is provided
-        if ($request->query('google_search_console_site_id') && $request->query('google_search_console_site_id') !== '*') {
-            $annotationsQuery .= " and (annotation_ga_properties.google_analytics_property_id IS NULL OR annotation_ga_properties.google_analytics_property_id = " . $request->query('google_search_console_site_id') . ") ";
+        if ($gSCSiteId && $gSCSiteId !== '*') {
+            $annotationsQuery .= " and (annotation_ga_properties.google_analytics_property_id IS NULL OR annotation_ga_properties.google_analytics_property_id = " . $gSCSiteId . ") ";
         }
         $annotationsQuery .= " ORDER BY TempTable.show_at DESC";
 
@@ -128,7 +159,7 @@ class SearchConsoleController extends Controller
         $this->validate($request, [
             'start_date' => 'required|date|after:2005-01-01|before:today|before:end_date',
             'end_date' => 'required|date|after:2005-01-01|after:start_date',
-            'google_search_console_site_id' => 'required',
+            'ga_property_id' => 'required',
             'statistics_padding_days' => 'required|numeric|between:0,7',
         ]);
 
@@ -139,19 +170,22 @@ class SearchConsoleController extends Controller
 
         $user = Auth::user();
         $userIdsArray = $user->getAllGroupUserIdsArray();
-
-        $gSCSite = GoogleSearchConsoleSite::findOrFail($request->query('google_search_console_site_id'));
+        $gAProperty = GoogleAnalyticsProperty::findOrFail($request->query('ga_property_id'));
+        if (!in_array($gAProperty->user_id, $userIdsArray) || !$gAProperty->google_search_console_site_id) {
+            return ['annotations' => []];
+        }
+        $gSCSite = GoogleSearchConsoleSite::findOrFail($gAProperty->google_search_console_site_id);
         if (!in_array($gSCSite->user_id, $userIdsArray)) {
-            abort(404, "Unable to find Google Search Console Site for the given id.");
+            return ['annotations' => []];
         }
         $annotationsQuery = "SELECT `TempTable`.* FROM (";
-        $annotationsQuery .= AnnotationQueryHelper::allAnnotationsUnionQueryString($user, $request->query('google_search_console_site_id'), $userIdsArray);
+        $annotationsQuery .= AnnotationQueryHelper::allAnnotationsUnionQueryString($user, $gAProperty->google_search_console_site_id, $userIdsArray);
         $annotationsQuery .= ") AS TempTable";
         // LEFT JOIN to load all properties selected in annotations
         $annotationsQuery .= " LEFT JOIN annotation_ga_properties ON TempTable.id = annotation_ga_properties.annotation_id";
         // Apply google analytics property filter if the value for filter is provided
-        if ($request->query('google_search_console_site_id') && $request->query('google_search_console_site_id') !== '*') {
-            $annotationsQuery .= " and (annotation_ga_properties.google_analytics_property_id IS NULL OR annotation_ga_properties.google_analytics_property_id = " . $request->query('google_search_console_site_id') . ") ";
+        if ($gAProperty->google_search_console_site_id && $gAProperty->google_search_console_site_id !== '*') {
+            $annotationsQuery .= " and (annotation_ga_properties.google_analytics_property_id IS NULL OR annotation_ga_properties.google_analytics_property_id = " . $gAProperty->google_search_console_site_id . ") ";
         }
         $annotationsQuery .= " ORDER BY TempTable.show_at DESC";
 
@@ -197,14 +231,18 @@ class SearchConsoleController extends Controller
         $this->validate($request, [
             'start_date' => 'required|date|after:2005-01-01|before:today|before:end_date',
             'end_date' => 'required|date|after:2005-01-01|after:start_date',
-            'google_search_console_site_id' => 'required'
+            'ga_property_id' => 'required',
         ]);
 
         $userIdsArray = (Auth::user())->getAllGroupUserIdsArray();
 
-        $gSCSite = GoogleSearchConsoleSite::findOrFail($request->query('google_search_console_site_id'));
+        $gAProperty = GoogleAnalyticsProperty::findOrFail($request->query('ga_property_id'));
+        if (!in_array($gAProperty->user_id, $userIdsArray) || !$gAProperty->google_search_console_site_id) {
+            return ['statistics' => [],'google_account'=> []];
+        }
+        $gSCSite = GoogleSearchConsoleSite::findOrFail($gAProperty->google_search_console_site_id);
         if (!in_array($gSCSite->user_id, $userIdsArray)) {
-            abort(404, "Unable to find Google Search Console Site for the given id.");
+            return ['statistics' => [],'google_account'=> []];
         }
         $statistics = GoogleSearchConsoleStatistics::selectRaw('query, SUM(clicks_count) as sum_clicks_count, SUM(impressions_count) as sum_impressions_count')
             ->groupBy('query')
@@ -221,14 +259,18 @@ class SearchConsoleController extends Controller
         $this->validate($request, [
             'start_date' => 'required|date|after:2005-01-01|before:today|before:end_date',
             'end_date' => 'required|date|after:2005-01-01|after:start_date',
-            'google_search_console_site_id' => 'required'
+            'ga_property_id' => 'required',
         ]);
 
         $userIdsArray = (Auth::user())->getAllGroupUserIdsArray();
 
-        $gSCSite = GoogleSearchConsoleSite::findOrFail($request->query('google_search_console_site_id'));
+        $gAProperty = GoogleAnalyticsProperty::findOrFail($request->query('ga_property_id'));
+        if (!in_array($gAProperty->user_id, $userIdsArray) || !$gAProperty->google_search_console_site_id) {
+            return ['statistics' => []];
+        }
+        $gSCSite = GoogleSearchConsoleSite::findOrFail($gAProperty->google_search_console_site_id);
         if (!in_array($gSCSite->user_id, $userIdsArray)) {
-            abort(404, "Unable to find Google Search Console Site for the given id.");
+            return ['statistics' => []];
         }
         $statistics = GoogleSearchConsoleStatistics::selectRaw('page, SUM(clicks_count) as sum_clicks_count, SUM(impressions_count) as sum_impressions_count')
             ->groupBy('page')
