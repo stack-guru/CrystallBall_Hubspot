@@ -177,7 +177,7 @@ export default class UserStartupConfigurationModal extends Component {
             return false;
         });
     }
-    
+
     handleGAPUpdate(gAP, data) {
         this.setState({isBusy: true});
         HttpClient.put(`/settings/google-analytics-property/${gAP.id}`, data).then(resp => {
@@ -231,7 +231,7 @@ export default class UserStartupConfigurationModal extends Component {
                         </span>
                         <span className='pl-2'>Connect Google Analytics</span>
                     </li>
-                    <li>
+                    {/*<li>
                         <span
                             className={`status-icon ${stepNumber === 3 ? 'current' : stepNumber > 3 ? 'checked' : 'icon-list'}`}>
                             {stepNumber === 3 ?
@@ -240,7 +240,7 @@ export default class UserStartupConfigurationModal extends Component {
                                     <img alt="Connect GA & Search Console" src="./icon-checked-green.svg"/> : null}
                         </span>
                         <span className='pl-2'>GA & Search Console</span>
-                    </li>
+                    </li>*/}
                     <li onClick={() => this.setState({stepNumber: 4})} className={"cursor-pointer"}>
                         <span
 
