@@ -264,7 +264,8 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
             Route::get('get-github-repositories', [GithubAutomationController::class, 'getRepositories']);
             Route::post('apple_podcast_url', [App\Http\Controllers\ApplePodcastMonitorController::class, 'applePodcastUrl']);
 
-            Route::post('shopify_url', [App\Http\Controllers\ShopifyMonitorController::class, 'shopifyUrl']);
+            Route::post('shopify_url', [App\Http\Controllers\ShopifyMonitorController::class, 'saveShopifyProducts']);
+            Route::get('getShopifyProducts', [App\Http\Controllers\ShopifyMonitorController::class, 'getShopifyProducts']);
             Route::resource('shopify-monitor', App\Http\Controllers\ShopifyMonitorController::class)->only(['index', 'store', 'update', 'destroy']);
             Route::resource('apple-podcast-monitor', App\Http\Controllers\ApplePodcastMonitorController::class)->only(['index', 'store', 'update', 'destroy']);
         });
