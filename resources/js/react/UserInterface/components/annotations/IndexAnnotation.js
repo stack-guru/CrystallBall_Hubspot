@@ -599,7 +599,7 @@ class IndexAnnotations extends React.Component {
                                     .map((anno, idx) => {
                                         let borderLeftColor = "rgba(0,0,0,.0625)";
                                         let selectedIcon = anno.category || '';
-                                        const annoPropertyString = (anno.table_ga_property_id || "").split("~~~~")?.[1] || "";
+                                        const annoPropertyString = anno.google_analytics_property_name ? anno.google_analytics_property_name : (anno.added_by || "").split("~~~~")?.[1] || "";
                                         const propertyNames = annoPropertyString.split(",");
 
                                         let displayString = "";

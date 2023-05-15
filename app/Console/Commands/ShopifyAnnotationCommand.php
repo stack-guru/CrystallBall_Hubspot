@@ -8,6 +8,7 @@ use App\Models\ShopifyMonitor;
 use App\Models\UserDataSource;
 use App\Services\ShopifyService;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class ShopifyAnnotationCommand extends Command
 {
@@ -46,10 +47,12 @@ class ShopifyAnnotationCommand extends Command
         $sMonitors = ShopifyMonitor::get();
         $shopifyService = new ShopifyService();
         foreach($sMonitors as $monitor){
-            $url = $monitor->url;
-            $userId = $monitor->user_id;
-
-            $shopifyData = $shopifyService->saveShopifyProducts($url, $userId);
+            $products    = $shopifyService->getShopifyProducts($monitor->url);
+            if (!$products) {
+                Log::channel('shopify')->debug('Url is not loaded!');
+                return false;
+            }
+            $shopifyData = $shopifyService->saveShopifyProducts(json_decode($monitor->events), $products, $monitor->user_id);
             $monitor->last_synced_at = Carbon::now();
             $monitor->save();
 
