@@ -40,6 +40,7 @@ export default class CreatePayment extends Component {
             },
             isBusy: false,
             isLoading: false,
+            loadingText: 'Processing payment, please wait!',
             isDirty: false,
             redirectTo: null,
             validation: {},
@@ -347,7 +348,7 @@ export default class CreatePayment extends Component {
                        <DowngradedPopup show={true} text={extra_alert} />
                     ))} */}
                     <Container>
-                        <LoaderAnimation show={this.state.isLoading} />
+                        <LoaderAnimation text={this.state.loadingText}  show={this.state.isLoading} />
                         <div className="pageHeader checkoutPageHead">
                             <h2 className="pageTitle">Checkout</h2>
                         </div>
