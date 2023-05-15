@@ -2383,6 +2383,7 @@ body {
     color: #666;
     font-size: 14px;
     line-height: 18px;
+    align-items: baseline;
 }
 
 .annotionRow ul:first-child li {
