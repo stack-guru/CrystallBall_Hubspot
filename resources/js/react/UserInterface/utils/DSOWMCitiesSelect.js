@@ -88,7 +88,7 @@ export default class DSOWMCitiesSelect extends React.Component {
                 });
             }
         });
-        
+
         this.props.onCheckAllCallback(data);
         this.props.updateTrackingStatus(true);
         this.props.updateUserService({ target: {
@@ -223,7 +223,7 @@ export default class DSOWMCitiesSelect extends React.Component {
                                     })}
                             </select> */}
                         </div>
-                        <div className="input-group w-100 search-input-box mb-3 d-flex justify-content-between">
+                       {/* <div className="input-group w-100 search-input-box mb-3 d-flex justify-content-between">
                             <GoogleAnalyticsPropertySelect
                                 className="themeNewselect hide-icon"
                                 name="ga_property_id"
@@ -236,7 +236,7 @@ export default class DSOWMCitiesSelect extends React.Component {
                                 placeholder="Select GA Properties"
                                 isClearable={true}
                             />
-                        </div>
+                        </div>*/}
                         <div className="input-group search-input-box mb-3">
                             <input
                                 type="text"
@@ -307,7 +307,7 @@ export default class DSOWMCitiesSelect extends React.Component {
                                         <span className="d-flex w-100 justify-content-between">
                                             <div>{wAC.open_weather_map_city.name}</div>
                                             <div className="d-flex text-nowrap align-items-center">
-                                            {wAC.open_weather_map_city_id === this.state.editSelected
+                                            {/*{wAC.open_weather_map_city_id === this.state.editSelected
                                                 ?
                                                 <>
                                                     <GoogleAnalyticsPropertySelect
@@ -328,7 +328,7 @@ export default class DSOWMCitiesSelect extends React.Component {
                                                     </i>
                                                 </>
                                                 :
-                                                <> 
+                                                <>
                                                     <div className="dd-tooltip d-flex">
                                                         <CustomTooltip tooltipText={wAC.ga_property_name ?? "All Properties"}
                                                                         maxLength={50}>
@@ -343,7 +343,7 @@ export default class DSOWMCitiesSelect extends React.Component {
                                                         <img className="w-20px" src='/icon-edit.svg' />
                                                     </i>
                                                 </>
-                                            }
+                                            }*/}
                                             </div>
                                         </span>
                                     </label>
