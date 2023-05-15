@@ -70,7 +70,7 @@ class WordpressUpdates extends React.Component {
                                                         "wordpress_updates"
                                                     );
                                                     this.props.updateGAPropertyId(null)
-                                                    
+
                                                 }
                                             }}
                                                    checked={
@@ -85,15 +85,15 @@ class WordpressUpdates extends React.Component {
                                         </label>
                                     </div>
 
-                                    <div className="d-flex align-items-center hide-icon">
+                                    {/*<div className="d-flex align-items-center hide-icon">
                                         {
                                             !this.props.userDataSources.wordpress_updates
-                                            .length ?? 
+                                            .length ??
                                             <span className="betweentext">for</span>
                                         }
                                         {
                                             (this.props.userDataSources.wordpress_updates
-                                            .length > 0  && this.state.editProperty) || 
+                                            .length > 0  && this.state.editProperty) ||
                                             !this.props.userDataSources.wordpress_updates
                                             .length ?
                                             <>
@@ -139,16 +139,16 @@ class WordpressUpdates extends React.Component {
                                         {
                                             this.props.userDataSources.wordpress_updates
                                             .length && !this.state.editProperty
-                                            ? 
+                                            ?
                                             <h4 className='text-capitalize mb-0'>
-                                                <span>{!gaPropertyName ? 'All Properties' : gaPropertyName}</span> 
+                                                <span>{!gaPropertyName ? 'All Properties' : gaPropertyName}</span>
                                                 <i className="ml-2 icon fa" onClick={() => this.setState({ editProperty: true })}>
                                                     <img className="w-20px" src='/icon-edit.svg' />
                                                 </i>
                                             </h4>
                                             : ''
                                         }
-                                    </div>
+                                    </div>*/}
                                 </div>
                             </div>
 
