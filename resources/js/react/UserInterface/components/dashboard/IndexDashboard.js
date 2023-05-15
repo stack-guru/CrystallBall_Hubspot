@@ -231,7 +231,7 @@ export default class IndexDashboard extends Component {
                             </div>
                         </div>
                     </div>
-                    {this.props.user.google_accounts_count && !this.state.user.google_analytics_properties_count ? (
+                    {this.props.user.google_accounts_count && !this.state.google_analytics_properties_count ? (
                             <>
                                 <div className="justify-content-between align-items-center text-center">
                                     Why don't I see properties? Check this <a target="_blank" href='https://youtu.be/108pI2bvWt0'>Video</a> tutorial on how to fix it.
