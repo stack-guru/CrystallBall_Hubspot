@@ -54,7 +54,7 @@ export default class BitbucketTracking extends React.Component {
             // this.setState({ used_credits: this.state.used_credits - 1 });
             (this.props.onUncheckCallback)(e.target.id, 'bitbucket_tracking')
         }
-
+        
         let isChecked = false;
         if( usedCredits > 0 ) isChecked = true;
 
@@ -122,7 +122,7 @@ export default class BitbucketTracking extends React.Component {
                                                                 } */}
                                                             </span>
                                                         </label>
-                                                        {/*{userRepositories.indexOf(repository.slug) !== -1
+                                                        {userRepositories.indexOf(repository.slug) !== -1
                                                          ?
                                                             repository.slug === this.state.editSelected
                                                                 ?
@@ -155,7 +155,7 @@ export default class BitbucketTracking extends React.Component {
                                                                     </div>
                                                         :
                                                             ''
-                                                        }*/}
+                                                        }
                                                     </div>
                                                 )
                                             }) : <p className='ml-1 pl-1 mb-0'>No repositories found</p>}

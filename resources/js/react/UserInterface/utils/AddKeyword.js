@@ -144,7 +144,7 @@ export default class AddKeyword extends React.Component {
                     this.props.updateUserService({ target: {
                             name: "is_ds_keyword_tracking_enabled",
                             checked: true,
-                        },
+                        }, 
                     });
                     const Toast = Swal.mixin({
                         toast: true,
@@ -260,7 +260,7 @@ export default class AddKeyword extends React.Component {
                     </div>
 
                     <div className="d-flex align-items-center w-100 justify-content-end tracker-content">
-                        {/*<span className="betweentext">for</span>
+                        <span className="betweentext">for</span>
                         <GoogleAnalyticsPropertySelect
                             className="themeNewselect hide-icon"
                             name="ga_property_id"
@@ -273,7 +273,7 @@ export default class AddKeyword extends React.Component {
                             placeholder="Select GA Properties"
                             isClearable={true}
                             onDeleteCallback={this.props.onUncheckCallback}
-                        />*/}
+                        />
                     </div>
 
                     <div className="themeNewInputGroup inputWithIcon position-relative">
