@@ -245,7 +245,7 @@ export default class DSRMDatesSelect extends React.Component {
                                                        rketing_id={rmd.id}/>
                                                 <span className="d-flex w-100 justify-content-between">
                                                     <div>{rmd.show_at} - {rmd.event_name}</div>
-                                                    {/*<div className={`d-flex text-nowrap ${this.state.editSelected ? "align-items-center" : ""}`}>
+                                                    <div className={`d-flex text-nowrap ${this.state.editSelected ? "align-items-center" : ""}`}>
                                                         {gaProperty?.id === this.state.editSelected
                                                             ?
                                                             <>
@@ -283,7 +283,7 @@ export default class DSRMDatesSelect extends React.Component {
                                                                 </i>
                                                             </>
                                                         }
-                                                    </div>*/}
+                                                    </div>
                                                 </span>
                                             </label>
                                         );
