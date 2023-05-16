@@ -211,7 +211,7 @@ class FacebookAutomationRepository
 
                         foreach ($facebook_pages_from_database as $facebook_page_from_database) {
 
-                            if ($facebook_page_from_facebook['id'] == $facebook_page_from_database->facebook_page_id) {
+                            if (@$facebook_page_from_facebook['id'] == $facebook_page_from_database->facebook_page_id) {
                                 // get page posts from facebook
                                 $response = $this->facebookService->getFacebookPagePosts($facebook_account->token, $facebook_page_from_database->facebook_page_id);
                                 info('Facebook page posts from facebook :: ');
