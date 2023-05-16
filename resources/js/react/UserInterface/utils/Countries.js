@@ -136,12 +136,12 @@ export default class countries extends React.Component {
 
                                 const currentValue = userCountries.length
                                 if (currentValue) {
-                                    this.handleClick({target: {checked: true, name: userCountries[0]}});
+                                    // this.handleClick({target: {checked: true, name: userCountries[0]}});
                                 } else {
-                                    Toast.fire({
-                                        icon: 'success',
-                                        title: "Successfully saved holidays settings.",
-                                    });
+                                    // Toast.fire({
+                                    //     icon: 'success',
+                                    //     title: "Successfully saved holidays settings.",
+                                    // });
                                 }
                             }}
                             placeholder="Select GA Properties"

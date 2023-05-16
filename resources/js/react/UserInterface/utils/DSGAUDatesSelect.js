@@ -70,12 +70,12 @@ export default class DSGAUDatesSelect extends React.Component {
 
                             const currentValue = this.props.ds_data.length ? (this.props.ds_data[0].status ? this.props.ds_data[0].status : "") : ""
                             if (currentValue) {
-                                this.selectedStatusChanged({ target: { name: 'searchStatus', value: currentValue, gaPropertyId: gAP.target.value } });
+                                // this.selectedStatusChanged({ target: { name: 'searchStatus', value: currentValue, gaPropertyId: gAP.target.value } });
                             } else {
-                                Toast.fire({
-                                    icon: 'success',
-                                    title: "Successfully saved google update settings.",
-                                });
+                                // Toast.fire({
+                                //     icon: 'success',
+                                //     title: "Successfully saved google update settings.",
+                                // });
                             }
                         }}
                         placeholder="Select GA Properties"

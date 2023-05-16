@@ -241,7 +241,7 @@ export default class DSOWMCitiesSelect extends React.Component {
                             <input
                                 type="text"
                                 className="form-control search-input"
-                                placeholder="Search"
+                                placeholder="Search Cities"
                                 value={this.state.searchText}
                                 name="searchText"
                                 onChange={(e) =>

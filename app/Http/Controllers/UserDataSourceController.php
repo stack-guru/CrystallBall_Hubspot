@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Events\UserDataSourceUpdatedOrCreated;
+use App\Helpers\BitbucketCommitHelper;
+use App\Helpers\GitHubCommitHelper;
 use App\Http\Requests\StoreKeywordsRequest;
 use App\Http\Requests\UserDataSourceRequest;
 use App\Models\Keyword;
@@ -13,7 +15,6 @@ use App\Models\UserDataSource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-
 class UserDataSourceController extends Controller
 {
     /**
@@ -142,7 +143,13 @@ class UserDataSourceController extends Controller
         $userDataSource->user_id = $user->id;
         $userDataSource->save();
         $userDataSource->load('openWeatherMapCity');
+        if ($request->ds_code == 'bitbucket_tracking') {
+            BitbucketCommitHelper::fetch($userDataSource);
+        }
 
+        if ($request->ds_code == 'github_tracking') {
+            GitHubCommitHelper::fetch($userDataSource);
+        }
         return ['user_data_source' => $userDataSource];
     }
 
