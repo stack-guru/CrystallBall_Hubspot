@@ -501,7 +501,7 @@ export default class Profile extends React.Component {
                                                     </li>}
                                                 <li><i
                                                     className='pr-2'><img src='/icon-listTick.svg'/></i>Website
-                                                    Monitoring: <span>{this.props.user.price_plan.web_monitor_count} Credits</span>
+                                                    Monitoring: <span>{this.props.user.price_plan.web_monitor_count == 0 ? 'Unlimited' : (this.props.user.price_plan.web_monitor_count > 0 ? this.props.user.price_plan.web_monitor_count : 0)} Credits</span>
                                                 </li>
                                                 <li><i
                                                     className='pr-2'><img src='/icon-listTick.svg'/></i>Weather
