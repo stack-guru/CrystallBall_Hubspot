@@ -246,11 +246,14 @@ class UserDataSourceController extends Controller
 
         // loop through data for each keyword
         foreach ($request->keywords as $keyword_loop) {
-            // save keyword
-            $keyword = new Keyword();
-            $keyword->keyword = $keyword_loop['keyword'];
-            $keyword->user_data_source_id = $user_data_source->id;
-            $keyword->save();
+            $keyword = Keyword::where('keyword', $keyword_loop['keyword'])->where('user_data_source_id', $user_data_source->id)->first();
+            // save keyword if not exist
+            if(!$keyword) {
+                $keyword = new Keyword();
+                $keyword->keyword = $keyword_loop['keyword'];
+                $keyword->user_data_source_id = $user_data_source->id;
+                $keyword->save();
+            }
 
             // save configurations
             $url = $request->url;
@@ -266,10 +269,13 @@ class UserDataSourceController extends Controller
                         $location_code = $location['value'] ?? '';
                         $configuration_id = $this->saveKeywordConfiguration($url, $search_engine, $location_code, $language, $ranking_direction, $ranking_places_changed, $is_url_competitors);
                         // doing pivot entry
-                        $keyword_meta = new KeywordMeta();
-                        $keyword_meta->keyword_id = $keyword->id;
-                        $keyword_meta->keyword_configuration_id = $configuration_id;
-                        $keyword_meta->save();
+                        $keyword_meta = KeywordMeta::where('keyword_id', $keyword->id)->where('keyword_configuration_id', $configuration_id)->first();
+                        if (!$keyword_meta) {
+                            $keyword_meta = new KeywordMeta();
+                            $keyword_meta->keyword_id = $keyword->id;
+                            $keyword_meta->keyword_configuration_id = $configuration_id;
+                            $keyword_meta->save();
+                        }
                     }
                 }
             } elseif (count($request->location) < count($request->search_engine)) {
@@ -279,10 +285,13 @@ class UserDataSourceController extends Controller
                         $location_code = $location['value'] ?? '';
                         $configuration_id = $this->saveKeywordConfiguration($url, $search_engine, $location_code, $language, $ranking_direction, $ranking_places_changed, $is_url_competitors);
                         // doing pivot entry
-                        $keyword_meta = new KeywordMeta();
-                        $keyword_meta->keyword_id = $keyword->id;
-                        $keyword_meta->keyword_configuration_id = $configuration_id;
-                        $keyword_meta->save();
+                        $keyword_meta = KeywordMeta::where('keyword_id', $keyword->id)->where('keyword_configuration_id', $configuration_id)->first();
+                        if (!$keyword_meta) {
+                            $keyword_meta = new KeywordMeta();
+                            $keyword_meta->keyword_id = $keyword->id;
+                            $keyword_meta->keyword_configuration_id = $configuration_id;
+                            $keyword_meta->save();
+                        }
                     }
                 }
             }
