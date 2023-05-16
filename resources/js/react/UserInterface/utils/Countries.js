@@ -124,7 +124,7 @@ export default class countries extends React.Component {
                     </div>
 
                     <div className="d-flex align-items-center w-100 justify-content-end">
-                        {/*<span className="betweentext">for</span>
+                        <span className="betweentext">for</span>
                         <GoogleAnalyticsPropertySelect
                             className="themeNewselect hide-icon"
                             name="ga_property_id"
@@ -136,18 +136,18 @@ export default class countries extends React.Component {
 
                                 const currentValue = userCountries.length
                                 if (currentValue) {
-                                    this.handleClick({target: {checked: true, name: userCountries[0]}});
+                                    // this.handleClick({target: {checked: true, name: userCountries[0]}});
                                 } else {
-                                    Toast.fire({
-                                        icon: 'success',
-                                        title: "Successfully saved holidays settings.",
-                                    });
+                                    // Toast.fire({
+                                    //     icon: 'success',
+                                    //     title: "Successfully saved holidays settings.",
+                                    // });
                                 }
                             }}
                             placeholder="Select GA Properties"
                             isClearable={true}
                             onDeleteCallback={this.props.onUncheckCallback}
-                        />*/}
+                        />
                     </div>
                 </div>
                 <div className="grid2layout">
@@ -201,7 +201,7 @@ export default class countries extends React.Component {
                                                     <input checked={userCountries.indexOf(country) !== -1 } type="checkbox" name={country} id={userCountries.indexOf(country) !== -1 ? gaProperty.id : null } onChange={ this.handleClick }/>
                                                     <span className="d-flex w-100 justify-content-between">
                                                         <div>{country}</div>
-                                                        {/*{gaProperty.id === this.state.editSelected
+                                                        {gaProperty.id === this.state.editSelected
                                                             ?
                                                             <div className="d-flex text-nowrap align-items-center">
                                                                 <GoogleAnalyticsPropertySelect
@@ -237,7 +237,7 @@ export default class countries extends React.Component {
                                                                     <img className="w-20px" src='/icon-edit.svg' />
                                                                 </i>
                                                             </div>
-                                                        }*/}
+                                                        }
                                                     </span>
                                                 </label>
                                             );

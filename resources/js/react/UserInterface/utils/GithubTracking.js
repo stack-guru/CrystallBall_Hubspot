@@ -55,7 +55,7 @@ export default class GithubTracking extends React.Component {
 
         let isChecked = false;
         if( usedCredits > 0 ) isChecked = true;
-
+        
         this.props.updateTrackingStatus(isChecked)
         this.props.updateUserService({ target: {
             name: "is_ds_github_tracking_enabled",
@@ -100,7 +100,7 @@ export default class GithubTracking extends React.Component {
                     <strong className='d-block mb-4'>Repositories</strong>
                     <div className="checkBoxList d-flex flex-column">
                         {
-                            this.state.isBusy ? <div><i className="fa fa-spinner fa-spin mr-1"></i>We are fetching your account, just a moment</div> : repositories && repositories.length > 0 ?
+                            this.state.isBusy ? <div><i className="fa fa-spinner fa-spin mr-1"></i>We are fetching your account, just a moment</div> : repositories && repositories.length > 0 ? 
                             repositories.map(repository => {
 
                                 const dsProperties = this.props.ds_data[userRepositories.indexOf(repository.name)];
@@ -115,7 +115,7 @@ export default class GithubTracking extends React.Component {
                                                 </span>
                                             </label>
 
-                                        {/*{userRepositories.indexOf(repository.name) !== -1
+                                        {userRepositories.indexOf(repository.name) !== -1
                                             ?
                                             dsProperties.id === this.state.editSelected
                                                 ?
@@ -148,7 +148,7 @@ export default class GithubTracking extends React.Component {
                                                     </div>
                                             :
                                                 ''
-                                            }*/}
+                                            }
                                         </div>
                                     )
                             }) : <p className='ml-1 pl-1 mb-0'>No repositories found</p>

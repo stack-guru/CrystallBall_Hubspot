@@ -623,7 +623,7 @@ class IndexAnnotations extends React.Component {
                                         } else if (dataSource === 'csv-upload' && tableName === 'annotations') {
                                             borderLeftColor = this.state.userAnnotationColors.csv;
                                             selectedIcon = '/csv-upload.svg';
-                                        } else if (dataSource === 'api' && tableName === 'annotations') {
+                                        } else if ((dataSource === 'zapier' || dataSource === 'api') && tableName === 'annotations') {
                                             borderLeftColor = this.state.userAnnotationColors.api;
                                             selectedIcon = '/api-image.svg';
                                         } else if (dataSource === 'System' && tableName === 'google_algorithm_updates') {

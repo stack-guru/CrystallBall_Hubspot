@@ -57,7 +57,7 @@ export default class DSGAUDatesSelect extends React.Component {
                         </select>
                     </div>
 
-                    {/*<span className="betweentext">for</span>
+                    <span className="betweentext">for</span>
                     <GoogleAnalyticsPropertySelect
                         className="themeNewselect hide-icon"
                         name="ga_property_id"
@@ -70,20 +70,20 @@ export default class DSGAUDatesSelect extends React.Component {
 
                             const currentValue = this.props.ds_data.length ? (this.props.ds_data[0].status ? this.props.ds_data[0].status : "") : ""
                             if (currentValue) {
-                                this.selectedStatusChanged({ target: { name: 'searchStatus', value: currentValue, gaPropertyId: gAP.target.value } });
+                                // this.selectedStatusChanged({ target: { name: 'searchStatus', value: currentValue, gaPropertyId: gAP.target.value } });
                             } else {
-                                Toast.fire({
-                                    icon: 'success',
-                                    title: "Successfully saved google update settings.",
-                                });
+                                // Toast.fire({
+                                //     icon: 'success',
+                                //     title: "Successfully saved google update settings.",
+                                // });
                             }
                         }}
                         placeholder="Select GA Properties"
                         isClearable={true}
-                    />*/}
+                    />
                 </div>
 
-                {/*<div className="gray-box">
+                <div className="gray-box">
                     {this.props.ds_data.length ?
                         <h4 className='text-capitalize'>
                             {this.props.ds_data[0].status ? this.props.ds_data[0].status : 'Both'} <span>{this.props.ds_data[0].ga_property_name}</span>
@@ -91,7 +91,7 @@ export default class DSGAUDatesSelect extends React.Component {
                     :
                         ""
                     }
-                </div>*/}
+                </div>
 
                 <div className="checkBoxList d-flex flex-column">
                     {
