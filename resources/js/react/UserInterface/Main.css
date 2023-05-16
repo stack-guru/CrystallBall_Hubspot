@@ -741,6 +741,7 @@ setting-menu-item.dropdown {
 
 .css-1uccc91-singleValue {
     color: #72777a !important;
+    max-width: calc(100% - 35px) !important;
 }
 
 thead th {
