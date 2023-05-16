@@ -106,11 +106,11 @@ const ShopifyStoreConfig = (props) => {
                             onKeyUp={(e) => {
                                 if (e.keyCode === 13) {
                                     e.persist();
-                                    getProducts(e);
+                                    addAnnotation(e)
                                 }
                             }}
                         />
-                        <div onClick={(e) => getProducts(e)} className="input-group-append">
+                        <div onClick={(e) => addAnnotation(e)} className="input-group-append">
                             <i className="ti-plus"></i>
                         </div>
                     </div>
@@ -133,7 +133,7 @@ const ShopifyStoreConfig = (props) => {
                     />
                 </div>
 
-                <div className="checkboxes">
+                <div className="checkboxes mt-3">
                     {products?.map((product) => {
                         return (
                             <label className="themeNewCheckbox d-flex align-items-center justify-content-start textDark" key={product}>
