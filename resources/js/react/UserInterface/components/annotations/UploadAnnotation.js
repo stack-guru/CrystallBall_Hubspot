@@ -87,11 +87,12 @@ export default class UploadAnnotation extends React.Component {
                     fieldErrorsCount++;
                     obj.show_at_error = date.message ? date.message : `Date format is incorrect, use format [${moment("2021-01-15").format(date_format)}]`;
                 }
-                if (!obj.category || itm.category_error) {
-                    fieldErrorsCount++;
-                    obj.category_error = itm.category_error ? itm.category_error : `Category can't be empty`;
-                }
+                // if (!obj.category || itm.category_error) {
+                //     fieldErrorsCount++;
+                //     obj.category_error = itm.category_error ? itm.category_error : `Category can't be empty`;
+                // }
 
+                obj.category_empty = !obj.category
                 if(obj.category && obj.category.length > 100) {
                     fieldErrorsCount++;
                     obj.category_error = `Category can be up to 100 characters`;
@@ -153,7 +154,7 @@ export default class UploadAnnotation extends React.Component {
             if (date.isValid) {
                 delete list.show_at_error
             }
-            if (list.category && list.category.length < 100) {
+            if (list.category.length < 100) {
                 delete list.category_error
             }
             if (list.event_name && list.event_name.length < 100) {
@@ -368,7 +369,7 @@ export default class UploadAnnotation extends React.Component {
                     fieldErrorsCount = fieldErrorsCount - 1;
                     delete list.url_error
                 }
-                if (name === 'category' && list.category_error && list.category && list.category.length < 100) {
+                if (name === 'category' && (!list.category || (list.category_error && list.category && list.category.length < 100))) {
                     fieldErrorsCount = fieldErrorsCount - 1;
                     delete list.category_error
                 }
@@ -745,17 +746,17 @@ export default class UploadAnnotation extends React.Component {
                                             return (
                                                 <tr>
                                                     <td className="position-relative">
-                                                        {rd.category_error ?
+                                                        {rd.category_error || rd.category_empty ?
                                                             <>
                                                                 <input
                                                                     onBlur={(e) => this.changeMapHandler(e, i, true)}
                                                                     onKeyUp={(e) => this.changeMapHandler(e, i)}
                                                                     onChange={(e) => this.changeMapHandler(e, i)}
-                                                                    className='form-control is-invalid'
+                                                                    className={`form-control ${rd.category_error} ? "is-invalid" : ""`}
                                                                     name='category'
                                                                     value={rd.category}/>
                                                                     <span 
-                                                                        className="is-invalid"
+                                                                        className={`${rd.category_error} ? "is-invalid" : ""`}
                                                                         onMouseOver={() =>
                                                                             this.setState({
                                                                                 activeDeletePopover: 'category' + i,

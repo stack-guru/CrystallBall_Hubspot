@@ -21,7 +21,8 @@ import {
 import GoogleAnalyticsPropertySelect from "../GoogleAnalyticsPropertySelect";
 
 const ShopifyStoreConfig = (props) => {
-    const [inputVale, setInputVale] = useState("");
+    const products = ['New Product', 'Updated Product', 'Removed Product'];
+    const [inputValue, setInputVale] = useState("");
     const [activeDeletePopover, setActiveDeletePopover] = useState("");
 
     const deletePodcasts = async (payload) => {
@@ -50,10 +51,15 @@ const ShopifyStoreConfig = (props) => {
     };
 
     const addAnnotation = async () => {
-        if (props.limitReached) {
-            props.upgradePopup('more-annotations')
-        } else {
-        HttpClient.post("/data-source/shopify_url", { shopifyUrl: inputVale, gaPropertyId: props.gaPropertyId || "" })
+
+        const events = [];
+        $("input:checkbox[name=product-row]:checked").each((idx, input) =>{
+            events.push( $(input).val() );
+        });
+
+        if( events.length && inputValue ) {
+
+            HttpClient.post("/data-source/shopify_url", { shopifyUrl: inputValue, events: JSON.stringify(events), gaPropertyId: props.gaPropertyId || "" })
             .then(
                 () => {
                     props.sectionToggler();
@@ -93,18 +99,18 @@ const ShopifyStoreConfig = (props) => {
                             type="text"
                             className="form-control search-input themeNewInput"
                             placeholder="Enter store url"
-                            value={inputVale}
+                            value={inputValue}
                             onChange={(e) =>
                                 setInputVale(e.target.value.toLowerCase())
                             }
                             onKeyUp={(e) => {
                                 if (e.keyCode === 13) {
                                     e.persist();
-                                    addAnnotation(e);
+                                    getProducts(e);
                                 }
                             }}
                         />
-                        <div onClick={(e) => addAnnotation(e)} className="input-group-append">
+                        <div onClick={(e) => getProducts(e)} className="input-group-append">
                             <i className="ti-plus"></i>
                         </div>
                     </div>
@@ -125,6 +131,17 @@ const ShopifyStoreConfig = (props) => {
                         placeholder="Select GA Properties"
                         isClearable={true}
                     />
+                </div>
+
+                <div className="checkboxes">
+                    {products?.map((product) => {
+                        return (
+                            <label className="themeNewCheckbox d-flex align-items-center justify-content-start textDark" key={product}>
+                                <input value={product} type="checkbox" defaultChecked={true} name='product-row' />
+                                <span>{product}</span>
+                            </label>
+                        )
+                    })}
                 </div>
                 <div className='d-flex justify-content-end pt-3'>
                     <button onClick={(e) => addAnnotation(e)} className="btn-theme">Add</button>
