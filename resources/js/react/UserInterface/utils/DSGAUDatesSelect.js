@@ -50,7 +50,9 @@ export default class DSGAUDatesSelect extends React.Component {
                 <h4 className='themeNewTitle'>Select mode:</h4>
                 <div className="d-flex align-items-center justify-content-between mb-3">
                     <div className="input-group themeNewInputGroup">
-                        <select className="form-control" placeholder="Search" value={this.props.ds_data.length ? (this.props.ds_data[0].status ? this.props.ds_data[0].status : "") : ""} name="searchStatus" onChange={this.selectedStatusChanged}>
+                        <select className="form-control" placeholder="Search" 
+                            value={this.props.ds_data.length ? (this.props.ds_data[0].status ? this.props.ds_data[0].status : "") : ""} name="searchStatus" 
+                            onChange={this.selectedStatusChanged}>
                             <option value="">Both</option>
                             <option value="unconfirmed">Unconfirmed</option>
                             <option value="confirmed">Confirmed</option>
@@ -70,7 +72,7 @@ export default class DSGAUDatesSelect extends React.Component {
 
                             const currentValue = this.props.ds_data.length ? (this.props.ds_data[0].status ? this.props.ds_data[0].status : "") : ""
                             if (currentValue) {
-                                // this.selectedStatusChanged({ target: { name: 'searchStatus', value: currentValue, gaPropertyId: gAP.target.value } });
+                                this.selectedStatusChanged({ target: { name: 'searchStatus', value: currentValue, gaPropertyId: gAP.target.value } });
                             } else {
                                 // Toast.fire({
                                 //     icon: 'success',

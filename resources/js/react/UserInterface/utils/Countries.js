@@ -155,10 +155,7 @@ export default class countries extends React.Component {
                         <div className="white-box">
                             <div className="d-flex flex-column border-bottom pb-3 mb-3">
                                 <div className="checkBoxList">
-                                    <label className="themeNewCheckbox d-flex align-items-center justify-content-start" htmlFor="check-all">
-                                        <input type="checkbox" id="check-all" onChange={this.selectAllShowing}/>
-                                        <span>Select All</span>
-                                    </label>
+                                    <span className="btn-clearAll text-primary cursor-pointer" onClick={this.selectAllShowing}>Select All</span>
                                 </div>
                             </div>
                             <div className="checkBoxList">
