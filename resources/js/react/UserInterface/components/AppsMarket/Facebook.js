@@ -48,6 +48,7 @@ class Facebook extends React.Component {
                 />
 
                 <FacebookTracking
+                    serviceName={"Facebook"}
                     updateUserService={this.props.updateUserService}
                     updateTrackingStatus={this.updateTrackingStatus.bind(this)}
                     used_credits={this.props.userDataSources.facebook_tracking?.length}

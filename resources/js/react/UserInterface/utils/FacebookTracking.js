@@ -1,9 +1,8 @@
 import React from "react";
-import Select from 'react-select'
 import HttpClient from "./HttpClient";
-import SearchEngineSelect from "./SearchEngineSelect";
 import FacebookPagesSelect from "./FacebookPagesSelect";
 import GoogleAnalyticsPropertySelect from "./GoogleAnalyticsPropertySelect";
+import {CustomTooltip} from "../components/annotations/IndexAnnotation";
 
 export default class FacebookTracking extends React.Component {
     constructor(props) {
@@ -36,6 +35,32 @@ export default class FacebookTracking extends React.Component {
         this.changePageHandler = this.changePageHandler.bind(this);
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
         this.fetchConfigurations = this.fetchConfigurations.bind(this);
+    }
+
+    showConfirm = () => {
+
+        const _this = this;
+        // this.props.closeModal();
+        swal.fire({
+            iconHtml: `<img src="/${(this.props.serviceName || '').toLowerCase()}-small.svg">`,
+            showCloseButton: true,
+            title: `Connect with ${ this.props.serviceName }`,
+            text: `Connect your ${ this.props.serviceName } account to create automatic annotations for commits`,
+            confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
+            confirmButtonText: `<span class='text-white'><i class='mr-2 fa fa-${ this.props.serviceName.toLowerCase() }'> </i>${ this.props.serviceName }</span>`,
+            customClass: {
+                htmlContainer: "py-3",
+            },
+            customClass: {
+                popup: "popupAlert",
+                closeButton: "closeButtonTwitterAlert",
+            },
+        }).then( result => {
+            if( result.isConfirmed ) {
+                location.href = `/socialite/${ this.props.serviceName.toLowerCase() }`;
+                localStorage.setItem("repo", this.props.serviceName);
+            }
+        });
     }
 
     componentDidMount() {
@@ -144,21 +169,34 @@ export default class FacebookTracking extends React.Component {
         return (
             <div className="apps-bodyContent switch-wrapper">
                 <div className="weather_alert_cities-form">
-                    <h4 className="gaa-text-primary">Configure Facebook</h4>
-                    <label>Select Facebook Pages</label>
-                    <div className="d-flex align-items-center">
+                    <div className="d-flex mb-2">
                         <div className="w-50">
-                        {/*<Select options={this.state.facebook_pages} isMulti onChange={this.pagesOnChangeHandler} value={this.selected_facebook_pages} />*/}
+                        <label>Select Facebook Pages</label>
                         <FacebookPagesSelect className="gray_clr" multiple name="facebook_page" id="facebook_page"
                             value={this.state.selected_facebook_pages}
                             onChangeCallback={this.changePageHandler}
                             placeholder="Select Facebook Page"/>
                         </div>
-                        <div className="w-50 text-right">
+                        <div className="w-86px">
+                            <label>&nbsp;</label>
+                            <div className="pt-2">
+                                <div className="dd-tooltip">
+                                <CustomTooltip tooltipText={"Add more Account"} maxLength={50}>
+                                    <i 
+                                        className="ml-2 icon fa" 
+                                        onClick={this.showConfirm.bind(this)}
+                                    >
+                                        <img className="w-14px" src='/icon-plus.svg' />
+                                    </i>
+                                </CustomTooltip>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="pl-2">
+                            <label>Assign to property</label>
                         {!this.state.configuration_id || this.state.editProperty
                         ?
                             <div className="d-flex align-items-center w-100">
-                                <span className="betweentext">for</span>
                                 <GoogleAnalyticsPropertySelect
                                     className="themeNewselect hide-icon"
                                     name="ga_property_id"
@@ -181,12 +219,12 @@ export default class FacebookTracking extends React.Component {
                             }
                             </div>
                         :
-                            <>
+                            <div className="pt-2">
                             <span>{this.state.gaPropertyName ? this.state.gaPropertyName : "All Properties"}</span>
                             <i className="ml-2 icon fa" onClick={() => this.setState({ editProperty: true })}>
                                 <img className="w-20px" src='/icon-edit.svg' />
                             </i>
-                            </>
+                            </div>
                         }
                         </div>
                     </div>
@@ -195,7 +233,7 @@ export default class FacebookTracking extends React.Component {
                     <h5 className="gaa-text-primary"><b>Create Annotation When:</b></h5>
 
                     <div className="mt-2">
-                        <div className="form-check">
+                        <div className="d-flex align-items-center form-check themeNewCheckbox">
                             <input className="form-check-input" id='when_new_post_on_facebook' onChange={(e) => {
                                 this.setState({
                                     when_new_post_on_facebook: e.target.checked
@@ -208,7 +246,7 @@ export default class FacebookTracking extends React.Component {
                     </div>
 
                     <div className="mt-2">
-                        <div className="form-check">
+                        <div className="d-flex align-items-center form-check themeNewCheckbox">
                             <input className="form-check-input" type="checkbox" value=""
                                    id="is_post_likes_tracking_on_checkbox" onChange={(e) => {
                                 this.setState({
@@ -232,7 +270,7 @@ export default class FacebookTracking extends React.Component {
                     </div>
 
                     <div className="mt-2">
-                        <div className="form-check">
+                        <div className="d-flex align-items-center form-check themeNewCheckbox">
                             <input className="form-check-input" type="checkbox" value=""
                                    id="is_post_comments_tracking_on_checkbox" onChange={(e) => {
                                 this.setState({
@@ -256,7 +294,7 @@ export default class FacebookTracking extends React.Component {
                     </div>
 
                     <div className="mt-2">
-                        <div className="form-check">
+                        <div className="d-flex align-items-center form-check themeNewCheckbox">
                             <input className="form-check-input" type="checkbox" value=""
                                    id="is_post_views_tracking_on_checkbox" onChange={(e) => {
                                 this.setState({
@@ -280,7 +318,7 @@ export default class FacebookTracking extends React.Component {
                     </div>
 
                     <div className="mt-2">
-                        <div className="form-check">
+                        <div className="d-flex align-items-center form-check themeNewCheckbox">
                             <input className="form-check-input" type="checkbox" value=""
                                    id="is_post_shares_tracking_on_checkbox" onChange={(e) => {
                                 this.setState({
@@ -305,7 +343,7 @@ export default class FacebookTracking extends React.Component {
 
 
                     <div className="mt-2">
-                        <div className="form-check">
+                        <div className="d-flex align-items-center form-check themeNewCheckbox">
                             <input className="form-check-input" type="checkbox" value="" id="new_ad_compaign_launched"
                                    onChange={(e) => {
                                        this.setState({
@@ -319,7 +357,7 @@ export default class FacebookTracking extends React.Component {
                     </div>
 
                     <div className="mt-2">
-                        <div className="form-check">
+                        <div className="d-flex align-items-center form-check themeNewCheckbox">
                             <input className="form-check-input" type="checkbox" value="" id="an_ad_compaign_ended"
                                    onChange={(e) => {
                                        this.setState({
@@ -333,7 +371,7 @@ export default class FacebookTracking extends React.Component {
                     </div>
 
                     <div className="mt-2">
-                        <div className="form-check">
+                        <div className="d-flex align-items-center form-check themeNewCheckbox">
                             <input className="form-check-input" type="checkbox" value="" id="changes_on_ad_compaign"
                                    onChange={(e) => {
                                        this.setState({
