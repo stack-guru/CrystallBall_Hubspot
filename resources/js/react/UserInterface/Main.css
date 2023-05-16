@@ -6013,3 +6013,12 @@ div[data-tour-elem="controls"]
     color: #096db7;
     font-size: 22px;
 }
+
+.css-1hb7zxy-IndicatorsContainer > div:first-child {
+    display: none !important
+}
+
+#facebook_page > div:first-child {
+    height: 44px !important;
+    border-radius: 10px !important;
+} 
