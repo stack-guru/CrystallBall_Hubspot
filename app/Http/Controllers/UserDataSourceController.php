@@ -7,6 +7,7 @@ use App\Helpers\BitbucketCommitHelper;
 use App\Helpers\GitHubCommitHelper;
 use App\Http\Requests\StoreKeywordsRequest;
 use App\Http\Requests\UserDataSourceRequest;
+use App\Models\FacebookTrackingConfiguration;
 use App\Models\Keyword;
 use App\Models\KeywordConfiguration;
 use App\Models\KeywordMeta;
@@ -53,7 +54,7 @@ class UserDataSourceController extends Controller
                 'keyword_tracking' => $this->userDataSourceQuery(['value'], 'keyword_tracking'),
                 'bitbucket_tracking' => $this->userDataSourceQuery(['value'], 'bitbucket_tracking', true),
                 'github_tracking' => $this->userDataSourceQuery(['value'], 'github_tracking', true),
-                'facebook_tracking' => $this->userDataSourceQuery(['value'], 'facebook_tracking', true),
+                'facebook_tracking' => FacebookTrackingConfiguration::select('id')->where('user_id', Auth::user()->id)->get(),
                 'twitter_tracking' => $this->userDataSourceQuery(['value'], 'twitter_tracking', true),
                 'instagram_tracking' => $this->userDataSourceQuery(['value'], 'instagram_tracking', true),
                 'shopify_annotation' => $this->userDataSourceQuery(['shopify_annotation_id'], 'shopify_annotation'),
