@@ -13,6 +13,6 @@ class UserFacebookAccount extends Model
 
     public function pages()
     {
-        return $this->hasMany(\App\Models\UserFacebookPage::class, 'user_facebook_account_id');
+        return $this->hasMany(\App\Models\UserFacebookPage::class, 'user_facebook_account_id', 'facebook_account_id');
     }
 }

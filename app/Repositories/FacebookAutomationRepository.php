@@ -334,7 +334,8 @@ class FacebookAutomationRepository
                     'event_name' => 'New Post',
                     'title' => $data['description'] ?? "",
                     'description' => $data['title'] ?? $description,
-                    'show_at' => today()
+                    'show_at' => today(),
+                    'configuration_id' => $data['configuration_id'],
                 ]);
                 break;
             case 'when_post_reach_likes':
@@ -346,6 +347,7 @@ class FacebookAutomationRepository
                     'event_name' => 'Likes Reached',
                     'title' => $data['description'] ?? "",
                     'description' => $data['title'] ?? $description,
+                    'configuration_id' => $data['configuration_id'],
                     'show_at' => today()
                 ]);
                 break;
@@ -358,6 +360,7 @@ class FacebookAutomationRepository
                     'event_name' => 'Comments Reached',
                     'title' => $data['description'] ?? "",
                     'description' => $data['title'] ?? $description,
+                    'configuration_id' => $data['configuration_id'],
                     'show_at' => today()
                 ]);
                 break;
@@ -370,6 +373,7 @@ class FacebookAutomationRepository
                     'event_name' => 'Views Reached',
                     'title' => $data['description'] ?? "",
                     'description' => $data['title'] ?? $description,
+                    'configuration_id' => $data['configuration_id'],
                     'show_at' => today()
                 ]);
                 break;
@@ -382,6 +386,7 @@ class FacebookAutomationRepository
                     'event_name' => 'Shares Reached',
                     'title' => $data['description'] ?? "",
                     'description' => $data['title'] ?? $description,
+                    'configuration_id' => $data['configuration_id'],
                     'show_at' => today()
                 ]);
                 break;
