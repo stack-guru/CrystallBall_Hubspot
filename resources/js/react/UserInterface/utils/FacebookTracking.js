@@ -136,6 +136,7 @@ export default class FacebookTracking extends React.Component {
         }
         HttpClient.post('/data-source/save-facebook-tracking-configurations', form_data).then(resp => {
             this.setState({facebook_pages: resp.data.facebook_pages, isBusy: false, gaPropertyName: resp.data.gaPropertyName, configuration_id: true, editProperty: false});
+            this.props.loadUserDataSources();
             const Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',
@@ -253,7 +254,7 @@ export default class FacebookTracking extends React.Component {
                                     is_post_likes_tracking_on: e.target.checked
                                 })
                             }}/>
-                            <label className="form-check-label" htmlFor="is_post_likes_tracking_on_checkbox">
+                            <label className="d-flex align-items-center form-check-label" htmlFor="is_post_likes_tracking_on_checkbox">
                                 A Post Reached
                                 <input
                                     name="post_likes"
@@ -277,7 +278,7 @@ export default class FacebookTracking extends React.Component {
                                     is_post_comments_tracking_on: e.target.checked
                                 })
                             }}/>
-                            <label className="form-check-label" htmlFor="is_post_comments_tracking_on_checkbox">
+                            <label className="d-flex align-items-center form-check-label" htmlFor="is_post_comments_tracking_on_checkbox">
                                 A Post Reached
                                 <input
                                     name="post_comments"
@@ -301,7 +302,7 @@ export default class FacebookTracking extends React.Component {
                                     is_post_views_tracking_on: e.target.checked
                                 })
                             }}/>
-                            <label className="form-check-label" htmlFor="is_post_views_tracking_on_checkbox">
+                            <label className="d-flex align-items-center form-check-label" htmlFor="is_post_views_tracking_on_checkbox">
                                 A Post Reached
                                 <input
                                     name="post_views"
@@ -325,7 +326,7 @@ export default class FacebookTracking extends React.Component {
                                     is_post_shares_tracking_on: e.target.checked
                                 })
                             }}/>
-                            <label className="form-check-label" htmlFor="is_post_shares_tracking_on_checkbox">
+                            <label className="d-flex align-items-center form-check-label" htmlFor="is_post_shares_tracking_on_checkbox">
                                 A Post Reached
                                 <input
                                     name="post_shares"

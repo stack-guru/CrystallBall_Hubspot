@@ -900,6 +900,7 @@ class AppsMarket extends React.Component {
                                     } else {
                                         this.setState({
                                             dsKey: item.dsKey,
+                                            ga_property_id: null,
                                             dsKeySkip: ""
                                         });
                                     }
