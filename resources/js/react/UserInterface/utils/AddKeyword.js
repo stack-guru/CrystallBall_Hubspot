@@ -200,17 +200,20 @@ export default class AddKeyword extends React.Component {
     }
 
     changeLocationHandler(selectedLocations) {
+
+        const selectedLocationsLength = selectedLocations?.length ? selectedLocations.length : 0
+
         if (
             this.canAddMoreConfigurations(
                 this.state.keywords.length,
-                selectedLocations.length,
+                selectedLocationsLength,
                 this.state.search_engines.length
             )
         ) {
             this.setState({
                 locations: selectedLocations,
             });
-            this.updateAvailableCredits(this.state.keywords.length, selectedLocations.length, this.state.search_engines.length);
+            this.updateAvailableCredits(this.state.keywords.length, selectedLocationsLength, this.state.search_engines.length);
             return true;
         } else {
             this.props.upgradePopupForRankingTracking();
