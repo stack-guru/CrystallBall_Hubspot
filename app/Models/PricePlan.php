@@ -47,6 +47,9 @@ class PricePlan extends Model
         'twitter_credits_count',
         'reference_text',
         'holiday_credits_count',
+        'external_email',
+        'facebook_credits_count',
+        'instagram_credits_count',
         'is_hidden'
     ];
 
