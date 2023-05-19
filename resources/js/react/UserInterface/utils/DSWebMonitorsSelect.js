@@ -329,7 +329,7 @@ export default class DSWebMonitorsSelect extends React.Component {
                                                 <i className="icon"><img src={'/icon-chain.svg'} /></i>
                                             </a>
                                             &nbsp;
-                                            <CustomTooltip tooltipText={wM.google_analytics_property.name}
+                                            <CustomTooltip tooltipText={wM.google_analytics_property?.name}
                                                             maxLength={50}>
                                                 {wM.name}
                                             </CustomTooltip>
