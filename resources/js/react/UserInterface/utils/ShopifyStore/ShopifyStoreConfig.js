@@ -85,9 +85,9 @@ const ShopifyStoreConfig = (props) => {
         }
     };
 
-    useEffect(() => {
-        props.getExistingShopifyStore();
-    }, [props.gaPropertyId]);
+    // useEffect(() => {
+    //     props.getExistingShopifyStore();
+    // }, [props.gaPropertyId]);
 
     return (
         <div className="apps-bodyContent">

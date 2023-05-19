@@ -7,6 +7,7 @@ use App\Models\GoogleAnalyticsProperty;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Artisan;
 
 class FacebookTrackingConfigurationController extends Controller
 {
@@ -46,6 +47,8 @@ class FacebookTrackingConfigurationController extends Controller
         );
 
         $gaProperty = GoogleAnalyticsProperty::find((int)$request->ga_property_id);
+
+        Artisan::call('gaa:execute-facebook-automation');
 
         return response()->json([
             'message' => 'Settings Updated',
