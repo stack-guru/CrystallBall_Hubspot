@@ -241,7 +241,7 @@ const ApplePodcastConfig = (props) => {
                                         key={gAK.id}
                                         user_data_source_id={gAK.id}
                                     >
-                                        <CustomTooltip tooltipText={`${gAK.google_analytics_property?.name}`}
+                                        <CustomTooltip tooltipText={`${gAK.google_analytics_property?.name || "All Properties"}`}
                                                        maxLength={50}>
                                             <span
                                                 style={{background: "#2d9cdb"}}

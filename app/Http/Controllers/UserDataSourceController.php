@@ -25,7 +25,7 @@ class UserDataSourceController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->query('ga_property_id')) {
+        if ($request->query('ga_property_id') && $request->query('ga_property_id') !== 'null') {
             return [
                 'user_data_sources' => [
                     'holidays' => UserDataSource::select('id', 'ds_code', 'ds_name', 'country_name', 'ga_property_id')->ofCurrentUser()->where('ga_property_id', $request->query('ga_property_id'))->where('ds_code', 'holidays')->orderBy('country_name')->get(),

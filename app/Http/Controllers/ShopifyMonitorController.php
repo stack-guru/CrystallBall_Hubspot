@@ -18,7 +18,7 @@ class ShopifyMonitorController extends Controller
 
     public function index(Request $request)
     {
-        if ($request->query('ga_property_id')) {
+        if ($request->query('ga_property_id') && $request->query('ga_property_id') != "null") {
             return ['shopify_monitors' => ShopifyMonitor::ofCurrentUser()->with('googleAnalyticsProperty')->where('ga_property_id', $request->query('ga_property_id'))->get()];
         }
         return ['shopify_monitors' => ShopifyMonitor::ofCurrentUser()->with('googleAnalyticsProperty')->get()];
