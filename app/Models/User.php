@@ -378,7 +378,7 @@ class User extends Authenticatable implements MustVerifyEmail
         $annotationsQuery .= ") AS TempTable2";
 
         $query = DB::select($annotationsQuery);
-        $annotationsCount = $query ? $query[0]->total_annotations_count : 0;
+        $annotationsCount = $query ? @$query[0]->total_annotations_count : 0;
 
         return $annotationsCount;
     }
