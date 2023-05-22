@@ -374,4 +374,24 @@ class AnalyticsController extends Controller
         $data['pagesIndex'] = $searchConsole->pagesIndex($request);
         return Excel::download(new AnalyticFullExport($data), 'anyaltic_and_console_report.xlsx');
     }
+    public function shareReport(Request $request)
+    {
+        
+        $data = [];
+        $data['topStatisticsIndex'] = $this->topStatisticsIndex($request);
+        $data['usersDaysAnnotationsIndex'] = $this->usersDaysAnnotationsIndex($request);
+        $data['annotationsMetricsDimensionsIndex'] = $this->annotationsMetricsDimensionsIndex($request);
+        $data['mediaIndex'] = $this->mediaIndex($request);
+        $data['sourcesIndex'] = $this->sourcesIndex($request);
+        $data['deviceCategoriesIndex'] = $this->deviceCategoriesIndex($request);
+        $data['devicesIndexByImpression'] = $this->devicesIndexByImpression($request);
+        $data['countriesIndex'] = $this->countriesIndex($request);
+        $searchConsole = new SearchConsoleController();
+        $data['consoletopStatisticsIndex'] = $searchConsole->topStatisticsIndex($request);
+        $data['clicksImpressionsDaysAnnotationsIndex'] = $searchConsole->clicksImpressionsDaysAnnotationsIndex($request);
+        $data['annotationsDatesIndex'] = $searchConsole->annotationsDatesIndex($request);
+        $data['queriesIndex'] = $searchConsole->queriesIndex($request);
+        $data['pagesIndex'] = $searchConsole->pagesIndex($request);
+        return Excel::download(new AnalyticFullExport($data), 'anyaltic_and_console_report.xlsx');
+    }
 }

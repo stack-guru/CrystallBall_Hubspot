@@ -263,7 +263,6 @@ class SearchConsoleController extends Controller
         ]);
 
         $userIdsArray = (Auth::user())->getAllGroupUserIdsArray();
-
         $gAProperty = GoogleAnalyticsProperty::findOrFail($request->query('ga_property_id'));
         if (!in_array($gAProperty->user_id, $userIdsArray) || !$gAProperty->google_search_console_site_id) {
             return ['statistics' => []];

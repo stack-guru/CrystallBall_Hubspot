@@ -16,16 +16,17 @@ class ReportsController extends Controller
 {
     public function showUserActiveReport(Request $request)
     {
-        if($request->start_date)
-        {
-            $start_date = Carbon::parse($request->start_date);
-            $end_date = Carbon::parse($request->end_date);
-        }else{
-            $start_date = Carbon::parse(date('Y-m-d',strtotime("-30 days")));
-            $end_date = Carbon::today();
-        }
-        $users = User::whereBetween('created_at',[$start_date,$end_date])
-            ->orderBy('created_at', 'DESC')
+        // if($request->start_date)
+        // {
+        //     $start_date = Carbon::parse($request->start_date);
+        //     $end_date = Carbon::parse($request->end_date);
+        // }else{
+        //     $start_date = Carbon::parse(date('Y-m-d',strtotime("-90 days")));
+        //     $end_date = Carbon::today();
+        // }
+        $users = User::
+            // whereBetween('created_at',[$start_date,$end_date])
+            orderBy('created_at', 'DESC')
             ->with([
                 'user',
                 'pricePlan',
@@ -52,7 +53,7 @@ class ReportsController extends Controller
             $user->total_annotations_count = $user->getTotalAnnotationsCount(false);
         }
 
-        return view('admin/reports/user-active-report')->with('users', $users)->with('start_date',$start_date)->with('end_date',$end_date);
+        return view('admin/reports/user-active-report')->with('users', $users);
     }
 
     public function showUserGAInfo(Request $request, User $user)
