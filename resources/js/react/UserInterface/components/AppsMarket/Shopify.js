@@ -20,7 +20,7 @@ class Shopify extends React.Component {
 
     getExistingShopifyStore = async () => {
         HttpClient.get(
-            `/data-source/shopify-monitor?ga_property_id=${this.props.ga_property_id}`
+            `/data-source/shopify-monitor`
         )
             .then(
                 (result) => {

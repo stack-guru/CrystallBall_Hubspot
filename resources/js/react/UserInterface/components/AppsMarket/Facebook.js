@@ -51,9 +51,6 @@ class Facebook extends React.Component {
                     serviceName={"Facebook"}
                     updateUserService={this.props.updateUserService}
                     updateTrackingStatus={this.updateTrackingStatus.bind(this)}
-                    used_credits={this.props.userDataSources.facebook_tracking?.length}
-                    total_credits={this.props.user.price_plan.facebook_credits_count}
-                    ds_data={this.props.userDataSources.facebook_tracking}
                     onCheckCallback={this.props.userDataSourceAddHandler}
                     onUncheckCallback={this.props.userDataSourceDeleteHandler}
                     ga_property_id={this.props.ga_property_id}

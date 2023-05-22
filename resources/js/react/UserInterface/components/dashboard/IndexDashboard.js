@@ -164,7 +164,7 @@ export default class IndexDashboard extends Component {
                                 <div className="singleCol text-left">Analytics Accounts</div>
                                 <div className="singleCol text-left">Properties &amp; Apps</div>
                                 <div className="singleCol text-left">Google Account</div>
-                                {/* <div className="singleCol text-left">Search Console <i className='fa fa-exclamation-circle ml-2' data-toggle="tooltip" data-placement="top" title="Please remove and reconnect account"></i></div> */}
+                                <div className="singleCol text-left">Search Console <i className='fa fa-exclamation-circle ml-2' data-toggle="tooltip" data-placement="top" title="Please remove and reconnect account"></i></div>
                                 <div className="singleCol text-right">&nbsp;</div>
                             </div>
                             <div className="tableBody">
@@ -203,9 +203,9 @@ export default class IndexDashboard extends Component {
                                                     null
                                             }
                                             </span>
-                                            {/* <span className="text-right">{gAP.google_search_console_site_id ? <i><img src={'/icon-link-green.svg'} /></i> :  <i><img src={'/icon-unlink-red.svg'} /></i>}</span> */}
+                                            <span className="text-right">{gAP.google_search_console_site_id ? <i><img src={'/icon-link-green.svg'} /></i> :  <i><img src={'/icon-unlink-red.svg'} /></i>}</span>
                                         </div>
-                                            {/* <div className="singleCol text-left d-flex flex-column">
+                                            <div className="singleCol text-left d-flex flex-column">
                                                 <div className="themeNewInputStyle position-relative w-100">
                                                     <i className="btn-searchIcon right-0 fa fa-angle-down"></i>
                                                     <select name="" value={gAP.google_search_console_site_id} className={`form-control ${gAP.google_search_console_site_id ? 'selected' : null}`} onChange={(event) => this.handleGAPUpdate(gAP, { google_search_console_site_id: event.target.value })}>
@@ -216,7 +216,7 @@ export default class IndexDashboard extends Component {
                                                     </select>
                                                     <i className="btn-searchIcon left-0 fa fa-check-circle"></i>
                                                 </div>
-                                            </div> */}
+                                            </div>
                                         <div className="singleCol text-right">
                                             <a href="javascript:void(0);" onClick={() => this.handleGAPDelete(gAP.id)} >
                                                 <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -231,7 +231,7 @@ export default class IndexDashboard extends Component {
                             </div>
                         </div>
                     </div>
-                    {this.props.user.google_accounts_count && !this.state.user.google_analytics_properties_count ? (
+                    {this.props.user.google_accounts_count ? (
                             <>
                                 <div className="justify-content-between align-items-center text-center">
                                     Why don't I see properties? Check this <a target="_blank" href='https://youtu.be/108pI2bvWt0'>Video</a> tutorial on how to fix it.
