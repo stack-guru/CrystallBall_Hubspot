@@ -13,7 +13,7 @@
                 <div class="card">
                     <div class="card-header">Users</div>
                     <div class="card-body">
-                        <form method="GET" id="searchForm">
+                        {{-- <form method="GET" id="searchForm">
                             <div class="row">
                                 <div class="form-group col-md-2">
                                     <label>
@@ -32,7 +32,7 @@
                                     <button type="submit" class="btn btn-primary">Search</button>
                                 </div>
                             </div>
-                        </form>
+                        </form> --}}
                         <div class="table-responsive">
                             <table aria-label="User Active Report" class="table table-hoved table-bordered" id="myTable">
                                 <thead>

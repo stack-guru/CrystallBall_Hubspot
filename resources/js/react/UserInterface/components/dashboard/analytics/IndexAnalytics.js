@@ -25,7 +25,8 @@ import ConsoleAnnotationsTable from './tables/consoleAnnotationsTable';
 import ClicksImpressionsDaysGraph from './graphs/clicksImpressionsDaysGraph';
 import QueriesTable from './tables/queriesTable';
 import PagesTable from './tables/pagesTable';
-
+import AppsModal from "../../AppsMarket/AppsModal";
+import ShareAnalytics from "./ShareAnalytics";
 
 
 export default class IndexAnalytics extends Component {
@@ -36,6 +37,7 @@ export default class IndexAnalytics extends Component {
             isBusy: false,
             redirectTo: null,
             showDateRangeSelect: false,
+            shareAnalyticsPopup: false,
             googleAccount: undefined,
             consoleGoogleAccount: undefined,
             topStatistics: {
@@ -122,6 +124,11 @@ export default class IndexAnalytics extends Component {
                         <div className="row ml-0 mr-0 mb-2">
                             <div className="col-md-12 text-right">
                                 <button className="btn gaa-btn-primary btn-sm" onClick={() => this.exportExcel(this.state.redirectTo)}><i className="fa fa-file-excel-o"></i> Download Excel</button>
+                            </div>
+                        </div>
+                        <div className="row ml-0 mr-0 mb-2">
+                            <div className="col-md-12 text-right">
+                                <button className="btn gaa-btn-primary btn-sm" onClick={() => this.setState({shareAnalyticsPopup: true})}><i className="fa fa-file-excel-o"></i> Share Report</button>
                             </div>
                         </div>
                         <div id="dashboard-index-container">
@@ -261,6 +268,32 @@ export default class IndexAnalytics extends Component {
                     </div>
                 </section>
             </div >
+            
+            <AppsModal isOpen={this.state.shareAnalyticsPopup} popupSize={'md'} toggle={() => {
+                    this.setState({shareAnalyticsPopup: false,});
+                }}>
+                <div className="popupContent modal-createUser">
+                    <div className="apps-modalHead">
+                        <div className="d-flex justify-content-between align-items-center">
+                            <div className="d-flex justify-content-start align-items-center"><h2>Share Analytics</h2>
+                            </div>
+                            <span onClick={() => this.setState({shareAnalyticsPopup: false,})} className="btn-close">
+                                <img className="inject-me" src="/close-icon.svg" width="26" height="26"
+                                        alt="menu icon"/>
+                            </span>
+                        </div>
+                    </div>
+
+                    <ShareAnalytics toggle={() => {
+                        this.setState({shareAnalyticsPopup: false,});
+                    }}  user={this.props.user}
+                        ga_property_id={this.state.ga_property_id}
+                        statisticsPaddingDays={this.state.statisticsPaddingDays}
+                        start_date={this.state.startDate}
+                        end_date={this.state.endDate}
+                    />
+                </div>
+            </AppsModal>
         </React.Fragment>;
     }
 

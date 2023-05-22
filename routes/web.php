@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('test_fb', function () {
+    $nGSCS = App\Models\GoogleSearchConsoleSite::find(171);
+    App\Jobs\FetchGSCSStatisticsJob::dispatch($nGSCS, '2023-05-01', Carbon\Carbon::yesterday()->format('Y-m-d'));
     (new \App\Services\FacebookService())->test();
 });
 
@@ -170,6 +172,7 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
                 Route::get('device-categories', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'deviceCategoriesIndex']);
                 Route::get('device-by-impression', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'devicesIndexByImpression']);
                 Route::get('countries', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'countriesIndex']);
+                Route::get('share-report', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'shareReport']);
             });
 
             Route::group(['prefix' => 'search-console'], function () {
