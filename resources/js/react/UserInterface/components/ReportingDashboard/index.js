@@ -16,6 +16,8 @@ import {
 } from "recharts";
 import { FormGroup, Label } from "reactstrap";
 import ModalHeader from "../AppsMarket/common/ModalHeader";
+import SharePopups from "./SharePopups";
+import ActiveRecurrence from "./ActiveRecurrence";
 import { CircularProgressbar } from "react-circular-progressbar";
 
 
@@ -32,11 +34,16 @@ class ReportingDashboard extends React.Component {
             deviceByConversion: null,
             countries: null,
             isLoading: true,
+            selectedCharts: [],
             userAnnotationColors: {},
             percentage:67,
             percentage1:46,
             percentage2:15,
             cardIsSelected:false,
+            isSharePopup:false,
+            isActiveRecurrenecePopup:false,
+            dsKey: "",
+             dsKeySkip: "",
             userClassName:" ",
             conversationData: [
                 { name: "Desktop", users: "65434", conversionRate: "4.5%" },
@@ -105,7 +112,7 @@ class ReportingDashboard extends React.Component {
         };
         this.shareHandler = this.shareHandler.bind(this);
         this.updateUserAnnotationColors = this.updateUserAnnotationColors.bind(this);
-
+        this.activeReccurenceHandler = this.activeReccurenceHandler.bind(this);
     }
 
     async componentDidMount() {
@@ -433,22 +440,22 @@ class ReportingDashboard extends React.Component {
     }
     shareHandler(){
         console.log("share handler button function call");
-        <ModalHeader
-                    userAnnotationColors={this.state.userAnnotationColors}
-                    updateUserAnnotationColors={this.updateUserAnnotationColors}
-                    userServices={() => {
-                    }}
-                    serviceStatusHandler={() => {
-                    }}
-                    closeModal={() => this.props.togglePopup('')}
-                    serviceName={'Share Reports'}
-                    colorKeyName={"manual"}
-                    dsKeyName={''}
-                    creditString={null}
-                />
+        this.setState({ isSharePopup: true });
+        console.log('sdkzfn  djdk ===== ',this.state.isSharePopup)
+
+    }
+    activeReccurenceHandler(){
+        console.log("activeReccurenceHandler  button function call");
+        this.setState({isActiveRecurrenecePopup :true});
+        console.log('sdkzfn  djdk ===== ',this.state.isActiveRecurrenecePopup)
+
     }
 
+    
+   
+
     render() {
+        const {isSharePopup,isActiveRecurrenecePopup}=this.state;
         return (
             <div className="container reporting-block">
                 <div className="row">
@@ -471,18 +478,25 @@ class ReportingDashboard extends React.Component {
                                     alt="active icon"
                                 />
                             </span>
-                                <h5 className="active-recerrences mb-0">
+                                <button className="active-recerrences mb-0" data-toggle="modal" data-target="#exampleModalCenter1" onClick={this.activeReccurenceHandler}>
                                     Active recurrence
-                                </h5>
-                                <button className="`btn btn-outline btn-sm btnCornerRounded share-btn" onClick={this.shareHandler}>
-                                <span className="align-center">
-                                <img
-                                    src="/images/svg/share.svg"
-                                    alt="share icon"
-                                />
-                            </span>
+                                </button>
+                                {
+                                    isActiveRecurrenecePopup && <ActiveRecurrence />
+                                }
+                                <button className="`btn btn-outline btn-sm btnCornerRounded share-btn " data-toggle="modal" data-target="#exampleModalCenter" onClick={this.shareHandler}>
+                                    <span className="align-center">
+                                        <img
+                                            src="/images/svg/share.svg"
+                                            alt="share icon"
+                                        />
+                                    </span>
                                     Share
                                 </button>
+                                
+                                {
+                                    isSharePopup && <SharePopups />
+                                }
                             </div>
                             
                         </div>
@@ -595,13 +609,13 @@ class ReportingDashboard extends React.Component {
                     <div className={"col-8"}>
                         {/*left side div*/}
                         {/*user's div*/}
-                        {
+                        {/* {
                             this.state.cardIsSelected ?
                             this.state.userClassName=="report-box-selected"                        
                         : 
                         this.state.userClassName=="report-box"                         
                         }
-                        
+                         */}
                         <div className={this.state.userClassName}>
                             {
                                 this.state.cardIsSelected ?
