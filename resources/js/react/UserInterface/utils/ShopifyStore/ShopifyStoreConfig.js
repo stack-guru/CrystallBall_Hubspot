@@ -50,6 +50,13 @@ const ShopifyStoreConfig = (props) => {
             });
     };
 
+    const addAnnotationWithProperty = async (e) => {
+
+        if (props.gaPropertyId) {
+            addAnnotation(e)
+        }
+    }
+
     const addAnnotation = async () => {
 
         const events = [];
@@ -110,9 +117,6 @@ const ShopifyStoreConfig = (props) => {
                                 }
                             }}
                         />
-                        <div onClick={(e) => addAnnotation(e)} className="input-group-append">
-                            <i className="ti-plus"></i>
-                        </div>
                     </div>
                     <span className="betweentext">for</span>
                     <GoogleAnalyticsPropertySelect
@@ -121,6 +125,7 @@ const ShopifyStoreConfig = (props) => {
                         id="ga_property_id"
                         currentPricePlan={props.user.price_plan}
                         value={props.ga_property_id}
+                        onChangeCallbackIcon={(e) => addAnnotationWithProperty(e)}
                         onChangeCallback={(gAP) => {
                             props.updateGAPropertyId(gAP?.target?.value || null);
                         }}
