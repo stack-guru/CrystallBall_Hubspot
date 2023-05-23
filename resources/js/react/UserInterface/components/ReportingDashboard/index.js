@@ -13,6 +13,8 @@ import {
     Cell,
     BarChart,
     Bar,
+    AreaChart,
+    Area,
 } from "recharts";
 import { FormGroup, Label } from "reactstrap";
 import ModalHeader from "../AppsMarket/common/ModalHeader";
@@ -472,13 +474,9 @@ class ReportingDashboard extends React.Component {
                                 </h4>
                             </div>
                             <div className="d-flex align-items-center">
-                            <span>
-                                <img
-                                    src="/images/svg/active-recurrence.svg"
-                                    alt="active icon"
-                                />
-                            </span>
-                                <button className="active-recerrences mb-0" data-toggle="modal" data-target="#exampleModalCenter1" onClick={this.activeReccurenceHandler}>
+                            
+                                <button className="active-recerrences mb-0 p-0 bg-white mr-4" data-toggle="modal" data-target="#exampleModalCenter1" onClick={this.activeReccurenceHandler}>
+                                    <img src="/images/svg/active-recurrence.svg" alt="active icon" className="mr-2" />
                                     Active recurrence
                                 </button>
                                 {
@@ -504,104 +502,95 @@ class ReportingDashboard extends React.Component {
                                 <h4>dfsdf sdf fs fs</h4>
                         </div>
                         {/*filter div*/}
-                        <div className="d-flex justify-content-between mb-5">
+                        <div className="filtersHolder d-flex justify-content-between align-items-center">
                             <div className="d-flex">
-                                <div>
-                                    <FormGroup className="filter-sort position-relative mr-3">
-                                        <Label
-                                            className="sr-only"
-                                            for="dropdownFilters"
-                                        >
-                                            <span
-                                                className={`dot`}
-                                                style={{ color: "2D9CDB" }}
-                                            ></span>
+                                <FormGroup className="filter-sort position-relative">
+                                    <Label
+                                        className="sr-only"
+                                        for="dropdownFilters"
+                                    >
+                                        <span
+                                            className={`dot`}
+                                            style={{ color: "2D9CDB" }}
+                                        ></span>
+                                        Crystal Ball
+                                    </Label>
+                                    <i className="btn-dot left-0 ">
+                                        {/*<svg width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">*/}
+                                        {/*    <path d="M0 10V8.33333H4V10H0ZM0 5.83333V4.16667H8V5.83333H0ZM0 1.66667V0H12V1.66667H0Z" fill="#666666" />*/}
+                                        {/*</svg>*/}
+                                    </i>
+                                    <i className="btn-searchIcon right-0 fa fa-angle-down"></i>
+                                    <select
+                                        name="sortBy"
+                                        id="sort-by"
+                                        value={this.state.sortBy}
+                                        className="form-control"
+                                        onChange={this.sort}
+                                    >
+                                        <option value="">
                                             Crystal Ball
-                                        </Label>
-                                        <i className="btn-dot left-0 ">
-                                            {/*<svg width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">*/}
-                                            {/*    <path d="M0 10V8.33333H4V10H0ZM0 5.83333V4.16667H8V5.83333H0ZM0 1.66667V0H12V1.66667H0Z" fill="#666666" />*/}
-                                            {/*</svg>*/}
-                                        </i>
-                                        <i className="btn-searchIcon right-0 fa fa-angle-down"></i>
-                                        <select
-                                            name="sortBy"
-                                            id="sort-by"
-                                            value={this.state.sortBy}
-                                            className="form-control"
-                                            onChange={this.sort}
+                                        </option>
+                                        {/*<option value="added">Added</option>*/}
+                                        {/*<option value="user">By User</option>*/}
+                                        {/*<option value="today">By Today</option>*/}
+                                        {/*<option value="date">By Date</option>*/}
+                                        {/*<option value="category">By Category</option>*/}
+                                        {/*<option value="ga-property">By GA Property</option>*/}
+                                    </select>
+                                </FormGroup>
+                                <FormGroup className="filter-sort position-relative">
+                                    <Label
+                                        className="sr-only"
+                                        for="dropdownFilters"
+                                    >
+                                        My First Dashboard
+                                    </Label>
+                                    <i className="btn-searchIcon left-0">
+                                        <svg
+                                            width="12"
+                                            height="10"
+                                            viewBox="0 0 12 10"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
                                         >
-                                            <option value="">
-                                                Crystal Ball
-                                            </option>
-                                            {/*<option value="added">Added</option>*/}
-                                            {/*<option value="user">By User</option>*/}
-                                            {/*<option value="today">By Today</option>*/}
-                                            {/*<option value="date">By Date</option>*/}
-                                            {/*<option value="category">By Category</option>*/}
-                                            {/*<option value="ga-property">By GA Property</option>*/}
-                                        </select>
-                                    </FormGroup>
-                                </div>
-                                <div>
-                                    <FormGroup className="filter-sort position-relative mr-3">
-                                        <Label
-                                            className="sr-only"
-                                            for="dropdownFilters"
-                                        >
+                                            <path
+                                                d="M0 10V8.33333H4V10H0ZM0 5.83333V4.16667H8V5.83333H0ZM0 1.66667V0H12V1.66667H0Z"
+                                                fill="#666666"
+                                            />
+                                        </svg>
+                                    </i>
+                                    <i className="btn-searchIcon right-0 fa fa-angle-down"></i>
+                                    <select
+                                        name="sortBy"
+                                        id="sort-by"
+                                        value={this.state.sortBy}
+                                        className="form-control"
+                                        onChange={this.sort}
+                                    >
+                                        <option value="">
                                             My First Dashboard
-                                        </Label>
-                                        <i className="btn-searchIcon left-0">
-                                            <svg
-                                                width="12"
-                                                height="10"
-                                                viewBox="0 0 12 10"
-                                                fill="none"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <path
-                                                    d="M0 10V8.33333H4V10H0ZM0 5.83333V4.16667H8V5.83333H0ZM0 1.66667V0H12V1.66667H0Z"
-                                                    fill="#666666"
-                                                />
-                                            </svg>
-                                        </i>
-                                        <i className="btn-searchIcon right-0 fa fa-angle-down"></i>
-                                        <select
-                                            name="sortBy"
-                                            id="sort-by"
-                                            value={this.state.sortBy}
-                                            className="form-control"
-                                            onChange={this.sort}
-                                        >
-                                            <option value="">
-                                                My First Dashboard
-                                            </option>
-                                            {/*<option value="added">Added</option>*/}
-                                            {/*<option value="user">By User</option>*/}
-                                            {/*<option value="today">By Today</option>*/}
-                                            {/*<option value="date">By Date</option>*/}
-                                            {/*<option value="category">By Category</option>*/}
-                                            {/*<option value="ga-property">By GA Property</option>*/}
-                                        </select>
-                                    </FormGroup>
-                                </div>
+                                        </option>
+                                        {/*<option value="added">Added</option>*/}
+                                        {/*<option value="user">By User</option>*/}
+                                        {/*<option value="today">By Today</option>*/}
+                                        {/*<option value="date">By Date</option>*/}
+                                        {/*<option value="category">By Category</option>*/}
+                                        {/*<option value="ga-property">By GA Property</option>*/}
+                                    </select>
+                                </FormGroup>
                             </div>
-                            <div className="d-flex">
-                                <div>
-                                    <button className="filter-btn">
-                                        Today
-                                    </button>
-                                    <button className="filter-btn">1w</button>
-                                    <button className="filter-btn">2w</button>
-                                    <button className="filter-btn">1m</button>
-                                    <button className="filter-btn">6m</button>
-                                    <button className="filter-btn">All</button>
-                                </div>
-                                <div>
-                                    <button className="custom-btn">
-                                        custom
-                                    </button>
-                                </div>
+                            <div className="filterBtnGroup d-flex">
+                                <button className="filter-btn">Today</button>
+                                <button className="filter-btn">1w</button>
+                                <button className="filter-btn">2w</button>
+                                <button className="filter-btn">1m</button>
+                                <button className="filter-btn">6m</button>
+                                <button className="filter-btn">All</button>
+                                <button className="custom-btn">Custom
+                                <img className="pl-2" src="/images/svg/custom-date.svg"
+                                 alt="custom-date icon" />
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -616,7 +605,7 @@ class ReportingDashboard extends React.Component {
                         this.state.userClassName=="report-box"                         
                         }
                          */}
-                        <div className={this.state.userClassName}>
+                        <div className="report-box">
                             {
                                 this.state.cardIsSelected ?
                                 <span className="tickicongreen">
@@ -1027,7 +1016,7 @@ class ReportingDashboard extends React.Component {
                                             <div>
                                                 <h3 className="card-heading">
                                                     Another Data
-                                                    Subhani bhai
+                                                    *********
                                                 </h3>
                                             </div>
                                             <div>
@@ -1228,7 +1217,7 @@ class ReportingDashboard extends React.Component {
                                     <div className="justify-content-between d-flex mb-3">
                                         <div>
                                             <p className="card-heading">
-                                                Another Data Subhani bhai
+                                                Another Data *********
                                             </p>
                                         </div>
                                         <div>
@@ -1400,7 +1389,7 @@ class ReportingDashboard extends React.Component {
                                     <div className="d-flex justify-content-between mb-5">
                                         <div>
                                             <p className="card-heading">
-                                                Another data Subhan i bhai
+                                                Another data *********
                                             </p>
                                         </div>
                                         <div>
@@ -1492,7 +1481,7 @@ class ReportingDashboard extends React.Component {
                                     <div className="d-flex justify-content-between mb-5">
                                         <div>
                                             <p className="card-heading">
-                                                Another data Subhani bhai
+                                                Another data *********
                                             </p>
                                         </div>
                                         <div>
@@ -1594,12 +1583,22 @@ class ReportingDashboard extends React.Component {
                                     </h4>
                                 </div>
                                 <div>
-                                    <span>
+                                    <div className="btn-group dropright">
+                                        <button type="button" className="btn btn-secondary">
+                                            Split dropright
+                                        </button>
+                                        <button type="button" className="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span className="sr-only">Toggle Dropright</span>
+                                        </button>
+                                        <div className="dropdown-menu">
+                                        </div>
+                                    </div>
+                                    {/* <span>
                                         <img
                                             src="/images/svg/dashboard-list-option.svg"
                                             alt="list icon"
                                         />
-                                    </span>
+                                    </span> */}
                                 </div>
                             </div>
 
@@ -1957,7 +1956,7 @@ class ReportingDashboard extends React.Component {
                             <h6>
                                 Connect Facebook Ads and get valuable                            
                                 insights on rate, retention, cpc etc
-                                Subhani bhai
+                                *********
                             </h6>
                                 <img
                                     src="/images/svg/fb-bg.svg"
@@ -1986,7 +1985,7 @@ class ReportingDashboard extends React.Component {
                             <div className="d-flex justify-content-between mb-5">
                                 <div>
                                     <h4 className="card-heading">
-                                        Another data Subhani bhai
+                                        Another data *********
                                     </h4>
                                 </div>
                                 <div>

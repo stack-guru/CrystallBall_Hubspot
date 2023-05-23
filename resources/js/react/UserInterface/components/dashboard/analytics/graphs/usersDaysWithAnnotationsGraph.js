@@ -1,5 +1,21 @@
 import React from 'react';
 import { Chart } from "react-google-charts";
+import {
+    LineChart,
+    Line,
+    XAxis,
+    YAxis,
+    CartesianGrid,
+    Tooltip,
+    Legend,
+    Pie,
+    PieChart,
+    Cell,
+    BarChart,
+    Bar,
+    AreaChart,
+    Area,
+} from "recharts";
 
 export default function UsersDaysWithAnnotationsGraph(props) {
 
@@ -41,8 +57,9 @@ export default function UsersDaysWithAnnotationsGraph(props) {
         pointSize: 5,
         vAxis: {
             minValue: 0,
+            // maxValue:5000,
             title: 'Users',
-            titleTextStyle: { color: '#3366cc' }
+            titleTextStyle: { color: '#828282' }
         },
         hAxis: {
             scaleType: 'linear',
@@ -59,7 +76,7 @@ export default function UsersDaysWithAnnotationsGraph(props) {
             },
             boxStyle: {
                 // Color of the box outline.
-                stroke: '#888',
+                stroke: '#017ED7',
                 // Thickness of the box outline.
                 strokeWidth: 1,
                 // x-radius of the corner curvature.
@@ -91,32 +108,124 @@ export default function UsersDaysWithAnnotationsGraph(props) {
     const optionsArray2 = {
         annotations: {
             textStyle: {
-                fontName: 'Times-Roman',
-                fontSize: 18,
-                bold: true,
-                italic: true,
+                fontName: 'Source Sans Pro',
+                fontSize: 14,
+                // bold: true,
+                // italic: true,
                 // The color of the text.
-                color: '#871b47',
+                color: '#828282',
                 // The color of the text outline.
-                auraColor: '#d799ae',
+                // auraColor: '#d799ae',
                 // The transparency of the text.
                 opacity: 0.8
             }
         }
     };
 
-    return <div className="row ml-0 mr-0 mt-4">
-        <div className="col-12">
-            <Chart
-                width={'100%'}
-                // style={{ paddingLeft: '10px' }}
-                // height={'50'}
-                chartType="AreaChart"
-                loader={<div>Loading Chart</div>}
-                data={dataArray}
-                options={optionsArray}
-            />
-        </div>
-    </div>
+    return (
+            <>
+             {/*user's div*/}
+                       
+                        {/* <div className="report-box">                           
+                            
+                            <div className="d-flex justify-content-between">
+                                <div>
+                                    <h4 className="card-heading">Users</h4>
+                                </div>
+                                <div>
+                                    <span>
+                                    <img
+                                            src="/images/svg/dashboard-goto-link.svg"
+                                            alt="link icon"
+                                        />                                    
+                                        
+                                    </span>
+                                    <span>
+                                        <div class="btn-group gaa-annotation">
+                                            
+                                            <button class="border-0 p-0 bg-white" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <img
+                                                src="/images/svg/dashboard-list-option.svg"
+                                                alt="list icon"
+                                            />
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                a
+                                                ball
+                                            </div>
+                                        </div>
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                            <div className="mt-4">
+                                <LineChart
+                                    width={600}
+                                    height={200}
+                                    data={dataArray}
+                                >
+                                    <XAxis dataKey="type" />
+                                    <YAxis />
+                                    <CartesianGrid stroke="#ccc" />
+                                    <Tooltip />
+                                    <Legend />
+                                    <Line
+                                        type="monotone"
+                                        dataKey="label"
+                                        stroke="#82ca9d"
+                                        strokeWidth={2}
+                                    />
+                                </LineChart>
+                            </div>
+                        </div> */}
+        
+                <div className="row ml-0 mr-0 mt-4">
+                    <div className="col-12 report-box">
+                      
+                        <div className="d-flex justify-content-between">
+                                    <div>
+                                        <h4 className="card-heading">Users</h4>
+                                    </div>
+                                    <div>
+                                        <span>
+                                        <img
+                                                src="/images/svg/dashboard-goto-link.svg"
+                                                alt="link icon"
+                                            />                                    
+                                            
+                                        </span>
+                                        <span>
+                                            <div class="btn-group gaa-annotation">
+                                                
+                                                <button class="border-0 p-0 bg-white" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <img
+                                                    src="/images/svg/dashboard-list-option.svg"
+                                                    alt="list icon"
+                                                />
+                                                </button>
+                                                <div class="dropdown-menu">
+                                                    a
+                                                    ball
+                                                </div>
+                                            </div>
+                                            
+                                        </span>
+                                    </div>
+                                </div>
+
+                        <Chart
+                            width={'100%'}
+                            // style={{ paddingLeft: '10px' }}
+                            // height={'50'}
+                            chartType="AreaChart"
+                            loader={<div>Loading Chart</div>}
+                            data={dataArray}
+                            options={optionsArray}
+                        />
+                    </div>
+                </div>
+            </>
+    )
+    
 };
 
