@@ -211,7 +211,7 @@ class FacebookAutomationRepository
 
                         foreach ($facebook_pages_from_database as $facebook_page_from_database) {
 
-                            if ($facebook_page_from_facebook['id'] == $facebook_page_from_database->facebook_page_id) {
+                            if (@$facebook_page_from_facebook['id'] == $facebook_page_from_database->facebook_page_id) {
                                 // get page posts from facebook
                                 $response = $this->facebookService->getFacebookPagePosts($facebook_account->token, $facebook_page_from_database->facebook_page_id);
                                 info('Facebook page posts from facebook :: ');
@@ -334,7 +334,8 @@ class FacebookAutomationRepository
                     'event_name' => 'New Post',
                     'title' => $data['description'] ?? "",
                     'description' => $data['title'] ?? $description,
-                    'show_at' => today()
+                    'show_at' => today(),
+                    'configuration_id' => $data['configuration_id'],
                 ]);
                 break;
             case 'when_post_reach_likes':
@@ -346,6 +347,7 @@ class FacebookAutomationRepository
                     'event_name' => 'Likes Reached',
                     'title' => $data['description'] ?? "",
                     'description' => $data['title'] ?? $description,
+                    'configuration_id' => $data['configuration_id'],
                     'show_at' => today()
                 ]);
                 break;
@@ -358,6 +360,7 @@ class FacebookAutomationRepository
                     'event_name' => 'Comments Reached',
                     'title' => $data['description'] ?? "",
                     'description' => $data['title'] ?? $description,
+                    'configuration_id' => $data['configuration_id'],
                     'show_at' => today()
                 ]);
                 break;
@@ -370,6 +373,7 @@ class FacebookAutomationRepository
                     'event_name' => 'Views Reached',
                     'title' => $data['description'] ?? "",
                     'description' => $data['title'] ?? $description,
+                    'configuration_id' => $data['configuration_id'],
                     'show_at' => today()
                 ]);
                 break;
@@ -382,6 +386,7 @@ class FacebookAutomationRepository
                     'event_name' => 'Shares Reached',
                     'title' => $data['description'] ?? "",
                     'description' => $data['title'] ?? $description,
+                    'configuration_id' => $data['configuration_id'],
                     'show_at' => today()
                 ]);
                 break;

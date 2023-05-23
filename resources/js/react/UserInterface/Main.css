@@ -741,6 +741,7 @@ setting-menu-item.dropdown {
 
 .css-1uccc91-singleValue {
     color: #72777a !important;
+    max-width: calc(100% - 35px) !important;
 }
 
 thead th {
@@ -2158,7 +2159,7 @@ body {
 }
 
 .inputWithIcon .fa {
-    top: 7px;
+    top: 9px;
     right: 7px;
     z-index: 2;
     width: 25px;
@@ -6013,4 +6014,17 @@ div[data-tour-elem="controls"]
     text-decoration: line-through;
     color: #096db7;
     font-size: 22px;
+}
+
+.css-1hb7zxy-IndicatorsContainer > div:first-child {
+    display: none !important
+}
+
+#facebook_page > div:first-child {
+    height: 44px !important;
+    border-radius: 10px !important;
+} 
+
+.w-86px {
+    width: 86px !important;
 }

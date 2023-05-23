@@ -390,97 +390,97 @@ export default class UserStartupConfigurationModal extends Component {
                         <div className='popupBtnBox d-flex justify-content-between align-items-center'>
                             <Button onClick={() => {
                                 this.recordStepResponse('IMPORT_OLD_ANNOTATIONS', false);
-                                this.incrementStep(1)
+                                this.incrementStep(2)
                             }} className="btn-cancel">Skip this</Button>
                             <Button onClick={() => {
                                 this.recordStepResponse('IMPORT_OLD_ANNOTATIONS', false);
-                                this.incrementStep(1)
+                                this.incrementStep(2)
                             }} className="btn-theme">Continue</Button>
                         </div>
                     </ModalBody>
                 </div>];
                 break;
             case 3:
-                modalBodyFooter = [<div className="d-flex">
-                    {popupSidebar}
-                    <ModalBody className='p-6 contentArea GAandSearchConsole flex-grow-1'>
-                        <div className='titleAndCloseButton d-flex justify-content-between align-items-center'>
-                            <h2>Connect GA & Search Console</h2>
-                            {/*<span className='cursor-pointer'>
-                                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M9 7.00031L16.0003 0L18 1.99969L10.9997 9L18 16.0003L16.0003 18L9 10.9997L1.99969 18L0 16.0003L7.00031 9L0 1.99969L1.99969 0L9 7.00031Z"
-                                            fill="#a6a6a6"/>
-                                    </svg>
-                                </span>*/}
-                        </div>
-                        <div className='connectGAandSearchConsole d-flex flex-column'>
-                            <p className='m-0'>Please select URLs for each property</p>
-                            <div className='dataTableAnalyticsAccount'>
-                                {this.state.googleAnalyticsProperties.map(gAP => {
-                                    return (
-                                        <div className='d-flex flex-column' key={gAP.id}>
-                                            <div className='d-flex justify-content-start analyticTopBar'>
-                                                <div className='d-flex align-items-center pr-3'>
-                                                    <span className='pr-2'><img src="/icon-g.svg"/></span>
-                                                    <span>{
-                                                                (gAP.google_analytics_account) ?
-                                                                    gAP.google_analytics_account.name :
-                                                                    ''
-                                                            }
-                                                    </span>
-                                                    {
-                                                        gAP.is_in_use ?
-                                                            <em className='tag-inuse'><i className='fa fa-check'></i><i>In
-                                                                use</i></em> :
-                                                            null
-                                                    }
-                                                </div>
-                                                <div className='d-flex align-items-center'>
-                                                    <span className='pr-2'><img src="/icon-bars.svg"/></span>
-                                                    <span>{
-                                                        gAP.google_account ?
-                                                            gAP.google_account.name :
-                                                            null
-                                                    }</span>
-                                                </div>
-                                            </div>
-                                            <div className='grid2layout'>
-                                                <div className='w-100 d-flex justify-content-between align-items-center'>
-                                                    <span>{gAP.name}</span>
-                                                    <span>{gAP.google_search_console_site_id ?<img src={'/icon-link-green.svg'} /> :  <img src={'/icon-unlink-red.svg'} />}</span>
-                                                </div>
-                                                <div className="singleCol text-left d-flex flex-column">
-                                                    <div className="themeNewInputStyle position-relative w-100">
-                                                        <i className="btn-searchIcon right-0 fa fa-angle-down"></i>
-                                                        <select name=""  value={gAP.google_search_console_site_id} className={`form-control ${gAP.google_search_console_site_id ? 'selected' : null}`} onChange={(event) => this.handleGAPUpdate(gAP, { google_search_console_site_id: event.target.value })}>
-                                                            <option value="">Select website</option>
-                                                            {
-                                                                this.state.googleSearchConsoleSites.map(gSCS => <option value={gSCS.id} key={gSCS.id}>{gSCS.site_url} from {gSCS.google_account.name}</option>)
-                                                            }
-                                                        </select>
-                                                        <i className="btn-searchIcon left-0 fa fa-check-circle"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    )
-                                })}
-                            </div>
-                        </div>
-                        <div className='popupBtnBox d-flex justify-content-between align-items-center'>
-                            <Button onClick={() => {
-                                this.recordStepResponse('IMPORT_OLD_ANNOTATIONS', false);
-                                this.incrementStep(1)
-                            }} className="btn-cancel">Skip this</Button>
-                            <Button onClick={() => {
-                                this.recordStepResponse('IMPORT_OLD_ANNOTATIONS', false);
-                                this.incrementStep(1)
-                            }}  className="btn-theme">Continue</Button>
-                        </div>
-                    </ModalBody>
-                </div>];
+                // modalBodyFooter = [<div className="d-flex">
+                //     {popupSidebar}
+                //     <ModalBody className='p-6 contentArea GAandSearchConsole flex-grow-1'>
+                //         <div className='titleAndCloseButton d-flex justify-content-between align-items-center'>
+                //             <h2>Connect GA & Search Console</h2>
+                //             {/*<span className='cursor-pointer'>
+                //                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
+                //                          xmlns="http://www.w3.org/2000/svg">
+                //                         <path
+                //                             d="M9 7.00031L16.0003 0L18 1.99969L10.9997 9L18 16.0003L16.0003 18L9 10.9997L1.99969 18L0 16.0003L7.00031 9L0 1.99969L1.99969 0L9 7.00031Z"
+                //                             fill="#a6a6a6"/>
+                //                     </svg>
+                //                 </span>*/}
+                //         </div>
+                //         <div className='connectGAandSearchConsole d-flex flex-column'>
+                //             <p className='m-0'>Please select URLs for each property</p>
+                //             <div className='dataTableAnalyticsAccount'>
+                //                 {this.state.googleAnalyticsProperties.map(gAP => {
+                //                     return (
+                //                         <div className='d-flex flex-column' key={gAP.id}>
+                //                             <div className='d-flex justify-content-start analyticTopBar'>
+                //                                 <div className='d-flex align-items-center pr-3'>
+                //                                     <span className='pr-2'><img src="/icon-g.svg"/></span>
+                //                                     <span>{
+                //                                                 (gAP.google_analytics_account) ?
+                //                                                     gAP.google_analytics_account.name :
+                //                                                     ''
+                //                                             }
+                //                                     </span>
+                //                                     {
+                //                                         gAP.is_in_use ?
+                //                                             <em className='tag-inuse'><i className='fa fa-check'></i><i>In
+                //                                                 use</i></em> :
+                //                                             null
+                //                                     }
+                //                                 </div>
+                //                                 <div className='d-flex align-items-center'>
+                //                                     <span className='pr-2'><img src="/icon-bars.svg"/></span>
+                //                                     <span>{
+                //                                         gAP.google_account ?
+                //                                             gAP.google_account.name :
+                //                                             null
+                //                                     }</span>
+                //                                 </div>
+                //                             </div>
+                //                             <div className='grid2layout'>
+                //                                 <div className='w-100 d-flex justify-content-between align-items-center'>
+                //                                     <span>{gAP.name}</span>
+                //                                     <span>{gAP.google_search_console_site_id ?<img src={'/icon-link-green.svg'} /> :  <img src={'/icon-unlink-red.svg'} />}</span>
+                //                                 </div>
+                //                                 <div className="singleCol text-left d-flex flex-column">
+                //                                     <div className="themeNewInputStyle position-relative w-100">
+                //                                         <i className="btn-searchIcon right-0 fa fa-angle-down"></i>
+                //                                         <select name=""  value={gAP.google_search_console_site_id} className={`form-control ${gAP.google_search_console_site_id ? 'selected' : null}`} onChange={(event) => this.handleGAPUpdate(gAP, { google_search_console_site_id: event.target.value })}>
+                //                                             <option value="">Select website</option>
+                //                                             {
+                //                                                 this.state.googleSearchConsoleSites.map(gSCS => <option value={gSCS.id} key={gSCS.id}>{gSCS.site_url} from {gSCS.google_account.name}</option>)
+                //                                             }
+                //                                         </select>
+                //                                         <i className="btn-searchIcon left-0 fa fa-check-circle"></i>
+                //                                     </div>
+                //                                 </div>
+                //                             </div>
+                //                         </div>
+                //                     )
+                //                 })}
+                //             </div>
+                //         </div>
+                //         <div className='popupBtnBox d-flex justify-content-between align-items-center'>
+                //             <Button onClick={() => {
+                //                 this.recordStepResponse('IMPORT_OLD_ANNOTATIONS', false);
+                //                 this.incrementStep(1)
+                //             }} className="btn-cancel">Skip this</Button>
+                //             <Button onClick={() => {
+                //                 this.recordStepResponse('IMPORT_OLD_ANNOTATIONS', false);
+                //                 this.incrementStep(1)
+                //             }}  className="btn-theme">Continue</Button>
+                //         </div>
+                //     </ModalBody>
+                // </div>];
                 break;
             case 4:
                 modalBodyFooter = [<div className="d-flex">

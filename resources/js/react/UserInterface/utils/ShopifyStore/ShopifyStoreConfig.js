@@ -50,6 +50,13 @@ const ShopifyStoreConfig = (props) => {
             });
     };
 
+    const addAnnotationWithProperty = async (e) => {
+
+        if (props.gaPropertyId) {
+            addAnnotation(e)
+        }
+    }
+
     const addAnnotation = async () => {
 
         const events = [];
@@ -85,9 +92,9 @@ const ShopifyStoreConfig = (props) => {
         }
     };
 
-    useEffect(() => {
-        props.getExistingShopifyStore();
-    }, [props.gaPropertyId]);
+    // useEffect(() => {
+    //     props.getExistingShopifyStore();
+    // }, [props.gaPropertyId]);
 
     return (
         <div className="apps-bodyContent">
@@ -106,13 +113,10 @@ const ShopifyStoreConfig = (props) => {
                             onKeyUp={(e) => {
                                 if (e.keyCode === 13) {
                                     e.persist();
-                                    getProducts(e);
+                                    addAnnotation(e)
                                 }
                             }}
                         />
-                        <div onClick={(e) => getProducts(e)} className="input-group-append">
-                            <i className="ti-plus"></i>
-                        </div>
                     </div>
                     <span className="betweentext">for</span>
                     <GoogleAnalyticsPropertySelect
@@ -121,6 +125,7 @@ const ShopifyStoreConfig = (props) => {
                         id="ga_property_id"
                         currentPricePlan={props.user.price_plan}
                         value={props.ga_property_id}
+                        onChangeCallbackIcon={(e) => addAnnotationWithProperty(e)}
                         onChangeCallback={(gAP) => {
                             props.updateGAPropertyId(gAP?.target?.value || null);
                         }}
@@ -133,7 +138,7 @@ const ShopifyStoreConfig = (props) => {
                     />
                 </div>
 
-                <div className="checkboxes">
+                <div className="checkboxes mt-3">
                     {products?.map((product) => {
                         return (
                             <label className="themeNewCheckbox d-flex align-items-center justify-content-start textDark" key={product}>
@@ -165,7 +170,7 @@ const ShopifyStoreConfig = (props) => {
                                     key={gAK.id}
                                     user_data_source_id={gAK.id}
                                 >
-                                    <CustomTooltip tooltipText={`${gAK.google_analytics_property.name} - ${gAK.url}`}
+                                    <CustomTooltip tooltipText={`${gAK.google_analytics_property?.name || "All Properties"} - ${gAK.url}`}
                                                        maxLength={50}>
                                         <span
                                             style={{background: "#2d9cdb"}}
