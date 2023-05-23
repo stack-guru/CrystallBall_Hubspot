@@ -106,7 +106,7 @@ export default class DSGAUDatesSelect extends React.Component {
                     </button>
                 </div>
 
-                <div className="gray-box">
+                <div className="gray-box mt-3">
                     {/*{this.props.ds_data.length ?
                         <h4 className='text-capitalize'>
                             {this.props.ds_data[0].status ? this.props.ds_data[0].status : 'Both'}

@@ -93,9 +93,12 @@ class UserDataSourceController extends Controller
     {
         $user = Auth::user();
 
-        // if ($request->ds_code == 'google_algorithm_update_dates') {
-            // DB::statement("DELETE FROM user_data_sources WHERE ds_code = ? AND user_id = ?", ['google_algorithm_update_dates', Auth::id()]);
-        // }
+        if ($request->ds_code == 'google_algorithm_update_dates') {
+            $dsCityCount = UserDataSource::where('ds_code', 'google_algorithm_update_dates')->where('ga_property_id', $request->ga_property_id)->where('user_id', $user->id)->count();
+            if ($dsCityCount)
+                return response(['message' => "This mode is already saved"], 400);
+                // DB::statement("DELETE FROM user_data_sources WHERE ds_code = ? AND user_id = ?", ['google_algorithm_update_dates', Auth::id()]);
+        }
         if ($request->ds_code == 'open_weather_map_cities') {
             $dsCityCount = UserDataSource::where('ds_code', 'open_weather_map_cities')->where('user_id', $user->id)->count();
             $pricePlan = $user->pricePlan;
