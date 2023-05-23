@@ -48,7 +48,7 @@ class UserDataSourceController extends Controller
                 'retail_marketings' =>  $this->userDataSourceQuery(['retail_marketing_id'], 'retail_marketings', true),
                 'open_weather_map_cities' => $this->userDataSourceQuery(['open_weather_map_city_id'], 'open_weather_map_cities', true, null, 'openWeatherMapCity'),
                 'open_weather_map_events' => $this->userDataSourceQuery(['open_weather_map_event'], 'open_weather_map_events'),
-                'google_algorithm_update_dates' => $this->userDataSourceQuery(['status'], 'google_algorithm_update_dates', true),
+                'google_algorithm_update_dates' => $this->userDataSourceQuery(['ga_property_id', 'status'], 'google_algorithm_update_dates', true),
                 'google_alert_keywords' => $this->userDataSourceQuery(['value'], 'google_alert_keywords', true),
                 'wordpress_updates' => $this->userDataSourceQuery(['value'], 'wordpress_updates', true),
                 'keyword_tracking' => $this->userDataSourceQuery(['value'], 'keyword_tracking'),
@@ -93,9 +93,9 @@ class UserDataSourceController extends Controller
     {
         $user = Auth::user();
 
-        if ($request->ds_code == 'google_algorithm_update_dates') {
-            DB::statement("DELETE FROM user_data_sources WHERE ds_code = ? AND user_id = ?", ['google_algorithm_update_dates', Auth::id()]);
-        }
+        // if ($request->ds_code == 'google_algorithm_update_dates') {
+            // DB::statement("DELETE FROM user_data_sources WHERE ds_code = ? AND user_id = ?", ['google_algorithm_update_dates', Auth::id()]);
+        // }
         if ($request->ds_code == 'open_weather_map_cities') {
             $dsCityCount = UserDataSource::where('ds_code', 'open_weather_map_cities')->where('user_id', $user->id)->count();
             $pricePlan = $user->pricePlan;
