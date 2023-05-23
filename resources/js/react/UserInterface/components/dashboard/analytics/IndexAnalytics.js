@@ -43,7 +43,8 @@ import {
 } from "recharts";
 import { FormGroup, Label } from "reactstrap";
 import { CircularProgressbar } from "react-circular-progressbar";
-
+import SharePopups from '../../ReportingDashboard/SharePopups';
+import ActiveRecurrence from '../../ReportingDashboard/ActiveRecurrence';
 
 
 
@@ -179,10 +180,22 @@ export default class IndexAnalytics extends Component {
         this.fetchUsersDaysAnnotations = this.fetchUsersDaysAnnotations.bind(this);
         this.changeStatisticsPaddingDays = this.changeStatisticsPaddingDays.bind(this);
         this.exportExcel = this.exportExcel.bind(this);
+        // this.updateUserAnnotationColors = this.updateUserAnnotationColors.bind(this);
+        this.shareHandler = this.shareHandler.bind(this);
+        this.activeReccurenceHandler = this.activeReccurenceHandler.bind(this);
     }
     componentDidMount() {
         document.title = 'Analytic Dashboard';
     }
+
+    shareHandler(){
+        this.setState({ isSharePopup: true });
+    }
+    activeReccurenceHandler(){
+        this.setState({isActiveRecurrenecePopup :true});
+        console.log('sdkzfn  djdk ===== ',this.state.isActiveRecurrenecePopup)
+    }
+
     render() {
 
         if (!this.props.user.google_accounts_count) return <NoGoogleAccountConnectedPage />
@@ -196,7 +209,7 @@ export default class IndexAnalytics extends Component {
                             {/*wellcome div*/}
                             <div className="d-flex align-items-end">
                                 <h2 className="welcome-color mb-0 p-0">
-                                    Wellcome  👋
+                                    Wellcome {this.props.user.name} 👋
                                 </h2>
 
                                 <h4 className=" ml-4 discription-color mb-0 p-0">
@@ -209,9 +222,9 @@ export default class IndexAnalytics extends Component {
                                     <img src="/images/svg/active-recurrence.svg" alt="active icon" className="mr-2" />
                                     Active recurrence
                                 </button>
-                                {/* {
-                                    isActiveRecurrenecePopup && <ActiveRecurrence />
-                                } */}
+                                {
+                                    this.state.isActiveRecurrenecePopup && <ActiveRecurrence />
+                                }
                                 <button className="`btn btn-outline btn-sm btnCornerRounded share-btn " data-toggle="modal" data-target="#exampleModalCenter" onClick={this.shareHandler}>
                                     <span className="align-center">
                                         <img className='mr-2'
@@ -220,11 +233,10 @@ export default class IndexAnalytics extends Component {
                                         />
                                     </span>
                                     Share
-                                </button>
-                                
-                                {/* {
-                                    isSharePopup && <SharePopups />
-                                } */}
+                                </button>                                
+                                {
+                                    this.state.isSharePopup && <SharePopups />
+                                }
                             </div>
                             
                         </div>
@@ -329,7 +341,13 @@ export default class IndexAnalytics extends Component {
                             </div>
                             <div className="filterBtnGroup d-flex align-items-center">
                                 <button className="filter-btn today">Today</button>
-                                <button className="filter-btn">1w</button>
+                                <button className="filter-btn"
+                                    >1w
+                                      {/* From: {moment(this.state.startDate).format(timezoneToDateFormat(this.props.user.timezone))}
+                                        &nbsp;&nbsp;&nbsp;
+                                        To: {moment(this.state.endDate).format(timezoneToDateFormat(this.props.user.timezone))}
+                                        &nbsp; */}                                    
+                                </button>
                                 <button className="filter-btn">2w</button>
                                 <button className="filter-btn">1m</button>
                                 <button className="filter-btn">6m</button>
@@ -337,6 +355,8 @@ export default class IndexAnalytics extends Component {
                                 <button className="custom-btn">Custom
                                 <img className="pl-2" src="/images/svg/custom-date.svg"
                                  alt="custom-date icon" />
+
+                                 
                                 </button>
                             </div>
                         </div>
@@ -409,7 +429,9 @@ export default class IndexAnalytics extends Component {
                         </div> */}
                         
                         {/*Attribution source*/}
-                        <div className="report-box">
+                        <AnnotationsTable user={this.props.user} annotations={this.state.annotations} satisticsPaddingDaysCallback={this.changeStatisticsPaddingDays} statisticsPaddingDays={this.state.statisticsPaddingDays} />
+
+                        {/* <div className="report-box">
                             <div className="d-flex justify-content-between">
                                 <div>
                                     <h4 className="card-heading">
@@ -503,7 +525,7 @@ export default class IndexAnalytics extends Component {
                                     )}
                                 </tbody>
                             </table>
-                        </div>
+                        </div> */}
 
                         <div className="d-flex flex-column">
                             <div className="fourGridBoxesHolder">
@@ -700,16 +722,11 @@ export default class IndexAnalytics extends Component {
                                     </div>
                                     
                                 </div>
-
-                                <div >
+                                <div>
                                     {/*Linkedin taffic cpc div*/}
                                     <div className="w-100 report-box">
                                         <div className="d-flex justify-content-between mb-5">
-                                            <div>
-                                                <h4 className="card-heading">
-                                                    LinkedIn traffic CPC
-                                                </h4>
-                                            </div>
+                                            <div><h4 className="card-heading">LinkedIn traffic CPC</h4></div>
                                             <div>
                                                 <span>
                                                     <img
@@ -748,14 +765,35 @@ export default class IndexAnalytics extends Component {
                                                 />
                                             </LineChart>
                                         </div>
+                                        <div className="d-flex flex-column todayData linkedintrafic" style={{borderTop: '1px solid #E0E0E0'}}>
+                                            {/* <h3 className="text-center">Today</h3> */}
+                                            <div className="d-flex align-items-center justify-content-center">
+                                                <div className="d-flex flex-column pr-4">
+                                                    <h4 className="mb-0 d-flex justify-content-center align-items-center">
+                                                        <span className='pr-1'><img className='d-block' src="/images/svg/blue-dot.svg" alt="blue-dot icon" /></span>
+                                                        Last month
+                                                    </h4>
+                                                    <h4 className='mb-0 text-center'>1234</h4> 
+                                                </div>
+                                                <div className='divider'></div>
+                                                <div className="d-flex flex-column pl-4">
+                                                    <h4 className="mb-0 d-flex justify-content-center align-items-center">
+                                                        <span className='pr-1'><img className='d-block' src="/images/svg/green-dot.svg" alt="green-dot icon"/></span>
+                                                        This month
+                                                    </h4>
+                                                    <h4 className='mb-0 text-center'>1234</h4>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    {/*Another data div*/}
-                                    <div className="w-100 report-box">
+                                    {/*Media graph div*/}
+                                    <MediaGraph statistics={this.state.mediaStatistics} />
+
+                                    {/* <div className="w-100 report-box">
                                         <div className="justify-content-between d-flex mb-3">
                                             <div>
                                                 <h3 className="card-heading">
-                                                    Another Data
-                                                    *********
+                                                    Media                                                     
                                                 </h3>
                                             </div>
                                             <div>
@@ -894,13 +932,8 @@ export default class IndexAnalytics extends Component {
                                             </div>
                                         </div>
                                         <p>Source:BestGenNewtonSite</p>
-                                    </div>
-                                    
+                                    </div> */}
                                 </div>
-
-                                
-
-                                
                             </div>
                         </div>
 
@@ -957,7 +990,7 @@ export default class IndexAnalytics extends Component {
                                         <div className="justify-content-between d-flex mb-3">
                                             <div>
                                                 <p className="card-heading">
-                                                    Another Data *********
+                                                    Another Data
                                                 </p>
                                             </div>
                                             <div>
@@ -1248,8 +1281,13 @@ export default class IndexAnalytics extends Component {
                         </div>
                     </div>
                     <div className={"col-4"}>
+
                         {/*right side div*/}
-                        {/*Annotations div*/}
+                        
+                        {/*Annotations Table div*/}
+
+                        {/* <AnnotationsTable user={this.props.user} annotations={this.state.annotations} satisticsPaddingDaysCallback={this.changeStatisticsPaddingDays} statisticsPaddingDays={this.state.statisticsPaddingDays} /> */}
+
                         <div className=" report-box ">
                             <div className="d-flex justify-content-between mb-5">
                                 <div>
@@ -1258,16 +1296,7 @@ export default class IndexAnalytics extends Component {
                                     </h4>
                                 </div>
                                 <div>
-                                    <div className="btn-group dropright">
-                                        <button type="button" className="btn btn-secondary">
-                                            Split dropright
-                                        </button>
-                                        <button type="button" className="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <span className="sr-only">Toggle Dropright</span>
-                                        </button>
-                                        <div className="dropdown-menu">
-                                        </div>
-                                    </div>
+                                   
                                     {/* <span>
                                         <img
                                             src="/images/svg/dashboard-list-option.svg"
@@ -1294,21 +1323,12 @@ export default class IndexAnalytics extends Component {
                                         </tr>
                                     ))}
                                 </tbody>
-                                {/*<tbody>*/}
-                                {/*<tr>*/}
-                                {/*    <td>alif</td>*/}
-                                {/*</tr>*/}
-                                {/*<tr>*/}
-                                {/*    <td>alif</td>*/}
-                                {/*</tr>*/}
-                                {/*<tr>*/}
-                                {/*    <td>alif</td>*/}
-                                {/*</tr>*/}
-                                {/*</tbody>*/}
+                                
                             </table>
                         </div>
+
                         {/*Device by impression div*/}
-                        <div className=" report-box">
+                        {/* <div className=" report-box">
                             <div className="d-flex justify-content-between mb-5">
                                 <div>
                                     <h4 className="card-heading">
@@ -1348,9 +1368,7 @@ export default class IndexAnalytics extends Component {
                             </div>
                             <div className="d-flex justify-content-between">
                                 <div className="d-flex flex-row">
-                                    {/*<ResponsiveContainer width="100%" height="100%">*/}
                                     <PieChart width={150} height={150}>
-                                        {/*<Pie data={this.state.data01} dataKey="value" cx="50%" cy="50%" outerRadius={60} fill="#8884d8" />*/}
                                         <Pie
                                             data={this.state.data02}
                                             dataKey="value"
@@ -1378,7 +1396,6 @@ export default class IndexAnalytics extends Component {
                                             )}
                                         </Pie>
                                     </PieChart>
-                                    {/*</ResponsiveContainer>*/}
                                     <div className="d-flex flex-column pl-3 justify-content-center">
                                         <span className="d-flex">
                                             <span className="">
@@ -1408,14 +1425,16 @@ export default class IndexAnalytics extends Component {
                                             </span>
                                             <h5>Tablet</h5>
                                         </span>
-                                        {/* <span>Desktop</span>
-                                            <span>Mobile</span>
-                                            <span>Tablet</span> */}
+                                      
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
+
+
+
                         {/*Device by Conversation div*/}
+
                         <div className=" report-box">
                             <div>
                                 <div className="d-flex justify-content-between mb-5">
@@ -1424,14 +1443,11 @@ export default class IndexAnalytics extends Component {
                                             Devivce By Conversation
                                         </h4>
                                     </div>
-                                    <div>
+                                    {/* <div>
                                         <span>
-                                            <img
-                                                src="/images/svg/dashboard-list-option.svg"
-                                                alt="list icon"
-                                            />
+                                            <img src="/images/svg/dashboard-list-option.svg" alt="list icon" />
                                         </span>
-                                    </div>
+                                    </div> */}
                                 </div>
                                 <table className="table border">
                                     <thead>
@@ -1442,10 +1458,22 @@ export default class IndexAnalytics extends Component {
                                         </tr>
                                     </thead>
                                     <tbody>
+                                            {
+                                                this.state.sourcesStatistics.map(sS => {
+                                                    const conversionRate = sS.sum_conversions_count && sS.sum_users_count ? ((sS.sum_conversions_count / sS.sum_users_count) * 100).toFixed(2) : 0;
+                                                    return <tr>
+                                                        <td><img height="25px" width="25px" src={`https://${sS.source_name}/favicon.ico`} onError={(e) => { e.target.remove(); }} /></td>
+                                                        <td>{sS.source_name}</td>
+                                                        <td>{sS.sum_users_count}</td>
+                                                        <td>{conversionRate}</td>
+                                                    </tr>
+                                                })
+                                            }
+                                    </tbody>
+                                    {/* <tbody>
                                         {this.state.conversationData.map(
                                             (itm, index) => (
                                                 <tr key={index}>
-                                                    {/* <span className="d-flex"> */}
                                                     <td>
                                                         {itm.name ===
                                                         "Desktop" ? (
@@ -1476,8 +1504,7 @@ export default class IndexAnalytics extends Component {
                                                             </span>
                                                         ) : null}
                                                     </td>
-                                                    {/* <td>{itm.name}</td> */}
-                                                    {/* </span> */}
+                                                   
                                                     <td>{itm.users}</td>
                                                     <td>
                                                         {itm.conversionRate}
@@ -1485,13 +1512,12 @@ export default class IndexAnalytics extends Component {
                                                 </tr>
                                             )
                                         )}
-                                    </tbody>
+                                    </tbody> */}
                                 </table>
                             </div>
-                            <div className="d-flex justify-content-between ">
+                            {/* <div className="d-flex justify-content-between ">
                                 <div className="">
-                                    {/*<ResponsiveContainer width="100%" height="100%">*/}
-                                    <PieChart width={150} height={150}>
+]                                    <PieChart width={150} height={150}>
                                         <Pie
                                             data={this.state.data02}
                                             dataKey="value"
@@ -1504,55 +1530,71 @@ export default class IndexAnalytics extends Component {
                                         >
                                             {this.state.data02.map(
                                                 (entry, index) => (
-                                                    <Cell
-                                                        key={`cell-${index}`}
-                                                        fill={
-                                                            this.state.COLORS[
-                                                                index %
-                                                                    this.state
-                                                                        .COLORS
-                                                                        .length
-                                                            ]
-                                                        }
+                                                    <Cell key={`cell-${index}`}
+                                                        fill={this.state.COLORS[index % this.state.COLORS.length]}
                                                     />
                                                 )
                                             )}
                                         </Pie>
                                     </PieChart>
-                                    {/*</ResponsiveContainer>*/}
                                 </div>
                                 <div className="d-flex flex-column">
                                     <span className="d-flex">
                                         <span className="">
-                                            <img
-                                                src="/images/svg/green-dot.svg"
-                                                alt="green-dot icon"
-                                            />
+                                            <img src="/images/svg/green-dot.svg"alt="green-dot icon" />
                                         </span>
                                         <h5>Desktop</h5>
                                     </span>
                                     <span className="d-flex">
                                         <span>
-                                            <img
-                                                src="/images/svg/yellow-dot.svg"
-                                                alt="yellow-dot icon"
-                                            />
+                                            <img src="/images/svg/yellow-dot.svg" alt="yellow-dot icon" />
                                         </span>
 
                                         <h5>Mobile</h5>
                                     </span>
                                     <span className="d-flex">
                                         <span>
-                                            <img
-                                                src="/images/svg/red-dot.svg"
-                                                alt="red-dot icon"
-                                            />
+                                            <img src="/images/svg/red-dot.svg" alt="red-dot icon" />
                                         </span>
                                         <h5>Tablet</h5>
                                     </span>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
+
+                        <div className="report-box">
+                                <DeviceUsersGraph deviceCategoriesStatistics={this.state.deviceCategoriesStatistics} />
+                        </div>
+
+                        {/* <div className="row ml-0 mr-0 mt-4">
+                                            <div className="col-6 scrollable">
+                                                <table className="table table-bordered table-hover gaa-hover">
+                                                    <thead><tr><th></th><th>Source</th><th>Users</th><th>Conversion Rate</th></tr></thead>
+                                                    <tbody>
+                                                        {
+                                                            this.state.sourcesStatistics.map(sS => {
+                                                                const conversionRate = sS.sum_conversions_count && sS.sum_users_count ? ((sS.sum_conversions_count / sS.sum_users_count) * 100).toFixed(2) : 0;
+                                                                return <tr>
+                                                                    <td><img height="25px" width="25px" src={`https://${sS.source_name}/favicon.ico`} onError={(e) => { e.target.remove(); }} /></td>
+                                                                    <td>{sS.source_name}</td>
+                                                                    <td>{sS.sum_users_count}</td>
+                                                                    <td>{conversionRate}</td>
+                                                                </tr>
+                                                            })
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div className="col-6">
+                                                <DeviceUsersGraph deviceCategoriesStatistics={this.state.deviceCategoriesStatistics} />
+                                            </div>
+                        </div> */}
+
+
+                        
+                   
+
+
                         {/*Visitor by Country */}
                         <div className="report-box">
                             <div className="justify-content-between d-flex">
@@ -1628,32 +1670,14 @@ export default class IndexAnalytics extends Component {
                         </div>
                         {/*Facebook Ad's div*/}
                         <div className="report-box">
-                            <h6>
-                                Connect Facebook Ads and get valuable                            
-                                insights on rate, retention, cpc etc
-                                *********
-                            </h6>
-                                <img
-                                    src="/images/svg/fb-bg.svg"
-                                    alt="option icon"
-                                />
+                            <h6 className='mb-0'>Connect Facebook Ads and get valuable insights on rate, retention, cpc etc</h6>
+                            <div className='holder position-relative'>
+                                <img className='position-relative z-index-1' src="/images/svg/fb-bg.svg" alt="option icon" />
                                 <div className="fb-ads">
-                                <span>
-                                <img
-                                    src="/images/svg/fb-ads.svg"
-                                    alt="fb-ads icon"
-                                />
-                                </span>
-                                <span>
-                                <img 
-                                    src="/images/svg/premium-btn.svg"
-                                    alt="premium icon"
-                                />
-                                </span>
+                                    <span className='mb-3'><img src="/images/svg/fb-ads.svg" alt="fb-ads icon"/></span>
+                                    <span><img src="/images/svg/premium-btn.svg" alt="premium icon"/></span>
                                 </div>
-                               
-                                
-
+                            </div>
                         </div>
                         {/*Another data div */}
                         <div className="report-box">
@@ -1690,6 +1714,26 @@ export default class IndexAnalytics extends Component {
                     </div>
             </div>
             </>
+
+
+
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
 
             <>
             {/* <TopStatistics topStatistics={this.state.topStatistics} /> */}

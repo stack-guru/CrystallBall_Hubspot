@@ -450,7 +450,6 @@ class ReportingDashboard extends React.Component {
         console.log("activeReccurenceHandler  button function call");
         this.setState({isActiveRecurrenecePopup :true});
         console.log('sdkzfn  djdk ===== ',this.state.isActiveRecurrenecePopup)
-
     }
 
     

@@ -123,7 +123,7 @@ export default function UsersDaysWithAnnotationsGraph(props) {
     };
 
     return (
-            <>
+        <>
              {/*user's div*/}
                        
                         {/* <div className="report-box">                           
@@ -179,52 +179,21 @@ export default function UsersDaysWithAnnotationsGraph(props) {
                             </div>
                         </div> */}
         
-                <div className="row ml-0 mr-0 mt-4">
-                    <div className="col-12 report-box">
-                      
-                        <div className="d-flex justify-content-between">
-                                    <div>
-                                        <h4 className="card-heading">Users</h4>
-                                    </div>
-                                    <div>
-                                        <span>
-                                        <img
-                                                src="/images/svg/dashboard-goto-link.svg"
-                                                alt="link icon"
-                                            />                                    
-                                            
-                                        </span>
-                                        <span>
-                                            <div class="btn-group gaa-annotation">
-                                                
-                                                <button class="border-0 p-0 bg-white" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <img
-                                                    src="/images/svg/dashboard-list-option.svg"
-                                                    alt="list icon"
-                                                />
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    a
-                                                    ball
-                                                </div>
-                                            </div>
-                                            
-                                        </span>
-                                    </div>
-                                </div>
-
-                        <Chart
-                            width={'100%'}
-                            // style={{ paddingLeft: '10px' }}
-                            // height={'50'}
-                            chartType="AreaChart"
-                            loader={<div>Loading Chart</div>}
-                            data={dataArray}
-                            options={optionsArray}
-                        />
-                    </div>
+            <div className="report-box">
+                <div className="d-flex justify-content-between">
+                    <div><h4 className="card-heading">Users</h4></div>
                 </div>
-            </>
+                <Chart
+                    width={'100%'}
+                    // style={{ paddingLeft: '10px' }}
+                    // height={'50'}
+                    chartType="AreaChart"
+                    loader={<div>Loading Chart</div>}
+                    data={dataArray}
+                    options={optionsArray}
+                />
+            </div>
+        </>
     )
     
 };
