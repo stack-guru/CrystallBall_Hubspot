@@ -55,6 +55,7 @@ class GoogleUpdates extends React.Component {
                     user={this.props.user}
                     loadUserDataSources={this.props.loadUserDataSources}
                     updateGAPropertyId={this.props.updateGAPropertyId}
+                    userDataSourceDeleteHandler={this.props.userDataSourceDeleteHandler}
                 />
                 </>
                 }

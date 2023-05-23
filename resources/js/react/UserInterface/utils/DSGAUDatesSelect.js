@@ -158,7 +158,9 @@ export default class DSGAUDatesSelect extends React.Component {
                                             {gAK.status || 'Both'}"?.
                                         </PopoverBody>
                                         <button
-                                            // onClick={() => deletePodcasts(activeDeletePopover)}
+                                            onClick={() => {
+                                                this.props.userDataSourceDeleteHandler(gAK.id, 'google_algorithm_update_dates');
+                                            }}
                                             key={gAK.id}
                                             user_data_source_id={gAK.id}
                                         >
