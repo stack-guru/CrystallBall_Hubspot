@@ -1990,8 +1990,6 @@ class AppsMarket extends React.Component {
     }
 
     serviceStatusHandler(e) {
-
-        console.log('test')
         if (this.props.user.price_plan.name == 'Trial Ended') {
             if (e.target.name === 'is_ds_keyword_tracking_enabled') {
                 this.props.upgradePopup('rank-tracking-access')
@@ -2009,6 +2007,10 @@ class AppsMarket extends React.Component {
             }
 
             if (e.target.name === 'is_ds_twitter_tracking_enabled') {
+                this.props.upgradePopup('social-media')
+            }
+            
+            if (e.target.name === 'is_ds_facebook_tracking_enabled') {
                 this.props.upgradePopup('social-media')
             }
 
@@ -2514,6 +2516,12 @@ class AppsMarket extends React.Component {
                         if (this.state.dsKey === 'is_ds_shopify_annotation_enabled') {
                             this.props.upgradePopup('more-annotations')
                         }
+                    }
+                    if (err.response.status === 400) {
+                        Toast.fire({
+                            icon: 'error',
+                            title: err.response.data.message,
+                        });
                     }
                 }
             )

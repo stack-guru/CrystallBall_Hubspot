@@ -20,12 +20,18 @@ class FacebookTrackingConfigurationController extends Controller
         $request->validate([
             'selected_facebook_pages' => 'required',
         ]);
+        $userId = Auth::user()->id;
 
-        FacebookTrackingConfiguration::updateOrCreate(
+        $exists = FacebookTrackingConfiguration::where('user_id', $userId)->where('ga_property_id', (int)$request->ga_property_id)->first();
+        if ($exists) {
+            return response()->json([
+                'message' => 'Already Exist',
+            ], 422);
+        }
+
+        FacebookTrackingConfiguration::insert(
             [
-                'user_id' => Auth::user()->id,
-            ],
-            [
+                'user_id' => $userId,
                 'when_new_post_on_facebook' => (boolean)$request->when_new_post_on_facebook,
                 'when_new_ad_compaign_launched' => (boolean)$request->when_new_ad_campaign_launched,
                 'when_ad_compaign_ended' => (boolean)$request->when_ad_campaign_ended,
@@ -48,8 +54,6 @@ class FacebookTrackingConfigurationController extends Controller
 
         $gaProperty = GoogleAnalyticsProperty::find((int)$request->ga_property_id);
 
-        Artisan::call('gaa:execute-facebook-automation');
-
         return response()->json([
             'message' => 'Settings Updated',
             'gaPropertyName' => $gaProperty ? $gaProperty->name : ''
@@ -57,59 +61,76 @@ class FacebookTrackingConfigurationController extends Controller
     }
 
 
+    public function runJob (){
+        Artisan::call('gaa:execute-facebook-automation');
+    }
+
     /**
      * @return JsonResponse
      */
     public function get(): JsonResponse
     {
-        $FacebookTrackingConfiguration = FacebookTrackingConfiguration::where('user_id', Auth::user()->id)->first();
-        if ($FacebookTrackingConfiguration){
-            return response()->json([
-                'configuration_id' => $FacebookTrackingConfiguration->ga_property_id || false,
+        $configurations = FacebookTrackingConfiguration::select('facebook_tracking_configurations.*', 'google_analytics_properties.name AS gaPropertyName')
+        ->where('facebook_tracking_configurations.user_id', Auth::user()->id)
+        ->leftjoin('google_analytics_properties', 'ga_property_id', 'google_analytics_properties.id')->get();
 
-                'when_new_post_on_facebook' => (bool)$FacebookTrackingConfiguration->when_new_post_on_facebook,
-                'when_new_ad_compaign_launched' => (bool)$FacebookTrackingConfiguration->when_new_ad_compaign_launched,
-                'when_ad_compaign_ended' => (bool)$FacebookTrackingConfiguration->when_ad_compaign_ended,
-                'when_changes_on_ad_compaign' => (bool)$FacebookTrackingConfiguration->when_changes_on_ad_compaign,
+        return response()->json(
+            compact('configurations')
+        );
+        // if ($FacebookTrackingConfiguration){
+        //     return response()->json([
+        //         'configuration_id' => $FacebookTrackingConfiguration->ga_property_id || false,
 
-                'when_post_reach_likes' => (int)$FacebookTrackingConfiguration->when_post_reach_likes,
-                'when_post_reach_comments' => (int)$FacebookTrackingConfiguration->when_post_reach_comments,
-                'when_post_reach_shares' => (int)$FacebookTrackingConfiguration->when_post_reach_shares,
-                'when_post_reach_views' => (int)$FacebookTrackingConfiguration->when_post_reach_views,
+        //         'when_new_post_on_facebook' => (bool)$FacebookTrackingConfiguration->when_new_post_on_facebook,
+        //         'when_new_ad_compaign_launched' => (bool)$FacebookTrackingConfiguration->when_new_ad_compaign_launched,
+        //         'when_ad_compaign_ended' => (bool)$FacebookTrackingConfiguration->when_ad_compaign_ended,
+        //         'when_changes_on_ad_compaign' => (bool)$FacebookTrackingConfiguration->when_changes_on_ad_compaign,
 
-                'is_post_likes_tracking_on' => (int)$FacebookTrackingConfiguration->is_post_likes_tracking_on,
-                'is_post_comments_tracking_on' => (int)$FacebookTrackingConfiguration->is_post_comments_tracking_on,
-                'is_post_views_tracking_on' => (int)$FacebookTrackingConfiguration->is_post_views_tracking_on,
-                'is_post_shares_tracking_on' => (int)$FacebookTrackingConfiguration->is_post_shares_tracking_on,
+        //         'when_post_reach_likes' => (int)$FacebookTrackingConfiguration->when_post_reach_likes,
+        //         'when_post_reach_comments' => (int)$FacebookTrackingConfiguration->when_post_reach_comments,
+        //         'when_post_reach_shares' => (int)$FacebookTrackingConfiguration->when_post_reach_shares,
+        //         'when_post_reach_views' => (int)$FacebookTrackingConfiguration->when_post_reach_views,
 
-                'ga_property_id' => (int)$FacebookTrackingConfiguration->ga_property_id,
-                'gaPropertyName' => $FacebookTrackingConfiguration->ga_property_id ? GoogleAnalyticsProperty::find((int)$FacebookTrackingConfiguration->ga_property_id)->name : "",
+        //         'is_post_likes_tracking_on' => (int)$FacebookTrackingConfiguration->is_post_likes_tracking_on,
+        //         'is_post_comments_tracking_on' => (int)$FacebookTrackingConfiguration->is_post_comments_tracking_on,
+        //         'is_post_views_tracking_on' => (int)$FacebookTrackingConfiguration->is_post_views_tracking_on,
+        //         'is_post_shares_tracking_on' => (int)$FacebookTrackingConfiguration->is_post_shares_tracking_on,
 
-                'selected_pages' => unserialize($FacebookTrackingConfiguration->selected_pages) ?? [],
-            ]);
-        }
-        else{
-            return response()->json([
-                'configuration_id' => null,
-                'when_new_post_on_facebook' => true,
-                'when_new_ad_compaign_launched' => true,
-                'when_ad_compaign_ended' => true,
-                'when_changes_on_ad_compaign' => true,
+        //         'ga_property_id' => (int)$FacebookTrackingConfiguration->ga_property_id,
+        //         'gaPropertyName' => $FacebookTrackingConfiguration->ga_property_id ? GoogleAnalyticsProperty::find((int)$FacebookTrackingConfiguration->ga_property_id)->name : "",
 
-                'is_post_likes_tracking_on' => true,
-                'is_post_comments_tracking_on' => true,
-                'is_post_views_tracking_on' => true,
-                'is_post_shares_tracking_on' => true,
+        //         'selected_pages' => unserialize($FacebookTrackingConfiguration->selected_pages) ?? [],
+        //     ]);
+        // }
+        // else{
+        //     return response()->json([
+        //         'configuration_id' => null,
+        //         'when_new_post_on_facebook' => true,
+        //         'when_new_ad_compaign_launched' => true,
+        //         'when_ad_compaign_ended' => true,
+        //         'when_changes_on_ad_compaign' => true,
 
-                'when_post_reach_likes' => 1000,
-                'when_post_reach_comments' => 1000,
-                'when_post_reach_shares' => 1000,
-                'when_post_reach_views' => 1000,
+        //         'is_post_likes_tracking_on' => true,
+        //         'is_post_comments_tracking_on' => true,
+        //         'is_post_views_tracking_on' => true,
+        //         'is_post_shares_tracking_on' => true,
 
-                'ga_property_id' => null,
+        //         'when_post_reach_likes' => 1000,
+        //         'when_post_reach_comments' => 1000,
+        //         'when_post_reach_shares' => 1000,
+        //         'when_post_reach_views' => 1000,
 
-                'selected_pages' => [],
-            ]);
-        }
+        //         'ga_property_id' => null,
+
+        //         'selected_pages' => [],
+        //     ]);
+        // }
+    }
+
+    public function destroy(FacebookTrackingConfiguration $facebookTrackingConfiguration): JsonResponse
+    {
+        $facebookTrackingConfiguration->delete();
+        return ['success' => true, 'data_source' => $facebookTrackingConfiguration];
+
     }
 }

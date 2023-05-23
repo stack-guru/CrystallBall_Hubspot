@@ -239,7 +239,9 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
             // update the keyword details
             Route::post('update-keyword-tracking-keyword', [App\Http\Controllers\UserDataSourceController::class, 'updateKeywordTrackingDetailsForKeyword']);
 
+            Route::delete('remove-facebook-tracking-configuration', [FacebookTrackingConfigurationController::class, 'destroy']);
             Route::post('save-facebook-tracking-configurations', [FacebookTrackingConfigurationController::class, 'save']);
+            Route::post('run-facebook-job', [FacebookTrackingConfigurationController::class, 'runJob']);
             Route::get('get-facebook-tracking-configurations', [FacebookTrackingConfigurationController::class, 'get']);
 
             Route::post('save-twitter-tracking-configurations', [TwitterTrackingConfigurationController::class, 'save']);
