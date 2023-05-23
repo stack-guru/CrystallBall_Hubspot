@@ -392,6 +392,15 @@ class AnalyticsController extends Controller
         $data['annotationsDatesIndex'] = $searchConsole->annotationsDatesIndex($request);
         $data['queriesIndex'] = $searchConsole->queriesIndex($request);
         $data['pagesIndex'] = $searchConsole->pagesIndex($request);
+        $fileContent = Excel::create(new AnalyticFullExport($data), 'anyaltic_and_console_report.xlsx');
+        dd($fileContent);
+        $fileName = 'Reservations by Book Me Host '.$host->name .'-'.$start_date.'-'.$end_date.'.xlsx';    
+        Storage::disk('public_uploads')->put($fileName, $fileContent);
+        $all_exported_data=[];
+        //return "ok";
+
+        $url =  public_path('').'/uploads/'.$fileName;
+
         return Excel::download(new AnalyticFullExport($data), 'anyaltic_and_console_report.xlsx');
     }
 }
