@@ -1076,7 +1076,7 @@ body {
 }
 
 .main-content {
-    padding: 120px 5px 5px;
+    padding: 105px 5px 5px;
 }
 
 .header .header-container {
@@ -6030,7 +6030,7 @@ div[data-tour-elem="controls"]
     background: #FFFFFF;
     box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.1);
     border-radius: 16px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     font-size: 1rem;
     padding-top: 50px;
     /* border: 3px solid #0BD25F */
@@ -6060,7 +6060,7 @@ div[data-tour-elem="controls"]
 }
 .fourGridBoxesHolder {
     display: grid;
-    gap: 15px;
+    gap: 30px;
     grid-template-columns: 1fr 1fr;
 }
 .expence-box {
@@ -6160,6 +6160,8 @@ div[data-tour-elem="controls"]
     font-size: 16px;
     line-height: 20px;
     text-align: center;
+    padding: 6px 8px;
+    gap: 10px;
 }
 .custom-btn{
     border: 1px solid #BDBDBD;
@@ -6171,6 +6173,8 @@ div[data-tour-elem="controls"]
     font-size: 14px;
     line-height: 18px;
     color: #666666;
+    padding: 10px 12px;
+    background: white;
 }
 
 
@@ -6229,4 +6233,54 @@ div[data-tour-elem="controls"]
     border-radius: 16px;
     height: 96px;
     margin-bottom: 24px;
+}
+.filtersHolder { margin-bottom: 42px; }
+.filtersHolder > div { padding-right: 20px; }
+.filtersHolder .filter-sort + .filter-sort { margin-left: 20px; }
+.filterBtnGroup .filter-btn.today{
+    width: auto;
+    padding: 6px 8px;
+}
+.filterBtnGroup .filter-btn{
+    width: 36px;
+    height: 32px;
+    padding: 0;
+    text-align: center;
+    font-size: 16px;
+    line-height: 20px;
+    text-align: center;
+    border-radius: 4px;
+}
+.filterBtnGroup .filter-btn:hover {
+    color: #096DB7;
+    background: rgba(25, 118, 254, 0.05);
+}
+/* .filterBtnGroup .{
+    
+} */
+.dotList h5 {
+    line-height: 1rem;
+}
+.todayData h3 {
+    font-size: 16px;
+    line-height: 20px;
+    color: #666;
+    margin-bottom: 1rem;
+}
+.todayData h4:first-child {
+    color: #828282;
+    padding-bottom: 6px;
+}
+.todayData h4 {
+    color: #222B45;
+    line-height: 1rem;
+    font-size: 16px;
+}
+.todayData .divider {
+    height: 24px;
+    border-right: 1px solid #E0E0E0;
+}
+.divider :horizontal{
+    border-right: 1px solid #E0E0E0;
+
 }
