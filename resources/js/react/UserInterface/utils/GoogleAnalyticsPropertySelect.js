@@ -221,7 +221,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
                     </Modal>
 
                     <div className="themeNewInputStyle position-relative inputWithIcon">
-                        <i className="icon fa">
+                        <i className="icon fa" onClick={this.props.onChangeCallbackIcon}>
                             <img src='/icon-plus.svg'/>
                         </i>
                         <Select

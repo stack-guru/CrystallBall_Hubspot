@@ -52,12 +52,14 @@ class Facebook extends React.Component {
                     updateUserService={this.props.updateUserService}
                     updateTrackingStatus={this.updateTrackingStatus.bind(this)}
                     onCheckCallback={this.props.userDataSourceAddHandler}
+                    sectionToggler={this.props.closeModal}
                     onUncheckCallback={this.props.userDataSourceDeleteHandler}
                     ga_property_id={this.props.ga_property_id}
                     reloadWebMonitors={this.props.reloadWebMonitors}
                     user={this.props.user}
                     loadUserDataSources={this.props.loadUserDataSources}
                     updateGAPropertyId={this.props.updateGAPropertyId}
+                    serviceStatusHandler={this.props.serviceStatusHandler}
                 />
                 </>}
             </div>
