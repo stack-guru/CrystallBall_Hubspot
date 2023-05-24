@@ -181,7 +181,8 @@ export default function UsersDaysWithAnnotationsGraph(props) {
         
             <div className="report-box">
                 <div className="d-flex justify-content-between">
-                    <div><h4 className="card-heading">Users</h4></div>
+                    <div><h4 className="card-heading">Users</h4>
+                    </div>
                 </div>
                 <Chart
                     width={'100%'}
@@ -198,3 +199,60 @@ export default function UsersDaysWithAnnotationsGraph(props) {
     
 };
 
+
+
+{/* <div className="report-box">
+                            {
+                                this.state.cardIsSelected ?
+                                <span className="tickicongreen">
+                                <img  src="/images/svg/green-tick.svg"
+                                 alt="green-tick icon" />
+                            </span>
+                            : null
+                            }
+                            
+                            <div className="d-flex justify-content-between">
+                                <div>
+                                    <h4 className="card-heading">Users</h4>
+                                </div>
+                                <div>
+                                    <span>
+                                    <img
+                                            src="/images/svg/dashboard-goto-link.svg"
+                                            alt="link icon"
+                                        />                                    
+                                        
+                                    </span>
+                                    <span>
+                                        <div class="btn-group gaa-annotation">
+                                            
+                                            <button class="border-0 p-0 bg-white" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <img
+                                                src="/images/svg/dashboard-list-option.svg"
+                                                alt="list icon"
+                                            />
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                a
+                                                ball
+                                            </div>
+                                        </div>
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                            <div className="mt-4">
+                                <LineChart
+                                    width={600}
+                                    height={200}
+                                    data={this.state.data}
+                                >
+                                    <XAxis dataKey="name" />
+                                    <YAxis />
+                                    <CartesianGrid stroke="#ccc" />
+                                    <Tooltip />
+                                    <Legend />
+                                    <Line type="monotone" dataKey="uv" stroke="#82ca9d" strokeWidth={2} />
+                                </LineChart>
+                            </div>
+                        </div> */}

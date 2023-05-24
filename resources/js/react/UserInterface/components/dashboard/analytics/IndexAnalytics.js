@@ -13,6 +13,7 @@ import AnnotationsTable from './tables/annotationsTable';
 import MediaGraph from './graphs/mediaGraph';
 import DeviceUsersGraph from './graphs/deviceUsersGraph';
 import UsersDaysWithAnnotationsGraph from './graphs/usersDaysWithAnnotationsGraph';
+import UsersDaysGraph from './graphs/usersDaysGraph';
 
 import NoGoogleAccountConnectedPage from '../subPages/NoGoogleAccountConnectedPage';
 import NoDataFoundPage from '../subPages/NoDataFoundPage';
@@ -25,6 +26,7 @@ import ConsoleAnnotationsTable from './tables/consoleAnnotationsTable';
 import ClicksImpressionsDaysGraph from './graphs/clicksImpressionsDaysGraph';
 import QueriesTable from './tables/queriesTable';
 import PagesTable from './tables/pagesTable';
+import DeviceByConversationTable from './tables/deviceByConversationTable';
 import {
     LineChart,
     Line,
@@ -218,13 +220,13 @@ export default class IndexAnalytics extends Component {
                             </div>
                             <div className="d-flex align-items-center">
                             
-                                <button className="active-recerrences mb-0 p-0 bg-white mr-4" data-toggle="modal" data-target="#exampleModalCenter1" onClick={this.activeReccurenceHandler}>
+                                {/* <button className="active-recerrences mb-0 p-0 bg-white mr-4" data-toggle="modal" data-target="#exampleModalCenter1" onClick={this.activeReccurenceHandler}>
                                     <img src="/images/svg/active-recurrence.svg" alt="active icon" className="mr-2" />
                                     Active recurrence
                                 </button>
                                 {
                                     this.state.isActiveRecurrenecePopup && <ActiveRecurrence />
-                                }
+                                } */}
                                 <button className="`btn btn-outline btn-sm btnCornerRounded share-btn " data-toggle="modal" data-target="#exampleModalCenter" onClick={this.shareHandler}>
                                     <span className="align-center">
                                         <img className='mr-2'
@@ -372,166 +374,29 @@ export default class IndexAnalytics extends Component {
                         
                         <UsersDaysWithAnnotationsGraph statistics={this.state.usersDaysStatistics} />
 
-                        {/* <div className="report-box">
-                            {
-                                this.state.cardIsSelected ?
-                                <span className="tickicongreen">
-                                <img  src="/images/svg/green-tick.svg"
-                                 alt="green-tick icon" />
-                            </span>
-                            : null
-                            }
-                            
-                            <div className="d-flex justify-content-between">
-                                <div>
-                                    <h4 className="card-heading">Users</h4>
-                                </div>
-                                <div>
-                                    <span>
-                                    <img
-                                            src="/images/svg/dashboard-goto-link.svg"
-                                            alt="link icon"
-                                        />                                    
-                                        
-                                    </span>
-                                    <span>
-                                        <div class="btn-group gaa-annotation">
-                                            
-                                            <button class="border-0 p-0 bg-white" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <img
-                                                src="/images/svg/dashboard-list-option.svg"
-                                                alt="list icon"
-                                            />
-                                            </button>
-                                            <div class="dropdown-menu">
-                                                a
-                                                ball
-                                            </div>
-                                        </div>
-                                        
-                                    </span>
-                                </div>
-                            </div>
-                            <div className="mt-4">
-                                <LineChart
-                                    width={600}
-                                    height={200}
-                                    data={this.state.data}
-                                >
-                                    <XAxis dataKey="name" />
-                                    <YAxis />
-                                    <CartesianGrid stroke="#ccc" />
-                                    <Tooltip />
-                                    <Legend />
-                                    <Line type="monotone" dataKey="uv" stroke="#82ca9d" strokeWidth={2} />
-                                </LineChart>
-                            </div>
-                        </div> */}
                         
                         {/*Attribution source*/}
                         <AnnotationsTable user={this.props.user} annotations={this.state.annotations} satisticsPaddingDaysCallback={this.changeStatisticsPaddingDays} statisticsPaddingDays={this.state.statisticsPaddingDays} />
+                
 
-                        {/* <div className="report-box">
-                            <div className="d-flex justify-content-between">
-                                <div>
-                                    <h4 className="card-heading">
-                                        Attribution source
-                                    </h4>
-                                </div>
-                                <div>
-                                    <span>
-                                        <img
-                                            src="/images/svg/dashboard-list-option.svg"
-                                            alt="list icon"
-                                        />
-                                    </span>
-                                </div>
-                            </div>
-                            <table className="table border mb-0">
-                                <thead>
-                                    <tr>
-                                        <td>Impression</td>
-                                        <td>User</td>
-                                        <td>Conversation</td>
-                                        <td>Conversation Rate</td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {this.state.attributionSourceData.map(
-                                        (itm, index) => (
-                                            <tr key={index}>
-                                                <td>
-                                                    {itm.name ===
-                                                    "Gannotations" ? (
-                                                        <span className="pr-2 d-flex align-items-center">
-                                                            <span style={{'width': '1rem', 'display':'block', 'marginRight':'8px'}}>
-                                                            <img
-                                                                style={{'width': '100%', 'height':'auto',}}
-                                                                src="/images/svg/google.svg"
-                                                                alt="list icon"
-                                                            />
-                                                            </span>
-                                                            {itm.name}
-                                                        </span>
-                                                    ) : itm.name ===
-                                                      "wowsite.co" ? (
-                                                        <span>{itm.name}</span>
-                                                    ) : itm.name ===
-                                                      "youtube.com/videos" ? (
-                                                        <span className="pr-2 d-flex align-items-center">
-                                                            <span style={{'width': '1rem', 'display':'block', 'marginRight':'8px'}}>
-                                                                <img
-                                                                    style={{'width': '100%', 'height':'auto',}}
-                                                                    src="/images/svg/youtube.svg"
-                                                                    alt="list icon"
-                                                                />
-                                                            </span>
-                                                            {itm.name}
-                                                        </span>
-                                                    ) : itm.name ===
-                                                      "news.yahoo.com" ? (
-                                                        <span className="pr-2 d-flex align-items-center">
-                                                            <span style={{'width': '1rem', 'display':'block', 'marginRight':'8px'}}>
-                                                                <img
-                                                                    style={{'width': '100%', 'height':'auto',}}
-                                                                    src="/images/svg/yahoo.svg"
-                                                                    alt="list icon"
-                                                                />
-                                                            </span>
-                                                            {itm.name}
-                                                        </span>
-                                                    ) : itm.name ===
-                                                      "newwebsite.com" ? (
-                                                        <span>{itm.name}</span>
-                                                    ) : itm.name ===
-                                                      "instagram.com" ? (
-                                                        <span className="pr-2 d-flex align-items-center">
-                                                            <span style={{'width': '1rem', 'display':'block', 'marginRight':'8px'}}>
-                                                                <img
-                                                                    style={{'width': '100%', 'height':'auto',}}
-                                                                    src="/images/svg/instagram.svg"
-                                                                    alt="list icon"
-                                                                />
-                                                            </span>
-                                                            {itm.name}
-                                                        </span>
-                                                    ) : null}
-                                                </td>
-                                                <td>{itm.users}</td>
-                                                <td>{itm.conversation}</td>
-                                                <td>{itm.conversionRate}</td>
-                                            </tr>
-                                        )
-                                    )}
-                                </tbody>
-                            </table>
-                        </div> */}
+                        {/* Click Impressions Graph */}                        
+                        <ClicksImpressionsDaysGraph statistics={this.state.clicksImpressionsDaysStatistics} />
+
+                        {/* Console Annotation Tabel */}
+                        <ConsoleAnnotationsTable user={this.props.user} annotations={this.state.console_annotations} satisticsPaddingDaysCallback={this.changeStatisticsPaddingDays} statisticsPaddingDays={this.state.statisticsPaddingDays} />
+
+                        {/* Queries Tabel */}
+                        <QueriesTable queriesStatistics={this.state.queriesStatistics} />
+
+                        {/* Page Table */}
+                        <PagesTable pagesStatistics={this.state.pagesStatistics} />
+
 
                         <div className="d-flex flex-column">
                             <div className="fourGridBoxesHolder">
-                                {/*<p className="card-heading">Todays expence</p>*/}
+
                                 {/*Todays Expence div*/}
-                                <div className="">
+                                {/* <div className="">
                                     <div className={"w-100 report-box"}>
                                         <div className="d-flex justify-content-between">
                                             <div>
@@ -692,7 +557,6 @@ export default class IndexAnalytics extends Component {
                                         </div>
                                     </div>
 
-                                    {/*Create your own moodboard div*/}
                                     <div className="w-100 report-box">
                                         <div>
                                             <p>
@@ -702,7 +566,6 @@ export default class IndexAnalytics extends Component {
                                         </div>
                                         <div>
                                             <form>
-                                                {/* <label htmlFor="img">Add Images:</label> */}
                                                 <span>
                                                     <img
                                                         src="/images/svg/image.svg"
@@ -721,10 +584,11 @@ export default class IndexAnalytics extends Component {
                                         </div>
                                     </div>
                                     
-                                </div>
+                                </div> */}
+                                
                                 <div>
                                     {/*Linkedin taffic cpc div*/}
-                                    <div className="w-100 report-box">
+                                    {/* <div className="w-100 report-box">
                                         <div className="d-flex justify-content-between mb-5">
                                             <div><h4 className="card-heading">LinkedIn traffic CPC</h4></div>
                                             <div>
@@ -766,7 +630,6 @@ export default class IndexAnalytics extends Component {
                                             </LineChart>
                                         </div>
                                         <div className="d-flex flex-column todayData linkedintrafic" style={{borderTop: '1px solid #E0E0E0'}}>
-                                            {/* <h3 className="text-center">Today</h3> */}
                                             <div className="d-flex align-items-center justify-content-center">
                                                 <div className="d-flex flex-column pr-4">
                                                     <h4 className="mb-0 d-flex justify-content-center align-items-center">
@@ -785,7 +648,9 @@ export default class IndexAnalytics extends Component {
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> */}
+
+                                                                                    
                                     {/*Media graph div*/}
                                     <MediaGraph statistics={this.state.mediaStatistics} />
 
@@ -938,7 +803,7 @@ export default class IndexAnalytics extends Component {
                         </div>
 
                         {/*youtube engagement div*/}
-                        <div className="report-box">
+                        {/* <div className="report-box">
                             <div className="d-flex justify-content-between mb-5">
                                 <div>
                                     <p className="card-heading">
@@ -981,11 +846,13 @@ export default class IndexAnalytics extends Component {
                                 <Bar dataKey="Likes" fill="#00F3A3" barSize={10} />
                                 <Bar dataKey="Subscribers" fill="#FFC514" barSize={10} />
                             </BarChart>
-                        </div>
+                        </div> */}
+
+
                         <div>
                             <div className='row'>
                                 {/*Another important data div*/}
-                                <div className='col-6'>
+                                {/* <div className='col-6'>
                                     <div className="report-box">
                                         <div className="justify-content-between d-flex mb-3">
                                             <div>
@@ -1002,17 +869,7 @@ export default class IndexAnalytics extends Component {
                                                 </span>
                                             </div>
                                         </div>
-                                        {/* <div className="d-flex justify-content-between mb-5">
-                                            <div>
-                                                <p className="card-heading">
-                                                    Another important data
-                                                </p>
-                                            </div>
-                                            <div>
-                                                <span><img src="/images/svg/dashboard-list-option.svg" alt="list icon"/></span>                              
-                                            </div>
-                                        </div>
-                                        */}
+                                        
                                         <div className="">
                                             <BarChart
                                                 width={350}
@@ -1061,9 +918,10 @@ export default class IndexAnalytics extends Component {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
+
                                 {/*stores status div*/}
-                                <div className='col-6'>
+                                {/* <div className='col-6'>
                                     <div className="d-flex flex-column report-box">
                                         <div className="d-flex justify-content-between mb-5">
                                             <div>
@@ -1142,9 +1000,10 @@ export default class IndexAnalytics extends Component {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
+
                                 {/*Another data div*/}
-                                <div className='col-6'>
+                                {/* <div className='col-6'>
                                     <div className="report-box">
                                         <div className="d-flex justify-content-between mb-5">
                                             <div>
@@ -1166,9 +1025,7 @@ export default class IndexAnalytics extends Component {
                                                 <Pie
                                                     data={this.state.data02}
                                                     cx="50%"
-                                                    cy="50%"
-                                                    // labelLine={false}
-                                                    // label={renderCustomizedLabel}
+                                                    cy="50%"                                      
                                                     outerRadius={50}
                                                     fill="#8884d8"
                                                     dataKey="value"
@@ -1208,9 +1065,10 @@ export default class IndexAnalytics extends Component {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
+
                                 {/*Another data dive */}
-                                <div className='col-6'>
+                                {/* <div className='col-6'>
                                     <div className="report-box">
                                         <div className="d-flex justify-content-between mb-5">
                                             <div>
@@ -1232,9 +1090,7 @@ export default class IndexAnalytics extends Component {
                                                 <Pie
                                                     data={this.state.data02}
                                                     cx="50%"
-                                                    cy="50%"
-                                                    // labelLine={false}
-                                                    // label={renderCustomizedLabel}
+                                                    cy="50%"                                             
                                                     outerRadius={50}
                                                     fill="#8884d8"
                                                     dataKey="value"
@@ -1276,7 +1132,7 @@ export default class IndexAnalytics extends Component {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </div>
@@ -1287,8 +1143,7 @@ export default class IndexAnalytics extends Component {
                         {/*Annotations Table div*/}
 
                         {/* <AnnotationsTable user={this.props.user} annotations={this.state.annotations} satisticsPaddingDaysCallback={this.changeStatisticsPaddingDays} statisticsPaddingDays={this.state.statisticsPaddingDays} /> */}
-
-                        <div className=" report-box ">
+                        {/* <div className=" report-box ">
                             <div className="d-flex justify-content-between mb-5">
                                 <div>
                                     <h4 className="card-heading">
@@ -1297,12 +1152,12 @@ export default class IndexAnalytics extends Component {
                                 </div>
                                 <div>
                                    
-                                    {/* <span>
+                                    <span>
                                         <img
                                             src="/images/svg/dashboard-list-option.svg"
                                             alt="list icon"
                                         />
-                                    </span> */}
+                                    </span>
                                 </div>
                             </div>
 
@@ -1325,116 +1180,14 @@ export default class IndexAnalytics extends Component {
                                 </tbody>
                                 
                             </table>
-                        </div>
-
-                        {/*Device by impression div*/}
-                        {/* <div className=" report-box">
-                            <div className="d-flex justify-content-between mb-5">
-                                <div>
-                                    <h4 className="card-heading">
-                                        Devivce By Impression
-                                    </h4>
-                                </div>
-                                <div>
-                                    <span>
-                                        <img
-                                            src="/images/svg/dashboard-list-option.svg"
-                                            alt="list icon"
-                                        />
-                                    </span>
-                                </div>
-                            </div>
-                            <div>
-                                <table className="table border">
-                                    <thead>
-                                        <tr>
-                                            <td>Source</td>
-                                            <td>Click</td>
-                                            <td>Impr.</td>
-                                            <td>unknown</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {this.state.data.map((itm, index) => (
-                                            <tr key={index}>
-                                                <td>{itm.name}</td>
-                                                <td>{itm.pv}</td>
-                                                <td>{itm.uv}</td>
-                                                <td>{itm.uv}</td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div className="d-flex justify-content-between">
-                                <div className="d-flex flex-row">
-                                    <PieChart width={150} height={150}>
-                                        <Pie
-                                            data={this.state.data02}
-                                            dataKey="value"
-                                            cx="50%"
-                                            cy="50%"
-                                            innerRadius={30}
-                                            outerRadius={40}
-                                            fill="#82ca9d"
-                                            label
-                                        >
-                                            {this.state.data02.map(
-                                                (entry, index) => (
-                                                    <Cell
-                                                        key={`cell-${index}`}
-                                                        fill={
-                                                            this.state.COLORS[
-                                                                index %
-                                                                    this.state
-                                                                        .COLORS
-                                                                        .length
-                                                            ]
-                                                        }
-                                                    />
-                                                )
-                                            )}
-                                        </Pie>
-                                    </PieChart>
-                                    <div className="d-flex flex-column pl-3 justify-content-center">
-                                        <span className="d-flex">
-                                            <span className="">
-                                                <img
-                                                    src="/images/svg/green-dot.svg"
-                                                    alt="green-dot icon"
-                                                />
-                                            </span>
-                                            <h5>Desktop</h5>
-                                        </span>
-                                        <span className="d-flex">
-                                            <span>
-                                                <img
-                                                    src="/images/svg/yellow-dot.svg"
-                                                    alt="yellow-dot icon"
-                                                />
-                                            </span>
-
-                                            <h5>Mobile</h5>
-                                        </span>
-                                        <span className="d-flex">
-                                            <span>
-                                                <img
-                                                    src="/images/svg/red-dot.svg"
-                                                    alt="red-dot icon"
-                                                />
-                                            </span>
-                                            <h5>Tablet</h5>
-                                        </span>
-                                      
-                                    </div>
-                                </div>
-                            </div>
                         </div> */}
 
-
+                        {/*Device by impression div*/}
+                        <DeviceClicksImpressionsGraph devicesStatistics={this.state.devicesStatistics} />
+                        
 
                         {/*Device by Conversation div*/}
-
+                        {/* <DeviceByConversationTable devicesStatistics={this.state.devicesStatistics} /> */}
                         <div className=" report-box">
                             <div>
                                 <div className="d-flex justify-content-between mb-5">
@@ -1443,11 +1196,11 @@ export default class IndexAnalytics extends Component {
                                             Devivce By Conversation
                                         </h4>
                                     </div>
-                                    {/* <div>
+                                    <div>
                                         <span>
                                             <img src="/images/svg/dashboard-list-option.svg" alt="list icon" />
                                         </span>
-                                    </div> */}
+                                    </div>
                                 </div>
                                 <table className="table border">
                                     <thead>
@@ -1470,96 +1223,10 @@ export default class IndexAnalytics extends Component {
                                                 })
                                             }
                                     </tbody>
-                                    {/* <tbody>
-                                        {this.state.conversationData.map(
-                                            (itm, index) => (
-                                                <tr key={index}>
-                                                    <td>
-                                                        {itm.name ===
-                                                        "Desktop" ? (
-                                                            <span className="pr-1">
-                                                                <img
-                                                                    src="/images/svg/desktop.svg"
-                                                                    alt="list icon"
-                                                                />
-                                                                {itm.name}
-                                                            </span>
-                                                        ) : itm.name ===
-                                                          "Mobile" ? (
-                                                            <span className="pr-1">
-                                                                <img
-                                                                    src="/images/svg/mobile.svg"
-                                                                    alt="list icon"
-                                                                />
-                                                                {itm.name}
-                                                            </span>
-                                                        ) : itm.name ===
-                                                          "Tablet" ? (
-                                                            <span className="pr-1">
-                                                                <img
-                                                                    src="/images/svg/tablet.svg"
-                                                                    alt="list icon"
-                                                                />
-                                                                {itm.name}
-                                                            </span>
-                                                        ) : null}
-                                                    </td>
-                                                   
-                                                    <td>{itm.users}</td>
-                                                    <td>
-                                                        {itm.conversionRate}
-                                                    </td>
-                                                </tr>
-                                            )
-                                        )}
-                                    </tbody> */}
+                                   
                                 </table>
                             </div>
-                            {/* <div className="d-flex justify-content-between ">
-                                <div className="">
-]                                    <PieChart width={150} height={150}>
-                                        <Pie
-                                            data={this.state.data02}
-                                            dataKey="value"
-                                            cx="50%"
-                                            cy="50%"
-                                            innerRadius={30}
-                                            outerRadius={40}
-                                            fill="#82ca9d"
-                                            label
-                                        >
-                                            {this.state.data02.map(
-                                                (entry, index) => (
-                                                    <Cell key={`cell-${index}`}
-                                                        fill={this.state.COLORS[index % this.state.COLORS.length]}
-                                                    />
-                                                )
-                                            )}
-                                        </Pie>
-                                    </PieChart>
-                                </div>
-                                <div className="d-flex flex-column">
-                                    <span className="d-flex">
-                                        <span className="">
-                                            <img src="/images/svg/green-dot.svg"alt="green-dot icon" />
-                                        </span>
-                                        <h5>Desktop</h5>
-                                    </span>
-                                    <span className="d-flex">
-                                        <span>
-                                            <img src="/images/svg/yellow-dot.svg" alt="yellow-dot icon" />
-                                        </span>
-
-                                        <h5>Mobile</h5>
-                                    </span>
-                                    <span className="d-flex">
-                                        <span>
-                                            <img src="/images/svg/red-dot.svg" alt="red-dot icon" />
-                                        </span>
-                                        <h5>Tablet</h5>
-                                    </span>
-                                </div>
-                            </div> */}
+                           
                         </div>
 
                         <div className="report-box">
@@ -1589,14 +1256,12 @@ export default class IndexAnalytics extends Component {
                                                 <DeviceUsersGraph deviceCategoriesStatistics={this.state.deviceCategoriesStatistics} />
                                             </div>
                         </div> */}
-
-
                         
-                   
-
 
                         {/*Visitor by Country */}
-                        <div className="report-box">
+
+                        <MapChart countriesStatistics={this.state.countriesStatistics} />
+                        {/* <div className="report-box">
                             <div className="justify-content-between d-flex">
                                 <div className="d-flex flex-column">
                                     <h3 className="card-heading">
@@ -1667,9 +1332,13 @@ export default class IndexAnalytics extends Component {
                                 </span>                                
                                 <h5 className="ml-5">123456</h5>
                             </div>
-                        </div>
+                        </div> */}
+
+                        {/* Country Table */}
+                        <CountriesTable countriesStatistics={this.state.countriesStatistics} />
+
                         {/*Facebook Ad's div*/}
-                        <div className="report-box">
+                        {/* <div className="report-box">
                             <h6 className='mb-0'>Connect Facebook Ads and get valuable insights on rate, retention, cpc etc</h6>
                             <div className='holder position-relative'>
                                 <img className='position-relative z-index-1' src="/images/svg/fb-bg.svg" alt="option icon" />
@@ -1678,9 +1347,10 @@ export default class IndexAnalytics extends Component {
                                     <span><img src="/images/svg/premium-btn.svg" alt="premium icon"/></span>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
+
                         {/*Another data div */}
-                        <div className="report-box">
+                        {/* <div className="report-box">
                             <div className="d-flex justify-content-between mb-5">
                                 <div>
                                     <h4 className="card-heading">
@@ -1709,7 +1379,7 @@ export default class IndexAnalytics extends Component {
 
                             </div>
                             <div></div>
-                        </div>
+                        </div> */}
                     </div>
                     </div>
             </div>
@@ -1721,203 +1391,192 @@ export default class IndexAnalytics extends Component {
 
 
 
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
+            {/* <>
+                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-
-
-
-
-
-
-
-
-            <>
-            {/* <TopStatistics topStatistics={this.state.topStatistics} /> */}
-            {/* <ConsoleTopStatistics topStatistics={this.state.consoleTopStatistics} /> */}
-            <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper" >
-                <section className="ftco-section" id="inputs">
-                    <div className="container-xl p-0">
-                        <div className="row ml-0 mr-0 mb-1">
-                            <div className="col-md-6 pl-0">
-                                <h2 className="heading-section gaa-title">Analytics</h2>
+                <TopStatistics topStatistics={this.state.topStatistics} /> 
+                <ConsoleTopStatistics topStatistics={this.state.consoleTopStatistics} /> 
+                <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper" >
+                    <section className="ftco-section" id="inputs">
+                        <div className="container-xl p-0">
+                            <div className="row ml-0 mr-0 mb-1">
+                                <div className="col-md-6 pl-0">
+                                    <h2 className="heading-section gaa-title">Analytics</h2>
+                                </div>
+                                <div className="col-md-6 text-right">
+                                    <h6 className="gaa-text-color">This page is on Beta</h6>
+                                </div>
                             </div>
-                            <div className="col-md-6 text-right">
-                                <h6 className="gaa-text-color">This page is on Beta</h6>
-                            </div>
-                        </div>
-                        <div className="row ml-0 mr-0 mb-2">
-                            {/* <div className="col-md-12 text-right">
-                            <button className="btn gaa-btn-primary btn-sm" onClick={() => {
-                                html2canvas(document.getElementById("dashboard-index-container")).then(function (canvas) {
-                                    const link = document.createElement("a");
-                                    link.download = "dashboard_analytics.png";
-                                    canvas.toBlob(function (blob) {
-                                        link.href = URL.createObjectURL(blob);
-                                        link.click();
-                                    });
-                                });
-                            }}><i className="fa fa-file-picture-o"></i> Download</button>
-                         </div> */}
-                            <div className="col-md-12 text-right">
+                            <div className="row ml-0 mr-0 mb-2">
+                                <div className="col-md-12 text-right">
                                 <button className="btn gaa-btn-primary btn-sm" onClick={() => {
-                                    html2pdf(document.getElementById("dashboard-index-container"), {
-                                        margin: 0.5,
-                                        filename: 'dashboard_analytics.pdf',
-                                        image: { type: 'jpeg', quality: 1.0 },
-                                        html2canvas: { scale: 1 },
-                                        jsPDF: { unit: 'in', format: 'A4', orientation: 'landscape' }
+                                    html2canvas(document.getElementById("dashboard-index-container")).then(function (canvas) {
+                                        const link = document.createElement("a");
+                                        link.download = "dashboard_analytics.png";
+                                        canvas.toBlob(function (blob) {
+                                            link.href = URL.createObjectURL(blob);
+                                            link.click();
+                                        });
                                     });
-                                }}><i className="fa fa-file-pdf-o"></i> Download</button>
+                                }}><i className="fa fa-file-picture-o"></i> Download</button>
+                            </div>
+                                <div className="col-md-12 text-right">
+                                    <button className="btn gaa-btn-primary btn-sm" onClick={() => {
+                                        html2pdf(document.getElementById("dashboard-index-container"), {
+                                            margin: 0.5,
+                                            filename: 'dashboard_analytics.pdf',
+                                            image: { type: 'jpeg', quality: 1.0 },
+                                            html2canvas: { scale: 1 },
+                                            jsPDF: { unit: 'in', format: 'A4', orientation: 'landscape' }
+                                        });
+                                    }}><i className="fa fa-file-pdf-o"></i> Download</button>
 
+                                </div>
+                            </div>
+                            <div className="row ml-0 mr-0 mb-2">
+                                <div className="col-md-12 text-right">
+                                    <button className="btn gaa-btn-primary btn-sm" onClick={() => this.exportExcel(this.state.redirectTo)}><i className="fa fa-file-excel-o"></i> Download Excel</button>
+                                </div>
+                            </div>
+                            <div id="dashboard-index-container">
+                                <div className="row ml-0 mr-0">
+                                    <div className="col-md-12">
+                                        <ErrorAlert errors={this.state.errors} />
+                                    </div>
+                                </div>
+                                <div className="row ml-0 mr-0">
+                                    <div style={{ maxWidth: '10%', width: '10%' }} >
+                                        Date range:
+                                    </div>
+                                    <div style={{ maxWidth: '30%', width: '30%' }} >
+                                        <button className="btn thin-light-gray-border text-black w-100"
+                                            style={{ paddingRight: '8px' }}
+                                            onClick={() => { this.setState({ showDateRangeSelect: !this.state.showDateRangeSelect }); }}>
+                                            From: {moment(this.state.startDate).format(timezoneToDateFormat(this.props.user.timezone))}
+                                            &nbsp;&nbsp;&nbsp;
+                                            To: {moment(this.state.endDate).format(timezoneToDateFormat(this.props.user.timezone))}
+                                            &nbsp;
+                                            <svg height="20" width="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false" className="css-19bqh2r float-right" style={{ color: "rgb(204, 204, 204)" }}>
+                                                <path d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div style={{ maxWidth: '50%', width: '50%' }} >
+                                        {
+                                            this.state.showDateRangeSelect ?
+                                                <DateRangePicker
+                                                    style={{ 'position': 'absolute', backgroundColor: '#F7F7F7', zIndex: 9999999999999 }}
+                                                    editableDateInputs={true}
+                                                    moveRangeOnFirstSelection={false}
+                                                    staticRanges={newStaticRanges}
+                                                    inputRanges={[]}
+                                                    ranges={[{
+                                                        startDate: new Date(this.state.startDate),
+                                                        endDate: new Date(this.state.endDate),
+                                                        key: 'selection',
+                                                    }]}
+                                                    onChange={(ranges) => {
+                                                        this.setState({
+                                                            startDate: moment(ranges.selection.startDate).format("YYYY-MM-DD"),
+                                                            endDate: moment(ranges.selection.endDate).format("YYYY-MM-DD"),
+                                                            showDateRangeSelect: moment(ranges.selection.startDate).format("YYYY-MM-DD") == moment(ranges.selection.endDate).format("YYYY-MM-DD")
+                                                        }, () => {
+                                                            if (moment(ranges.selection.startDate).format("YYYY-MM-DD") !== moment(ranges.selection.endDate).format("YYYY-MM-DD")) {
+                                                                this.fetchStatistics(this.state.ga_property_id);
+                                                            }
+                                                        });
+                                                    }}
+                                                />
+                                                :
+                                                null
+                                        }
+                                    </div>
+                                </div>
+                                <div className="row ml-0 mr-0 mt-3">
+                                    <div style={{ maxWidth: '10%', width: '10%' }} >
+                                        Property:
+                                    </div>
+                                    <div style={{ maxWidth: '30%', width: '30%' }} >
+                                        <GoogleAnalyticsPropertySelect
+                                            name="ga_property_id"
+                                            id="ga_property_id"
+                                            value={this.state.ga_property_id}
+                                            onChangeCallback={(event) => { this.setState({ ga_property_id: event.target.value }); this.fetchStatistics(event.target.value); }} placeholder="Select GA Properties"
+                                            components={{ IndicatorSeparator: () => null }}
+                                            autoSelectFirst
+                                        />
+                                    </div>
+                                </div>
+                                {
+                                    this.state.usersDaysStatistics.length ?
+                                        <React.Fragment>
+                                            <UsersDaysGraph statistics={this.state.usersDaysStatistics} />
+                                            <UsersDaysWithAnnotationsGraph statistics={this.state.usersDaysStatistics} />
+                                            <AnnotationsTable user={this.props.user} annotations={this.state.annotations} satisticsPaddingDaysCallback={this.changeStatisticsPaddingDays} statisticsPaddingDays={this.state.statisticsPaddingDays} />
+                                            <MediaGraph statistics={this.state.mediaStatistics} />
+                                            <div className="row ml-0 mr-0 mt-4">
+                                                <div className="col-6 scrollable">
+                                                    <table className="table table-bordered table-hover gaa-hover">
+                                                        <thead><tr><th></th><th>Source</th><th>Users</th><th>Conversion Rate</th></tr></thead>
+                                                        <tbody>
+                                                            {
+                                                                this.state.sourcesStatistics.map(sS => {
+                                                                    const conversionRate = sS.sum_conversions_count && sS.sum_users_count ? ((sS.sum_conversions_count / sS.sum_users_count) * 100).toFixed(2) : 0;
+                                                                    return <tr>
+                                                                        <td><img height="25px" width="25px" src={`https://${sS.source_name}/favicon.ico`} onError={(e) => { e.target.remove(); }} /></td>
+                                                                        <td>{sS.source_name}</td>
+                                                                        <td>{sS.sum_users_count}</td>
+                                                                        <td>{conversionRate}</td>
+                                                                    </tr>
+                                                                })
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div className="col-6">
+                                                    <DeviceUsersGraph deviceCategoriesStatistics={this.state.deviceCategoriesStatistics} />
+                                                </div>
+                                            </div>
+                                        </React.Fragment>
+                                        :
+                                        <NoDataFoundPage googleAccount={this.state.googleAccount} />
+                                }
+                                {
+                                    this.state.clicksImpressionsDaysStatistics.length ?
+                                        <React.Fragment>
+                                            <ClicksImpressionsDaysGraph statistics={this.state.clicksImpressionsDaysStatistics} />
+                                            <ConsoleAnnotationsTable user={this.props.user} annotations={this.state.console_annotations} satisticsPaddingDaysCallback={this.changeStatisticsPaddingDays} statisticsPaddingDays={this.state.statisticsPaddingDays} />
+                                            <div className="row ml-0 mr-0 mt-4">
+                                                <div className="col-6 p-0 scrollable border">
+                                                    <QueriesTable queriesStatistics={this.state.queriesStatistics} />
+                                                </div>
+                                                <div className="col-6 p-0 scrollable border-bottom">
+                                                    <PagesTable pagesStatistics={this.state.pagesStatistics} />
+                                                </div>
+                                            </div>
+                                            <div className="row ml-0 mr-0 mt-4 border-top border-bottom border-left">
+                                                <div className="col-6 p-0">
+                                                    <MapChart countriesStatistics={this.state.countriesStatistics} />
+                                                </div>
+                                                <div className="col-6 p-0 scrollable">
+                                                    <CountriesTable countriesStatistics={this.state.countriesStatistics} />
+                                                </div>
+                                            </div>
+                                            <div className="row ml-0 mr-0 mt-4">
+                                                <div className="col-6 border">
+                                                    <DeviceClicksImpressionsGraph devicesStatistics={this.state.devicesStatistics} />
+                                                </div>
+                                            </div>
+                                        </React.Fragment>
+                                        :
+                                        <NoDataFoundPage googleAccount={this.state.consoleGoogleAccount} />
+                                }
                             </div>
                         </div>
-                        <div className="row ml-0 mr-0 mb-2">
-                            <div className="col-md-12 text-right">
-                                <button className="btn gaa-btn-primary btn-sm" onClick={() => this.exportExcel(this.state.redirectTo)}><i className="fa fa-file-excel-o"></i> Download Excel</button>
-                            </div>
-                        </div>
-                        <div id="dashboard-index-container">
-                            <div className="row ml-0 mr-0">
-                                <div className="col-md-12">
-                                    <ErrorAlert errors={this.state.errors} />
-                                </div>
-                            </div>
-                            <div className="row ml-0 mr-0">
-                                <div style={{ maxWidth: '10%', width: '10%' }} >
-                                    Date range:
-                                </div>
-                                <div style={{ maxWidth: '30%', width: '30%' }} >
-                                    <button className="btn thin-light-gray-border text-black w-100"
-                                        style={{ paddingRight: '8px' }}
-                                        onClick={() => { this.setState({ showDateRangeSelect: !this.state.showDateRangeSelect }); }}>
-                                        From: {moment(this.state.startDate).format(timezoneToDateFormat(this.props.user.timezone))}
-                                        &nbsp;&nbsp;&nbsp;
-                                        To: {moment(this.state.endDate).format(timezoneToDateFormat(this.props.user.timezone))}
-                                        &nbsp;
-                                        <svg height="20" width="20" viewBox="0 0 20 20" aria-hidden="true" focusable="false" className="css-19bqh2r float-right" style={{ color: "rgb(204, 204, 204)" }}>
-                                            <path d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"></path>
-                                        </svg>
-                                    </button>
-                                </div>
-                                <div style={{ maxWidth: '50%', width: '50%' }} >
-                                    {
-                                        this.state.showDateRangeSelect ?
-                                            <DateRangePicker
-                                                style={{ 'position': 'absolute', backgroundColor: '#F7F7F7', zIndex: 9999999999999 }}
-                                                editableDateInputs={true}
-                                                moveRangeOnFirstSelection={false}
-                                                staticRanges={newStaticRanges}
-                                                inputRanges={[]}
-                                                ranges={[{
-                                                    startDate: new Date(this.state.startDate),
-                                                    endDate: new Date(this.state.endDate),
-                                                    key: 'selection',
-                                                }]}
-                                                onChange={(ranges) => {
-                                                    this.setState({
-                                                        startDate: moment(ranges.selection.startDate).format("YYYY-MM-DD"),
-                                                        endDate: moment(ranges.selection.endDate).format("YYYY-MM-DD"),
-                                                        showDateRangeSelect: moment(ranges.selection.startDate).format("YYYY-MM-DD") == moment(ranges.selection.endDate).format("YYYY-MM-DD")
-                                                    }, () => {
-                                                        if (moment(ranges.selection.startDate).format("YYYY-MM-DD") !== moment(ranges.selection.endDate).format("YYYY-MM-DD")) {
-                                                            this.fetchStatistics(this.state.ga_property_id);
-                                                        }
-                                                    });
-                                                }}
-                                            />
-                                            :
-                                            null
-                                    }
-                                </div>
-                            </div>
-                            <div className="row ml-0 mr-0 mt-3">
-                                <div style={{ maxWidth: '10%', width: '10%' }} >
-                                    Property:
-                                </div>
-                                <div style={{ maxWidth: '30%', width: '30%' }} >
-                                    <GoogleAnalyticsPropertySelect
-                                        name="ga_property_id"
-                                        id="ga_property_id"
-                                        value={this.state.ga_property_id}
-                                        onChangeCallback={(event) => { this.setState({ ga_property_id: event.target.value }); this.fetchStatistics(event.target.value); }} placeholder="Select GA Properties"
-                                        components={{ IndicatorSeparator: () => null }}
-                                        autoSelectFirst
-                                    />
-                                </div>
-                            </div>
-                            {
-                                this.state.usersDaysStatistics.length ?
-                                    <React.Fragment>
-                                        {/* <UsersDaysGraph statistics={this.state.usersDaysStatistics} /> */}
-                                        <UsersDaysWithAnnotationsGraph statistics={this.state.usersDaysStatistics} />
-                                        <AnnotationsTable user={this.props.user} annotations={this.state.annotations} satisticsPaddingDaysCallback={this.changeStatisticsPaddingDays} statisticsPaddingDays={this.state.statisticsPaddingDays} />
-                                        <MediaGraph statistics={this.state.mediaStatistics} />
-                                        <div className="row ml-0 mr-0 mt-4">
-                                            <div className="col-6 scrollable">
-                                                <table className="table table-bordered table-hover gaa-hover">
-                                                    <thead><tr><th></th><th>Source</th><th>Users</th><th>Conversion Rate</th></tr></thead>
-                                                    <tbody>
-                                                        {
-                                                            this.state.sourcesStatistics.map(sS => {
-                                                                const conversionRate = sS.sum_conversions_count && sS.sum_users_count ? ((sS.sum_conversions_count / sS.sum_users_count) * 100).toFixed(2) : 0;
-                                                                return <tr>
-                                                                    <td><img height="25px" width="25px" src={`https://${sS.source_name}/favicon.ico`} onError={(e) => { e.target.remove(); }} /></td>
-                                                                    <td>{sS.source_name}</td>
-                                                                    <td>{sS.sum_users_count}</td>
-                                                                    <td>{conversionRate}</td>
-                                                                </tr>
-                                                            })
-                                                        }
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div className="col-6">
-                                                <DeviceUsersGraph deviceCategoriesStatistics={this.state.deviceCategoriesStatistics} />
-                                            </div>
-                                        </div>
-                                    </React.Fragment>
-                                    :
-                                    <NoDataFoundPage googleAccount={this.state.googleAccount} />
-                            }
-                            {
-                                this.state.clicksImpressionsDaysStatistics.length ?
-                                    <React.Fragment>
-                                        <ClicksImpressionsDaysGraph statistics={this.state.clicksImpressionsDaysStatistics} />
-                                        <ConsoleAnnotationsTable user={this.props.user} annotations={this.state.console_annotations} satisticsPaddingDaysCallback={this.changeStatisticsPaddingDays} statisticsPaddingDays={this.state.statisticsPaddingDays} />
-                                        <div className="row ml-0 mr-0 mt-4">
-                                            <div className="col-6 p-0 scrollable border">
-                                                <QueriesTable queriesStatistics={this.state.queriesStatistics} />
-                                            </div>
-                                            <div className="col-6 p-0 scrollable border-bottom">
-                                                <PagesTable pagesStatistics={this.state.pagesStatistics} />
-                                            </div>
-                                        </div>
-                                        <div className="row ml-0 mr-0 mt-4 border-top border-bottom border-left">
-                                            <div className="col-6 p-0">
-                                                <MapChart countriesStatistics={this.state.countriesStatistics} />
-                                            </div>
-                                            <div className="col-6 p-0 scrollable">
-                                                <CountriesTable countriesStatistics={this.state.countriesStatistics} />
-                                            </div>
-                                        </div>
-                                        <div className="row ml-0 mr-0 mt-4">
-                                            <div className="col-6 border">
-                                                <DeviceClicksImpressionsGraph devicesStatistics={this.state.devicesStatistics} />
-                                            </div>
-                                        </div>
-                                    </React.Fragment>
-                                    :
-                                    <NoDataFoundPage googleAccount={this.state.consoleGoogleAccount} />
-                            }
-                        </div>
-                    </div>
-                </section>
-            </div >
-            </>
+                    </section>
+                </div >
+            </> */}
         </React.Fragment>;
     }
 

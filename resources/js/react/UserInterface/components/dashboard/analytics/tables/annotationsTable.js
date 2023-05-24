@@ -188,3 +188,100 @@ export default function AnnotationsTable(props) {
             </>
         )
 }
+
+
+ {/* <div className="report-box">
+                            <div className="d-flex justify-content-between">
+                                <div>
+                                    <h4 className="card-heading">
+                                        Attribution source
+                                    </h4>
+                                </div>
+                                <div>
+                                    <span>
+                                        <img
+                                            src="/images/svg/dashboard-list-option.svg"
+                                            alt="list icon"
+                                        />
+                                    </span>
+                                </div>
+                            </div>
+                            <table className="table border mb-0">
+                                <thead>
+                                    <tr>
+                                        <td>Impression</td>
+                                        <td>User</td>
+                                        <td>Conversation</td>
+                                        <td>Conversation Rate</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {this.state.attributionSourceData.map(
+                                        (itm, index) => (
+                                            <tr key={index}>
+                                                <td>
+                                                    {itm.name ===
+                                                    "Gannotations" ? (
+                                                        <span className="pr-2 d-flex align-items-center">
+                                                            <span style={{'width': '1rem', 'display':'block', 'marginRight':'8px'}}>
+                                                            <img
+                                                                style={{'width': '100%', 'height':'auto',}}
+                                                                src="/images/svg/google.svg"
+                                                                alt="list icon"
+                                                            />
+                                                            </span>
+                                                            {itm.name}
+                                                        </span>
+                                                    ) : itm.name ===
+                                                      "wowsite.co" ? (
+                                                        <span>{itm.name}</span>
+                                                    ) : itm.name ===
+                                                      "youtube.com/videos" ? (
+                                                        <span className="pr-2 d-flex align-items-center">
+                                                            <span style={{'width': '1rem', 'display':'block', 'marginRight':'8px'}}>
+                                                                <img
+                                                                    style={{'width': '100%', 'height':'auto',}}
+                                                                    src="/images/svg/youtube.svg"
+                                                                    alt="list icon"
+                                                                />
+                                                            </span>
+                                                            {itm.name}
+                                                        </span>
+                                                    ) : itm.name ===
+                                                      "news.yahoo.com" ? (
+                                                        <span className="pr-2 d-flex align-items-center">
+                                                            <span style={{'width': '1rem', 'display':'block', 'marginRight':'8px'}}>
+                                                                <img
+                                                                    style={{'width': '100%', 'height':'auto',}}
+                                                                    src="/images/svg/yahoo.svg"
+                                                                    alt="list icon"
+                                                                />
+                                                            </span>
+                                                            {itm.name}
+                                                        </span>
+                                                    ) : itm.name ===
+                                                      "newwebsite.com" ? (
+                                                        <span>{itm.name}</span>
+                                                    ) : itm.name ===
+                                                      "instagram.com" ? (
+                                                        <span className="pr-2 d-flex align-items-center">
+                                                            <span style={{'width': '1rem', 'display':'block', 'marginRight':'8px'}}>
+                                                                <img
+                                                                    style={{'width': '100%', 'height':'auto',}}
+                                                                    src="/images/svg/instagram.svg"
+                                                                    alt="list icon"
+                                                                />
+                                                            </span>
+                                                            {itm.name}
+                                                        </span>
+                                                    ) : null}
+                                                </td>
+                                                <td>{itm.users}</td>
+                                                <td>{itm.conversation}</td>
+                                                <td>{itm.conversionRate}</td>
+                                            </tr>
+                                        )
+                                    )}
+                                </tbody>
+                            </table>
+                        </div> */}

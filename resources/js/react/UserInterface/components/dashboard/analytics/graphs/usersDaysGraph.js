@@ -8,9 +8,7 @@ export default function UsersDaysGraph(props) {
     const noOfUsers = props.statistics.map(s => s.sum_users_count);
 
     return (
-        <>
-        <h2>UsersDaysGraph</h2>
-   
+        <>   
         <Line
             height={'50px'}
             data={{

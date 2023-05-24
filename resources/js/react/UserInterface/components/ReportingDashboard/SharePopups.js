@@ -39,7 +39,12 @@ class SharePopups extends React.Component {
         this.setState(prevState => ({
             isShareSubmit: !prevState.isShareSubmit
           }));
+
+          
         console.log('toggle call')
+
+   
+
     }
 
     render() {
