@@ -291,6 +291,7 @@ export default class IndexAnalytics extends Component {
                         statisticsPaddingDays={this.state.statisticsPaddingDays}
                         start_date={this.state.startDate}
                         end_date={this.state.endDate}
+                        upgradePopup={this.props.upgradePopup}
                     />
                 </div>
             </AppsModal>

@@ -18,8 +18,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('test_fb', function () {
-    $nGSCS = App\Models\GoogleSearchConsoleSite::find(171);
-    App\Jobs\FetchGSCSStatisticsJob::dispatch($nGSCS, '2023-05-01', Carbon\Carbon::yesterday()->format('Y-m-d'));
     (new \App\Services\FacebookService())->test();
 });
 
@@ -172,7 +170,7 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
                 Route::get('device-categories', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'deviceCategoriesIndex']);
                 Route::get('device-by-impression', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'devicesIndexByImpression']);
                 Route::get('countries', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'countriesIndex']);
-                Route::get('share-report', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'shareReport']);
+                Route::post('share-report', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'shareReport']);
             });
 
             Route::group(['prefix' => 'search-console'], function () {
@@ -241,10 +239,10 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
             // update the keyword details
             Route::post('update-keyword-tracking-keyword', [App\Http\Controllers\UserDataSourceController::class, 'updateKeywordTrackingDetailsForKeyword']);
 
-            Route::delete('remove-facebook-tracking-configuration', [FacebookTrackingConfigurationController::class, 'destroy']);
             Route::post('save-facebook-tracking-configurations', [FacebookTrackingConfigurationController::class, 'save']);
             Route::post('run-facebook-job', [FacebookTrackingConfigurationController::class, 'runJob']);
             Route::get('get-facebook-tracking-configurations', [FacebookTrackingConfigurationController::class, 'get']);
+            Route::delete('remove-facebook-tracking-configuration/{facebook_tracking_configuration}', [FacebookTrackingConfigurationController::class, 'destroy']);
 
             Route::post('save-twitter-tracking-configurations', [TwitterTrackingConfigurationController::class, 'save']);
             Route::get('get-twitter-tracking-configurations', [TwitterTrackingConfigurationController::class, 'get']);

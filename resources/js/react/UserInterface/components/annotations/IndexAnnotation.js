@@ -300,7 +300,7 @@ class IndexAnnotations extends React.Component {
                 (response) => {
                     this.loadAnnotationsCancelToken = null;
                     this.setState({
-                        annotations: uniqBy(this.state.annotations.concat(response.data.annotations), 'added_by'),
+                        annotations: this.state.annotations.concat(response.data.annotations),
                         isLoading: false,
                         hasMore: response.data.annotations.length >= pageSize,
                     });
@@ -600,6 +600,7 @@ class IndexAnnotations extends React.Component {
                                         let borderLeftColor = "rgba(0,0,0,.0625)";
                                         let selectedIcon = anno.category || '';
                                         const annoPropertyString = anno.google_analytics_property_name ? anno.google_analytics_property_name : (anno.added_by || "").split("~~~~")?.[1] || "";
+                                        console.log("=>(IndexAnnotation.js:603) anno.google_analytics_property_name", anno.google_analytics_property_name);
                                         const propertyNames = annoPropertyString.split(",");
 
                                         let displayString = "";

@@ -96,6 +96,9 @@ export default class DSGAUDatesSelect extends React.Component {
 
                 <div className='d-flex justify-content-end pt-3'>
                     <button onClick={(e) => {
+                        if (!this.props.ds_data.length) {
+                            this.props.serviceStatusHandler({ target: { name: 'is_ds_google_algorithm_updates_enabled', value: true, checked: true }})
+                        }
                         (this.props.onCheckCallback)({
                             code: 'google_algorithm_update_dates',
                             name: 'GoogleAlgorithmUpdateDate',
@@ -135,13 +138,13 @@ export default class DSGAUDatesSelect extends React.Component {
                                         user_data_source_id={gAK.id}
                                     >
                                         <CustomTooltip
-                                            tooltipText={`${gAK.ga_property_name || "All Properties"} - ${gAK.status || 'Both'}`}
+                                            tooltipText={`${gAK.status || 'Both'}`}
                                             maxLength={50}>
                                         <span
                                             style={{background: "#2d9cdb"}}
                                             className="dot"
                                         ></span>
-                                            {gAK.status || 'Both'}
+                                            {gAK.ga_property_name || "All Properties"}
                                         </CustomTooltip>
                                     </button>
 
@@ -160,6 +163,9 @@ export default class DSGAUDatesSelect extends React.Component {
                                         <button
                                             onClick={() => {
                                                 this.props.userDataSourceDeleteHandler(gAK.id, 'google_algorithm_update_dates');
+                                                if (this.props.ds_data.length === 1) {
+                                                    this.props.serviceStatusHandler({ target: { name: 'is_ds_google_algorithm_updates_enabled', value: false, checked: false }})
+                                                }
                                             }}
                                             key={gAK.id}
                                             user_data_source_id={gAK.id}
