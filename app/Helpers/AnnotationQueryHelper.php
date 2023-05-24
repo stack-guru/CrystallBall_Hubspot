@@ -215,7 +215,7 @@ class AnnotationQueryHelper
     public static function holidaysQuery(array $userIdsArray, string $googleAnalyticsPropertyId)
     {
         $gAPropertyCriteria = self::googleAnalyticsPropertyWhereClause($googleAnalyticsPropertyId);
-        return "select 1, holiday_date AS show_at, NULL, category, event_name, NULL as url, CONCAT('holidays', '~~~~', `uds`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, 'System' AS `user_name`, holiday_date, `uds`.`ga_property_id` AS `table_ga_property_id` from `holidays` inner join `user_data_sources` as `uds` on `uds`.`country_name` = `holidays`.`country_name` where $gAPropertyCriteria AND (`uds`.`user_id` IN ('" . implode("', '", $userIdsArray) . "') and `uds`.`ds_code` = 'holidays')";
+        return "select 1, holiday_date AS show_at, NULL, category, event_name, NULL as url, CONCAT('holidays', '~~~~', `uds`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, 'System' AS `user_name`, holiday_date, `uds`.`ga_property_id` AS `table_ga_property_id` from `holidays` inner join `user_data_sources` as `uds` on `uds`.`country_name` = `holidays`.`country_name` and `uds`.`ga_property_id` = '$googleAnalyticsPropertyId' where $gAPropertyCriteria AND (`uds`.`user_id` IN ('" . implode("', '", $userIdsArray) . "') and `uds`.`ds_code` = 'holidays')";
     }
 
     public static function retailMarketingQuery(array $userIdsArray, string $googleAnalyticsPropertyId)
