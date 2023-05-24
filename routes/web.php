@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('test_fb', function () {
+    $nGSCS = App\Models\GoogleSearchConsoleSite::find(171);
+    App\Jobs\FetchGSCSStatisticsJob::dispatch($nGSCS, '2023-05-01', Carbon\Carbon::yesterday()->format('Y-m-d'));
     (new \App\Services\FacebookService())->test();
 });
 
@@ -109,12 +111,12 @@ Route::group(['prefix' => 'app-sumo', 'as' => 'app-sumo.', 'middleware' => ['aut
 });
 Route::post('ui/generate-password', [App\Http\Controllers\ConfirmPasswordController::class, 'generatePassword'])->name('generate-password');
 Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], function () {
-
+    Route::get('export-statistics',[App\Http\Controllers\Dashboard\AnalyticsController::class, 'export']);
     Route::delete('user', [App\Http\Controllers\HomeController::class, 'deleteAccount'])->withoutMiddleware('only.non.empty.password');
 
     Route::view('dashboard', 'ui/app'); // obsolete
     Route::view('ga-accounts', 'ui/app');
-    // Route::view('dashboard/analytics', 'ui/app');
+    Route::view('dashboard/analytics', 'ui/app');
     // Route::view('dashboard/search-console', 'ui/app');
 
     Route::resource('annotation', App\Http\Controllers\AnnotationController::class)->except(['store', 'show', 'update', 'destroy']);
@@ -164,13 +166,13 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
                 Route::get('top-statistics', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'topStatisticsIndex']);
                 Route::get('annotations-metrics-dimensions', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'annotationsMetricsDimensionsIndex']);
                 Route::get('users-days', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'usersDaysIndex']);
-                Route::get('users-days', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'usersDaysIndex']);
                 Route::get('users-days-annotations', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'usersDaysAnnotationsIndex']);
                 Route::get('media', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'mediaIndex']);
                 Route::get('sources', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'sourcesIndex']);
                 Route::get('device-categories', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'deviceCategoriesIndex']);
                 Route::get('device-by-impression', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'devicesIndexByImpression']);
                 Route::get('countries', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'countriesIndex']);
+                Route::get('share-report', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'shareReport']);
             });
 
             Route::group(['prefix' => 'search-console'], function () {
@@ -216,8 +218,11 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
             Route::put('mark-google-accounts-tour', [App\Http\Controllers\HomeController::class, 'markGoogleAccountsTourDone']);
 
             Route::resource('user-data-source', App\Http\Controllers\UserDataSourceController::class)->only(['index', 'store', 'update', 'destroy']);
+            Route::post('user-data-sources', [App\Http\Controllers\UserDataSourceController::class, 'storeAll']);
+            Route::post('user-data-sources/delete', [App\Http\Controllers\UserDataSourceController::class, 'deleteAll']);
 
             Route::get('user-facebook-accounts-exists', [FacebookAutomationController::class, 'userFacebookAccountsExists']);
+            Route::get('user-twitter-accounts-exists', [TwitterController::class, 'usertwitterAccountsExists']);
             Route::get('user-instagram-accounts-exists', [InstagramAutomationController::class, 'userInstagramAccountsExists']);
             Route::get('user-bitbucket-accounts-exists', [BitbucketAutomationController::class, 'userBitbucketAccountsExists']);
             Route::get('user-github-accounts-exists', [GithubAutomationController::class, 'userGithubAccountsExists']);
@@ -236,7 +241,9 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
             // update the keyword details
             Route::post('update-keyword-tracking-keyword', [App\Http\Controllers\UserDataSourceController::class, 'updateKeywordTrackingDetailsForKeyword']);
 
+            Route::delete('remove-facebook-tracking-configuration', [FacebookTrackingConfigurationController::class, 'destroy']);
             Route::post('save-facebook-tracking-configurations', [FacebookTrackingConfigurationController::class, 'save']);
+            Route::post('run-facebook-job', [FacebookTrackingConfigurationController::class, 'runJob']);
             Route::get('get-facebook-tracking-configurations', [FacebookTrackingConfigurationController::class, 'get']);
 
             Route::post('save-twitter-tracking-configurations', [TwitterTrackingConfigurationController::class, 'save']);
@@ -262,7 +269,8 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
             Route::get('get-github-repositories', [GithubAutomationController::class, 'getRepositories']);
             Route::post('apple_podcast_url', [App\Http\Controllers\ApplePodcastMonitorController::class, 'applePodcastUrl']);
 
-            Route::post('shopify_url', [App\Http\Controllers\ShopifyMonitorController::class, 'shopifyUrl']);
+            Route::post('shopify_url', [App\Http\Controllers\ShopifyMonitorController::class, 'saveShopifyProducts']);
+            Route::get('getShopifyProducts', [App\Http\Controllers\ShopifyMonitorController::class, 'getShopifyProducts']);
             Route::resource('shopify-monitor', App\Http\Controllers\ShopifyMonitorController::class)->only(['index', 'store', 'update', 'destroy']);
             Route::resource('apple-podcast-monitor', App\Http\Controllers\ApplePodcastMonitorController::class)->only(['index', 'store', 'update', 'destroy']);
         });

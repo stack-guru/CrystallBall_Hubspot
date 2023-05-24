@@ -211,7 +211,7 @@ class FacebookAutomationRepository
 
                         foreach ($facebook_pages_from_database as $facebook_page_from_database) {
 
-                            if ($facebook_page_from_facebook['id'] == $facebook_page_from_database->facebook_page_id) {
+                            if (@$facebook_page_from_facebook['id'] == $facebook_page_from_database->facebook_page_id) {
                                 // get page posts from facebook
                                 $response = $this->facebookService->getFacebookPagePosts($facebook_account->token, $facebook_page_from_database->facebook_page_id);
                                 info('Facebook page posts from facebook :: ');
@@ -226,6 +226,7 @@ class FacebookAutomationRepository
                                         // check configuration if it's enabled to create annotation
                                         if ($configuraion->when_new_post_on_facebook) {
                                             $data = @$response['page_posts'][0]['attachments']['data'][0];
+                                            $data['configuration_id'] = $configuraion->id;
                                             $this->createAutomationAnnotation('when_new_post_on_facebook', $user, $data);
                                         }
                                     }
@@ -255,7 +256,8 @@ class FacebookAutomationRepository
                                                         if ($likes_fb >= $when_post_reach_likes){
                                                             $data = [
                                                                 "likes" => $likes_fb,
-                                                                "url" => @$facebook_page_post_from_facebook['attachments']['data'][0]['url']
+                                                                "url" => @$facebook_page_post_from_facebook['attachments']['data'][0]['url'],
+                                                                'configuration_id' => $configuraion->id
                                                             ];
                                                             $this->createAutomationAnnotation('when_post_reach_likes', $user, $data);
                                                         }
@@ -268,7 +270,8 @@ class FacebookAutomationRepository
                                                         if ($comments_fb >= $when_post_reach_comments){
                                                             $data = [
                                                                 "comments" => $comments_fb,
-                                                                "url" => @$facebook_page_post_from_facebook['attachments']['data'][0]['url']
+                                                                "url" => @$facebook_page_post_from_facebook['attachments']['data'][0]['url'],
+                                                                'configuration_id' => $configuraion->id
                                                             ];
                                                             $this->createAutomationAnnotation('when_post_reach_comments', $user, $data);
                                                         }
@@ -281,7 +284,8 @@ class FacebookAutomationRepository
                                                         if ($views_fb >= $when_post_reach_views){
                                                             $data = [
                                                                 "views" => $views_fb,
-                                                                "url" => @$facebook_page_post_from_facebook['attachments']['data'][0]['url']
+                                                                "url" => @$facebook_page_post_from_facebook['attachments']['data'][0]['url'],
+                                                                'configuration_id' => $configuraion->id
                                                             ];
                                                             $this->createAutomationAnnotation('when_post_reach_views', $user, $data);
                                                         }
@@ -294,7 +298,8 @@ class FacebookAutomationRepository
                                                         if ($shares_fb >= $when_post_reach_shares){
                                                             $data = [
                                                                 "shares" => $shares_fb,
-                                                                "url" => @$facebook_page_post_from_facebook['attachments']['data'][0]['url']
+                                                                "url" => @$facebook_page_post_from_facebook['attachments']['data'][0]['url'],
+                                                                'configuration_id' => $configuraion->id
                                                             ];
                                                             $this->createAutomationAnnotation('when_post_reach_shares', $user, $data);
                                                         }
@@ -329,7 +334,8 @@ class FacebookAutomationRepository
                     'event_name' => 'New Post',
                     'title' => $data['description'] ?? "",
                     'description' => $data['title'] ?? $description,
-                    'show_at' => today()
+                    'show_at' => today(),
+                    'configuration_id' => $data['configuration_id'],
                 ]);
                 break;
             case 'when_post_reach_likes':
@@ -341,6 +347,7 @@ class FacebookAutomationRepository
                     'event_name' => 'Likes Reached',
                     'title' => $data['description'] ?? "",
                     'description' => $data['title'] ?? $description,
+                    'configuration_id' => $data['configuration_id'],
                     'show_at' => today()
                 ]);
                 break;
@@ -353,6 +360,7 @@ class FacebookAutomationRepository
                     'event_name' => 'Comments Reached',
                     'title' => $data['description'] ?? "",
                     'description' => $data['title'] ?? $description,
+                    'configuration_id' => $data['configuration_id'],
                     'show_at' => today()
                 ]);
                 break;
@@ -365,6 +373,7 @@ class FacebookAutomationRepository
                     'event_name' => 'Views Reached',
                     'title' => $data['description'] ?? "",
                     'description' => $data['title'] ?? $description,
+                    'configuration_id' => $data['configuration_id'],
                     'show_at' => today()
                 ]);
                 break;
@@ -377,6 +386,7 @@ class FacebookAutomationRepository
                     'event_name' => 'Shares Reached',
                     'title' => $data['description'] ?? "",
                     'description' => $data['title'] ?? $description,
+                    'configuration_id' => $data['configuration_id'],
                     'show_at' => today()
                 ]);
                 break;

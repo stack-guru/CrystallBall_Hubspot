@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Toast from "../../utils/Toast";
 import HttpClient from "../HttpClient";
 import "./ShopifyStoreConfig.css";
+import {CustomTooltip} from "../../components/annotations/IndexAnnotation";
 
 import {
     Button,
@@ -20,7 +21,8 @@ import {
 import GoogleAnalyticsPropertySelect from "../GoogleAnalyticsPropertySelect";
 
 const ShopifyStoreConfig = (props) => {
-    const [inputVale, setInputVale] = useState("");
+    const products = ['New Product', 'Updated Product', 'Removed Product'];
+    const [inputValue, setInputVale] = useState("");
     const [activeDeletePopover, setActiveDeletePopover] = useState("");
 
     const deletePodcasts = async (payload) => {
@@ -48,11 +50,23 @@ const ShopifyStoreConfig = (props) => {
             });
     };
 
+    const addAnnotationWithProperty = async (e) => {
+
+        if (props.gaPropertyId) {
+            addAnnotation(e)
+        }
+    }
+
     const addAnnotation = async () => {
-        if (props.limitReached) {
-            props.upgradePopup('more-annotations')
-        } else {
-        HttpClient.post("/data-source/shopify_url", { shopifyUrl: inputVale, gaPropertyId: props.gaPropertyId || "" })
+
+        const events = [];
+        $("input:checkbox[name=product-row]:checked").each((idx, input) =>{
+            events.push( $(input).val() );
+        });
+
+        if( events.length && inputValue ) {
+
+            HttpClient.post("/data-source/shopify_url", { shopifyUrl: inputValue, events: JSON.stringify(events), gaPropertyId: props.gaPropertyId || "" })
             .then(
                 () => {
                     props.sectionToggler();
@@ -78,9 +92,9 @@ const ShopifyStoreConfig = (props) => {
         }
     };
 
-    useEffect(() => {
-        props.getExistingShopifyStore();
-    }, [props.gaPropertyId]);
+    // useEffect(() => {
+    //     props.getExistingShopifyStore();
+    // }, [props.gaPropertyId]);
 
     return (
         <div className="apps-bodyContent">
@@ -92,20 +106,17 @@ const ShopifyStoreConfig = (props) => {
                             type="text"
                             className="form-control search-input themeNewInput"
                             placeholder="Enter store url"
-                            value={inputVale}
+                            value={inputValue}
                             onChange={(e) =>
                                 setInputVale(e.target.value.toLowerCase())
                             }
                             onKeyUp={(e) => {
                                 if (e.keyCode === 13) {
                                     e.persist();
-                                    addAnnotation(e);
+                                    addAnnotation(e)
                                 }
                             }}
                         />
-                        <div onClick={(e) => addAnnotation(e)} className="input-group-append">
-                            <i className="ti-plus"></i>
-                        </div>
                     </div>
                     <span className="betweentext">for</span>
                     <GoogleAnalyticsPropertySelect
@@ -114,6 +125,7 @@ const ShopifyStoreConfig = (props) => {
                         id="ga_property_id"
                         currentPricePlan={props.user.price_plan}
                         value={props.ga_property_id}
+                        onChangeCallbackIcon={(e) => addAnnotationWithProperty(e)}
                         onChangeCallback={(gAP) => {
                             props.updateGAPropertyId(gAP?.target?.value || null);
                         }}
@@ -124,6 +136,17 @@ const ShopifyStoreConfig = (props) => {
                         placeholder="Select GA Properties"
                         isClearable={true}
                     />
+                </div>
+
+                <div className="checkboxes mt-3">
+                    {products?.map((product) => {
+                        return (
+                            <label className="themeNewCheckbox d-flex align-items-center justify-content-start textDark" key={product}>
+                                <input value={product} type="checkbox" defaultChecked={true} name='product-row' />
+                                <span>{product}</span>
+                            </label>
+                        )
+                    })}
                 </div>
                 <div className='d-flex justify-content-end pt-3'>
                     <button onClick={(e) => addAnnotation(e)} className="btn-theme">Add</button>
@@ -143,16 +166,18 @@ const ShopifyStoreConfig = (props) => {
                                     }}
                                     id={"gAK-" + gAK.id}
                                     type="button"
-                                    className="keywordTag"
+                                    className="keywordTag dd-tooltip d-flex"
                                     key={gAK.id}
-                                    title={gAK.google_analytics_property.name}
                                     user_data_source_id={gAK.id}
                                 >
-                                    <span
-                                        style={{ background: "#2d9cdb" }}
-                                        className="dot"
-                                    ></span>
-                                    {gAK.url}
+                                    <CustomTooltip tooltipText={`${gAK.google_analytics_property?.name || "All Properties"} - ${gAK.url}`}
+                                                       maxLength={50}>
+                                        <span
+                                            style={{background: "#2d9cdb"}}
+                                            className="dot"
+                                        ></span>
+                                        {gAK.url}
+                                    </CustomTooltip>
                                 </button>
 
                                 <Popover

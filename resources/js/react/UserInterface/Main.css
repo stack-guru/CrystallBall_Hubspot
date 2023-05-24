@@ -708,6 +708,19 @@ setting-menu-item.dropdown {
 .w-20px {
     width: 20px !important;
 }
+.w-14px {
+    width: 14px !important;
+}
+.w-150px {
+    width: 150px !important;
+}
+
+.ellipsis-prop {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100px;
+}
 
 .d-content {
     display: contents;
@@ -728,6 +741,7 @@ setting-menu-item.dropdown {
 
 .css-1uccc91-singleValue {
     color: #72777a !important;
+    max-width: calc(100% - 35px) !important;
 }
 
 thead th {
@@ -2145,7 +2159,7 @@ body {
 }
 
 .inputWithIcon .fa {
-    top: 7px;
+    top: 9px;
     right: 7px;
     z-index: 2;
     width: 25px;
@@ -2370,6 +2384,7 @@ body {
     color: #666;
     font-size: 14px;
     line-height: 18px;
+    align-items: baseline;
 }
 
 .annotionRow ul:first-child li {
@@ -3060,7 +3075,7 @@ body {
     font-size: 18px;
     font-weight: 600;
     line-height: 23px;
-    padding: 9px 24px;
+    padding: 10px 24px;
     background: #fff;
     border-radius: 100px;
     border: 2px solid #a6a6a6;
@@ -6001,6 +6016,15 @@ div[data-tour-elem="controls"]
     font-size: 22px;
 }
 
-.pt-02px {
-    padding-bottom: 0.2rem !important;
+.css-1hb7zxy-IndicatorsContainer > div:first-child {
+    display: none !important
+}
+
+#facebook_page > div:first-child {
+    height: 44px !important;
+    border-radius: 10px !important;
+} 
+
+.w-86px {
+    width: 86px !important;
 }

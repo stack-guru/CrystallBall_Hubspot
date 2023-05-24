@@ -33,6 +33,7 @@ import AnalyticsAndBusinessIntelligenceIndex from './components/analyticsAndBusi
 import CreatePaymentDetail from './components/settings/CreatePaymentDetail';
 import StartupChecklist from './helpers/StartupChecklist';
 import UserStartupConfigurationModal from './helpers/UserStartupConfigurationModal';
+import ConsoleSiteModal from './helpers/ConsoleSiteModal';
 import AddNewPasswordModal from './helpers/AddNewPasswordModal';
 import AddWebsiteModal from './helpers/AddWebsiteModal';
 import InterfaceTour from './helpers/InterfaceTour';
@@ -566,6 +567,17 @@ class Main extends React.Component {
                             bannerImg="/images/more-property-upgrade.svg"
                         ></ga-extend-trail-popup> : null}
                 </Modal>
+                {this.state.upgradePopupType === 'console-modal' ?
+                    <ConsoleSiteModal
+                        upgradePopup={(popupType) => this.setState({
+                            showUpgradePopup: true,
+                            upgradePopupType: popupType
+                        })}
+                        closeModal={() => this.setState({showConsolePopup: false})}
+                        isOpen={this.state.upgradePopupType === 'console-modal'}
+                        user={this.state.user}
+                    />
+                :null}
                 {/* <Modal isOpen={true} centered className="gaUpgradePopup" toggle={() => {}}>
                     <button onClick={() => {}} class="btn-closeUpgradePopup"></button>
 

@@ -200,17 +200,20 @@ export default class AddKeyword extends React.Component {
     }
 
     changeLocationHandler(selectedLocations) {
+
+        const selectedLocationsLength = selectedLocations?.length ? selectedLocations.length : 0
+
         if (
             this.canAddMoreConfigurations(
                 this.state.keywords.length,
-                selectedLocations.length,
+                selectedLocationsLength,
                 this.state.search_engines.length
             )
         ) {
             this.setState({
                 locations: selectedLocations,
             });
-            this.updateAvailableCredits(this.state.keywords.length, selectedLocations.length, this.state.search_engines.length);
+            this.updateAvailableCredits(this.state.keywords.length, selectedLocationsLength, this.state.search_engines.length);
             return true;
         } else {
             this.props.upgradePopupForRankingTracking();
@@ -294,7 +297,14 @@ export default class AddKeyword extends React.Component {
                         <SearchEngineSelect className="gray_clr" name="search_engine" id="search_engine" selected={{label: '', value: ''}} onChangeCallback={this.changeSearchEngineHandler} placeholder="Select search engines" multiple="true"/>
                     </div>
                     <div className="themeNewInputGroup">
-                        <input type="text" className="form-control" placeholder="Add keywords" name="keywords" id="tracking_keywords"/>
+                        <input 
+                            type="text" 
+                            className="form-control" 
+                            placeholder="Add keywords" 
+                            name="keywords" 
+                            id="tracking_keywords"
+                            onKeyUp={(e) => { if (e.key === "Enter") this.addKeyword(e) }}
+                            />
                         <div className="input-group-append"><a onClick={(e) => {this.addKeyword(e);}} href="#"><i className="ti-plus"></i></a></div>
 
                         {this.state.keywords.length > 0 ?

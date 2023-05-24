@@ -103,7 +103,19 @@
                             <label for="holiday_credits_count">Holiday Credits count <sub>(0 means unlimited, -1 means not allowed)</sub></label>
                             <input type="number" min="-1" name="holiday_credits_count" value="{{old('holiday_credits_count', $pricePlan->holiday_credits_count)}}" id="holiday_credits_count" class="form-control" />
                         </div>
-
+                        
+                        <div class="form-group">
+                            <label for="facebook_credits_count">Facebook Credits count <sub>(0 means unlimited, -1 means not allowed)</sub></label>
+                            <input type="number" min="-1" name="facebook_credits_count" value="{{old('facebook_credits_count', $pricePlan->facebook_credits_count)}}" id="facebook_credits_count" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="instagram_credits_count">Instagram Credits count <sub>(0 means unlimited, -1 means not allowed)</sub></label>
+                            <input type="number" min="-1" name="instagram_credits_count" value="{{old('instagram_credits_count', $pricePlan->instagram_credits_count)}}" id="instagram_credits_count" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label for="external_email">External Email <sub>(0 means unlimited, -1 means not allowed)</sub></label>
+                            <input type="number" min="-1" name="external_email" value="{{old('external_email', $pricePlan->external_email)}}" id="external_email" class="form-control" />
+                        </div>
 
                         <div class="form-group">
                             <label>Yearly discount percent? <sub>(minimum 0, maximum 100)</sub></label>

@@ -174,11 +174,11 @@ export default class IndexPricingPlans extends React.Component {
                                                     <label className="px-3">{" "}</label>
                                                 </div>}
                                             {pricePlan.short_description === "For Freelancers" ? <div>
-                                                <h3 className="price-plan-discount-strick pt-02px">
+                                                <h3 className="price-plan-discount-strick">
                                                     <label><sup>$</sup> 29/m</label>
                                                 </h3>
                                             </div> :  <div>
-                                                <h3 className="price-plan-discount-strick py-2">
+                                                <h3 className="price-plan-discount-strick">
                                                     <label><sup>{" "}</sup></label>
                                                 </h3>
                                             </div>}

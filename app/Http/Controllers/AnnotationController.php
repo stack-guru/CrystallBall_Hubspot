@@ -426,13 +426,16 @@ class AnnotationController extends Controller
                 }
             }
 
-            if (!$fe['category']) {
-                $error = true;
-                $fieldErrorsCount++;
-                $fe['category_error'] = "Category can't be empty";
-            } else {
-                unset($fe['category_error']);
-            }
+            // if (!$fe['category']) {
+            //     $error = true;
+            //     $fieldErrorsCount++;
+            //     $fe['category_error'] = "Category can't be empty";
+            // } else {
+                // unset($fe['category_error']);
+            // }
+            unset($fe['category_error']);
+            unset($fe['category_empty']);
+
 
             if ($fe['url'] && !filter_var($fe['url'], FILTER_VALIDATE_URL)) {
                 $error = true;
@@ -470,6 +473,9 @@ class AnnotationController extends Controller
             $fe['user_id'] = $user_id;
             $fe['added_by'] = 'csv-upload';
             $fe['created_at'] = Carbon::now();
+            if (!$fe['category']) {
+                $fe['category'] = "Legacy Annotations";
+            }
 
             if (!$exists) {
                 foreach ($data as $dt) {

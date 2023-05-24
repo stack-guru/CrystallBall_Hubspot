@@ -102,42 +102,47 @@ export default class GithubTracking extends React.Component {
                         {
                             this.state.isBusy ? <div><i className="fa fa-spinner fa-spin mr-1"></i>We are fetching your account, just a moment</div> : repositories && repositories.length > 0 ? 
                             repositories.map(repository => {
+
+                                const dsProperties = this.props.ds_data[userRepositories.indexOf(repository.name)];
+                                const gaPropertyName = dsProperties?.ga_property_name ?? "All Properties";
                                 if (repository !== null)
                                     return (
                                         <div className="d-flex justify-content-between">
-                                            <label className="themeNewCheckbox d-flex align-items-center justify-content-start textDark" htmlFor={userRepositories.indexOf(repository.name) !== -1 ? this.props.ds_data[userRepositories.indexOf(repository.name)].id : null} key={repository.id}>
-                                                <input checked={userRepositories.indexOf(repository.name) !== -1} type="checkbox" name={repository.name} data-username={repository.owner.login} id={userRepositories.indexOf(repository.name) !== -1 ? this.props.ds_data[userRepositories.indexOf(repository.name)].id : null} onChange={this.handleClick}/>
+                                            <label className="themeNewCheckbox d-flex align-items-center justify-content-start textDark" htmlFor={userRepositories.indexOf(repository.name) !== -1 ? dsProperties.id : null} key={repository.id}>
+                                                <input checked={userRepositories.indexOf(repository.name) !== -1} type="checkbox" name={repository.name} data-username={repository.owner.login} id={userRepositories.indexOf(repository.name) !== -1 ? dsProperties.id : null} onChange={this.handleClick}/>
                                                 <span className="d-flex w-100 justify-content-between">
                                                     <div>{repository.full_name}</div>
-                                                    {/* {
-                                                        userRepositories.indexOf(repository.name) !== -1 &&
-                                                            <input className="themenewCountInput"  type="text" placeholder="Set category name or Url" defaultValue={this.props.ds_data[userRepositories.indexOf(repository.name)].ds_name} onChange={e => this.handleTextChange(e, this.props.ds_data[userRepositories.indexOf(repository.name)].id)} />
-                                                    } */}
-                                                    <div>{this.props.ds_data.find(ds => ds.value === repository.name)?.ga_property_name}</div>
                                                 </span>
                                             </label>
 
                                         {userRepositories.indexOf(repository.name) !== -1
                                             ?
-                                            repository.name === this.state.editSelected || !this.props.ds_data[userRepositories.indexOf(repository.name)]?.ga_property_name
+                                            dsProperties.id === this.state.editSelected
                                                 ?
-                                                    <GoogleAnalyticsPropertySelect
-                                                        className="w-175px themeNewselect hide-icon"
-                                                        name="ga_property_id"
-                                                        id="ga_property_id"
-                                                        currentPricePlan={this.props.user.price_plan}
-                                                        value={this.props.gaPropertyId}
-                                                        onChangeCallback={(gAP) => {
-                                                            this.setState({ editSelected: '' })
-                                                            this.props.userDataSourceUpdateHandler(this.props.ds_data[userRepositories.indexOf(repository.name)].id, gAP.target.value || null)
-                                                        }}
-                                                        placeholder="Select GA Properties"
-                                                        isClearable={true}
-                                                    />
+                                                    <div className="d-flex text-nowrap align-items-center">
+                                                        <GoogleAnalyticsPropertySelect
+                                                            className="w-175px themeNewselect hide-icon"
+                                                            name="ga_property_id"
+                                                            id="ga_property_id"
+                                                            currentPricePlan={this.props.user.price_plan}
+                                                            value={this.props.gaPropertyId}
+                                                            onChangeCallback={(gAP) => {
+                                                                this.setState({ editSelected: '' })
+                                                                this.props.userDataSourceUpdateHandler(dsProperties.id, gAP.target.value || null)
+                                                            }}
+                                                            placeholder="Select GA Properties"
+                                                            isClearable={true}
+                                                        />
+                                                        <i className="ml-2 icon fa" onClick={() => this.setState({ editSelected: null })}>
+                                                            <img className="w-14px" src='/close-icon.svg' />
+                                                        </i>
+                                                    </div>
                                                 :
-                                                    <div>
-                                                        {this.props.ds_data[userRepositories.indexOf(repository.name)]?.ga_property_name}
-                                                        <i className="ml-2 icon fa" onClick={() => this.setState({ editSelected: repository.name })}>
+                                                    <div className="d-flex text-nowrap">
+                                                        <div className="ellipsis-prop w-150px" title={gaPropertyName}>
+                                                            {gaPropertyName}
+                                                        </div>
+                                                        <i className="ml-2 icon fa" onClick={() => this.setState({ editSelected: dsProperties.id })}>
                                                             <img className="w-20px" src='/icon-edit.svg' />
                                                         </i>
                                                     </div>

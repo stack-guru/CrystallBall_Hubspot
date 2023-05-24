@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Events\UserDataSourceUpdatedOrCreated;
+use App\Helpers\BitbucketCommitHelper;
+use App\Helpers\GitHubCommitHelper;
 use App\Http\Requests\StoreKeywordsRequest;
 use App\Http\Requests\UserDataSourceRequest;
+use App\Models\FacebookTrackingConfiguration;
 use App\Models\Keyword;
 use App\Models\KeywordConfiguration;
 use App\Models\KeywordMeta;
@@ -13,7 +16,6 @@ use App\Models\UserDataSource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-
 class UserDataSourceController extends Controller
 {
     /**
@@ -23,7 +25,7 @@ class UserDataSourceController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->query('ga_property_id')) {
+        if ($request->query('ga_property_id') && $request->query('ga_property_id') !== 'null') {
             return [
                 'user_data_sources' => [
                     'holidays' => UserDataSource::select('id', 'ds_code', 'ds_name', 'country_name', 'ga_property_id')->ofCurrentUser()->where('ga_property_id', $request->query('ga_property_id'))->where('ds_code', 'holidays')->orderBy('country_name')->get(),
@@ -42,20 +44,44 @@ class UserDataSourceController extends Controller
         }
         return [
             'user_data_sources' => [
-                'holidays' => UserDataSource::select('user_data_sources.id', 'ds_code', 'ds_name', 'country_name', 'google_analytics_properties.name AS ga_property_name')->ofCurrentUser()->leftjoin('google_analytics_properties', 'google_analytics_properties.id', 'user_data_sources.ga_property_id')->where('ds_code', 'holidays')->orderBy('country_name')->get(),
-                'retail_marketings' => UserDataSource::select('user_data_sources.id', 'ds_code', 'ds_name', 'retail_marketing_id', 'google_analytics_properties.name AS ga_property_name')->ofCurrentUser()->leftjoin('google_analytics_properties', 'google_analytics_properties.id', 'user_data_sources.ga_property_id')->where('ds_code', 'retail_marketings')->get(),
-                'open_weather_map_cities' => UserDataSource::select('user_data_sources.id', 'ds_code', 'ds_name', 'open_weather_map_city_id', 'google_analytics_properties.name AS ga_property_name')->ofCurrentUser()->leftjoin('google_analytics_properties', 'google_analytics_properties.id', 'user_data_sources.ga_property_id')->with('openWeatherMapCity')->where('ds_code', 'open_weather_map_cities')->get(),
-                'open_weather_map_events' => UserDataSource::select('id', 'ds_code', 'ds_name', 'open_weather_map_event')->ofCurrentUser()->where('ds_code', 'open_weather_map_events')->get(),
-                'google_algorithm_update_dates' => UserDataSource::select('user_data_sources.id', 'ds_code', 'ds_name', 'status', 'google_analytics_properties.name AS ga_property_name')->ofCurrentUser()->leftjoin('google_analytics_properties', 'google_analytics_properties.id', 'user_data_sources.ga_property_id')->where('ds_code', 'google_algorithm_update_dates')->get(),
-                'google_alert_keywords' => UserDataSource::select('user_data_sources.id', 'ds_code', 'ds_name', 'value', 'google_analytics_properties.name AS ga_property_name')->ofCurrentUser()->leftjoin('google_analytics_properties', 'google_analytics_properties.id', 'user_data_sources.ga_property_id')->where('ds_code', 'google_alert_keywords')->get(),
-                'wordpress_updates' => UserDataSource::select('user_data_sources.id', 'ds_code', 'ds_name', 'value', 'google_analytics_properties.name AS ga_property_name')->ofCurrentUser()->leftjoin('google_analytics_properties', 'google_analytics_properties.id', 'user_data_sources.ga_property_id')->where('ds_code', 'wordpress_updates')->get(),
-                'keyword_tracking' => UserDataSource::select('id', 'ds_code', 'ds_name', 'value')->ofCurrentUser()->where('ds_code', 'keyword_tracking')->get(),
-                'bitbucket_tracking' => UserDataSource::select('user_data_sources.id', 'ds_code', 'ds_name', 'value', 'google_analytics_properties.name AS ga_property_name')->ofCurrentUser()->leftjoin('google_analytics_properties', 'google_analytics_properties.id', 'user_data_sources.ga_property_id')->where('ds_code', 'bitbucket_tracking')->get(),
-                'github_tracking' => UserDataSource::select('user_data_sources.id', 'ds_code', 'ds_name', 'value', 'google_analytics_properties.name AS ga_property_name')->ofCurrentUser()->leftjoin('google_analytics_properties', 'google_analytics_properties.id', 'user_data_sources.ga_property_id')->where('ds_code', 'github_tracking')->get(),
-                'shopify_annotation' => UserDataSource::select('id', 'ds_code', 'ds_name', 'shopify_annotation_id')->ofCurrentUser()->where('ds_code', 'shopify_annotation')->get(),
+                'holidays' => $this->userDataSourceQuery(['country_name'], 'holidays', true, 'country_name'),
+                'retail_marketings' =>  $this->userDataSourceQuery(['retail_marketing_id'], 'retail_marketings', true),
+                'open_weather_map_cities' => $this->userDataSourceQuery(['open_weather_map_city_id'], 'open_weather_map_cities', true, null, 'openWeatherMapCity'),
+                'open_weather_map_events' => $this->userDataSourceQuery(['open_weather_map_event'], 'open_weather_map_events'),
+                'google_algorithm_update_dates' => $this->userDataSourceQuery(['ga_property_id', 'status'], 'google_algorithm_update_dates', true),
+                'google_alert_keywords' => $this->userDataSourceQuery(['value'], 'google_alert_keywords', true),
+                'wordpress_updates' => $this->userDataSourceQuery(['value'], 'wordpress_updates', true),
+                'keyword_tracking' => $this->userDataSourceQuery(['value'], 'keyword_tracking'),
+                'bitbucket_tracking' => $this->userDataSourceQuery(['value'], 'bitbucket_tracking', true),
+                'github_tracking' => $this->userDataSourceQuery(['value'], 'github_tracking', true),
+                'facebook_tracking' => FacebookTrackingConfiguration::select('id')->where('user_id', Auth::user()->id)->get(),
+                'twitter_tracking' => $this->userDataSourceQuery(['value'], 'twitter_tracking', true),
+                'instagram_tracking' => $this->userDataSourceQuery(['value'], 'instagram_tracking', true),
+                'shopify_annotation' => $this->userDataSourceQuery(['shopify_annotation_id'], 'shopify_annotation'),
             ],
         ];
     }
+    private function userDataSourceQuery ($addSelect, $where, $join = null, $orderBy = null, $with = null) {
+    
+        $query = UserDataSource::select(array_merge(['user_data_sources.id', 'ds_code', 'ds_name'], $addSelect))
+        ->ofCurrentUser()
+        ->when($join, function ($q) {
+            $q->leftjoin('google_analytics_properties', 'google_analytics_properties.id', 'user_data_sources.ga_property_id');
+            $q->addSelect('google_analytics_properties.name AS ga_property_name');
+        })
+        ->where('ds_code', $where)
+        ->when($orderBy, function ($q) use ($orderBy) {
+            $q->orderBy($orderBy);
+        })
+        ->when($with, function ($q) use ($with) {
+            $q->with($with);
+        })
+        ->get();
+    
+        return $query;
+    }
+    
+    
 
     /**
      * Store a newly created resource in storage.
@@ -68,7 +94,10 @@ class UserDataSourceController extends Controller
         $user = Auth::user();
 
         if ($request->ds_code == 'google_algorithm_update_dates') {
-            DB::statement("DELETE FROM user_data_sources WHERE ds_code = ? AND user_id = ?", ['google_algorithm_update_dates', Auth::id()]);
+            $dsCityCount = UserDataSource::where('ds_code', 'google_algorithm_update_dates')->where('ga_property_id', $request->ga_property_id)->where('user_id', $user->id)->count();
+            if ($dsCityCount)
+                return response(['message' => "This mode is already saved"], 400);
+                // DB::statement("DELETE FROM user_data_sources WHERE ds_code = ? AND user_id = ?", ['google_algorithm_update_dates', Auth::id()]);
         }
         if ($request->ds_code == 'open_weather_map_cities') {
             $dsCityCount = UserDataSource::where('ds_code', 'open_weather_map_cities')->where('user_id', $user->id)->count();
@@ -118,8 +147,56 @@ class UserDataSourceController extends Controller
         $userDataSource->user_id = $user->id;
         $userDataSource->save();
         $userDataSource->load('openWeatherMapCity');
+        if ($request->ds_code == 'bitbucket_tracking') {
+            BitbucketCommitHelper::fetch($userDataSource);
+        }
 
+        if ($request->ds_code == 'github_tracking') {
+            GitHubCommitHelper::fetch($userDataSource);
+        }
         return ['user_data_source' => $userDataSource];
+    }
+
+
+    // for checkall
+    public function storeAll(Request $request) {
+        $data = $request->input('data');
+        $ga_property_id = $request->input('ga_property_id');
+
+        $result = [];
+        foreach($data as $dt) {
+
+            $user = Auth::user();
+
+            $userDataSource = new UserDataSource;
+            $dt = (object) $dt;
+            $userDataSource->country_name = $dt->country_name;
+            $userDataSource->ds_code = $dt->code;
+            $userDataSource->ds_name = $dt->name;
+            if(@$dt->open_weather_map_city_id) {
+                $userDataSource->open_weather_map_city_id = $dt->open_weather_map_city_id;
+            }
+            if(@$dt->retail_marketing_id) {
+                $userDataSource->retail_marketing_id = $dt->retail_marketing_id;
+            }
+            $userDataSource->ga_property_id = $ga_property_id;
+            $userDataSource->is_enabled = 1;
+            $userDataSource->user_id = $user->id;
+            $userDataSource->save();
+            $userDataSource->load('openWeatherMapCity');
+
+            $result[] = $userDataSource;
+        }
+        return $result;
+    }
+
+    public function deleteAll(Request $request)
+    {
+
+        $userDataSourceIds = $request->input('userDataSourceIds');
+        UserDataSource::whereIn('id', $userDataSourceIds)->delete();
+
+        return ['success' => true];
     }
 
     /**
@@ -180,11 +257,14 @@ class UserDataSourceController extends Controller
 
         // loop through data for each keyword
         foreach ($request->keywords as $keyword_loop) {
-            // save keyword
-            $keyword = new Keyword();
-            $keyword->keyword = $keyword_loop['keyword'];
-            $keyword->user_data_source_id = $user_data_source->id;
-            $keyword->save();
+            $keyword = Keyword::where('keyword', $keyword_loop['keyword'])->where('user_data_source_id', $user_data_source->id)->first();
+            // save keyword if not exist
+            if(!$keyword) {
+                $keyword = new Keyword();
+                $keyword->keyword = $keyword_loop['keyword'];
+                $keyword->user_data_source_id = $user_data_source->id;
+                $keyword->save();
+            }
 
             // save configurations
             $url = $request->url;
@@ -200,10 +280,13 @@ class UserDataSourceController extends Controller
                         $location_code = $location['value'] ?? '';
                         $configuration_id = $this->saveKeywordConfiguration($url, $search_engine, $location_code, $language, $ranking_direction, $ranking_places_changed, $is_url_competitors);
                         // doing pivot entry
-                        $keyword_meta = new KeywordMeta();
-                        $keyword_meta->keyword_id = $keyword->id;
-                        $keyword_meta->keyword_configuration_id = $configuration_id;
-                        $keyword_meta->save();
+                        $keyword_meta = KeywordMeta::where('keyword_id', $keyword->id)->where('keyword_configuration_id', $configuration_id)->first();
+                        if (!$keyword_meta) {
+                            $keyword_meta = new KeywordMeta();
+                            $keyword_meta->keyword_id = $keyword->id;
+                            $keyword_meta->keyword_configuration_id = $configuration_id;
+                            $keyword_meta->save();
+                        }
                     }
                 }
             } elseif (count($request->location) < count($request->search_engine)) {
@@ -213,10 +296,13 @@ class UserDataSourceController extends Controller
                         $location_code = $location['value'] ?? '';
                         $configuration_id = $this->saveKeywordConfiguration($url, $search_engine, $location_code, $language, $ranking_direction, $ranking_places_changed, $is_url_competitors);
                         // doing pivot entry
-                        $keyword_meta = new KeywordMeta();
-                        $keyword_meta->keyword_id = $keyword->id;
-                        $keyword_meta->keyword_configuration_id = $configuration_id;
-                        $keyword_meta->save();
+                        $keyword_meta = KeywordMeta::where('keyword_id', $keyword->id)->where('keyword_configuration_id', $configuration_id)->first();
+                        if (!$keyword_meta) {
+                            $keyword_meta = new KeywordMeta();
+                            $keyword_meta->keyword_id = $keyword->id;
+                            $keyword_meta->keyword_configuration_id = $configuration_id;
+                            $keyword_meta->save();
+                        }
                     }
                 }
             }

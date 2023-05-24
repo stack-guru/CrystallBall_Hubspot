@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\GoogleAnalyticsProperty;
 use App\Models\TwitterTrackingConfiguration;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -27,6 +28,7 @@ class TwitterTrackingConfigurationController extends Controller
                 'when_tweet_reach_likes'         => (int) $request->when_tweet_reach_likes,
                 'is_tweets_retweets_tracking_on' => (boolean) $request->is_tweets_retweets_tracking_on,
                 'when_tweet_reach_retweets'      => (int) $request->when_tweet_reach_retweets,
+                'ga_property_id' => (int)$request->ga_property_id,
             ]
         );
 
@@ -34,8 +36,10 @@ class TwitterTrackingConfigurationController extends Controller
             'user' => $userId,
         ]);
 
+        $gaProperty = GoogleAnalyticsProperty::find((int)$request->ga_property_id);
         return response()->json([
             'message' => 'Settings Updated',
+            'gaPropertyName' => $gaProperty ? $gaProperty->name : ''
         ]);
     }
 
@@ -52,10 +56,13 @@ class TwitterTrackingConfigurationController extends Controller
         }
 
         return response()->json([
+            'configuration_id' => $config->ga_property_id || false,
             'is_tweets_likes_tracking_on'    => (boolean) ($config->is_tweets_likes_tracking_on ?? false),
             'when_tweet_reach_likes'         => (int) ($config->when_tweet_reach_likes ?? 0),
             'is_tweets_retweets_tracking_on' => (boolean) ($config->is_tweets_retweets_tracking_on ?? false),
             'when_tweet_reach_retweets'      => (int) ($config->when_tweet_reach_retweets ?? 0),
+            'ga_property_id' => (int)$config->ga_property_id,
+            'gaPropertyName' => $config->ga_property_id ? GoogleAnalyticsProperty::find((int)$config->ga_property_id)->name : "",
         ]);
     }
 }
