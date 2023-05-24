@@ -21,8 +21,9 @@ class FacebookTrackingConfigurationController extends Controller
             'selected_facebook_pages' => 'required',
         ]);
         $userId = Auth::user()->id;
+        $selectedPages = serialize($request->selected_facebook_pages);
 
-        $exists = FacebookTrackingConfiguration::where('user_id', $userId)->where('ga_property_id', (int)$request->ga_property_id)->first();
+        $exists = FacebookTrackingConfiguration::where('user_id', $userId)->where('selected_pages', $selectedPages)->where('ga_property_id', (int)$request->ga_property_id)->first();
         if ($exists) {
             return response()->json([
                 'message' => 'Already Exist',
@@ -48,7 +49,7 @@ class FacebookTrackingConfigurationController extends Controller
                 'is_post_shares_tracking_on' => (int)$request->is_post_shares_tracking_on,
 
                 'ga_property_id' => (int)$request->ga_property_id,
-                'selected_pages' => serialize($request->selected_facebook_pages),
+                'selected_pages' => $selectedPages,
             ]
         );
 
@@ -73,6 +74,10 @@ class FacebookTrackingConfigurationController extends Controller
         $configurations = FacebookTrackingConfiguration::select('facebook_tracking_configurations.*', 'google_analytics_properties.name AS gaPropertyName')
         ->where('facebook_tracking_configurations.user_id', Auth::user()->id)
         ->leftjoin('google_analytics_properties', 'ga_property_id', 'google_analytics_properties.id')->get();
+
+        foreach($configurations as $config) {
+            $config->selected_pages_array = unserialize($config->selected_pages);
+        }
 
         return response()->json(
             compact('configurations')
@@ -127,10 +132,8 @@ class FacebookTrackingConfigurationController extends Controller
         // }
     }
 
-    public function destroy(FacebookTrackingConfiguration $facebookTrackingConfiguration): JsonResponse
+    public function destroy(FacebookTrackingConfiguration $facebookTrackingConfiguration)
     {
-        $facebookTrackingConfiguration->delete();
-        return ['success' => true, 'data_source' => $facebookTrackingConfiguration];
-
+        return ['success' => $facebookTrackingConfiguration->delete()];
     }
 }

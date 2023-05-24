@@ -35,7 +35,8 @@ export default class FacebookTracking extends React.Component {
             when_post_reach_comments: 1000,
             when_post_reach_shares: 1000,
             when_post_reach_views: 1000,
-            configurations: []
+            configurations: [],
+            activeDeletePopover: null
         };
 
         this.changePageHandler = this.changePageHandler.bind(this);
@@ -47,7 +48,7 @@ export default class FacebookTracking extends React.Component {
 
     deleteSelected = (payload) => {
 
-        HttpClient.delete(`/remove-facebook-tracking-configuration/${payload.id}`)
+        HttpClient.delete(`/data-source/remove-facebook-tracking-configuration/${payload.id}`)
             .then(
                 () => {
                     this.fetchConfigurations();
@@ -173,10 +174,11 @@ export default class FacebookTracking extends React.Component {
 
         HttpClient.post('/data-source/save-facebook-tracking-configurations', form_data).then(resp => {
             this.setState({facebook_pages: resp.data.facebook_pages, isBusy: false, gaPropertyName: resp.data.gaPropertyName, configuration_id: true, editProperty: false});
-            this.props.sectionToggler();
-            this.props.serviceStatusHandler({ target: { name: 'is_ds_facebook_tracking_enabled', value: true, checked: true }})
+            if (!this.state.configurations.length) {
+                this.props.serviceStatusHandler({ target: { name: 'is_ds_facebook_tracking_enabled', value: true, checked: true }})
+            }
             this.props.loadUserDataSources();
-
+            this.fetchConfigurations();
             Toast.fire({
                 icon: 'success',
                 title: 'Stored successfully!'
@@ -441,12 +443,12 @@ export default class FacebookTracking extends React.Component {
                         Active pages: <span>(Click to remove)</span>
                     </h4>
                     <div className="d-flex keywordTags">
-                        {/* {this.state.configurations?.map((gAK, index) => {
+                        {this.state.configurations?.map((gAK, index) => {
                             return (
                                 <>
                                     <button
                                         onClick={() => {
-                                            this.setState({'activeDeletePopover': gAK})
+                                            this.setState({activeDeletePopover: gAK})
                                         }}
                                         id={"gAK-" + gAK.id}
                                         type="button"
@@ -454,7 +456,7 @@ export default class FacebookTracking extends React.Component {
                                         key={gAK.id}
                                         user_data_source_id={gAK.id}
                                     >
-                                        <CustomTooltip tooltipText={`${gAK.gaPropertyName || "All Properties"} - ${gAK.gaPropertyName}`}
+                                        <CustomTooltip tooltipText={`${gAK.selected_pages_array.map(pg => pg.label)}`}
                                                         maxLength={50}>
                                             <span
                                                 style={{background: "#2d9cdb"}}
@@ -468,7 +470,7 @@ export default class FacebookTracking extends React.Component {
                                         placement="top"
                                         target={"gAK-" + gAK.id}
                                         isOpen={
-                                            activeDeletePopover?.id ===
+                                            this.state.activeDeletePopover?.id ===
                                             gAK.id
                                         }
                                     >
@@ -477,7 +479,13 @@ export default class FacebookTracking extends React.Component {
                                             {gAK.gaPropertyName}"?.
                                         </PopoverBody>
                                         <button
-                                            onClick={() => this.deleteSelected(activeDeletePopover)}
+                                            onClick={() => {
+                                                this.deleteSelected(this.state.activeDeletePopover)
+                                                if (this.state.configurations.length === 1) {
+                                                    this.props.serviceStatusHandler({ target: { name: 'is_ds_facebook_tracking_enabled', value: false, checked: false }})
+                                                    this.props.sectionToggler();
+                                                }
+                                            }}
                                             key={gAK.id}
                                             user_data_source_id={gAK.id}
                                         >
@@ -485,7 +493,7 @@ export default class FacebookTracking extends React.Component {
                                         </button>
                                         <button
                                             onClick={() =>
-                                                this.setState({'activeDeletePopover': ""})
+                                                this.setState({activeDeletePopover: ""})
                                             }
                                         >
                                             No
@@ -493,7 +501,7 @@ export default class FacebookTracking extends React.Component {
                                     </Popover>
                                 </>
                             );
-                        })} */}
+                        })}
                     </div>
                 </div>
 
