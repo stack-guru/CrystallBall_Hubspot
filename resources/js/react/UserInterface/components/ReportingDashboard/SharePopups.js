@@ -14,11 +14,32 @@ class SharePopups extends React.Component {
         };
 
         this.handleShareSuccess = this.handleShareSuccess.bind(this);
+        this.toggle = this.toggle.bind(this);
+        this.closeSuccessPopup = this.closeSuccessPopup.bind(this);
     }
 
+    handleShareReports(){
+        this.setState(prevState => ({
+            isShareSubmit: !prevState.isShareSubmit
+          }));
+    }
     handleShareSuccess() {
-        this.setState({ isShareSuccessfull: true, isShareSubmit: true });
+        // this.setState(prevState => ({
+        //     isShareSuccessfull: !prevState.isShareSuccessfull
+        //   }));
+      
+         this.setState({ isShareSuccessfull: true, isShareSubmit: true });
         // this.setState({ });
+    }
+    closeSuccessPopup(){
+        this.setState({ isShareSuccessfull: false, isShareSubmit: true });
+
+    }
+    toggle(){
+        this.setState(prevState => ({
+            isShareSubmit: !prevState.isShareSubmit
+          }));
+        console.log('toggle call')
     }
 
     render() {
@@ -27,7 +48,7 @@ class SharePopups extends React.Component {
                 <Modal
                     className={`apps-modal`}
                     isOpen={!this.state.isShareSubmit}
-                    toggle={() => {}}
+                    // toggle={this.toggle}
                 >
                     <ModalBody>
                         <div className="apps-modalHead d-flex justify-content-between align-items-center flex-row">
@@ -43,15 +64,25 @@ class SharePopups extends React.Component {
                             <div className="d-flex align-items-center">
                                 <div>
                                     
-                                    <button className="download-pdf-btn">
+                                    <button className="download-pdf-btn" onClick={() => {
+                                    html2pdf(document.getElementById("dashboard-index-container"), {
+                                        margin: 0.5,
+                                        filename: 'dashboard_analytics.pdf',
+                                        image: { type: 'jpeg', quality: 1.0 },
+                                        html2canvas: { scale: 1 },
+                                        jsPDF: { unit: 'in', format: 'A4', orientation: 'landscape' }
+                                    });
+                                }}>
                                     <img className="float-left d-inline" src="/images/svg/download.svg" alt="download-icon" />                                        
                                         Download pdf
                                     </button>
                                 </div>
                                 
                                 <span
-                                    onClick={this.props.closeModal}
-                                    className="btn-close"
+                                    onClick={this.toggle}
+                                    className="btn-close" 
+                                    // toggle={this.toggle}
+
                                 >
                                     <img
                                         className="inject-me"
@@ -234,7 +265,7 @@ class SharePopups extends React.Component {
                                 <div className="d-flex justify-content-center m-0">
                                     <button
                                         type="button"
-                                        className="btn btn-secondary mr-3 recurrence-text"
+                                        className="btn mr-3 recurrence-text"
                                     >
                                     <img src="/images/svg/recurrence-gray.svg" alt="active icon" className="mr-2 recurrence-color" />
                                         Set recurrence
@@ -293,7 +324,7 @@ class SharePopups extends React.Component {
 
                 <Modal
                     className={`apps-modal share-report-success-modal`}
-                    isOpen={this.state.isShareSubmit}
+                    isOpen={this.state.isShareSubmit && this.state.isShareSuccessfull}
                     toggle={() => {}}
                 >
                     <ModalBody className="d-flex flex-column justify-content-center">
@@ -301,7 +332,7 @@ class SharePopups extends React.Component {
                         <h2 className="report-success-text">Report sent successfully!</h2>
                         <div className="d-flex justify-content-center">
                             <button className="`btn btn-outline btn-sm btnCornerRounded share-another-btn mr-3">Share another</button>
-                            <button className="`btn btn-outline btn-sm btnCornerRounded share-another-btn close">Close</button>
+                            <button className="`btn btn-outline btn-sm btnCornerRounded share-another-btn close" title="close" onClick={this.closeSuccessPopup}>Close</button>
                         </div>
                     </ModalBody>
                 </Modal>
