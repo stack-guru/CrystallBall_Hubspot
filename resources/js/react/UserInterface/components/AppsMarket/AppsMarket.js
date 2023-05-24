@@ -476,17 +476,17 @@ class AppsMarket extends React.Component {
                 width: 160,
                 height: 56,
             },
-            {
-                id: "26",
-                background: "#004F9D",
-                dsKey: "is_ds_facebook_tracking_enabled",
-                connected: this.state.userServices["is_ds_facebook_tracking_enabled"],
-                premium: false,
-                brandName: "Facebook Ads",
-                brandLogo: "/facebookAds.svg",
-                width: 140,
-                height: 19,
-            },
+            // {
+            //     id: "26",
+            //     background: "#004F9D",
+            //     dsKey: "is_ds_facebook_tracking_enabled",
+            //     connected: this.state.userServices["is_ds_facebook_tracking_enabled"],
+            //     premium: false,
+            //     brandName: "Facebook Ads",
+            //     brandLogo: "/facebookAds.svg",
+            //     width: 140,
+            //     height: 19,
+            // },
             // {
             //     id: "27",
             //     background: "radial-gradient(126.96% 126.96% at 6.47% 97.81%, #FA8F21 9%, #D82D7E 78%)",
@@ -2009,7 +2009,7 @@ class AppsMarket extends React.Component {
             if (e.target.name === 'is_ds_twitter_tracking_enabled') {
                 this.props.upgradePopup('social-media')
             }
-            
+
             if (e.target.name === 'is_ds_facebook_tracking_enabled') {
                 this.props.upgradePopup('social-media')
             }
