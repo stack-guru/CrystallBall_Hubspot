@@ -179,7 +179,7 @@ class AnnotationQueryHelper
     public static function googleAlgorithmQuery(array $userIdsArray)
     {
         $annotationsQuery = "";
-        $annotationsQuery .= "SELECT 1, update_date AS show_at, NULL, category, event_name, NULL as url, CONCAT('google_algorithm_updates', '~~~~', `google_algorithm_updates`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, 'System' AS `user_name`, update_date, `uds`.`ga_property_id` AS `table_ga_property_id` FROM `google_algorithm_updates`, `user_data_sources` AS uds WHERE `uds`.`ds_code` = 'google_algorithm_update_dates' AND `uds`.`user_id` IN ('" . implode("', '", $userIdsArray) . "') ";
+        $annotationsQuery .= "SELECT 1, update_date AS show_at, NULL, category, event_name, NULL as url, CONCAT('google_algorithm_updates', '~~~~', `google_algorithm_updates`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, 'System' AS `user_name`, update_date, `uds`.`ga_property_id` AS `table_ga_property_id` FROM `google_algorithm_updates` JOIN `user_data_sources` AS uds ON `google_algorithm_updates`.`ga_property_id` = `uds`.`ga_property_id` WHERE `uds`.`ds_code` = 'google_algorithm_update_dates' AND `uds`.`user_id` IN ('" . implode("', '", $userIdsArray) . "') ";
 
         $gAUConfs = UserDataSource::whereIn('user_id', $userIdsArray)->where('ds_code', 'google_algorithm_update_dates')->get();
 
@@ -199,6 +199,7 @@ class AnnotationQueryHelper
 
         return $annotationsQuery;
     }
+
 
     public static function webMonitorQuery(array $userIdsArray)
     {
