@@ -18,32 +18,21 @@ class SharePopups extends React.Component {
         this.closeSuccessPopup = this.closeSuccessPopup.bind(this);
     }
 
-    handleShareReports(){
-        this.setState(prevState => ({
-            isShareSubmit: !prevState.isShareSubmit
-          }));
-    }
+  
     handleShareSuccess() {
-        // this.setState(prevState => ({
-        //     isShareSuccessfull: !prevState.isShareSuccessfull
-        //   }));
+   
       
          this.setState({ isShareSuccessfull: true, isShareSubmit: true });
-        // this.setState({ });
     }
     closeSuccessPopup(){
         this.setState({ isShareSuccessfull: false, isShareSubmit: true });
 
     }
     toggle(){
-        this.setState(prevState => ({
-            isShareSubmit: !prevState.isShareSubmit
-          }));
+        this.setState({ isShareSubmit: !this.state.isShareSubmit });
 
           
         console.log('toggle call')
-
-   
 
     }
 
@@ -86,7 +75,6 @@ class SharePopups extends React.Component {
                                 <span
                                     onClick={this.toggle}
                                     className="btn-close" 
-                                    // toggle={this.toggle}
 
                                 >
                                     <img

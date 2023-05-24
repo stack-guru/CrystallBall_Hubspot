@@ -6236,13 +6236,6 @@ div[data-tour-elem="controls"]
     flex-direction: column;
     position: absolute;
 }
-.active-recurrernce-card{
-    background: #FFFFFF;
-    box-shadow: 0px 8px 32px -6px rgba(0, 0, 0, 0.14);
-    border-radius: 16px;
-    height: 96px;
-    margin-bottom: 24px;
-}
 .filtersHolder { margin-bottom: 42px; }
 .filtersHolder > div { padding-right: 20px; }
 .filtersHolder .filter-sort + .filter-sort { margin-left: 20px; }
@@ -6526,7 +6519,6 @@ color: white;
 .recurrence-color{
     background: white;
     color: #666666;
-
 }
 .recurrence-text{
     /* background: white; */
@@ -6540,4 +6532,32 @@ color: white;
     text-align: right;
     overflow: none;
     cursor: auto;
+}
+.activeRecurrenceModal { }
+.activeRecurrenceModal .modal-content{ padding: 32px 42px 42px; }
+.activeRecurrenceModal .modal-header{
+    border: 0;
+    padding: 0 0 42px;
+}
+.activeRecurrenceModal .modal-body{
+    padding: 1.5rem;
+    margin: -1.5rem;
+
+}
+.activeRecurrenceModal .modal-header h3 span{color: #A6A6A6;}
+.activeRecurrenceModal .modal-header h3{
+    font-weight: 600;
+    font-size: 26px;
+    line-height: 33px;
+    color: #333333;
+}
+.activeRecurrenceModal .modal-body{ }
+.activeRecurrenceModal { }
+.activeRecurrenceModal { }
+.activeRecurrenceModal { }
+.active-recurrernce-card{
+    padding: 20px;
+    box-shadow: 0px 8px 32px -6px rgba(0, 0, 0, 0.14);
+    border-radius: 16px;
+    margin-bottom: 24px;
 }

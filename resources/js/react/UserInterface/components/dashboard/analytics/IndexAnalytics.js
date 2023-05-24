@@ -51,6 +51,7 @@ import ActiveRecurrence from '../../ReportingDashboard/ActiveRecurrence';
 
 import AppsModal from "../../AppsMarket/AppsModal";
 import ShareAnalytics from "./ShareAnalytics";
+import { DefinedRange } from 'react-date-range';
 
 
 export default class IndexAnalytics extends Component {
@@ -92,6 +93,12 @@ export default class IndexAnalytics extends Component {
             ga_property_id: '*',
             statisticsPaddingDays: 7,
             errors: undefined,
+            dateRange:[
+                {
+                  startDate: new Date(),
+                  endDate: null,
+                  key: 'selection'
+                }],
 
             // dummydata
 
@@ -110,6 +117,7 @@ export default class IndexAnalytics extends Component {
             percentage2:15,
             cardIsSelected:false,
             isSharePopup:false,
+            isPopupActive:false,
             isActiveRecurrenecePopup:false,
             dsKey: "",
              dsKeySkip: "",
@@ -223,13 +231,13 @@ export default class IndexAnalytics extends Component {
                             </div>
                             <div className="d-flex align-items-center">
 
-                                {/* <button className="active-recerrences mb-0 p-0 bg-white mr-4" data-toggle="modal" data-target="#exampleModalCenter1" onClick={this.activeReccurenceHandler}>
+                                <button className="active-recerrences mb-0 p-0 bg-white mr-4" data-toggle="modal" data-target="#exampleModalCenter1" onClick={this.activeReccurenceHandler}>
                                     <img src="/images/svg/active-recurrence.svg" alt="active icon" className="mr-2" />
                                     Active recurrence
                                 </button>
                                 {
                                     this.state.isActiveRecurrenecePopup && <ActiveRecurrence />
-                                } */}
+                                }
                                 <button className="`btn btn-outline btn-sm btnCornerRounded share-btn " data-toggle="modal" data-target="#exampleModalCenter" onClick={this.shareHandler}>
                                     <span className="align-center">
                                         <img className='mr-2'
@@ -345,6 +353,13 @@ export default class IndexAnalytics extends Component {
                                 </FormGroup> */}
                             </div>
                             <div className="filterBtnGroup d-flex align-items-center">
+                                
+                                {/* <DefinedRange
+                                onChange={item => this.setState({ dateRange:[item.selection]})}
+                                ranges={this.dateRange}
+                            />; */}
+                            
+                           
                                 <button className="filter-btn today">Today</button>
                                 <button className="filter-btn"
                                     >1w
