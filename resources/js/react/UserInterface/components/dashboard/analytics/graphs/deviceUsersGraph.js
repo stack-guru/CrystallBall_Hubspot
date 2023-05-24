@@ -1,22 +1,22 @@
 import React from 'react';
 import { useState } from 'react';
 import { Doughnut } from 'react-chartjs-2';
-import {
-    LineChart,
-    Line,
-    XAxis,
-    YAxis,
-    CartesianGrid,
-    Tooltip,
-    Legend,
-    Pie,
-    PieChart,
-    Cell,
-    BarChart,
-    Bar,
-    AreaChart,
-    Area,
-} from "recharts";
+// import {
+//     LineChart,
+//     Line,
+//     XAxis,
+//     YAxis,
+//     CartesianGrid,
+//     Tooltip,
+//     Legend,
+//     Pie,
+//     PieChart,
+//     Cell,
+//     BarChart,
+//     Bar,
+//     AreaChart,
+//     Area,
+// } from "recharts";
 
 export default function DeviceUsersGraph(props) {
 
@@ -117,7 +117,7 @@ export default function DeviceUsersGraph(props) {
                                 </div>
                                 <div className="d-flex justify-content-between ">
                                     <div className="">
-                                        <PieChart width={150} height={150}>
+                                        {/* <PieChart width={150} height={150}>
                                             <Pie
                                                 data={noOfUsers}
                                                 dataKey="value"
@@ -136,7 +136,7 @@ export default function DeviceUsersGraph(props) {
                                                     )
                                                 )}
                                             </Pie>
-                                        </PieChart>
+                                        </PieChart> */}
                                     </div>
                                     <div className="d-flex flex-column">
                                         <span className="d-flex">

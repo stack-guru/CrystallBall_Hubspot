@@ -1,21 +1,21 @@
 import React from "react";
 import HttpClient from "../../utils/HttpClient";
-import {
-    LineChart,
-    Line,
-    XAxis,
-    YAxis,
-    CartesianGrid,
-    Tooltip,
-    Legend,
-    Pie,
-    PieChart,
-    Cell,
-    BarChart,
-    Bar,
-    AreaChart,
-    Area,
-} from "recharts";
+// import {
+//     LineChart,
+//     Line,
+//     XAxis,
+//     YAxis,
+//     CartesianGrid,
+//     Tooltip,
+//     Legend,
+//     Pie,
+//     PieChart,
+//     Cell,
+//     BarChart,
+//     Bar,
+//     AreaChart,
+//     Area,
+// } from "recharts";
 import { FormGroup, Label } from "reactstrap";
 import ModalHeader from "../AppsMarket/common/ModalHeader";
 import SharePopups from "./SharePopups";
@@ -647,7 +647,7 @@ class ReportingDashboard extends React.Component {
                                 </div>
                             </div>
                             <div className="mt-4">
-                                <LineChart
+                                {/* <LineChart
                                     width={600}
                                     height={200}
                                     data={this.state.data}
@@ -657,14 +657,13 @@ class ReportingDashboard extends React.Component {
                                     <CartesianGrid stroke="#ccc" />
                                     <Tooltip />
                                     <Legend />
-                                    {/*<Line type="monotone" dataKey="pv" stroke="#8884d8" />*/}
                                     <Line
                                         type="monotone"
                                         dataKey="uv"
                                         stroke="#82ca9d"
                                         strokeWidth={2}
                                     />
-                                </LineChart>
+                                </LineChart> */}
                             </div>
                         </div>
                         
@@ -986,7 +985,7 @@ class ReportingDashboard extends React.Component {
                                             </div>
                                         </div>
                                         <div>
-                                            <LineChart
+                                            {/* <LineChart
                                                 width={300}
                                                 height={150}
                                                 data={this.state.data}
@@ -1006,7 +1005,7 @@ class ReportingDashboard extends React.Component {
                                                     dataKey="uv"
                                                     stroke="#82ca9d"
                                                 />
-                                            </LineChart>
+                                            </LineChart> */}
                                         </div>
                                     </div>
                                     {/*Another data div*/}
@@ -1188,7 +1187,7 @@ class ReportingDashboard extends React.Component {
                                 </div>
                             </div>
 
-                            <BarChart
+                            {/* <BarChart
                                 width={500}
                                 height={300}
                                 data={this.state.youtubeData}
@@ -1207,7 +1206,7 @@ class ReportingDashboard extends React.Component {
                                 <Bar dataKey="Views" fill="#1EA8FD" barSize={10} />
                                 <Bar dataKey="Likes" fill="#00F3A3" barSize={10} />
                                 <Bar dataKey="Subscribers" fill="#FFC514" barSize={10} />
-                            </BarChart>
+                            </BarChart> */}
                         </div>
                         <div>
                             <div className="fourGridBoxesHolder">
@@ -1240,7 +1239,7 @@ class ReportingDashboard extends React.Component {
                                     </div>
                                      */}
                                     <div className="">
-                                        <BarChart
+                                        {/* <BarChart
                                             width={350}
                                             height={300}
                                             data={this.state.data}
@@ -1268,7 +1267,7 @@ class ReportingDashboard extends React.Component {
                                                 fill="#00E096"
                                                 barSize={12}
                                             />
-                                        </BarChart>
+                                        </BarChart> */}
                                     </div>
                                     <div className="pt-4 justify-content-center ml-5">
                                         <h3 className="align-center">Today</h3>
@@ -1332,7 +1331,7 @@ class ReportingDashboard extends React.Component {
                                             <h4>Newton' store</h4>
                                             <h4 className="box-headings">$10.21k</h4>
                                             <h5 style={{color:"#0BD25F"}}>+5% then prev day</h5>
-                                            <LineChart
+                                            {/* <LineChart
                                                 width={100}
                                                 height={50}
                                                 data={this.state.data}
@@ -1343,7 +1342,7 @@ class ReportingDashboard extends React.Component {
                                                     stroke="#0BD25F"
                                                     strokeWidth={2}
                                                 />
-                                            </LineChart>
+                                            </LineChart> */}
                                         </div>
                                         <div className="d-flex flex-column">
                                             <h5 style={{color:"#666666",fontSize:"14px"}}>Orders</h5>
@@ -1360,7 +1359,7 @@ class ReportingDashboard extends React.Component {
                                             <h6 style={{color:"#333333",fontSize:"14px"}}>Store name that's lo...</h6>
                                             <h4 className="box-headings">$650.43</h4>
                                             <h5 style={{color:"#F44C3D"}}>+5% then prev day</h5>
-                                            <LineChart
+                                            {/* <LineChart
                                                 width={100}
                                                 height={50}
                                                 data={this.state.data}
@@ -1371,7 +1370,7 @@ class ReportingDashboard extends React.Component {
                                                     stroke="#F44C3D"
                                                     strokeWidth={2}
                                                 />
-                                            </LineChart>
+                                            </LineChart> */}
                                         </div>
                                         <div className="d-flex flex-column">
                                             <h5 style={{color:"#666666",fontSize:"14px"}}>Orders</h5>
@@ -1402,7 +1401,7 @@ class ReportingDashboard extends React.Component {
                                     </div>
                                      <div className="d-flex justify-content-between">
                                         <div>
-                                            <PieChart width={184} height={184}>
+                                            {/* <PieChart width={184} height={184}>
                                                 <Pie
                                                     data={this.state.data02}
                                                     cx="50%"
@@ -1429,7 +1428,7 @@ class ReportingDashboard extends React.Component {
                                                         )
                                                     )}
                                                 </Pie>
-                                            </PieChart>
+                                            </PieChart> */}
                                         </div>
                                         
                                             <div className="d-flex flex-column justify-content-center">
@@ -1494,7 +1493,7 @@ class ReportingDashboard extends React.Component {
                                     </div>
                                     <div className="d-flex justify-content-between justify-content-center">
                                         <div>
-                                            <PieChart width={184} height={184}>
+                                            {/* <PieChart width={184} height={184}>
                                                 <Pie
                                                     data={this.state.data02}
                                                     cx="50%"
@@ -1521,7 +1520,7 @@ class ReportingDashboard extends React.Component {
                                                         )
                                                     )}
                                                 </Pie>
-                                            </PieChart>
+                                            </PieChart> */}
                                         </div>
                                         
                                             <div className="d-flex flex-column ">
@@ -1673,8 +1672,7 @@ class ReportingDashboard extends React.Component {
                             <div className="d-flex justify-content-between">
                                 <div className="d-flex flex-row">
                                     {/*<ResponsiveContainer width="100%" height="100%">*/}
-                                    <PieChart width={150} height={150}>
-                                        {/*<Pie data={this.state.data01} dataKey="value" cx="50%" cy="50%" outerRadius={60} fill="#8884d8" />*/}
+                                    {/* <PieChart width={150} height={150}>
                                         <Pie
                                             data={this.state.data02}
                                             dataKey="value"
@@ -1701,7 +1699,7 @@ class ReportingDashboard extends React.Component {
                                                 )
                                             )}
                                         </Pie>
-                                    </PieChart>
+                                    </PieChart> */}
                                     {/*</ResponsiveContainer>*/}
                                     <div className="d-flex flex-column pl-3 justify-content-center">
                                         <span className="d-flex">
@@ -1815,7 +1813,7 @@ class ReportingDashboard extends React.Component {
                             <div className="d-flex justify-content-between ">
                                 <div className="">
                                     {/*<ResponsiveContainer width="100%" height="100%">*/}
-                                    <PieChart width={150} height={150}>
+                                    {/* <PieChart width={150} height={150}>
                                         <Pie
                                             data={this.state.data02}
                                             dataKey="value"
@@ -1842,7 +1840,7 @@ class ReportingDashboard extends React.Component {
                                                 )
                                             )}
                                         </Pie>
-                                    </PieChart>
+                                    </PieChart> */}
                                     {/*</ResponsiveContainer>*/}
                                 </div>
                                 <div className="d-flex flex-column">

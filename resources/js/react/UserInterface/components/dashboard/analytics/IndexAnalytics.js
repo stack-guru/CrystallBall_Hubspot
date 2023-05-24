@@ -27,22 +27,22 @@ import ClicksImpressionsDaysGraph from './graphs/clicksImpressionsDaysGraph';
 import QueriesTable from './tables/queriesTable';
 import PagesTable from './tables/pagesTable';
 import DeviceByConversationTable from './tables/deviceByConversationTable';
-import {
-    LineChart,
-    Line,
-    XAxis,
-    YAxis,
-    CartesianGrid,
-    Tooltip,
-    Legend,
-    Pie,
-    PieChart,
-    Cell,
-    BarChart,
-    Bar,
-    AreaChart,
-    Area,
-} from "recharts";
+// import {
+//     LineChart,
+//     Line,
+//     XAxis,
+//     YAxis,
+//     CartesianGrid,
+//     Tooltip,
+//     Legend,
+//     Pie,
+//     PieChart,
+//     Cell,
+//     BarChart,
+//     Bar,
+//     AreaChart,
+//     Area,
+// } from "recharts";
 import { FormGroup, Label } from "reactstrap";
 import { CircularProgressbar } from "react-circular-progressbar";
 import SharePopups from '../../ReportingDashboard/SharePopups';

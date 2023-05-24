@@ -1,20 +1,20 @@
 import React from 'react';
-import {
-    LineChart,
-    Line,
-    XAxis,
-    YAxis,
-    CartesianGrid,
-    Tooltip,
-    Legend,
-    Pie,
-    PieChart,
-    Cell,
-    BarChart,
-    Bar,
-    AreaChart,
-    Area,
-} from "recharts";
+// import {
+//     LineChart,
+//     Line,
+//     XAxis,
+//     YAxis,
+//     CartesianGrid,
+//     Tooltip,
+//     Legend,
+//     Pie,
+//     PieChart,
+//     Cell,
+//     BarChart,
+//     Bar,
+//     AreaChart,
+//     Area,
+// } from "recharts";
 import { FormGroup, Label } from "reactstrap";
 
 const DeviceByConversationTable = props => (

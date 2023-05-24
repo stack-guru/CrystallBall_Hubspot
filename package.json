@@ -50,7 +50,6 @@
         "react-toastify": "^6.2.0",
         "reactour": "^1.18.0",
         "reactstrap": "^8.10.1",
-        "recharts": "^2.6.2",
         "styled-components": "^4.4.1"
     }
 }

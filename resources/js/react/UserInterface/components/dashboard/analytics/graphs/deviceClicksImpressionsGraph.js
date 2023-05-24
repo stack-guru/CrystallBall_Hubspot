@@ -1,21 +1,21 @@
 import React from 'react';
 import { Doughnut } from 'react-chartjs-2';
-import {
-    LineChart,
-    Line,
-    XAxis,
-    YAxis,
-    CartesianGrid,
-    Tooltip,
-    Legend,
-    Pie,
-    PieChart,
-    Cell,
-    BarChart,
-    Bar,
-    AreaChart,
-    Area,
-} from "recharts";
+// import {
+//     LineChart,
+//     Line,
+//     XAxis,
+//     YAxis,
+//     CartesianGrid,
+//     Tooltip,
+//     Legend,
+//     Pie,
+//     PieChart,
+//     Cell,
+//     BarChart,
+//     Bar,
+//     AreaChart,
+//     Area,
+// } from "recharts";
 
 export default function DeviceClicksImpressionsGraph(props) {
 
@@ -68,7 +68,7 @@ export default function DeviceClicksImpressionsGraph(props) {
                 </div>
                 <div className="d-flex justify-content-between">
                     <div className="d-flex flex-row">
-                        <PieChart width={150} height={150}>
+                        {/* <PieChart width={150} height={150}>
                             <Pie
                                 data={noOfClicks}
                                 dataKey="value"
@@ -92,7 +92,7 @@ export default function DeviceClicksImpressionsGraph(props) {
                                     )
                                 )}
                             </Pie>
-                        </PieChart>
+                        </PieChart> */}
                         <div className="d-flex flex-column pl-3 justify-content-center">
                             <span className="d-flex">
                                 <span className="">
