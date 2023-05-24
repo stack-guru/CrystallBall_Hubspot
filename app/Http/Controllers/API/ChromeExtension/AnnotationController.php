@@ -187,12 +187,12 @@ class AnnotationController extends Controller
         $this->authorize('create', Annotation::class);
 
         $user = Auth::user();
-//        if ((!$user->pricePlan->has_chrome_extension)) {
-//            abort(402, "Please upgrade your plan to use Chrome Extension.");
-//        }
-//        if ($user->isPricePlanAnnotationLimitReached(true)) {
-//            abort(402, "You have reached the annotations plan's limit.\nPlease go to the dashboard to upgrade your plan.");
-//        }
+        if ((!$user->pricePlan->has_chrome_extension)) {
+            abort(402, "Please upgrade your plan to use Chrome Extension.");
+        }
+        if ($user->isPricePlanAnnotationLimitReached(true)) {
+            abort(402, "You have reached the annotations plan's limit.\nPlease go to the dashboard to upgrade your plan.");
+        }
 
         $userId = $user->id;
         $is_annotation_create = false;
@@ -209,16 +209,16 @@ class AnnotationController extends Controller
                 if (in_array($gAPId, $googleAnalyticsPropertyIds)) {
                     $googleAnalyticsProperty = GoogleAnalyticsProperty::find($gAPId);
                     if (!$googleAnalyticsProperty->is_in_use) {
-//                        if ($user->isPricePlanGoogleAnalyticsPropertyLimitReached()) {
-//                            DB::rollback();
-//                            // There are 2 different messages to send for different price plan users.
-//                            if ($user->pricePlan->name == PricePlan::PRO)
-//                            {
-//                                abort(402, 'You\'ve reached the maximum properties for this plan. <a href="' . RouteServiceProvider::PRODUCT_WEBSITE_PRICE_PLAN_PAGE . '" target="_blank" >Contact sales to upgrade your plan.</a>');
-//                            }else{
-//                                abort(402, 'You\'ve reached the maximum properties for this plan. <a href="' . route('settings.price-plans') . '" target="_blank" >Upgrade your plan.</a>');
-//                            }
-//                        }
+                        if ($user->isPricePlanGoogleAnalyticsPropertyLimitReached()) {
+                            DB::rollback();
+                            // There are 2 different messages to send for different price plan users.
+                            if ($user->pricePlan->name == PricePlan::PRO)
+                            {
+                                abort(402, 'You\'ve reached the maximum properties for this plan. <a href="' . RouteServiceProvider::PRODUCT_WEBSITE_PRICE_PLAN_PAGE . '" target="_blank" >Contact sales to upgrade your plan.</a>');
+                            }else{
+                                abort(402, 'You\'ve reached the maximum properties for this plan. <a href="' . route('settings.price-plans') . '" target="_blank" >Upgrade your plan.</a>');
+                            }
+                        }
                     }
                     $googleAnalyticsProperty->is_in_use = true;
                     $googleAnalyticsProperty->save();
