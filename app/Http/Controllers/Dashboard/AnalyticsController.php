@@ -374,4 +374,33 @@ class AnalyticsController extends Controller
         $data['pagesIndex'] = $searchConsole->pagesIndex($request);
         return Excel::download(new AnalyticFullExport($data), 'anyaltic_and_console_report.xlsx');
     }
+    public function shareReport(Request $request)
+    {
+        
+        $data = [];
+        $data['topStatisticsIndex'] = $this->topStatisticsIndex($request);
+        $data['usersDaysAnnotationsIndex'] = $this->usersDaysAnnotationsIndex($request);
+        $data['annotationsMetricsDimensionsIndex'] = $this->annotationsMetricsDimensionsIndex($request);
+        $data['mediaIndex'] = $this->mediaIndex($request);
+        $data['sourcesIndex'] = $this->sourcesIndex($request);
+        $data['deviceCategoriesIndex'] = $this->deviceCategoriesIndex($request);
+        $data['devicesIndexByImpression'] = $this->devicesIndexByImpression($request);
+        $data['countriesIndex'] = $this->countriesIndex($request);
+        $searchConsole = new SearchConsoleController();
+        $data['consoletopStatisticsIndex'] = $searchConsole->topStatisticsIndex($request);
+        $data['clicksImpressionsDaysAnnotationsIndex'] = $searchConsole->clicksImpressionsDaysAnnotationsIndex($request);
+        $data['annotationsDatesIndex'] = $searchConsole->annotationsDatesIndex($request);
+        $data['queriesIndex'] = $searchConsole->queriesIndex($request);
+        $data['pagesIndex'] = $searchConsole->pagesIndex($request);
+        $fileContent = Excel::create(new AnalyticFullExport($data), 'anyaltic_and_console_report.xlsx');
+        dd($fileContent);
+        $fileName = 'Reservations by Book Me Host '.$host->name .'-'.$start_date.'-'.$end_date.'.xlsx';    
+        Storage::disk('public_uploads')->put($fileName, $fileContent);
+        $all_exported_data=[];
+        //return "ok";
+
+        $url =  public_path('').'/uploads/'.$fileName;
+
+        return Excel::download(new AnalyticFullExport($data), 'anyaltic_and_console_report.xlsx');
+    }
 }

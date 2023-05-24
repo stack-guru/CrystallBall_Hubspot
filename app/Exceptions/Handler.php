@@ -35,7 +35,12 @@ class Handler extends ExceptionHandler
     {
         $this->renderable(function (\Exception $e, $request) {
             if ($e->getPrevious() instanceof \Illuminate\Session\TokenMismatchException) {
-                return redirect()->route('login')->with('message', 'CSRF token mismatch.');
+                $message = 'CSRF token mismatch.';
+                if ($request->expectsJson()) {
+                    return response()->json(['message' => $message], 401);
+                } else {
+                    return redirect()->route('login')->with('message', $message);
+                }
             }
         });
     }

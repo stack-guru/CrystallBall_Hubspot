@@ -172,6 +172,7 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
                 Route::get('device-categories', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'deviceCategoriesIndex']);
                 Route::get('device-by-impression', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'devicesIndexByImpression']);
                 Route::get('countries', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'countriesIndex']);
+                Route::post('share-report', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'shareReport']);
             });
 
             Route::group(['prefix' => 'search-console'], function () {
@@ -241,7 +242,9 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
             Route::post('update-keyword-tracking-keyword', [App\Http\Controllers\UserDataSourceController::class, 'updateKeywordTrackingDetailsForKeyword']);
 
             Route::post('save-facebook-tracking-configurations', [FacebookTrackingConfigurationController::class, 'save']);
+            Route::post('run-facebook-job', [FacebookTrackingConfigurationController::class, 'runJob']);
             Route::get('get-facebook-tracking-configurations', [FacebookTrackingConfigurationController::class, 'get']);
+            Route::delete('remove-facebook-tracking-configuration/{facebook_tracking_configuration}', [FacebookTrackingConfigurationController::class, 'destroy']);
 
             Route::post('save-twitter-tracking-configurations', [TwitterTrackingConfigurationController::class, 'save']);
             Route::get('get-twitter-tracking-configurations', [TwitterTrackingConfigurationController::class, 'get']);

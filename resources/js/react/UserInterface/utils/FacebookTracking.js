@@ -3,7 +3,12 @@ import HttpClient from "./HttpClient";
 import FacebookPagesSelect from "./FacebookPagesSelect";
 import GoogleAnalyticsPropertySelect from "./GoogleAnalyticsPropertySelect";
 import {CustomTooltip} from "../components/annotations/IndexAnnotation";
+import Toast from "../utils/Toast";
 
+import {
+    Popover,
+    PopoverBody,
+} from "reactstrap";
 export default class FacebookTracking extends React.Component {
     constructor(props) {
         super(props);
@@ -30,11 +35,42 @@ export default class FacebookTracking extends React.Component {
             when_post_reach_comments: 1000,
             when_post_reach_shares: 1000,
             when_post_reach_views: 1000,
+            configurations: [],
+            activeDeletePopover: null
         };
 
         this.changePageHandler = this.changePageHandler.bind(this);
+        this.runjob = this.runjob.bind(this);
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
         this.fetchConfigurations = this.fetchConfigurations.bind(this);
+        this.deleteSelected = this.deleteSelected.bind(this);
+    }
+
+    deleteSelected = (payload) => {
+
+        HttpClient.delete(`/data-source/remove-facebook-tracking-configuration/${payload.id}`)
+            .then(
+                () => {
+                    this.fetchConfigurations();
+                    Toast.fire({
+                        icon: 'success',
+                        title: "Facebook configuration deleted successfully.",
+                    });
+                },
+                (err) => {
+                    Toast.fire({
+                        icon: 'error',
+                        title: "Error while delete exists Facebook configuration.",
+                    });
+                }
+            )
+            .catch((err) => {
+                Toast.fire({
+                    icon: 'error',
+                    title: "Error while delete exists Facebook configuration.",
+                });
+            });
+
     }
 
     showConfirm = () => {
@@ -74,38 +110,39 @@ export default class FacebookTracking extends React.Component {
         this.setState({isBusy: true})
         HttpClient.get('/data-source/get-facebook-tracking-configurations').then(resp => {
             this.setState({
-                selected_facebook_pages: resp.data.selected_pages,
-                when_ad_compaign_ended: resp.data.when_ad_compaign_ended,
-                when_changes_on_ad_compaign: resp.data.when_changes_on_ad_compaign,
-                when_new_ad_compaing_launched: resp.data.when_new_ad_compaign_launched,
-                when_new_post_on_facebook: resp.data.when_new_post_on_facebook,
-                when_post_reach_comments: resp.data.when_post_reach_comments,
-                when_post_reach_likes: resp.data.when_post_reach_likes,
-                when_post_reach_shares: resp.data.when_post_reach_shares,
-                when_post_reach_views: resp.data.when_post_reach_views,
+                configurations: resp.data.configurations
+                // selected_facebook_pages: resp.data.selected_pages,
+                // when_ad_compaign_ended: resp.data.when_ad_compaign_ended,
+                // when_changes_on_ad_compaign: resp.data.when_changes_on_ad_compaign,
+                // when_new_ad_compaing_launched: resp.data.when_new_ad_compaign_launched,
+                // when_new_post_on_facebook: resp.data.when_new_post_on_facebook,
+                // when_post_reach_comments: resp.data.when_post_reach_comments,
+                // when_post_reach_likes: resp.data.when_post_reach_likes,
+                // when_post_reach_shares: resp.data.when_post_reach_shares,
+                // when_post_reach_views: resp.data.when_post_reach_views,
 
-                is_post_likes_tracking_on: resp.data.is_post_likes_tracking_on,
-                is_post_comments_tracking_on: resp.data.is_post_comments_tracking_on,
-                is_post_views_tracking_on: resp.data.is_post_views_tracking_on,
-                is_post_shares_tracking_on: resp.data.is_post_shares_tracking_on,
-                gaPropertyId: resp.data.ga_property_id,
-                gaPropertyName: resp.data.gaPropertyName,
-                configuration_id: resp.data.configuration_id
+                // is_post_likes_tracking_on: resp.data.is_post_likes_tracking_on,
+                // is_post_comments_tracking_on: resp.data.is_post_comments_tracking_on,
+                // is_post_views_tracking_on: resp.data.is_post_views_tracking_on,
+                // is_post_shares_tracking_on: resp.data.is_post_shares_tracking_on,
+                // gaPropertyId: resp.data.ga_property_id,
+                // gaPropertyName: resp.data.gaPropertyName,
+                // configuration_id: resp.data.configuration_id
 
             });
-            document.getElementById('when_new_post_on_facebook').checked = resp.data.when_new_post_on_facebook;
-            document.getElementById('new_ad_compaign_launched').checked = resp.data.when_new_ad_compaign_launched;
-            document.getElementById('an_ad_compaign_ended').checked = resp.data.when_ad_compaign_ended;
-            document.getElementById('changes_on_ad_compaign').checked = resp.data.when_changes_on_ad_compaign;
-            document.getElementById('post_likes').value = resp.data.when_post_reach_likes;
-            document.getElementById('post_comments').value = resp.data.when_post_reach_comments;
-            document.getElementById('post_views').value = resp.data.when_post_reach_views;
-            document.getElementById('post_shares').value = resp.data.when_post_reach_shares;
+            document.getElementById('when_new_post_on_facebook').checked = true;
+            document.getElementById('new_ad_compaign_launched').checked = true;
+            document.getElementById('an_ad_compaign_ended').checked = true;
+            document.getElementById('changes_on_ad_compaign').checked = true;
+            document.getElementById('post_likes').value = 1;
+            document.getElementById('post_comments').value = 1;
+            document.getElementById('post_views').value = 1;
+            document.getElementById('post_shares').value = 1;
 
-            document.getElementById('is_post_likes_tracking_on_checkbox').checked = resp.data.is_post_likes_tracking_on;
-            document.getElementById('is_post_comments_tracking_on_checkbox').checked = resp.data.is_post_comments_tracking_on;
-            document.getElementById('is_post_views_tracking_on_checkbox').checked = resp.data.is_post_views_tracking_on;
-            document.getElementById('is_post_shares_tracking_on_checkbox').checked = resp.data.is_post_shares_tracking_on;
+            document.getElementById('is_post_likes_tracking_on_checkbox').checked = true;
+            document.getElementById('is_post_comments_tracking_on_checkbox').checked = true;
+            document.getElementById('is_post_views_tracking_on_checkbox').checked = true;
+            document.getElementById('is_post_shares_tracking_on_checkbox').checked = true;
 
         }, (err) => {
             this.setState({isBusy: false, errors: (err.response).data});
@@ -134,30 +171,35 @@ export default class FacebookTracking extends React.Component {
 
             ga_property_id: this.state.gaPropertyId,
         }
+
         HttpClient.post('/data-source/save-facebook-tracking-configurations', form_data).then(resp => {
             this.setState({facebook_pages: resp.data.facebook_pages, isBusy: false, gaPropertyName: resp.data.gaPropertyName, configuration_id: true, editProperty: false});
+            if (!this.state.configurations.length) {
+                this.props.serviceStatusHandler({ target: { name: 'is_ds_facebook_tracking_enabled', value: true, checked: true }})
+            }
             this.props.loadUserDataSources();
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer)
-                    toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-            })
-
+            this.fetchConfigurations();
             Toast.fire({
                 icon: 'success',
                 title: 'Stored successfully!'
             })
+            this.runjob();
         }, (err) => {
+            Toast.fire({
+                icon: 'error',
+                title: err.response.data.message
+            })
+
             this.setState({isBusy: false, errors: (err.response).data});
         }).catch(err => {
+            console.log(err)
             this.setState({isBusy: false, errors: err});
         });
+    }
+
+    runjob() {
+        HttpClient.post('/data-source/run-facebook-job').then(resp => {
+        })
     }
 
     changePageHandler(val) {
@@ -394,6 +436,73 @@ export default class FacebookTracking extends React.Component {
                         </button>
                     </div>
 
+                </div>
+
+                <div className="gray-box">
+                    <h4>
+                        Active pages: <span>(Click to remove)</span>
+                    </h4>
+                    <div className="d-flex keywordTags">
+                        {this.state.configurations?.map((gAK, index) => {
+                            return (
+                                <>
+                                    <button
+                                        onClick={() => {
+                                            this.setState({activeDeletePopover: gAK})
+                                        }}
+                                        id={"gAK-" + gAK.id}
+                                        type="button"
+                                        className="keywordTag dd-tooltip d-flex"
+                                        key={gAK.id}
+                                        user_data_source_id={gAK.id}
+                                    >
+                                        <CustomTooltip tooltipText={`${gAK.selected_pages_array.map(pg => pg.label)}`}
+                                                        maxLength={50}>
+                                            <span
+                                                style={{background: "#2d9cdb"}}
+                                                className="dot"
+                                            ></span>
+                                            {gAK.gaPropertyName}
+                                        </CustomTooltip>
+                                    </button>
+
+                                    <Popover
+                                        placement="top"
+                                        target={"gAK-" + gAK.id}
+                                        isOpen={
+                                            this.state.activeDeletePopover?.id ===
+                                            gAK.id
+                                        }
+                                    >
+                                        <PopoverBody web_monitor_id={gAK.id}>
+                                            Are you sure you want to remove "
+                                            {gAK.gaPropertyName}"?.
+                                        </PopoverBody>
+                                        <button
+                                            onClick={() => {
+                                                this.deleteSelected(this.state.activeDeletePopover)
+                                                if (this.state.configurations.length === 1) {
+                                                    this.props.serviceStatusHandler({ target: { name: 'is_ds_facebook_tracking_enabled', value: false, checked: false }})
+                                                    this.props.sectionToggler();
+                                                }
+                                            }}
+                                            key={gAK.id}
+                                            user_data_source_id={gAK.id}
+                                        >
+                                            Yes
+                                        </button>
+                                        <button
+                                            onClick={() =>
+                                                this.setState({activeDeletePopover: ""})
+                                            }
+                                        >
+                                            No
+                                        </button>
+                                    </Popover>
+                                </>
+                            );
+                        })}
+                    </div>
                 </div>
 
             </div>

@@ -49,6 +49,8 @@ import SharePopups from '../../ReportingDashboard/SharePopups';
 import ActiveRecurrence from '../../ReportingDashboard/ActiveRecurrence';
 
 
+import AppsModal from "../../AppsMarket/AppsModal";
+import ShareAnalytics from "./ShareAnalytics";
 
 
 export default class IndexAnalytics extends Component {
@@ -59,6 +61,7 @@ export default class IndexAnalytics extends Component {
             isBusy: false,
             redirectTo: null,
             showDateRangeSelect: false,
+            shareAnalyticsPopup: false,
             googleAccount: undefined,
             consoleGoogleAccount: undefined,
             topStatistics: {
@@ -219,7 +222,7 @@ export default class IndexAnalytics extends Component {
                                 </h4>
                             </div>
                             <div className="d-flex align-items-center">
-                            
+
                                 {/* <button className="active-recerrences mb-0 p-0 bg-white mr-4" data-toggle="modal" data-target="#exampleModalCenter1" onClick={this.activeReccurenceHandler}>
                                     <img src="/images/svg/active-recurrence.svg" alt="active icon" className="mr-2" />
                                     Active recurrence
@@ -235,12 +238,12 @@ export default class IndexAnalytics extends Component {
                                         />
                                     </span>
                                     Share
-                                </button>                                
+                                </button>
                                 {
                                     this.state.isSharePopup && <SharePopups />
                                 }
                             </div>
-                            
+
                         </div>
                         {/* <div className="more-conversation">
                                 <h4>dfsdf sdf fs fs</h4>
@@ -258,7 +261,7 @@ export default class IndexAnalytics extends Component {
                                         autoSelectFirst
                                     />
                                 </div>
-                           
+
                                 {/* <FormGroup className="filter-sort position-relative">
                                     <Label
                                         className="sr-only"
@@ -279,7 +282,7 @@ export default class IndexAnalytics extends Component {
                                         Crystal Ball
                                     </Label>
                                     <i className="btn-dot left-0 ">
-                                        
+
                                     </i>
                                     <i className="btn-searchIcon right-0 fa fa-angle-down"></i>
                                     <select
@@ -348,7 +351,7 @@ export default class IndexAnalytics extends Component {
                                       {/* From: {moment(this.state.startDate).format(timezoneToDateFormat(this.props.user.timezone))}
                                         &nbsp;&nbsp;&nbsp;
                                         To: {moment(this.state.endDate).format(timezoneToDateFormat(this.props.user.timezone))}
-                                        &nbsp; */}                                    
+                                        &nbsp; */}
                                 </button>
                                 <button className="filter-btn">2w</button>
                                 <button className="filter-btn">1m</button>
@@ -358,7 +361,7 @@ export default class IndexAnalytics extends Component {
                                 <img className="pl-2" src="/images/svg/custom-date.svg"
                                  alt="custom-date icon" />
 
-                                 
+
                                 </button>
                             </div>
                         </div>
@@ -366,20 +369,20 @@ export default class IndexAnalytics extends Component {
 
 
                     <div className={"col-8"}>
-                    
+
                     {/*left side div*/}
 
-                        
+
                         {/*user's div*/}
-                        
+
                         <UsersDaysWithAnnotationsGraph statistics={this.state.usersDaysStatistics} />
 
-                        
+
                         {/*Attribution source*/}
                         <AnnotationsTable user={this.props.user} annotations={this.state.annotations} satisticsPaddingDaysCallback={this.changeStatisticsPaddingDays} statisticsPaddingDays={this.state.statisticsPaddingDays} />
-                
 
-                        {/* Click Impressions Graph */}                        
+
+                        {/* Click Impressions Graph */}
                         <ClicksImpressionsDaysGraph statistics={this.state.clicksImpressionsDaysStatistics} />
 
                         {/* Console Annotation Tabel */}
@@ -429,7 +432,7 @@ export default class IndexAnalytics extends Component {
                                                     />
                                                 </span>
                                                 <h2
-                                                    className="box-headings"                                               
+                                                    className="box-headings"
                                                 >
                                                     $1K
                                                 </h2>
@@ -462,7 +465,7 @@ export default class IndexAnalytics extends Component {
                                                     />
                                                 </span>
                                                 <h2
-                                                    className="box-headings"                                                
+                                                    className="box-headings"
                                                 >
                                                     300
                                                 </h2>
@@ -496,7 +499,7 @@ export default class IndexAnalytics extends Component {
                                                 </span>
 
                                                 <h2
-                                                    className="box-headings"                                               
+                                                    className="box-headings"
                                                 >
                                                     5
                                                 </h2>
@@ -530,7 +533,7 @@ export default class IndexAnalytics extends Component {
                                                 </span>
 
                                                 <h2
-                                                    className="box-headings"                                              
+                                                    className="box-headings"
                                                 >
                                                     300
                                                 </h2>
@@ -583,9 +586,9 @@ export default class IndexAnalytics extends Component {
                                             </form>
                                         </div>
                                     </div>
-                                    
+
                                 </div> */}
-                                
+
                                 <div>
                                     {/*Linkedin taffic cpc div*/}
                                     {/* <div className="w-100 report-box">
@@ -636,7 +639,7 @@ export default class IndexAnalytics extends Component {
                                                         <span className='pr-1'><img className='d-block' src="/images/svg/blue-dot.svg" alt="blue-dot icon" /></span>
                                                         Last month
                                                     </h4>
-                                                    <h4 className='mb-0 text-center'>1234</h4> 
+                                                    <h4 className='mb-0 text-center'>1234</h4>
                                                 </div>
                                                 <div className='divider'></div>
                                                 <div className="d-flex flex-column pl-4">
@@ -650,7 +653,7 @@ export default class IndexAnalytics extends Component {
                                         </div>
                                     </div> */}
 
-                                                                                    
+
                                     {/*Media graph div*/}
                                     <MediaGraph statistics={this.state.mediaStatistics} />
 
@@ -658,7 +661,7 @@ export default class IndexAnalytics extends Component {
                                         <div className="justify-content-between d-flex mb-3">
                                             <div>
                                                 <h3 className="card-heading">
-                                                    Media                                                     
+                                                    Media
                                                 </h3>
                                             </div>
                                             <div>
@@ -791,9 +794,9 @@ export default class IndexAnalytics extends Component {
                                                         aria-valuemax="100"
                                                     ></div>
                                                 </div>
-                                            
+
                                                 </div>
-                                                
+
                                             </div>
                                         </div>
                                         <p>Source:BestGenNewtonSite</p>
@@ -869,7 +872,7 @@ export default class IndexAnalytics extends Component {
                                                 </span>
                                             </div>
                                         </div>
-                                        
+
                                         <div className="">
                                             <BarChart
                                                 width={350}
@@ -905,7 +908,7 @@ export default class IndexAnalytics extends Component {
                                                         <span className='pr-1'><img className='d-block' src="/images/svg/blue-dot.svg" alt="blue-dot icon" /></span>
                                                         Volume
                                                     </h4>
-                                                    <h4 className='mb-0 text-center'>1234</h4> 
+                                                    <h4 className='mb-0 text-center'>1234</h4>
                                                 </div>
                                                 <div className='divider'></div>
                                                 <div className="d-flex flex-column pl-4">
@@ -1025,7 +1028,7 @@ export default class IndexAnalytics extends Component {
                                                 <Pie
                                                     data={this.state.data02}
                                                     cx="50%"
-                                                    cy="50%"                                      
+                                                    cy="50%"
                                                     outerRadius={50}
                                                     fill="#8884d8"
                                                     dataKey="value"
@@ -1061,7 +1064,7 @@ export default class IndexAnalytics extends Component {
                                                 <span className="d-flex align-items-center pb-4">
                                                     <span className="mr-1"><img className='d-block' src="/images/svg/unknown-dot.svg" alt="red-dot icon" /></span>
                                                     <h5 className='mb-0'>Unknown</h5>
-                                                </span> 
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
@@ -1090,7 +1093,7 @@ export default class IndexAnalytics extends Component {
                                                 <Pie
                                                     data={this.state.data02}
                                                     cx="50%"
-                                                    cy="50%"                                             
+                                                    cy="50%"
                                                     outerRadius={50}
                                                     fill="#8884d8"
                                                     dataKey="value"
@@ -1128,7 +1131,7 @@ export default class IndexAnalytics extends Component {
                                                 <span className="d-flex align-items-center pb-4">
                                                     <span className="mr-1"><img className='d-block' src="/images/svg/unknown-dot.svg" alt="red-dot icon" /></span>
                                                     <h5 className='mb-0'>Unknown</h5>
-                                                </span> 
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
@@ -1139,7 +1142,7 @@ export default class IndexAnalytics extends Component {
                     <div className={"col-4"}>
 
                         {/*right side div*/}
-                        
+
                         {/*Annotations Table div*/}
 
                         {/* <AnnotationsTable user={this.props.user} annotations={this.state.annotations} satisticsPaddingDaysCallback={this.changeStatisticsPaddingDays} statisticsPaddingDays={this.state.statisticsPaddingDays} /> */}
@@ -1151,7 +1154,7 @@ export default class IndexAnalytics extends Component {
                                     </h4>
                                 </div>
                                 <div>
-                                   
+
                                     <span>
                                         <img
                                             src="/images/svg/dashboard-list-option.svg"
@@ -1178,13 +1181,13 @@ export default class IndexAnalytics extends Component {
                                         </tr>
                                     ))}
                                 </tbody>
-                                
+
                             </table>
                         </div> */}
 
                         {/*Device by impression div*/}
                         <DeviceClicksImpressionsGraph devicesStatistics={this.state.devicesStatistics} />
-                        
+
 
                         {/*Device by Conversation div*/}
                         {/* <DeviceByConversationTable devicesStatistics={this.state.devicesStatistics} /> */}
@@ -1223,10 +1226,10 @@ export default class IndexAnalytics extends Component {
                                                 })
                                             }
                                     </tbody>
-                                   
+
                                 </table>
                             </div>
-                           
+
                         </div>
 
                         <div className="report-box">
@@ -1256,7 +1259,7 @@ export default class IndexAnalytics extends Component {
                                                 <DeviceUsersGraph deviceCategoriesStatistics={this.state.deviceCategoriesStatistics} />
                                             </div>
                         </div> */}
-                        
+
 
                         {/*Visitor by Country */}
 
@@ -1269,7 +1272,7 @@ export default class IndexAnalytics extends Component {
                                     </h3>
                                     <h6>Traffic analyze</h6>
                                 </div>
-                                
+
                                 <div className="flex">
                                     <span>
                                         <img
@@ -1285,11 +1288,11 @@ export default class IndexAnalytics extends Component {
                                     </span>
                                 </div>
                             </div>
-                            <div className="mb-3">                                
+                            <div className="mb-3">
                                  <img
                                         src="/images/svg/map.svg"
                                         alt="map Image"
-                                    />                                
+                                    />
                                 </div>
                             <h4 className="card-heading">Top countries</h4>
 
@@ -1303,7 +1306,7 @@ export default class IndexAnalytics extends Component {
                                         />
                                         </span>
                                         <h5 className="country-name">United states</h5>
-                                </span>                                
+                                </span>
                                 <h5 className="ml-5">123456</h5>
                             </div>
                             <div className="d-flex flex-row">
@@ -1316,7 +1319,7 @@ export default class IndexAnalytics extends Component {
                                         />
                                         </span>
                                         <h5 className="country-name">Germany</h5>
-                                </span> 
+                                </span>
                                 <h5 className="ml-5">123456</h5>
                             </div>
                             <div className="d-flex flex-row">
@@ -1329,7 +1332,7 @@ export default class IndexAnalytics extends Component {
                                         />
                                         </span>
                                         <h5 className="country-name">Canada</h5>
-                                </span>                                
+                                </span>
                                 <h5 className="ml-5">123456</h5>
                             </div>
                         </div> */}
@@ -1395,8 +1398,8 @@ export default class IndexAnalytics extends Component {
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-                <TopStatistics topStatistics={this.state.topStatistics} /> 
-                <ConsoleTopStatistics topStatistics={this.state.consoleTopStatistics} /> 
+                <TopStatistics topStatistics={this.state.topStatistics} />
+                <ConsoleTopStatistics topStatistics={this.state.consoleTopStatistics} />
                 <div className="container-xl bg-white anno-container  d-flex flex-column justify-content-center component-wrapper" >
                     <section className="ftco-section" id="inputs">
                         <div className="container-xl p-0">
@@ -1437,6 +1440,11 @@ export default class IndexAnalytics extends Component {
                             <div className="row ml-0 mr-0 mb-2">
                                 <div className="col-md-12 text-right">
                                     <button className="btn gaa-btn-primary btn-sm" onClick={() => this.exportExcel(this.state.redirectTo)}><i className="fa fa-file-excel-o"></i> Download Excel</button>
+                            </div>
+                        </div>
+                        <div className="row ml-0 mr-0 mb-2">
+                            <div className="col-md-12 text-right">
+                                <button className="btn gaa-btn-primary btn-sm" onClick={() => this.setState({shareAnalyticsPopup: true})}><i className="fa fa-file-excel-o"></i> Share Report</button>
                                 </div>
                             </div>
                             <div id="dashboard-index-container">
@@ -1576,6 +1584,33 @@ export default class IndexAnalytics extends Component {
                         </div>
                     </section>
                 </div >
+
+            <AppsModal isOpen={this.state.shareAnalyticsPopup} popupSize={'md'} toggle={() => {
+                    this.setState({shareAnalyticsPopup: false,});
+                }}>
+                <div className="popupContent modal-createUser">
+                    <div className="apps-modalHead">
+                        <div className="d-flex justify-content-between align-items-center">
+                            <div className="d-flex justify-content-start align-items-center"><h2>Share Analytics</h2>
+                            </div>
+                            <span onClick={() => this.setState({shareAnalyticsPopup: false,})} className="btn-close">
+                                <img className="inject-me" src="/close-icon.svg" width="26" height="26"
+                                        alt="menu icon"/>
+                            </span>
+                        </div>
+                    </div>
+
+                    <ShareAnalytics toggle={() => {
+                        this.setState({shareAnalyticsPopup: false,});
+                    }}  user={this.props.user}
+                        ga_property_id={this.state.ga_property_id}
+                        statisticsPaddingDays={this.state.statisticsPaddingDays}
+                        start_date={this.state.startDate}
+                        end_date={this.state.endDate}
+                        upgradePopup={this.props.upgradePopup}
+                    />
+                </div>
+            </AppsModal>
             </> */}
         </React.Fragment>;
     }
@@ -1712,7 +1747,7 @@ export default class IndexAnalytics extends Component {
             }
         );
     }
-    
+
     exportExcel(redirectTo) {
         window.location.replace(redirectTo);
     }
