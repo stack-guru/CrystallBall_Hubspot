@@ -303,7 +303,7 @@ export default class Accounts extends React.Component {
                                     : ''} */}
                         </div>
                     </section>
-                    <section className='accountsHolder'>
+                    {/*<section className='accountsHolder'>
                         <h3>Recommended for you</h3>
                         <div className="accounts recommendedForYour">
                             <div className='account'>
@@ -328,7 +328,7 @@ export default class Accounts extends React.Component {
                                 </div>
                             </div>
                         </div>
-                    </section>
+                    </section>*/}
                     <section className='accountsHolder'>
                         {/*<h3>Analytics Accounts</h3>*/}
 
@@ -631,7 +631,7 @@ export default class Accounts extends React.Component {
             this.setState({isBusy: false, errors: err});
         });
     }
-    
+
     handleFacebookDelete(id) {
         this.setState({isBusy: true});
         HttpClient.delete(`/settings/facebook-account/${id}`).then(resp => {
