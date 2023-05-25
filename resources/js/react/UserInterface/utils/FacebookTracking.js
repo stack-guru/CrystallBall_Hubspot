@@ -181,7 +181,7 @@ export default class FacebookTracking extends React.Component {
             this.fetchConfigurations();
             swal.fire('Success', "We will retrieve the posts/ads added to your account in the past year according to your preferences; it may take a few minutes. Subsequently, the system will perform a daily check and automatically add relevant annotations to your account.", 'info');
 
-            // this.runjob();
+            this.runjob();
         }, (err) => {
             Toast.fire({
                 icon: 'error',
