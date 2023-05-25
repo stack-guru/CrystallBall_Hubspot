@@ -2002,7 +2002,7 @@ body {
     width: calc(100% - 90px);
 }
 
-.popover-inner button {
+.popover-inner > button {
     width: 40px;
     height: 30px;
     padding: 6px;
@@ -2015,9 +2015,16 @@ body {
     align-items: center;
     justify-content: center;
     border: 1px solid #666;
-    background-color: transparent;
+    background-color: white;
 }
-
+.filterBtnGroup .btn-secondary.focus,
+.filterBtnGroup .btn-secondary:focus,
+.filterBtnGroup .btn-secondary:active,
+.filterBtnGroup .btn-secondary:hover {
+    color: #666 !important;
+    border: 1px solid #666 !important;
+    background-color: white !important;
+}
 .popover-inner button:nth-last-child(2) {
     color: #fff;
     background: #f44c3d;
@@ -6504,12 +6511,7 @@ color: #096DB7;
     text-align: right;
     color: #666666;
 }
-.add-logo{
-    font-weight: 400;
-font-size: 16px;
-line-height: 20px;
-color: #666666;
-}
+
 .share-preview-btn{
     background: linear-gradient(90deg, #3D8BFD 39.06%, #1273FF 100%);
 box-shadow: 0px 4px 12px rgba(0, 102, 213, 0.1);
@@ -6560,4 +6562,42 @@ color: white;
     box-shadow: 0px 8px 32px -6px rgba(0, 0, 0, 0.14);
     border-radius: 16px;
     margin-bottom: 24px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+}
+.active-recurrernce-card p{
+    color: #666;
+    margin-bottom: 12px;
+}
+.active-recurrernce-card ul:first-child {
+    color: #333333;
+    margin: 0 -20px;
+}
+.active-recurrernce-card ul:first-child li {
+    padding: 0 20px;
+    border-left: 1px solid #e0e0e0;
+}
+.active-recurrernce-card ul:first-child li:first-child { border: 0; }
+.active-recurrernce-card ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+}
+.active-recurrernce-card ul li {
+    list-style-type: none;
+}
+.logotext{
+}
+.add-logo{
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    color: #666666;
+}
+.closeActivereccurencePopup {padding: 0; width: 33px; height: 33px; display: block;}
+.calendar .popover {
+    max-width: 360px;
+    
 }

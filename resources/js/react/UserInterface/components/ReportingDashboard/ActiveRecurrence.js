@@ -12,7 +12,7 @@ class ActiveRecurrence extends React.Component {
 
         this.state = {
             isShareSuccessfull: false,
-            isActiveRecurrence: false,
+            isActiveRecurrence: true,
         };
 
         
@@ -22,21 +22,76 @@ class ActiveRecurrence extends React.Component {
 
 
     toggle(){
-        this.setState({isActiveRecurrence:!this.state.isActiveRecurrence})
+        // this.setState({isActiveRecurrence:!this.state.isActiveRecurrence})
+        this.setState((prevState) => ({
+            isActiveRecurrence: !prevState.isActiveRecurrence,
+          }));
     }
 
     render() {
+        const { isActiveRecurrence } = this.state;
         return (
-            <Modal className={`apps-modal activeRecurrenceModal`} isOpen={!this.state.isActiveRecurrence} toggle={()=>{this.setState({isActiveRecurrence:true})}}>
+            <Modal className={`apps-modal activeRecurrenceModal`} isOpen={isActiveRecurrence} toggle={this.toggle}>
                 <div className="modal-header d-flex justify-content-between align-items-center">
                     <h3 className="modal-title" id="exampleModalLongTitle">Active recurrence <span>12</span></h3>
-                    <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" onClick={this.toggle}>&times;</span></button>
+                    <span type="button" className="" data-dismiss="modal" aria-label="Close" onClick={this.toggle} aria-hidden="true">
+                        <img
+                            className="inject-me"
+                            src="/close-icon.svg"
+                            width="26"
+                            height="26"
+                            alt="close icon"
+                        />
+                    </span>
                 </div>
                 <ModalBody>
                 <div className="active-recurrernce-card">
-                    <h6>Report 1 created on 20 NOV,0222 </h6>
-                    <h5>CrystalBall</h5>
+                    <p>Report 1 created on 20 NOV,0222</p>
+                    <div className="d-flex justify-content-between">
+                        <ul className="infoList">
+                            <li><span>Crystall Ball</span></li>
+                            <li><span>Dashboard 1</span></li>
+                            <li><span>9 Charts</span></li>
+                        </ul>
+                        <ul className="actionList">
+                            <li><span><img src="/images/svg/edit.svg" alt="edit-icon" /></span></li>
+                            <li><span><img src="/images/svg/play.svg" alt="play-icon" /></span></li>
+                            <li><span><img src="/images/svg/delete.svg" alt="delete-icon" /></span></li>
+                        </ul>
+                    </div>
                 </div>
+                <div className="active-recurrernce-card">
+                    <p>Report 1 created on 20 NOV,0222</p>
+                    <div className="d-flex justify-content-between">
+                        <ul className="infoList">
+                            <li><span>Crystall Ball</span></li>
+                            <li><span>Dashboard 1</span></li>
+                            <li><span>9 Charts</span></li>
+                        </ul>
+                        <ul className="actionList">
+                            <li><span><img src="/images/svg/edit.svg" alt="edit-icon" /></span></li>
+                            <li><span><img src="/images/svg/pause.svg" alt="pause-icon" /></span></li>
+                            <li><span><img src="/images/svg/delete.svg" alt="delete-icon" /></span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div className="active-recurrernce-card">
+                    <p>Report 1 created on 20 NOV,0222</p>
+                    <div className="d-flex justify-content-between">
+                        <ul className="infoList">
+                            <li><span>Crystall Ball</span></li>
+                            <li><span>Dashboard 1</span></li>
+                            <li><span>9 Charts</span></li>
+                        </ul>
+                        <ul className="actionList">
+                            <li><span><img src="/images/svg/edit.svg" alt="edit-icon" /></span></li>
+                            <li><span><img src="/images/svg/play.svg" alt="play-icon" /></span></li>
+                            <li><span><img src="/images/svg/delete.svg" alt="delete-icon" /></span></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                
                 </ModalBody>
             </Modal>
         )

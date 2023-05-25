@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { DateRangePicker } from 'react-date-range';
+import { DateRangePicker,DateRange } from 'react-date-range';
+
 
 import HttpClient from '../../../utils/HttpClient';
 import { newStaticRanges } from '../../../utils/CustomDateRange';
@@ -44,6 +45,8 @@ import DeviceByConversationTable from './tables/deviceByConversationTable';
 //     Area,
 // } from "recharts";
 import { FormGroup, Label } from "reactstrap";
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter,UncontrolledPopover,PopoverHeader,PopoverBody } from "reactstrap";
+
 import { CircularProgressbar } from "react-circular-progressbar";
 import SharePopups from '../../ReportingDashboard/SharePopups';
 import ActiveRecurrence from '../../ReportingDashboard/ActiveRecurrence';
@@ -97,7 +100,7 @@ export default class IndexAnalytics extends Component {
                 {
                   startDate: new Date(),
                   endDate: null,
-                  key: 'selection'
+                //   key: 'selection'
                 }],
 
             // dummydata
@@ -196,6 +199,7 @@ export default class IndexAnalytics extends Component {
         // this.updateUserAnnotationColors = this.updateUserAnnotationColors.bind(this);
         this.shareHandler = this.shareHandler.bind(this);
         this.activeReccurenceHandler = this.activeReccurenceHandler.bind(this);
+        this.generateDateRange = this.generateDateRange.bind(this);
     }
     componentDidMount() {
         document.title = 'Analytic Dashboard';
@@ -205,9 +209,67 @@ export default class IndexAnalytics extends Component {
         this.setState({ isSharePopup: true });
     }
     activeReccurenceHandler(){
-        this.setState({isActiveRecurrenecePopup :true});
+        // this.setState({isActiveRecurrenecePopup :true});
+        this.setState((prevState) => ({
+            isActiveRecurrenecePopup: !prevState.isActiveRecurrenecePopup,
+          }));
         console.log('sdkzfn  djdk ===== ',this.state.isActiveRecurrenecePopup)
     }
+
+     generateDateRange(selectedValue) {
+        let startDate, endDate;
+    
+        switch (selectedValue) {
+            case 'today':
+              startDate = moment().format('YYYY-MM-DD');
+              endDate = moment().format('YYYY-MM-DD');
+              break;
+            case '1 week':
+              startDate = moment().subtract(1, 'week').format('YYYY-MM-DD');
+              endDate = moment().format('YYYY-MM-DD');
+              break;
+            case '2 weeks':
+              startDate = moment().subtract(2, 'weeks').format('YYYY-MM-DD');
+              endDate = moment().format('YYYY-MM-DD');
+              break;
+            case '1 month':
+              startDate = moment().subtract(1, 'month').format('YYYY-MM-DD');
+              endDate = moment().format('YYYY-MM-DD');
+              break;
+            case '6 months':
+              startDate = moment().subtract(6, 'months').format('YYYY-MM-DD');
+              endDate = moment().format('YYYY-MM-DD');
+              break;
+            case '1 year':
+              startDate = moment().subtract(1, 'year').format('YYYY-MM-DD');
+              endDate = moment().format('YYYY-MM-DD');
+              break;
+            case 'all':
+                startDate = moment().subtract(5, 'years').format('YYYY-MM-DD');
+                endDate = moment().format('YYYY-MM-DD');
+              break;
+            default:
+              // Default case (e.g., handle if no value is selected)
+              startDate = '';
+              endDate = '';
+              break;
+          }
+    
+        // Send the range to the backend or perform any other action with the generated dates
+        console.log('Start Date:===========  ===  ', startDate);
+        console.log('End Date: ================    ', endDate);
+        this.setState({
+            startDate: moment(startDate).format("YYYY-MM-DD"),
+            endDate: moment(endDate).format("YYYY-MM-DD"),
+             showDateRangeSelect: moment(startDate).format("YYYY-MM-DD") == moment(endDate).format("YYYY-MM-DD")
+        }, () => {
+            if (moment(startDate).format("YYYY-MM-DD") !== moment(endDate).format("YYYY-MM-DD")) {
+                this.fetchStatistics(this.state.ga_property_id);
+            }
+        });
+
+    }
+
 
     render() {
 
@@ -231,13 +293,13 @@ export default class IndexAnalytics extends Component {
                             </div>
                             <div className="d-flex align-items-center">
 
-                                {/* <button className="active-recerrences mb-0 p-0 bg-white mr-4" data-toggle="modal" data-target="#exampleModalCenter1" onClick={this.activeReccurenceHandler}>
+                                <button className="active-recerrences mb-0 p-0 bg-white mr-4" data-toggle="modal" data-target="#exampleModalCenter1" onClick={this.activeReccurenceHandler}>
                                     <img src="/images/svg/active-recurrence.svg" alt="active icon" className="mr-2" />
                                     Active recurrence
                                 </button>
                                 {
                                     this.state.isActiveRecurrenecePopup && <ActiveRecurrence />
-                                } */}
+                                }
                                 <button className="`btn btn-outline btn-sm btnCornerRounded share-btn " data-toggle="modal" data-target="#exampleModalCenter" onClick={this.shareHandler}>
                                     <span className="align-center">
                                         <img className='mr-2'
@@ -353,31 +415,79 @@ export default class IndexAnalytics extends Component {
                                 </FormGroup> */}
                             </div>
                             <div className="filterBtnGroup d-flex align-items-center">
-                                
-                                {/* <DefinedRange
-                                onChange={item => this.setState({ dateRange:[item.selection]})}
-                                ranges={this.dateRange}
-                            />; */}
-                            
-                           
-                                <button className="filter-btn today">Today</button>
-                                <button className="filter-btn"
-                                    >1w
-                                      {/* From: {moment(this.state.startDate).format(timezoneToDateFormat(this.props.user.timezone))}
-                                        &nbsp;&nbsp;&nbsp;
-                                        To: {moment(this.state.endDate).format(timezoneToDateFormat(this.props.user.timezone))}
-                                        &nbsp; */}
-                                </button>
-                                <button className="filter-btn">2w</button>
-                                <button className="filter-btn">1m</button>
-                                <button className="filter-btn">6m</button>
-                                <button className="filter-btn">All</button>
-                                <button className="custom-btn">Custom
+                               
+                                {/* <div className='d-flex'>
+                                <DefinedRange
+                                    moveRangeOnFirstSelection={false}
+                                    editableDateInputs={true}
+                                    inp
+                                    ranges={[{
+                                        startDate: new Date(this.state.startDate),
+                                        endDate: new Date(this.state.endDate),
+                                        key: 'selection',
+                                    }]}
+                                    onChange={(ranges) => {
+                                        this.setState({
+                                            startDate: moment(ranges.selection.startDate).format("YYYY-MM-DD"),
+                                            endDate: moment(ranges.selection.endDate).format("YYYY-MM-DD"),
+                                            showDateRangeSelect: moment(ranges.selection.startDate).format("YYYY-MM-DD") == moment(ranges.selection.endDate).format("YYYY-MM-DD")
+                                        }, () => {
+                                            if (moment(ranges.selection.startDate).format("YYYY-MM-DD") !== moment(ranges.selection.endDate).format("YYYY-MM-DD")) {
+                                                this.fetchStatistics(this.state.ga_property_id)
+                                            }
+                                        });
+                                    }}
+                                />
+                                </div> */}
+
+                                <button className="filter-btn" onClick={() => this.generateDateRange('today')}>Today</button>
+                                <button className="filter-btn" onClick={() => this.generateDateRange('1 week')}>1w </button>
+                                <button className="filter-btn" onClick={() => this.generateDateRange('2 weeks')}>2w</button>
+                                <button className="filter-btn" onClick={() => this.generateDateRange('1 month')}>1m</button>
+                                <button className="filter-btn" onClick={() => this.generateDateRange('6 months')}>6m</button>
+                                <button className="filter-btn" onClick={() => this.generateDateRange('1 year')}>Year</button>
+                                <button className="filter-btn" onClick={() => this.generateDateRange('all')}>All</button>
+
+                                {/* <button className="filter-btn">All</button> */}
+
+                                <Button id="PopoverClick" type="button" className="custom-btn">Custom
                                 <img className="pl-2" src="/images/svg/custom-date.svg"
                                  alt="custom-date icon" />
-
-
-                                </button>
+                                </Button>
+                                    <UncontrolledPopover
+                                        placement="bottom"
+                                        target="PopoverClick"
+                                        trigger="click"
+                                        className='calendar'
+                                    >
+                                        {/* <PopoverHeader>
+                                        {/* <PopoverBody> */}
+                                            <DateRange
+                                                editableDateInputs={true}
+                                                // onChange={item => setState({ dateRange:[item.selection]})}
+                                                // style={{ 'position': 'absolute', backgroundColor: '#F7F7F7', zIndex: 9999999999999 }}
+                                                moveRangeOnFirstSelection={false}
+                                                staticRanges={newStaticRanges}
+                                                inputRanges={[]}
+                                                ranges={[{
+                                                    startDate: new Date(this.state.startDate),
+                                                    endDate: new Date(this.state.endDate),
+                                                    key: 'selection',
+                                                }]}
+                                                onChange={(ranges) => {
+                                                    this.setState({
+                                                        startDate: moment(ranges.selection.startDate).format("YYYY-MM-DD"),
+                                                        endDate: moment(ranges.selection.endDate).format("YYYY-MM-DD"),
+                                                        showDateRangeSelect: moment(ranges.selection.startDate).format("YYYY-MM-DD") == moment(ranges.selection.endDate).format("YYYY-MM-DD")
+                                                    }, () => {
+                                                        if (moment(ranges.selection.startDate).format("YYYY-MM-DD") !== moment(ranges.selection.endDate).format("YYYY-MM-DD")) {
+                                                            this.fetchStatistics(this.state.ga_property_id);
+                                                        }
+                                                    });
+                                                }}
+                                            />
+                                        {/* </PopoverBody> */}
+                                    </UncontrolledPopover>
                             </div>
                         </div>
                     </div>

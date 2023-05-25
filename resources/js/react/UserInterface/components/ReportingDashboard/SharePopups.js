@@ -2,7 +2,7 @@ import React from "react";
 // import UserAnnotationColorPicker from "../../../helpers/UserAnnotationColorPickerComponent";
 import { FormGroup, Label } from "reactstrap";
 import ShareSuccessPopup from "./shareSucceessPopup";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, } from "reactstrap";
 
 class SharePopups extends React.Component {
     constructor(props) {
@@ -82,7 +82,7 @@ class SharePopups extends React.Component {
                                         src="/close-icon.svg"
                                         width="26"
                                         height="26"
-                                        alt="menu icon"
+                                        alt="close icon"
                                     />
                                 </span>
                             </div>
@@ -166,12 +166,22 @@ class SharePopups extends React.Component {
                                         </select>
                                     </FormGroup>
                                 </div>
-                                <div className="">
-                                <figure className="addLogo">
-                                    <img className="d-flex justify-content-center" src="/images/svg/circle-plus.svg" alt="plus icon" />
-                                    <p className="add-logo d-flex justify-content-center">Add Logo</p>
-                                </figure>
-                                </div>
+                                    <div className="align-items-center">
+                                        <figure className="addLogo d-flex justify-content-center align-items-center">
+                                            <span className="mb-0 d-flex align-items-center">
+                                                <img className="d-inline-block" src="/images/svg/circle-plus.svg" alt="plus icon" />
+                                                <span className="add-logo ml-2 d-inline-block">Add Logo</span>
+                                            </span>
+                                        </figure>
+                                    </div>
+                                {/* <div className="">
+                                    <figure className="addLogo ">
+                                    </figure>
+                                    <span className="d-flex logotext ml-3 ">
+                                            <img className="d-inline-block" src="/images/svg/circle-plus.svg" alt="plus icon" />
+                                            <p className="add-logo ml-2 d-inline-block">Add Logo</p>
+                                    </span>
+                                </div> */}
                                
                             </div>
                             <div className="modalContentArea">
