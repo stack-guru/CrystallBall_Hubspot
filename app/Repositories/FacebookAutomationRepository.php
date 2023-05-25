@@ -179,11 +179,15 @@ class FacebookAutomationRepository
     }
 
 
-    public function handleFacebookAutomation()
+    public function handleFacebookAutomation($userId = null)
     {
 
         // get all ga users whose fb automation is on
-        $users = User::where('is_ds_facebook_tracking_enabled', true)->get();
+        $users = User::where('is_ds_facebook_tracking_enabled', true)
+            ->when($userId, function ($q) use ($userId) {
+                $q->where('id', $userId);
+            })
+            ->get();
         // get fb configurations of each user
         foreach ($users as $user) {
 
@@ -247,7 +251,7 @@ class FacebookAutomationRepository
                                                 $shares_fb = (int)@$facebook_page_post_from_facebook['shares']['count'];
                                                 $shares_db = (int)$facebook_page_post_from_database->shares_count;
 
-                                                $views_fb = (int)$this->facebookService->getPagePostImpressions($facebook_page_post_from_facebook['id'], $response['page_token'])['post_impressions'];
+                                                $views_fb = (int)@$this->facebookService->getPagePostImpressions($facebook_page_post_from_facebook['id'], $response['page_token'])['post_impressions'];
                                                 $views_db = (int)$facebook_page_post_from_database->views_count;
 
                                                 if ($configuraion->is_post_likes_tracking_on){
