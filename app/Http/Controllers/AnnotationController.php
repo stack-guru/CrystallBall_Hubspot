@@ -281,7 +281,7 @@ class AnnotationController extends Controller
         }
         // Apply google analytics property filter if the value for filter is provided
         if ($request->query('annotation_ga_property_id') && $request->query('annotation_ga_property_id') !== '*') {
-            $whereClauses[] = "annotation_ga_properties.google_analytics_property_id = '" . $request->query('annotation_ga_property_id') . "'";
+            $whereClauses[] = "annotation_ga_properties.google_analytics_property_id = '" . $request->query('annotation_ga_property_id') . "' OR table_ga_property_id = '" . $request->query('annotation_ga_property_id') . "'";
             // $whereClauses[] = "(annotation_ga_properties.google_analytics_property_id IS NULL OR annotation_ga_properties.google_analytics_property_id = " . $request->query('annotation_ga_property_id') . ") ";
         }
         // Apply search functionality if search keyword is given
