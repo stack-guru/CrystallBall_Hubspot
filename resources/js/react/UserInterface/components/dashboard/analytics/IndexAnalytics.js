@@ -592,6 +592,14 @@ export default class IndexAnalytics extends Component {
                             <div className="fourGridBoxesHolder">
 
                                 {/*Todays Expence div*/}
+
+                                {/* Top Statistics  */}
+                                <TopStatistics topStatistics={this.state.topStatistics} />
+
+                                {/* Console Top Statistics */}
+                                {/* <ConsoleTopStatistics topStatistics={this.state.consoleTopStatistics} /> */}
+                                
+
                                 {/* <div className="">
                                     <div className={"w-100 report-box"}>
                                         <div className="d-flex justify-content-between">

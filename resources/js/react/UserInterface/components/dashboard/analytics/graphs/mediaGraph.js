@@ -69,72 +69,74 @@ export default function MediaGraph(props) {
                 </div>
                 <p className='mb-0'>Source:BestGenNewtonSite</p>
             </div> */}
-            <Bar
-                height='200px'
-                // width='100%'
-                data={{
-                    labels: dataLabels,
-                    datasets: [
-                        {
-                            label: '# of users',
-                            // data: noOfUsers,
-                            data:[151,192,121],
-                            backgroundColor: [
-                                "#1EA8FD",
-                                "#00F3A3",
-                                "#FFC514",
-                                "#FFFFFF",
-                                "#FFFFFF",
-                                // 'rgba(255, 99, 132, 0.2)',
-                                // 'rgba(54, 162, 235, 0.2)',
-                                // 'rgba(255, 206, 86, 0.2)',
-                                // 'rgba(75, 192, 192, 0.2)',
-                                // 'rgba(153, 102, 255, 0.2)',
-                                // 'rgba(255, 159, 64, 0.2)',
-                            ],
-                            borderColor: [
-                                "#1EA8FD",
-                                "#00F3A3",
-                                "#FFC514",
-                                "#1EA8FD",
-                                "#00F3A3",
-                                // 'rgba(255, 99, 132, 1)',
-                                // 'rgba(54, 162, 235, 1)',
-                                // 'rgba(255, 206, 86, 1)',
-                                // 'rgba(75, 192, 192, 1)',
-                                // 'rgba(153, 102, 255, 1)',
-                                // 'rgba(255, 159, 64, 1)',
-                            ],
-                            borderWidth: 1,
+            <div className="w-100 report-box">
+                <Bar
+                    height='150'
+                    // width='100%'
+                    data={{
+                        labels: dataLabels,
+                        datasets: [
+                            {
+                                label: '# of users',
+                                data: noOfUsers,
+                                // data:[151,192,121],
+                                backgroundColor: [
+                                    "#1EA8FD",
+                                    "#00F3A3",
+                                    "#FFC514",
+                                    "#1EA8FD",
+                                    "#00F3A3",
+                                    // 'rgba(255, 99, 132, 0.2)',
+                                    // 'rgba(54, 162, 235, 0.2)',
+                                    // 'rgba(255, 206, 86, 0.2)',
+                                    // 'rgba(75, 192, 192, 0.2)',
+                                    // 'rgba(153, 102, 255, 0.2)',
+                                    // 'rgba(255, 159, 64, 0.2)',
+                                ],
+                                borderColor: [
+                                    "#1EA8FD",
+                                    "#00F3A3",
+                                    "#FFC514",
+                                    "#1EA8FD",
+                                    "#00F3A3",
+                                    // 'rgba(255, 99, 132, 1)',
+                                    // 'rgba(54, 162, 235, 1)',
+                                    // 'rgba(255, 206, 86, 1)',
+                                    // 'rgba(75, 192, 192, 1)',
+                                    // 'rgba(153, 102, 255, 1)',
+                                    // 'rgba(255, 159, 64, 1)',
+                                ],
+                                borderWidth: 1,
+                            },
+                        ],
+                    }}
+                    options={{
+                        indexAxis: 'y',
+                    
+                        elements: {
+                            bar: {
+                                borderWidth: 1,
+                            },
                         },
-                    ],
-                }}
-                options={{
-                    indexAxis: 'y',
-                   
-                    elements: {
-                        bar: {
-                            borderWidth: 1,
+                        responsive: true,
+                    
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'bottom',
+                                labels: {
+                                    boxWidth: 0,
+                                    boxHeight: 0
+                                }
+                            },
+                            title: {
+                                display: true,
+                                align: 'start',
+                                text: 'Media',
+                            },
                         },
-                    },
-                    responsive: true,
-                   
-                    plugins: {
-                        legend: {
-                            display: true,
-                            position: 'bottom',
-                            labels: {
-                                boxWidth: 0,
-                                boxHeight: 0
-                            }
-                        },
-                        title: {
-                            display: true,
-                            align: 'start',
-                            text: 'Media',
-                        },
-                    },
                 }} />
+            </div>
         </>
     )
 }

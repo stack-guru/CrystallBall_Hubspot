@@ -11,6 +11,39 @@ import CreatableSelect from "react-select/creatable";
 import GoogleAnalyticsPropertySelect from "../../../utils/GoogleAnalyticsPropertySelect";
 
 
+
+export function CustomTooltip({ children, tooltipText, maxLength }) {
+    const lines = splitDisplayString(tooltipText, maxLength);
+    const formattedTooltipText = lines.join("<br>");
+    return (
+        <>
+            {children}
+            <div
+                className="dd-tooltip-text"
+                dangerouslySetInnerHTML={{ __html: formattedTooltipText }}
+            />
+        </>
+    );
+}
+function splitDisplayString(displayString, maxLength = 300) {
+    const items = displayString.split(",");
+    let lines = [];
+    let currentLine = items[0];
+
+    for (let i = 1; i < items.length; i++) {
+        if (currentLine.length + items[i].length + 1 <= maxLength) {
+            currentLine += "," + items[i];
+        } else {
+            lines.push(currentLine);
+            currentLine = items[i];
+        }
+    }
+
+    lines.push(currentLine);
+    return lines;
+}
+
+
 export default class ShareAnalytics extends Component {
     constructor(props) {
         super(props)
@@ -120,7 +153,7 @@ export default class ShareAnalytics extends Component {
         });
 
     }
-
+    
 
     submitHandler(e) {
         e.preventDefault();
@@ -148,6 +181,8 @@ export default class ShareAnalytics extends Component {
         });
     }
 
+
+   
     render() {
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo}/>
         return (
@@ -191,15 +226,19 @@ export default class ShareAnalytics extends Component {
                             </button> */}
                             <div className='d-flex'>
                                 {
-                                    this.state.users.map((index,gSCS) =>
-                                    <ul className='d-flex mb-2 mt-2 list-styles' key={index}>
-                                        <li > {gSCS.name} 
+                                    this.state.users.map((gSCS, index,) =>
+                                    
+                                    <ul className='d-flex mb-2 mt-2 list-styles dd-tooltip' key={index}>
+                                        <li>
+                                            <>
+                                            <span className="properties dd-tooltip">{gSCS.name ? <CustomTooltip tooltipText={gSCS.name} maxLength={50}></CustomTooltip> : "Name not found"}</span>
+                                            </>
                                                 {
-                                                    this.props.user.profile_image ?
-                                                    <div className='addPhoto' id='acronym-holder' style={{ backgroundPosition: 'center', backgroundSize: 'contain', backgroundImage: `url(/${this.props.user.profile_image})` }}>
+                                                    gSCS.profile_image ?
+                                                    <div className='addPhoto' id='acronym-holder' style={{ backgroundPosition: 'center', backgroundSize: 'contain', backgroundImage: `url(/${gSCS.profile_image})` }}>
                                                     </div>
                                                     :
-                                                    <span className="w-2r bdrs-50p text-center gaa-bg-color m-0" id="acronym-holder" alt="">{this.props.user != undefined ? this.props.user.name.split(' ').map(n => n.substring(0, 1)).join('').toUpperCase() : null}</span>
+                                                    <span className="w-2r bdrs-50p text-center gaa-bg-color m-0" id="acronym-holder" alt="">{gSCS != undefined ? gSCS.name.split(' ').map(n => n.substring(0, 1)).join('').toUpperCase() : null}</span>
                                                 }
                                         </li>
                                     </ul>
