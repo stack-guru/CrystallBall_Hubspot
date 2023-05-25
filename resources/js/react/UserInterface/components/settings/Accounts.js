@@ -23,6 +23,7 @@ export default class Accounts extends React.Component {
         this.state = {
             isBusy: false,
             googleAccounts: [],
+            facebookAccounts: [],
             googleAnalyticsAccounts: [],
             googleAnalyticsProperties: [],
             googleSearchConsoleSites: [],
@@ -32,6 +33,7 @@ export default class Accounts extends React.Component {
         }
 
         this.handleDelete = this.handleDelete.bind(this);
+        this.handleFacebookDelete = this.handleFacebookDelete.bind(this);
         this.fetchGAAccounts = this.fetchGAAccounts.bind(this);
         this.getGAAccounts = this.getGAAccounts.bind(this);
         this.getGoogleAccounts = this.getGoogleAccounts.bind(this);
@@ -87,6 +89,7 @@ export default class Accounts extends React.Component {
             this.setState({showACCISModal: searchParams && searchParams.has('do-refresh') && searchParams.has('google_account_id')})
         }
         this.getGoogleAccounts();
+        this.getFacebookAccounts();
         this.getGAAccounts();
         this.getGAProperties();
         this.getGSCSites();
@@ -184,10 +187,10 @@ export default class Accounts extends React.Component {
                             }
                         </div>
                     </section>
-                    {/*<section className='accountsHolder'>
+                    <section className='accountsHolder'>
                         <h3>Social accounts</h3>
                         <div className="accounts socialAccounts">
-                            {
+                            {/* {
                                 this.state.user.is_ds_twitter_tracking_enabled ?
                                     <div className='account'>
                                         <figure><img className='socialImage' src='/twitter-small.svg' alt='user image'/>
@@ -258,8 +261,29 @@ export default class Accounts extends React.Component {
                                             </button>
                                         </div>
                                     </div>
-                                    : ''}
+                                    : ''} */}
+
                             {
+                                this.state.facebookAccounts.map(facebookAccount => {
+                                    // className: reconnect
+                                    return <div className='account'>
+                                        <figure><img className='socialImage' src='/images/icons/facebook.png'
+                                                     alt='user image'/></figure>
+                                        <div className='nameAndEmail'>
+                                            <h4>{facebookAccount.name}</h4>
+                                            <span>{facebookAccount.email}</span>
+                                        </div>
+                                        <div className='btns'>
+                                            <button className='btn-change'>Change</button>
+                                            <button className='btn-disconnect'
+                                                    onClick={() => this.handleFacebookDelete(facebookAccount.id)}
+                                            >Disconnect
+                                            </button>
+                                        </div>
+                                    </div>
+                                })
+                            }
+                            {/* {
                                 this.state.user.is_ds_facebook_tracking_enabled ?
                                     <div className='account'>
                                         <figure><img className='socialImage' src='/images/icons/facebook.png'
@@ -276,7 +300,7 @@ export default class Accounts extends React.Component {
                                             </button>
                                         </div>
                                     </div>
-                                    : ''}
+                                    : ''} */}
                         </div>
                     </section>
                     <section className='accountsHolder'>
@@ -304,7 +328,7 @@ export default class Accounts extends React.Component {
                                 </div>
                             </div>
                         </div>
-                    </section>*/}
+                    </section>
                     <section className='accountsHolder'>
                         {/*<h3>Analytics Accounts</h3>*/}
 
@@ -578,6 +602,19 @@ export default class Accounts extends React.Component {
         });
     }
 
+    getFacebookAccounts() {
+        this.setState({isBusy: true})
+        HttpClient.get('/settings/facebook-accounts').then(resp => {
+            this.setState({facebookAccounts: resp.data.facebook_accounts, isBusy: false});
+        }, (err) => {
+
+            this.setState({isBusy: false, errors: (err.response).data});
+        }).catch(err => {
+
+            this.setState({isBusy: false, errors: err});
+        });
+    }
+
     handleDelete(id) {
         this.setState({isBusy: true});
         HttpClient.delete(`/settings/google-account/${id}`).then(resp => {
@@ -588,6 +625,23 @@ export default class Accounts extends React.Component {
             let googleAccounts = this.state.googleAccounts;
             googleAccounts = googleAccounts.filter(ga => ga.id != id);
             this.setState({isBusy: false, googleAccounts: googleAccounts})
+        }, (err) => {
+            this.setState({isBusy: false, errors: (err.response).data});
+        }).catch(err => {
+            this.setState({isBusy: false, errors: err});
+        });
+    }
+    
+    handleFacebookDelete(id) {
+        this.setState({isBusy: true});
+        HttpClient.delete(`/settings/facebook-account/${id}`).then(resp => {
+            Toast.fire({
+                icon: 'success',
+                title: "Account removed.",
+            });
+            let facebookAccounts = this.state.facebookAccounts;
+            facebookAccounts = facebookAccounts.filter(ga => ga.id != id);
+            this.setState({isBusy: false, facebookAccounts: facebookAccounts})
         }, (err) => {
             this.setState({isBusy: false, errors: (err.response).data});
         }).catch(err => {
