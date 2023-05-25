@@ -156,7 +156,7 @@ export default class ShareAnalytics extends Component {
                     <ErrorAlert errors={this.state.errors}/>
 
                     
-                    <div className='grid2layout'>
+                    <div className='grid2layout fieldsPlusLogo'>
                         <div className="themeNewInputStyle">
                             <GoogleAnalyticsPropertySelect
                                 name="ga_property_id"
@@ -165,7 +165,7 @@ export default class ShareAnalytics extends Component {
                                 components={{ IndicatorSeparator: () => null }}
                             />
                         </div>
-                        <div className="themeNewInputStyle">
+                        {/* <div className="themeNewInputStyle">
                             <select name="user_id"  onChange={this.changeHandler} multiple className={`form-control`} >
                                 <option value="">Select User</option>
                                 <option value={this.props.user.id} >{this.props.user.name}</option>
@@ -173,11 +173,53 @@ export default class ShareAnalytics extends Component {
                                     this.state.users.map(gSCS => <option value={gSCS.id} key={gSCS.id}>{gSCS.name}</option>)
                                 }
                             </select>
-                        </div>
+                        </div> */}
                     </div>
+                        <div className="modalContentArea mb-4 mt-4">
+                            <h5 className='mb-4'>
+                                Team members 
+                                {/* <span>(2selected)</span> */}
+                            </h5>
+                            {/* <button type='button' className="dropdown-toggle btn-toggle no-after border-0 bg-transparent bdrs-50p p-0" data-toggle="dropdown">
+                            {
+                                this.props.user.profile_image ?
+                                    <div className='addPhoto' id='acronym-holder' style={{ backgroundPosition: 'center', backgroundSize: 'contain', backgroundImage: `url(/${this.props.user.profile_image})` }}>
+                                    </div>
+                                    :
+                                    <span className="w-2r bdrs-50p text-center gaa-bg-color m-0" id="acronym-holder" alt="">{this.props.user != undefined ? this.props.user.name.split(' ').map(n => n.substring(0, 1)).join('').toUpperCase() : null}</span>
+                            }
+                            </button> */}
+                            <div className='d-flex'>
+                                {
+                                    this.state.users.map((index,gSCS) =>
+                                    <ul className='d-flex mb-2 mt-2 list-styles' key={index}>
+                                        <li > {gSCS.name} 
+                                                {
+                                                    this.props.user.profile_image ?
+                                                    <div className='addPhoto' id='acronym-holder' style={{ backgroundPosition: 'center', backgroundSize: 'contain', backgroundImage: `url(/${this.props.user.profile_image})` }}>
+                                                    </div>
+                                                    :
+                                                    <span className="w-2r bdrs-50p text-center gaa-bg-color m-0" id="acronym-holder" alt="">{this.props.user != undefined ? this.props.user.name.split(' ').map(n => n.substring(0, 1)).join('').toUpperCase() : null}</span>
+                                                }
+                                        </li>
+                                    </ul>
+                                    )
+                                }
+                            </div>
+                            
+                            {/* <ul className='d-flex mb-2 mt-2 gap-5 list-styles'>
+                                <li > <img src="/images/svg/6.svg" alt="share icon" /></li>
+                                <li> <img src="/images/svg/2.svg" alt="share icon" /></li>
+                                <li> <img src="/images/svg/5.svg" alt="share icon" /></li>
+                                <li> <img src="/images/svg/4.svg" alt="share icon" /></li>
+                                <li> <img src="/images/svg/5.svg" alt="share icon" />{" "}</li>
+                            </ul> */}
+                        </div>
                     <div className="grid2layout">
-
+                        
                         <div className="themeNewInputGroup">
+                        {/* <label>Add via email</label> */}
+
                             <input 
                                 type="text" 
                                 className="form-control" 
@@ -199,8 +241,11 @@ export default class ShareAnalytics extends Component {
                                 </div>
                             : null}
                         </div>
+                        
                     </div>
-
+                    <h5>
+                                    Selected <span>(Click to remove)</span>
+                                </h5>
                     <div
                         className={`d-flex ${this.props.userStartupConfig ? 'justify-content-between align-items-center' : 'pt-3'}`}>
                         <button type="submit" disabled={this.state.loading} className="btn-theme"

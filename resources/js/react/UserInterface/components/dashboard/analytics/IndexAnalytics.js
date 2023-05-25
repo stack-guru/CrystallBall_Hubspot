@@ -293,14 +293,14 @@ export default class IndexAnalytics extends Component {
                             </div>
                             <div className="d-flex align-items-center">
 
-                                <button className="active-recerrences mb-0 p-0 bg-white mr-4" data-toggle="modal" data-target="#exampleModalCenter1" onClick={this.activeReccurenceHandler}>
+                                {/* <button className="active-recerrences mb-0 p-0 bg-white mr-4" data-toggle="modal" data-target="#exampleModalCenter1" onClick={this.activeReccurenceHandler}>
                                     <img src="/images/svg/active-recurrence.svg" alt="active icon" className="mr-2" />
                                     Active recurrence
-                                </button>
+                                </button> */}
                                 {
                                     this.state.isActiveRecurrenecePopup && <ActiveRecurrence />
                                 }
-                                <button className="`btn btn-outline btn-sm btnCornerRounded share-btn " data-toggle="modal" data-target="#exampleModalCenter" onClick={this.shareHandler}>
+                                <button className="`btn btn-outline btn-sm btnCornerRounded share-btn " data-toggle="modal" data-target="#exampleModalCenter" onClick={() => this.setState({shareAnalyticsPopup: true})}>
                                     <span className="align-center">
                                         <img className='mr-2'
                                             src="/images/svg/share.svg"
@@ -309,9 +309,73 @@ export default class IndexAnalytics extends Component {
                                     </span>
                                     Share
                                 </button>
-                                {
-                                    this.state.isSharePopup && <SharePopups />
-                                }
+
+
+                                <AppsModal isOpen={this.state.shareAnalyticsPopup} popupSize={'lg'} toggle={() => {
+                                            this.setState({shareAnalyticsPopup: false,});
+                                        }}>
+                                        <div className="popupContent modal-createUser">
+                                            <div className="apps-modalHead">
+                                                <div className="d-flex justify-content-between align-items-center">
+                                                    <div className="d-flex justify-content-start align-items-center"><h2>Share Analytics</h2>
+                                                    </div>
+                                                    <div className='d-flex align-items-center'>
+                                                            <button className="download-pdf-btn" onClick={() => {
+                                                                html2pdf(document.getElementById("dashboard-index-container"), {
+                                                                    margin: 0.5,
+                                                                    filename: 'dashboard_analytics.pdf',
+                                                                    image: { type: 'jpeg', quality: 1.0 },
+                                                                    html2canvas: { scale: 1 },
+                                                                    jsPDF: { unit: 'in', format: 'A4', orientation: 'landscape' }
+                                                                });
+                                                                }}>
+                                                                <img className="float-left d-inline" src="/images/svg/download.svg" alt="download-icon" />                                        
+                                                                    Download pdf
+                                                            </button>
+                                                            <button className="download-pdf-btn" 
+                                                                onClick={() => this.exportExcel(this.props.redirectTo)}>
+                                                                <img className="float-left d-inline" src="/images/svg/download.svg" alt="download-icon" />                                        
+                                                                    Download Excel
+                                                            </button>
+                                                            <span onClick={() => this.setState({shareAnalyticsPopup: false,})} className="btn-close">
+                                                                <img className="inject-me" src="/close-icon.svg" width="26" height="26"
+                                                                        alt="menu icon"/>
+                                                            </span>
+                                                    </div>
+                                                    
+                                                    
+                                                </div>
+                                            </div>
+
+                                            <ShareAnalytics toggle={() => {
+                                                this.setState({shareAnalyticsPopup: false,});
+                                            }}  user={this.props.user}
+                                                ga_property_id={this.state.ga_property_id}
+                                                statisticsPaddingDays={this.state.statisticsPaddingDays}
+                                                start_date={this.state.startDate}
+                                                end_date={this.state.endDate}
+                                                upgradePopup={this.props.upgradePopup}
+                                            />
+                                        </div>
+                                </AppsModal>
+
+
+
+
+
+                                {/* {
+                                    this.state.isSharePopup && 
+                                    <SharePopups toggle={() => {
+                                        this.setState({shareAnalyticsPopup: false,});
+                                    }}  user={this.props.user}
+                                        props={this.props}
+                                        ga_property_id={this.state.ga_property_id}
+                                        statisticsPaddingDays={this.state.statisticsPaddingDays}
+                                        start_date={this.state.startDate}
+                                        end_date={this.state.endDate}
+                                        upgradePopup={this.props.upgradePopup}
+                                      exportExcel={this.exportExcel} redirectTo={this.redirectTo} />
+                                } */}
                             </div>
 
                         </div>
@@ -505,6 +569,10 @@ export default class IndexAnalytics extends Component {
 
                         {/*Attribution source*/}
                         <AnnotationsTable user={this.props.user} annotations={this.state.annotations} satisticsPaddingDaysCallback={this.changeStatisticsPaddingDays} statisticsPaddingDays={this.state.statisticsPaddingDays} />
+
+
+                        {/* media graphs */}
+                        <MediaGraph statistics={this.state.mediaStatistics} />
 
 
                         {/* Click Impressions Graph */}
@@ -780,7 +848,7 @@ export default class IndexAnalytics extends Component {
 
 
                                     {/*Media graph div*/}
-                                    <MediaGraph statistics={this.state.mediaStatistics} />
+                                    {/* <MediaGraph statistics={this.state.mediaStatistics} /> */}
 
                                     {/* <div className="w-100 report-box">
                                         <div className="justify-content-between d-flex mb-3">

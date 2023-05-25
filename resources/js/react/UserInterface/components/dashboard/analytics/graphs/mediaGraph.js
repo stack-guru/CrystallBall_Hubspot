@@ -9,17 +9,17 @@ export default function MediaGraph(props) {
 
     return (
         <>
-            <div className="w-100 report-box">
+            {/* <div className="w-100 report-box">
                 <div className="justify-content-between d-flex mb-3">
                     <div><h3 className="card-heading">Media</h3></div>
-                    {/* <div>
+                    <div>
                         <span>
                             <img
                                 src="/images/svg/dashboard-list-option.svg"
                                 alt="list icon"
                             />
                         </span>
-                    </div> */}
+                    </div>
                 </div>
                 <div className="d-flex flex-column">
                     <div className="progressbar d-flex flex-column pb-4">
@@ -68,8 +68,8 @@ export default function MediaGraph(props) {
                     </div>
                 </div>
                 <p className='mb-0'>Source:BestGenNewtonSite</p>
-            </div>
-            {/* <Bar
+            </div> */}
+            <Bar
                 height='200px'
                 // width='100%'
                 data={{
@@ -77,22 +77,33 @@ export default function MediaGraph(props) {
                     datasets: [
                         {
                             label: '# of users',
-                            data: noOfUsers,
+                            // data: noOfUsers,
+                            data:[151,192,121],
                             backgroundColor: [
-                                'rgba(255, 99, 132, 0.2)',
-                                'rgba(54, 162, 235, 0.2)',
-                                'rgba(255, 206, 86, 0.2)',
-                                'rgba(75, 192, 192, 0.2)',
-                                'rgba(153, 102, 255, 0.2)',
-                                'rgba(255, 159, 64, 0.2)',
+                                "#1EA8FD",
+                                "#00F3A3",
+                                "#FFC514",
+                                "#FFFFFF",
+                                "#FFFFFF",
+                                // 'rgba(255, 99, 132, 0.2)',
+                                // 'rgba(54, 162, 235, 0.2)',
+                                // 'rgba(255, 206, 86, 0.2)',
+                                // 'rgba(75, 192, 192, 0.2)',
+                                // 'rgba(153, 102, 255, 0.2)',
+                                // 'rgba(255, 159, 64, 0.2)',
                             ],
                             borderColor: [
-                                'rgba(255, 99, 132, 1)',
-                                'rgba(54, 162, 235, 1)',
-                                'rgba(255, 206, 86, 1)',
-                                'rgba(75, 192, 192, 1)',
-                                'rgba(153, 102, 255, 1)',
-                                'rgba(255, 159, 64, 1)',
+                                "#1EA8FD",
+                                "#00F3A3",
+                                "#FFC514",
+                                "#1EA8FD",
+                                "#00F3A3",
+                                // 'rgba(255, 99, 132, 1)',
+                                // 'rgba(54, 162, 235, 1)',
+                                // 'rgba(255, 206, 86, 1)',
+                                // 'rgba(75, 192, 192, 1)',
+                                // 'rgba(153, 102, 255, 1)',
+                                // 'rgba(255, 159, 64, 1)',
                             ],
                             borderWidth: 1,
                         },
@@ -103,7 +114,7 @@ export default function MediaGraph(props) {
                    
                     elements: {
                         bar: {
-                            borderWidth: 2,
+                            borderWidth: 1,
                         },
                     },
                     responsive: true,
@@ -123,7 +134,7 @@ export default function MediaGraph(props) {
                             text: 'Media',
                         },
                     },
-                }} />; */}      
+                }} />
         </>
     )
 }

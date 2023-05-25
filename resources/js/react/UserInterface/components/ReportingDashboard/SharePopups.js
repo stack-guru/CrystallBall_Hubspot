@@ -3,6 +3,8 @@ import React from "react";
 import { FormGroup, Label } from "reactstrap";
 import ShareSuccessPopup from "./shareSucceessPopup";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, } from "reactstrap";
+import ShareAnalytics from "../dashboard/analytics/ShareAnalytics";
+
 
 class SharePopups extends React.Component {
     constructor(props) {
@@ -11,6 +13,8 @@ class SharePopups extends React.Component {
         this.state = {
             isShareSuccessfull: false,
             isShareSubmit: false,
+            redirectTo: null,
+
         };
 
         this.handleShareSuccess = this.handleShareSuccess.bind(this);
@@ -18,6 +22,10 @@ class SharePopups extends React.Component {
         this.closeSuccessPopup = this.closeSuccessPopup.bind(this);
     }
 
+
+    exportExcel(redirectTo) {
+        window.location.replace(redirectTo);
+    }
   
     handleShareSuccess() {
    
@@ -49,14 +57,14 @@ class SharePopups extends React.Component {
                             <div className="d-flex justify-content-between align-items-center leftContent">
                                 <h3 className="mb-0">Share Reports</h3>
                                 <span className="divider"></span>
-                                <div className="d-flex justify-content-center">
+                                {/* <div className="d-flex justify-content-center">
                                     <h4 className="mb-0">9 Charts</h4>
                                     <h4 className="mb-0">Edit selection</h4>
-                                </div>
+                                </div> */}
                             </div>
 
                             <div className="d-flex align-items-center">
-                                <div>
+                                <div className="d-flex">
                                     
                                     <button className="download-pdf-btn" onClick={() => {
                                     html2pdf(document.getElementById("dashboard-index-container"), {
@@ -66,10 +74,27 @@ class SharePopups extends React.Component {
                                         html2canvas: { scale: 1 },
                                         jsPDF: { unit: 'in', format: 'A4', orientation: 'landscape' }
                                     });
-                                }}>
+                                    }}>
                                     <img className="float-left d-inline" src="/images/svg/download.svg" alt="download-icon" />                                        
                                         Download pdf
                                     </button>
+                                    {/* <button className="download-pdf-btn" onClick={() => {
+                                    html2pdf(document.getElementById("dashboard-index-container"), {
+                                        margin: 0.5,
+                                        filename: 'dashboard_analytics.pdf',
+                                        image: { type: 'jpeg', quality: 1.0 },
+                                        html2canvas: { scale: 1 },
+                                        jsPDF: { unit: 'in', format: 'A4', orientation: 'landscape' }
+                                    });
+                                    }}>
+                                    <img className="float-left d-inline" src="/images/svg/download.svg" alt="download-icon" />                                        
+                                        Download Excel
+                                    </button> */}
+                                    <button className="download-pdf-btn" 
+                                    onClick={() => this.exportExcel(this.props.redirectTo)}>
+                                        {/* <i className="fa fa-file-excel-o"></i>  */}
+                                        Download Excel</button>
+
                                 </div>
                                 
                                 <span
@@ -102,30 +127,24 @@ class SharePopups extends React.Component {
                                                 }}
                                             ></span>
                                             Crystal Ball
+                                           
                                         </Label>
-                                        <i className="btn-dot left-0 ">
-                                            {/*<svg width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">*/}
-                                            {/*    <path d="M0 10V8.33333H4V10H0ZM0 5.83333V4.16667H8V5.83333H0ZM0 1.66667V0H12V1.66667H0Z" fill="#666666" />*/}
-                                            {/*</svg>*/}
-                                        </i>
-                                        <i className="btn-searchIcon right-0 fa fa-angle-down"></i>
-                                        <select
+                                        <ShareAnalytics user={this.props.user}
+                                            ga_property_id={this.props.ga_property_id}
+                                            statisticsPaddingDays={this.props.statisticsPaddingDays}
+                                            start_date={this.props.startDate}
+                                            end_date={this.props.endDate}
+                                            upgradePopup={this.props.upgradePopup}/>
+                                        
+                                        {/* <select
                                             name="sortBy"
                                             id="sort-by"
                                             className="form-control" // value={this.state.sortBy} onChange={this.sort}
                                         >
-                                            <option value="">
-                                                Crystal Ball
-                                            </option>
-                                            {/*<option value="added">Added</option>*/}
-                                            {/*<option value="user">By User</option>*/}
-                                            {/*<option value="today">By Today</option>*/}
-                                            {/*<option value="date">By Date</option>*/}
-                                            {/*<option value="category">By Category</option>*/}
-                                            {/*<option value="ga-property">By GA Property</option>*/}
-                                        </select>
+                                            <option value="">Crystal Ball</option>
+                                        </select> */}
                                     </FormGroup>
-                                    <FormGroup className="filter-sort position-relative">
+                                    {/* <FormGroup className="filter-sort position-relative">
                                         <Label
                                             className="sr-only"
                                             for="dropdownFilters"
@@ -154,26 +173,18 @@ class SharePopups extends React.Component {
                                             // value={this.state.sortBy}
                                             // onChange={this.sort}
                                         >
-                                            <option value="">
-                                                My First Dashboard
-                                            </option>
-                                            {/*<option value="added">Added</option>*/}
-                                            {/*<option value="user">By User</option>*/}
-                                            {/*<option value="today">By Today</option>*/}
-                                            {/*<option value="date">By Date</option>*/}
-                                            {/*<option value="category">By Category</option>*/}
-                                            {/*<option value="ga-property">By GA Property</option>*/}
+                                            <option value=""> My First Dashboard</option>
                                         </select>
-                                    </FormGroup>
+                                    </FormGroup> */}
                                 </div>
-                                    <div className="align-items-center">
+                                    {/* <div className="align-items-center">
                                         <figure className="addLogo d-flex justify-content-center align-items-center">
                                             <span className="mb-0 d-flex align-items-center">
                                                 <img className="d-inline-block" src="/images/svg/circle-plus.svg" alt="plus icon" />
                                                 <span className="add-logo ml-2 d-inline-block">Add Logo</span>
                                             </span>
                                         </figure>
-                                    </div>
+                                    </div> */}
                                 {/* <div className="">
                                     <figure className="addLogo ">
                                     </figure>
@@ -228,7 +239,7 @@ class SharePopups extends React.Component {
                                         </span>
                                         <input type="email" className="form-control" placeholder="Enter email address" />
                                     </div>
-                                    <p className="d-flex align-items-center emailNote">
+                                    {/* <p className="d-flex align-items-center emailNote">
                                         <svg
                                             width="18"
                                             height="18"
@@ -243,7 +254,7 @@ class SharePopups extends React.Component {
                                         </svg>
                                         You’ve added 10 emails per your plan.{" "}
                                         <a href="">Upgrade to add more</a>
-                                    </p>
+                                    </p> */}
                                 </div>
                                 <h5>
                                     Selected <span>(Click to remove)</span>
@@ -264,15 +275,15 @@ class SharePopups extends React.Component {
                             </div>
 
                             <div className="modal-footer justify-content-between">
-                                <button className="m-0 btn btn-outline btn-sm btnCornerRounded share-btn">Preview</button>
+                                {/* <button className="m-0 btn btn-outline btn-sm btnCornerRounded share-btn">Preview</button> */}
                                 <div className="d-flex justify-content-center m-0">
-                                    <button
+                                    {/* <button
                                         type="button"
                                         className="btn mr-3 recurrence-text"
                                     >
-                                    <img src="/images/svg/recurrence-gray.svg" alt="active icon" className="mr-2 recurrence-color" />
+                                        <img src="/images/svg/recurrence-gray.svg" alt="active icon" className="mr-2 recurrence-color" />
                                         Set recurrence
-                                    </button>
+                                    </button> */}
                                     <button
                                         type="button"
                                         className="btn btn-outline btn-sm btnCornerRounded share-btn share-preview-btn "
@@ -334,7 +345,7 @@ class SharePopups extends React.Component {
                         <img src="/images/svg/share-success.svg" alt="share success" width={290} height={146} className="d-block mx-auto" />
                         <h2 className="report-success-text">Report sent successfully!</h2>
                         <div className="d-flex justify-content-center">
-                            <button className="`btn btn-outline btn-sm btnCornerRounded share-another-btn mr-3">Share another</button>
+                            {/* <button className="`btn btn-outline btn-sm btnCornerRounded share-another-btn mr-3">Share another</button> */}
                             <button className="`btn btn-outline btn-sm btnCornerRounded share-another-btn close" title="close" onClick={this.closeSuccessPopup}>Close</button>
                         </div>
                     </ModalBody>
