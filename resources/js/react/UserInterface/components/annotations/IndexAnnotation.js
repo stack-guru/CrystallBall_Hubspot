@@ -281,10 +281,13 @@ class IndexAnnotations extends React.Component {
         const { sortBy, searchText, category, googleAnalyticsProperty, pageSize, pageNumber } = this.state;
         let link = '/annotation?';
 
+        const searchByCategory = sortBy === 'category' && category;
+        const searchByProperty = sortBy === 'ga-property' && googleAnalyticsProperty;
+
         if (sortBy) link += `&sort_by=${sortBy}`;
         if (searchText) link += `&search=${searchText}`;
-        if (sortBy === 'category' && category) link += `&cateogry=${category}`;
-        if (sortBy === 'ga-property' && googleAnalyticsProperty) link += `&annotation_ga_property_id=${googleAnalyticsProperty}`;
+        if (searchByCategory) link += `&cateogry=${category}`;
+        if (searchByProperty) link += `&annotation_ga_property_id=${googleAnalyticsProperty}`;
         if (pageSize) link += `&page_size=${pageSize}`;
         if (pageNumber) link += `&page_number=${pageNumber}`;
 
@@ -299,10 +302,12 @@ class IndexAnnotations extends React.Component {
             .then(
                 (response) => {
                     this.loadAnnotationsCancelToken = null;
+                    const resetAnnotations = searchByCategory || searchByProperty || searchText;
+                    const annotations = resetAnnotations ? response.data.annotations : this.state.annotations.concat(response.data.annotations)
                     this.setState({
-                        annotations: this.state.annotations.concat(response.data.annotations),
+                        annotations,
                         isLoading: false,
-                        hasMore: response.data.annotations.length >= pageSize,
+                        hasMore: annotations.length >= pageSize,
                     });
 
                     setTimeout(() => {
