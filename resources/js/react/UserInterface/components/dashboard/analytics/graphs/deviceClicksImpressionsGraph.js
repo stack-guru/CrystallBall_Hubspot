@@ -67,33 +67,139 @@ export default function DeviceClicksImpressionsGraph(props) {
                     </table>
                 </div>
                 <div className="d-flex justify-content-between">
-                    <div className="d-flex flex-row">
-                        {/* <PieChart width={150} height={150}>
-                            <Pie
-                                data={noOfClicks}
-                                dataKey="value"
-                                cx="50%"
-                                cy="50%"
-                                innerRadius={30}
-                                outerRadius={40}
-                                fill="#82ca9d"
-                                label
-                            >
-                                {noOfClicks.map(
-                                    (entry, index) => (
-                                        <Cell
-                                            key={`cell-${index}`}
-                                            fill={
-                                                COLORS[
-                                                    index % COLORS.length
-                                                ]
+                    <div className="">
+
+                            {/* <Doughnut
+                                    width='183%'
+                                    data={{
+                                        labels: dataLabels,
+                                        datasets: [
+                                            {
+                                                label: '# of users',
+                                                // data: noOfUsers,
+                                                data: [80, 50,19,5],
+                                                backgroundColor: [
+                                                    '#0BD25F',
+                                                    '#FFC514',
+                                                    '#FE4C3C',
+                                                    '#E0E0E0',
+                                                    // 'rgba(255, 206, 86, 0.2)',
+                                                    // 'rgba(75, 192, 192, 0.2)',
+                                                    // 'rgba(153, 102, 255, 0.2)',
+                                                    // 'rgba(255, 159, 64, 0.2)',
+                                                ],
+                                                borderColor: [
+                                                    '#0BD25F',
+                                                    '#FFC514',
+                                                    '#FE4C3C',
+                                                    '#E0E0E0',
+                                                    // 'rgba(255, 206, 86, 1)',
+                                                    // 'rgba(75, 192, 192, 1)',
+                                                    // 'rgba(153, 102, 255, 1)',
+                                                    // 'rgba(255, 159, 64, 1)',
+                                                ],
+                                                // borderWidth: 1,
+                                            },
+                                        ],
+                                    }} options={{
+                                        indexAxis: 'y',
+                                        responsive: true,
+                                        maintainAspectRatio: true,
+                                        plugins: {
+                                            legend: {
+                                                display: true,
+                                                position: 'right',
+                                                labels: {
+                                                    boxWidth: 5,
+                                                    boxHeight: 5
+                                                }
+                                            },
+                                            title: {
+                                                display: true,
+                                                align: 'center',
+                                                // text: 'Devices',
+                                            },
+                                        },
+                                }} />   */}
+
+                            <Doughnut
+                                // height='100px'
+                                width='183%'
+                                data={{
+                                    labels: dataLabels,
+                                    datasets: [
+                                        {
+                                            label: '# of clicks',
+                                            data: noOfClicks,
+                                            // data:[60,30,15,5],
+                                            backgroundColor: [
+                                                '#0BD25F',
+                                                '#FFC514',
+                                                '#FE4C3C',
+                                                '#E0E0E0',
+                                                // 'rgba(153, 102, 255, 0.2)',
+                                                // 'rgba(255, 159, 64, 0.2)',
+                                            ],
+                                            borderColor: [
+                                                '#0BD25F',
+                                                '#FFC514',
+                                                '#FE4C3C',
+                                                '#E0E0E0',
+                                                // 'rgba(153, 102, 255, 1)',
+                                                // 'rgba(255, 159, 64, 1)',
+                                            ],
+                                            // borderWidth: 1,
+                                        },
+                                        {
+                                            label: '# of impressions',
+                                            data: noOfImpressions,
+                                            // data:[60,30,15,5],
+                                            backgroundColor: [
+                                                '#0BD25F',
+                                                '#FFC514',
+                                                '#FE4C3C',
+                                                '#E0E0E0',
+                                                // 'rgba(153, 102, 255, 0.2)',
+                                                // 'rgba(255, 159, 64, 0.2)',
+                                            ],
+                                            borderColor: [
+                                                '#0BD25F',
+                                                '#FFC514',
+                                                '#FE4C3C',
+                                                '#E0E0E0',
+                                                // 'rgba(153, 102, 255, 1)',
+                                                // 'rgba(255, 159, 64, 1)',
+                                            ],
+                                            // borderWidth: 1,
+                                        }
+                                    ],
+                                }} options={{
+                                    indexAxis: 'y',
+                                    responsive: true,
+                                    maintainAspectRatio: true,
+                                    // aspectRatio: 3,
+                                    plugins: {
+                                        legend: {
+                                            display: true,
+                                            position: 'right',
+                                            labels: {
+                                                boxWidth: 5,
+                                                boxHeight: 5
                                             }
-                                        />
-                                    )
-                                )}
-                            </Pie>
-                        </PieChart> */}
-                        <div className="d-flex flex-column pl-3 justify-content-center">
+                                        },
+                                        title: {
+                                            display: true,
+                                            align: 'start',
+                                            // text: 'Devices',
+                                        },
+                                    },
+                                }} />
+
+
+                        
+                        
+                    </div>
+                    <div className="d-flex flex-column">
                             <span className="d-flex">
                                 <span className="">
                                     <img
@@ -101,7 +207,7 @@ export default function DeviceClicksImpressionsGraph(props) {
                                         alt="green-dot icon"
                                     />
                                 </span>
-                                <h5>Desktop</h5>
+                                <h5>Devices</h5>
                             </span>
                             <span className="d-flex">
                                 <span>
@@ -111,7 +217,7 @@ export default function DeviceClicksImpressionsGraph(props) {
                                     />
                                 </span>
 
-                                <h5>Mobile</h5>
+                                <h5>Clicks</h5>
                             </span>
                             <span className="d-flex">
                                 <span>
@@ -120,10 +226,9 @@ export default function DeviceClicksImpressionsGraph(props) {
                                         alt="red-dot icon"
                                     />
                                 </span>
-                                <h5>Tablet</h5>
+                                <h5>Impressions</h5>
                             </span>
                             
-                        </div>
                     </div>
                 </div>
             </div>

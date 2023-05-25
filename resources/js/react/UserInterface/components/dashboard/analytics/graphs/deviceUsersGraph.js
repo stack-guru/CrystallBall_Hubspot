@@ -18,6 +18,13 @@ import { Doughnut } from 'react-chartjs-2';
 //     Area,
 // } from "recharts";
 
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Pie } from 'react-chartjs-2';
+
+ChartJS.register(ArcElement, Tooltip, Legend);
+
+
+
 export default function DeviceUsersGraph(props) {
 
 
@@ -26,6 +33,7 @@ export default function DeviceUsersGraph(props) {
 
     const dataLabels = props.deviceCategoriesStatistics.map(s => s.device_category.toUpperCase());
     const noOfUsers = props.deviceCategoriesStatistics.map(s => s.sum_users_count);
+
 
     return(
             <>
@@ -47,7 +55,7 @@ export default function DeviceUsersGraph(props) {
                                     <table className="table border">
                                         <thead>
                                             <tr>
-                                                <th>Device</th>
+                                                <th>Devices</th>
                                                 <th>Users</th>
                                                 <th>Conv.Rate</th>
                                             </tr>
@@ -55,7 +63,7 @@ export default function DeviceUsersGraph(props) {
                                         <tbody>
                                                 {
                                                     props.deviceCategoriesStatistics.map(dS => {
-                                                        const conversionRate = dS.sum_conversions_count && dS.sum_users_count ? ((dS.sum_conversions_count / dS.sum_users_count) * 100).toFixed(2) : 0;
+                                                        const conversionRate = dS.sum_conversions_count && dS.sum_users_count ? ((dS.sum_conversions_count / dS.sum_users_count) * 100).toFixed(2) : 0
                                                         return( 
                                                         <tr key={dS.device_category}>
                                                             <td className="text-uppercase">{dS.device_category}</td>
@@ -117,6 +125,61 @@ export default function DeviceUsersGraph(props) {
                                 </div>
                                 <div className="d-flex justify-content-between ">
                                     <div className="">
+
+                                        <Doughnut
+                                            width='183%'
+                                            data={{
+                                                labels: dataLabels,
+                                                datasets: [
+                                                    {
+                                                        label: '# of users',
+                                                        data: noOfUsers,
+                                                        // data: [80, 50,19,5],
+                                                        backgroundColor: [
+                                                            '#0BD25F',
+                                                            '#FFC514',
+                                                            '#FE4C3C',
+                                                            '#E0E0E0',
+                                                            // 'rgba(255, 206, 86, 0.2)',
+                                                            // 'rgba(75, 192, 192, 0.2)',
+                                                            // 'rgba(153, 102, 255, 0.2)',
+                                                            // 'rgba(255, 159, 64, 0.2)',
+                                                        ],
+                                                        borderColor: [
+                                                            '#0BD25F',
+                                                            '#FFC514',
+                                                            '#FE4C3C',
+                                                            '#E0E0E0',
+                                                            // 'rgba(255, 206, 86, 1)',
+                                                            // 'rgba(75, 192, 192, 1)',
+                                                            // 'rgba(153, 102, 255, 1)',
+                                                            // 'rgba(255, 159, 64, 1)',
+                                                        ],
+                                                        // borderWidth: 1,
+                                                    },
+                                                ],
+                                            }} options={{
+                                                indexAxis: 'y',
+                                                responsive: true,
+                                                maintainAspectRatio: true,
+                                                plugins: {
+                                                    legend: {
+                                                        display: true,
+                                                        position: 'right',
+                                                        labels: {
+                                                            boxWidth: 5,
+                                                            boxHeight: 5
+                                                        }
+                                                    },
+                                                    title: {
+                                                        display: true,
+                                                        align: 'center',
+                                                        // text: 'Devices',
+                                                    },
+                                                },
+                                        }} />   
+
+
                                         {/* <PieChart width={150} height={150}>
                                             <Pie
                                                 data={noOfUsers}
@@ -143,20 +206,20 @@ export default function DeviceUsersGraph(props) {
                                             <span className="">
                                                 <img src="/images/svg/green-dot.svg" alt="green-dot icon" />
                                             </span>
-                                            <h5>Desktop</h5>
+                                            <h5>Devices</h5>
                                         </span>
                                         <span className="d-flex">
                                             <span>
                                                 <img src="/images/svg/yellow-dot.svg" alt="yellow-dot icon" />
                                             </span>
 
-                                            <h5>Mobile</h5>
+                                            <h5>Users</h5>
                                         </span>
                                         <span className="d-flex">
                                             <span>
                                                 <img src="/images/svg/red-dot.svg" alt="red-dot icon" />
                                             </span>
-                                            <h5>Tablet</h5>
+                                            <h5>Conv.Rate</h5>
                                         </span>
                                     </div>
                                 </div>
@@ -177,7 +240,7 @@ export default function DeviceUsersGraph(props) {
                             <tbody>
                                 {
                                     props.deviceCategoriesStatistics.map(dS => {
-                                        const conversionRate = dS.sum_conversions_count && dS.sum_users_count ? ((dS.sum_conversions_count / dS.sum_users_count) * 100).toFixed(2) : 0;
+                                        const conversionRate = dS.sum_conversions_count && dS.sum_users_count ? ((dS.sum_conversions_count / dS.sum_users_count) * 100).toFixed(2) : 0
                                         return (
                                         <tr key={dS.device_category}>
                                             <td className="text-uppercase">{dS.device_category}</td>
@@ -227,19 +290,19 @@ export default function DeviceUsersGraph(props) {
                                         display: true,
                                         position: 'right',
                                         labels: {
-                                            boxWidth: 5,
-                                            boxHeight: 5
+                                            boxWidth: 15,
+                                            boxHeight: 15,
                                         }
                                     },
                                     title: {
                                         display: true,
                                         align: 'start',
-                                        text: 'Devices',
+                                        // text: 'Devices',
                                     },
                                 },
                             }} />
                     </div>
-                </div>; */}
+                </div> */}
 
             </>
         )

@@ -22,7 +22,7 @@ class ActiveRecurrence extends React.Component {
 
 
     toggle(){
-        this.setState({isActiveRecurrence:true})
+        this.setState({isActiveRecurrence:!this.state.isActiveRecurrence})
     }
 
     render() {
@@ -30,7 +30,7 @@ class ActiveRecurrence extends React.Component {
             <Modal className={`apps-modal activeRecurrenceModal`} isOpen={!this.state.isActiveRecurrence} toggle={()=>{this.setState({isActiveRecurrence:true})}}>
                 <div className="modal-header d-flex justify-content-between align-items-center">
                     <h3 className="modal-title" id="exampleModalLongTitle">Active recurrence <span>12</span></h3>
-                    <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" onClick={this.toggle}>&times;</span></button>
                 </div>
                 <ModalBody>
                 <div className="active-recurrernce-card">

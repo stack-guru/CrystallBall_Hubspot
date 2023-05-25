@@ -231,13 +231,13 @@ export default class IndexAnalytics extends Component {
                             </div>
                             <div className="d-flex align-items-center">
 
-                                <button className="active-recerrences mb-0 p-0 bg-white mr-4" data-toggle="modal" data-target="#exampleModalCenter1" onClick={this.activeReccurenceHandler}>
+                                {/* <button className="active-recerrences mb-0 p-0 bg-white mr-4" data-toggle="modal" data-target="#exampleModalCenter1" onClick={this.activeReccurenceHandler}>
                                     <img src="/images/svg/active-recurrence.svg" alt="active icon" className="mr-2" />
                                     Active recurrence
                                 </button>
                                 {
                                     this.state.isActiveRecurrenecePopup && <ActiveRecurrence />
-                                }
+                                } */}
                                 <button className="`btn btn-outline btn-sm btnCornerRounded share-btn " data-toggle="modal" data-target="#exampleModalCenter" onClick={this.shareHandler}>
                                     <span className="align-center">
                                         <img className='mr-2'
@@ -1247,9 +1247,9 @@ export default class IndexAnalytics extends Component {
 
                         </div>
 
-                        <div className="report-box">
+                        {/* <div className="report-box"> */}
                                 <DeviceUsersGraph deviceCategoriesStatistics={this.state.deviceCategoriesStatistics} />
-                        </div>
+                        {/* </div> */}
 
                         {/* <div className="row ml-0 mr-0 mt-4">
                                             <div className="col-6 scrollable">
