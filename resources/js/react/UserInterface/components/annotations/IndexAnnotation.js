@@ -706,7 +706,7 @@ class IndexAnnotations extends React.Component {
 
                                         return (
                                             <div className={`annotionRow d-flex align-items-center ${this.state.selectedRows.includes(anno.added_by) && "record-checked"}`} data-diff-in-milliseconds={diffTime} style={{ 'borderLeftColor': borderLeftColor }} id={rowId}
-                                                key={anno.added_by.toString()}
+                                                key={anno.added_by.toString() + idx}
                                                 onClick={
                                                     () => {
                                                         if (anno.added_by && this.state.enableSelect) {
@@ -854,7 +854,7 @@ class IndexAnnotations extends React.Component {
     // }
 
     sortByProperty(gaPropertyId) {
-        this.setState({ googleAnalyticsProperty: gaPropertyId });
+        this.setState({ googleAnalyticsProperty: gaPropertyId, searchText: '' });
         if (gaPropertyId !== "select-ga-property") {
             this.setState({ isLoading: true });
             HttpClient.get(
