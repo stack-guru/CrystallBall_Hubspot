@@ -48,6 +48,7 @@ Route::post('facebookAdsWebhook', [FacebookAutomationController::class, 'faceboo
 Route::get('requestInvitation', [App\Http\Controllers\Auth\RegisterController::class, 'requestInvitation'])->name('request.invite');
 Route::view('invite-sent', 'auth.invite-sent');
 
+Route::get('shared_report/download/{id}', [App\Http\Controllers\Auth\RegisterController::class, 'downloadReport'])->name('shared_report.download');
 Route::get('logs4727299@oolkidd9929', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
@@ -170,7 +171,10 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
                 Route::get('device-categories', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'deviceCategoriesIndex']);
                 Route::get('device-by-impression', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'devicesIndexByImpression']);
                 Route::get('countries', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'countriesIndex']);
-                Route::post('share-report', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'shareReport']);
+                Route::get('share-report', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'shareReport']);
+                Route::get('get-shared-reports', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'getSharedReports']);
+                Route::get('get-dashboard-activity', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'getDashboardActivity']);
+                Route::get('create-dashboard-activity', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'createDashboardActivity']);
             });
 
             Route::group(['prefix' => 'search-console'], function () {

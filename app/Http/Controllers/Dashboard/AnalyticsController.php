@@ -5,15 +5,20 @@ namespace App\Http\Controllers\Dashboard;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Mail\SharedReportEmail;
 use App\Models\GoogleAnalyticsMetricDimension;
 use App\Models\Annotation;
 use App\Models\GoogleAnalyticsProperty;
+use App\Models\AnalyticSharedReport;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Carbon;
 use App\Helpers\AnnotationQueryHelper;
 use App\Exports\AnalyticFullExport;
+use App\Models\AnalyticDashboadActivity;
 use App\Models\GoogleSearchConsoleSite;
 use App\Models\GoogleSearchConsoleStatistics;
+use App\Models\User;
+use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
 
 class AnalyticsController extends Controller
@@ -29,7 +34,6 @@ class AnalyticsController extends Controller
         $gaPropertyId = $request->ga_property_id;
         $startDate = $request->start_date;
         $endDate = $request->end_date;
-
         return ['statistics' => DB::select("SELECT 
                 SUM(users_count) AS sum_users_count,
                 SUM(sessions_count) AS sum_sessions_count,
@@ -376,7 +380,11 @@ class AnalyticsController extends Controller
     }
     public function shareReport(Request $request)
     {
-        
+        $dashboard_activity = AnalyticDashboadActivity::find($request->query('dashboard_id'));
+        $request->merge([
+            'start_date' => $dashboard_activity->start_date,
+            'end_date' => $dashboard_activity->end_date,
+        ]);
         $data = [];
         $data['topStatisticsIndex'] = $this->topStatisticsIndex($request);
         $data['usersDaysAnnotationsIndex'] = $this->usersDaysAnnotationsIndex($request);
@@ -392,15 +400,52 @@ class AnalyticsController extends Controller
         $data['annotationsDatesIndex'] = $searchConsole->annotationsDatesIndex($request);
         $data['queriesIndex'] = $searchConsole->queriesIndex($request);
         $data['pagesIndex'] = $searchConsole->pagesIndex($request);
-        $fileContent = Excel::create(new AnalyticFullExport($data), 'anyaltic_and_console_report.xlsx');
-        dd($fileContent);
-        $fileName = 'Reservations by Book Me Host '.$host->name .'-'.$start_date.'-'.$end_date.'.xlsx';    
-        Storage::disk('public_uploads')->put($fileName, $fileContent);
-        $all_exported_data=[];
-        //return "ok";
-
-        $url =  public_path('').'/uploads/'.$fileName;
-
-        return Excel::download(new AnalyticFullExport($data), 'anyaltic_and_console_report.xlsx');
+        $file_name = uniqid('analytic_report-').'.xlsx';
+        Excel::store(new AnalyticFullExport($data), $file_name, 'uploads');
+        $gAProperty = GoogleAnalyticsProperty::findOrFail($request->query('ga_property_id'));
+        $url = public_path('').'/storage/uploads/'.$file_name;
+        $shared_report = AnalyticSharedReport::create([
+            'excel_name' => $file_name,
+            'excel_url' => $url,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            'recurrence' => $request->query('recurrence'),
+            'dashboard_id' => $request->query('dashboard_id'),
+            'property_id' => $gAProperty->id,
+            'google_search_console_site_id' => $gAProperty->google_search_console_site_id,
+            'user_id' => Auth::user()->id,
+        ]);
+        if($request->query('user_id'))
+        {
+            $user = User::find($request->query('user_id'));
+            Mail::to($user->email)->send(new SharedReportEmail($url,$shared_report,$gAProperty,$data));
+        }
+        // foreach($request->query('emails') as $email)
+        // {
+        //     Mail::to($email)->send(new SharedReportEmail($url,$shared_report,$gAProperty));
+        // }
+        return ['success' => true];
+        // return Excel::download('new AnalyticFullExport($data)', 'anyaltic_and_console_report.xlsx');
+    }
+    public function getSharedReports(Request $request)
+    {   
+        $shared_reports = AnalyticSharedReport::with('property')->where('user_id',Auth::user()->id)->get();
+        return ['shared_reports' => $shared_reports];
+    }
+    public function getDashboardActivity(Request $request)
+    {   
+        $dashboard_activities = AnalyticDashboadActivity::where('user_id',Auth::user()->id)->get();
+        return ['dashboard_activities' => $dashboard_activities];
+    }
+    public function createDashboardActivity(Request $request)
+    {   
+        AnalyticDashboadActivity::create([
+            'name' => $request->query('dashboard'),
+            'start_date' => $request->query('start_date'),
+            'end_date' => $request->query('end_date'),
+            'property_id' => $request->query('ga_property_id'),
+            'user_id' => Auth::user()->id,
+        ]);
+        return ['success' => true];
     }
 }
