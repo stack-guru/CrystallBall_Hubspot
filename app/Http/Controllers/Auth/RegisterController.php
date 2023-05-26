@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Mail\EmailVerificationMail;
 use App\Mail\RequestInvitationMail;
+use App\Models\AnalyticSharedReport;
 use App\Models\CookieCoupon;
 use App\Models\GoogleAccount;
 use App\Models\PricePlan;
@@ -25,6 +26,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Facades\Response;
 
 class RegisterController extends Controller
 {
@@ -429,5 +431,12 @@ class RegisterController extends Controller
         User::where('id', $authId)->delete();
 
         return Redirect::route('register', ['email' => 1]);
+    }
+    public function downloadReport($id)
+    {
+        $report = AnalyticSharedReport::find($id);
+        $file_path = public_path('').'/storage/uploads/'.$report->excel_name;
+        $headers = array('Content-Type: {{$report->name}}',);
+        return Response::download($file_path, $report->name, $headers);
     }
 }

@@ -179,10 +179,8 @@ export default class FacebookTracking extends React.Component {
             }
             this.props.loadUserDataSources();
             this.fetchConfigurations();
-            Toast.fire({
-                icon: 'success',
-                title: 'Stored successfully!'
-            })
+            swal.fire('Success', "We will retrieve the posts/ads added to your account in the past year according to your preferences; it may take a few minutes. Subsequently, the system will perform a daily check and automatically add relevant annotations to your account.", 'info');
+
             this.runjob();
         }, (err) => {
             Toast.fire({
@@ -275,159 +273,165 @@ export default class FacebookTracking extends React.Component {
 
                     <h5 className="gaa-text-primary"><b>Create Annotation When:</b></h5>
 
-                    <div className="mt-2">
-                        <div className="d-flex align-items-center form-check themeNewCheckbox">
-                            <input className="form-check-input" id='when_new_post_on_facebook' onChange={(e) => {
-                                this.setState({
-                                    when_new_post_on_facebook: e.target.checked
-                                })
-                            }} type="checkbox"/>
-                            <label className="form-check-label" htmlFor="when_new_post_on_facebook">
-                                New Post On Facebook Page
-                            </label>
-                        </div>
-                    </div>
-
-                    <div className="mt-2">
-                        <div className="d-flex align-items-center form-check themeNewCheckbox">
-                            <input className="form-check-input" type="checkbox" value=""
-                                   id="is_post_likes_tracking_on_checkbox" onChange={(e) => {
-                                this.setState({
-                                    is_post_likes_tracking_on: e.target.checked
-                                })
-                            }}/>
-                            <label className="d-flex align-items-center form-check-label" htmlFor="is_post_likes_tracking_on_checkbox">
-                                A Post Reached
-                                <input
-                                    name="post_likes"
-                                    id="post_likes"
-                                    onKeyUp={(e) => {
+                    <div className="row">
+                        <div className="col-6">
+                            <div className="mt-2">
+                                <div className="d-flex align-items-center form-check themeNewCheckbox">
+                                    <input className="form-check-input" id='when_new_post_on_facebook' onChange={(e) => {
                                         this.setState({
-                                            when_post_reach_likes: e.target.value
+                                            when_new_post_on_facebook: e.target.checked
                                         })
-                                    }}
-                                    className="d-inline border m-1 mx-3 text-center p-1 w-25"/>
-                                Likes
-                            </label>
-                        </div>
-                    </div>
+                                    }} type="checkbox"/>
+                                    <label className="form-check-label" htmlFor="when_new_post_on_facebook">
+                                        New Post On Facebook Page
+                                    </label>
+                                </div>
+                            </div>
 
-                    <div className="mt-2">
-                        <div className="d-flex align-items-center form-check themeNewCheckbox">
-                            <input className="form-check-input" type="checkbox" value=""
-                                   id="is_post_comments_tracking_on_checkbox" onChange={(e) => {
-                                this.setState({
-                                    is_post_comments_tracking_on: e.target.checked
-                                })
-                            }}/>
-                            <label className="d-flex align-items-center form-check-label" htmlFor="is_post_comments_tracking_on_checkbox">
-                                A Post Reached
-                                <input
-                                    name="post_comments"
-                                    id="post_comments"
-                                    onKeyUp={(e) => {
+                            <div className="mt-2">
+                                <div className="d-flex align-items-center form-check themeNewCheckbox">
+                                    <input className="form-check-input" type="checkbox" value=""
+                                        id="is_post_likes_tracking_on_checkbox" onChange={(e) => {
                                         this.setState({
-                                            when_post_reach_comments: e.target.value
+                                            is_post_likes_tracking_on: e.target.checked
                                         })
-                                    }}
-                                    className="d-inline border m-1 mx-3 text-center p-1 w-25"/>
-                                Comments
-                            </label>
-                        </div>
-                    </div>
+                                    }}/>
+                                    <label className="d-flex align-items-center form-check-label" htmlFor="is_post_likes_tracking_on_checkbox">
+                                        A Post Reached
+                                        <input
+                                            name="post_likes"
+                                            id="post_likes"
+                                            onKeyUp={(e) => {
+                                                this.setState({
+                                                    when_post_reach_likes: e.target.value
+                                                })
+                                            }}
+                                            className="d-inline border m-1 mx-3 text-center p-1 w-25"/>
+                                        Likes
+                                    </label>
+                                </div>
+                            </div>
 
-                    <div className="mt-2">
-                        <div className="d-flex align-items-center form-check themeNewCheckbox">
-                            <input className="form-check-input" type="checkbox" value=""
-                                   id="is_post_views_tracking_on_checkbox" onChange={(e) => {
-                                this.setState({
-                                    is_post_views_tracking_on: e.target.checked
-                                })
-                            }}/>
-                            <label className="d-flex align-items-center form-check-label" htmlFor="is_post_views_tracking_on_checkbox">
-                                A Post Reached
-                                <input
-                                    name="post_views"
-                                    id="post_views"
-                                    onKeyUp={(e) => {
+                            <div className="mt-2">
+                                <div className="d-flex align-items-center form-check themeNewCheckbox">
+                                    <input className="form-check-input" type="checkbox" value=""
+                                        id="is_post_comments_tracking_on_checkbox" onChange={(e) => {
                                         this.setState({
-                                            when_post_reach_views: e.target.value
+                                            is_post_comments_tracking_on: e.target.checked
                                         })
-                                    }}
-                                    className="d-inline border m-1 mx-3 text-center p-1 w-25"/>
-                                Views
-                            </label>
-                        </div>
-                    </div>
+                                    }}/>
+                                    <label className="d-flex align-items-center form-check-label" htmlFor="is_post_comments_tracking_on_checkbox">
+                                        A Post Reached
+                                        <input
+                                            name="post_comments"
+                                            id="post_comments"
+                                            onKeyUp={(e) => {
+                                                this.setState({
+                                                    when_post_reach_comments: e.target.value
+                                                })
+                                            }}
+                                            className="d-inline border m-1 mx-3 text-center p-1 w-25"/>
+                                        Comments
+                                    </label>
+                                </div>
+                            </div>
 
-                    <div className="mt-2">
-                        <div className="d-flex align-items-center form-check themeNewCheckbox">
-                            <input className="form-check-input" type="checkbox" value=""
-                                   id="is_post_shares_tracking_on_checkbox" onChange={(e) => {
-                                this.setState({
-                                    is_post_shares_tracking_on: e.target.checked
-                                })
-                            }}/>
-                            <label className="d-flex align-items-center form-check-label" htmlFor="is_post_shares_tracking_on_checkbox">
-                                A Post Reached
-                                <input
-                                    name="post_shares"
-                                    id="post_shares"
-                                    onKeyUp={(e) => {
+                            <div className="mt-2">
+                                <div className="d-flex align-items-center form-check themeNewCheckbox">
+                                    <input className="form-check-input" type="checkbox" value=""
+                                        id="is_post_views_tracking_on_checkbox" onChange={(e) => {
                                         this.setState({
-                                            when_post_reach_shares: e.target.value
+                                            is_post_views_tracking_on: e.target.checked
                                         })
-                                    }}
-                                    className="d-inline border m-1 mx-3 text-center p-1 w-25"/>
-                                Shares
-                            </label>
+                                    }}/>
+                                    <label className="d-flex align-items-center form-check-label" htmlFor="is_post_views_tracking_on_checkbox">
+                                        A Post Reached
+                                        <input
+                                            name="post_views"
+                                            id="post_views"
+                                            onKeyUp={(e) => {
+                                                this.setState({
+                                                    when_post_reach_views: e.target.value
+                                                })
+                                            }}
+                                            className="d-inline border m-1 mx-3 text-center p-1 w-25"/>
+                                        Views
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="col-6">
+                            <div className="mt-2">
+                                <div className="d-flex align-items-center form-check themeNewCheckbox">
+                                    <input className="form-check-input" type="checkbox" value=""
+                                        id="is_post_shares_tracking_on_checkbox" onChange={(e) => {
+                                        this.setState({
+                                            is_post_shares_tracking_on: e.target.checked
+                                        })
+                                    }}/>
+                                    <label className="d-flex align-items-center form-check-label" htmlFor="is_post_shares_tracking_on_checkbox">
+                                        A Post Reached
+                                        <input
+                                            name="post_shares"
+                                            id="post_shares"
+                                            onKeyUp={(e) => {
+                                                this.setState({
+                                                    when_post_reach_shares: e.target.value
+                                                })
+                                            }}
+                                            className="d-inline border m-1 mx-3 text-center p-1 w-25"/>
+                                        Shares
+                                    </label>
+                                </div>
+                            </div>
+
+
+                            <div className="mt-2">
+                                <div className="d-flex align-items-center form-check themeNewCheckbox">
+                                    <input className="form-check-input" type="checkbox" value="" id="new_ad_compaign_launched"
+                                        onChange={(e) => {
+                                            this.setState({
+                                                when_new_ad_compaing_launched: e.target.checked
+                                            })
+                                        }}/>
+                                    <label className="form-check-label" htmlFor="new_ad_compaign_launched">
+                                        A New Ad Campaign Launched
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div className="mt-2">
+                                <div className="d-flex align-items-center form-check themeNewCheckbox">
+                                    <input className="form-check-input" type="checkbox" value="" id="an_ad_compaign_ended"
+                                        onChange={(e) => {
+                                            this.setState({
+                                                when_ad_compaign_ended: e.target.checked
+                                            })
+                                        }}/>
+                                    <label className="form-check-label" htmlFor="an_ad_compaign_ended">
+                                        An Ad Campaign Ended
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div className="mt-2">
+                                <div className="d-flex align-items-center form-check themeNewCheckbox">
+                                    <input className="form-check-input" type="checkbox" value="" id="changes_on_ad_compaign"
+                                        onChange={(e) => {
+                                            this.setState({
+                                                when_changes_on_ad_compaign: e.target.checked
+                                            })
+                                        }}/>
+                                    <label className="form-check-label" htmlFor="changes_on_ad_compaign">
+                                        Changes On An Ad Campaign
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
-
+                    
                     <div className="mt-2">
-                        <div className="d-flex align-items-center form-check themeNewCheckbox">
-                            <input className="form-check-input" type="checkbox" value="" id="new_ad_compaign_launched"
-                                   onChange={(e) => {
-                                       this.setState({
-                                           when_new_ad_compaing_launched: e.target.checked
-                                       })
-                                   }}/>
-                            <label className="form-check-label" htmlFor="new_ad_compaign_launched">
-                                A New Ad Campaign Launched
-                            </label>
-                        </div>
-                    </div>
-
-                    <div className="mt-2">
-                        <div className="d-flex align-items-center form-check themeNewCheckbox">
-                            <input className="form-check-input" type="checkbox" value="" id="an_ad_compaign_ended"
-                                   onChange={(e) => {
-                                       this.setState({
-                                           when_ad_compaign_ended: e.target.checked
-                                       })
-                                   }}/>
-                            <label className="form-check-label" htmlFor="an_ad_compaign_ended">
-                                An Ad Campaign Ended
-                            </label>
-                        </div>
-                    </div>
-
-                    <div className="mt-2">
-                        <div className="d-flex align-items-center form-check themeNewCheckbox">
-                            <input className="form-check-input" type="checkbox" value="" id="changes_on_ad_compaign"
-                                   onChange={(e) => {
-                                       this.setState({
-                                           when_changes_on_ad_compaign: e.target.checked
-                                       })
-                                   }}/>
-                            <label className="form-check-label" htmlFor="changes_on_ad_compaign">
-                                Changes On An Ad Compaign
-                            </label>
-                        </div>
-                    </div>
-
-                    <div className="mt-4">
                         <button
                             className="btn btn-success"
                             onClick={this.onSubmitHandler}
@@ -438,7 +442,7 @@ export default class FacebookTracking extends React.Component {
 
                 </div>
 
-                <div className="gray-box">
+                <div className="gray-box mt-4">
                     <h4>
                         Active pages: <span>(Click to remove)</span>
                     </h4>
