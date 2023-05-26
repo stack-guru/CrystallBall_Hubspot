@@ -71,7 +71,7 @@ export default function MediaGraph(props) {
             </div> */}
             <div className="w-100 report-box">
                 <Bar
-                    height='150'
+                    height='100'
                     // width='100%'
                     data={{
                         labels: dataLabels,
@@ -112,10 +112,18 @@ export default function MediaGraph(props) {
                     }}
                     options={{
                         indexAxis: 'y',
-                    
+                        barThickness: 18,
+                        layout: {
+                            padding: {
+                              top: 20,    // Adjust the top padding
+                              bottom: 30, // Adjust the bottom padding
+                              left: 20,   // Adjust the left padding
+                              right: 20,  // Adjust the right padding
+                            },
+                          },
                         elements: {
                             bar: {
-                                borderWidth: 1,
+                                borderWidth: 0.5,
                             },
                         },
                         responsive: true,

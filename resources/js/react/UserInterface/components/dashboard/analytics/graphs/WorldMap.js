@@ -114,7 +114,7 @@ const MapChart = (props) => {
                         <h6>Traffic analyze</h6>
                     </div>
                     
-                    <div className="flex">
+                    {/* <div className="flex">
                         <span>
                             <img
                                 src="/images/svg/visitor-country.svg"
@@ -127,7 +127,7 @@ const MapChart = (props) => {
                                 alt="list icon"
                             />
                         </span>
-                    </div>
+                    </div> */}
                 </div>
                 <ComposableMap
                     projectionConfig={{
