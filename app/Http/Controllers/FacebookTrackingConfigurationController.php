@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\FacebookCreateAnnotation;
 use App\Models\FacebookTrackingConfiguration;
 use App\Models\GoogleAnalyticsProperty;
 use Illuminate\Http\JsonResponse;
@@ -63,7 +64,7 @@ class FacebookTrackingConfigurationController extends Controller
 
 
     public function runJob (){
-        Artisan::call('gaa:execute-facebook-automation');
+        FacebookCreateAnnotation::dispatch(Auth::user()->id);
     }
 
     /**

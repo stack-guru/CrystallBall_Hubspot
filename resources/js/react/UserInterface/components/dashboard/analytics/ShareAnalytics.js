@@ -52,16 +52,17 @@ export default class ShareAnalytics extends Component {
         this.state = {
             form_data: {
                 ga_property_id: this.props.ga_property_id,
-                user_id: [],
+                user_id: null,
+                dashboard_id: null,
+                recurrence: null,
                 emails: [],
                 statistics_padding_days: this.props.statisticsPaddingDays,
-                start_date: this.props.start_date,
-                end_date: this.props.end_date,
+                // start_date: this.props.start_date,
+                // end_date: this.props.end_date,
             },
             users: [],
             errors: undefined,
             redirectTo: null,
-            ga_property_id: null,
             price_plan: this.props.user.price_plan,
             total_credits : this.props.user.price_plan.external_email == -1 ? 0 : this.props.user.price_plan.external_email,
 
@@ -87,7 +88,6 @@ export default class ShareAnalytics extends Component {
 
     componentDidMount() {
         document.title = 'User Accounts';
-        this.setState({ga_property_id: this.props.ga_property_id});
         if(this.props.user.price_plan.external_email == 0)
         {
             this.setState({total_credits: 9999});
@@ -106,6 +106,7 @@ export default class ShareAnalytics extends Component {
 
 
     changeHandler(e) {
+        console.log(e.target);
         this.setState({form_data: {...this.state.form_data, [e.target.name]: e.target.value}});
         console.log("change handler function   ===== ",e.target.value)
 
@@ -189,7 +190,7 @@ export default class ShareAnalytics extends Component {
     submitHandler(e) {
         e.preventDefault();
         this.setState({loading: true});
-        HttpClient.post(`/dashboard/analytics/share-report`, this.state.form_data)
+        HttpClient.get(`/dashboard/analytics/share-report?dashboard_id=${this.state.form_data.dashboard_id}&recurrence=${this.state.form_data.recurrence}&ga_property_id=${this.state.form_data.ga_property_id}&statistics_padding_days=${this.state.form_data.statistics_padding_days}&user_id=${this.state.form_data.user_id}&emails[]=${this.state.form_data.emails}`)
             .then(response => {
                 Toast.fire({
                     icon: 'success',
@@ -228,26 +229,18 @@ export default class ShareAnalytics extends Component {
                         <div className="themeNewInputStyle">
                             <GoogleAnalyticsPropertySelect
                                 name="ga_property_id"
-                                value={this.state.ga_property_id}
+                                value={this.state.form_data.ga_property_id}
                                 onChangeCallback={this.changeHandler}
+                                currentPricePlan={this.state.price_plan}
                                 components={{ IndicatorSeparator: () => null }}
                             />
                         </div>
-                        {/* <div className="themeNewInputStyle">
-                            <select name="user_id"  onChange={this.changeHandler} multiple className={`form-control`} >
-                                <option value="">Select User</option>
-                                <option value={this.props.user.id} >{this.props.user.name}</option>
-                                {
-                                    this.state.users.map(gSCS => <option value={gSCS.id} key={gSCS.id}>{gSCS.name}</option>)
-                                }
-                            </select>
-                        </div> */}
-                    </div>
-                    {
+                        </div>
 
 
+                    
 
-                    }
+
                         <div className="modalContentArea mb-4 mt-4">
                             <h5 className='mb-4 team-members'>
                                 Team members {selectedUsers.length} selected

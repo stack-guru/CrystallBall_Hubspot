@@ -6,6 +6,8 @@ import HttpClient from '../../../utils/HttpClient';
 import { newStaticRanges } from '../../../utils/CustomDateRange';
 import { timezoneToDateFormat } from '../../../utils/TimezoneTodateFormat';
 import ErrorAlert from '../../../utils/ErrorAlert';
+import Toast from "../../../utils/Toast";
+import DashboardSelect from './utils/DashboardSelect';
 import GoogleAnalyticsPropertySelect from './utils/GoogleAnalyticsPropertySelect';
 import { Redirect } from 'react-router';
 
@@ -55,6 +57,7 @@ import ActiveRecurrence from '../../ReportingDashboard/ActiveRecurrence';
 import AppsModal from "../../AppsMarket/AppsModal";
 import ShareAnalytics from "./ShareAnalytics";
 import { DefinedRange } from 'react-date-range';
+import ShareReportIndex from "./ShareReportIndex";
 
 
 export default class IndexAnalytics extends Component {
@@ -66,6 +69,7 @@ export default class IndexAnalytics extends Component {
             redirectTo: null,
             showDateRangeSelect: false,
             shareAnalyticsPopup: false,
+            shareReportIndexPopup: false,
             googleAccount: undefined,
             consoleGoogleAccount: undefined,
             topStatistics: {
@@ -91,6 +95,8 @@ export default class IndexAnalytics extends Component {
             devicesStatistics: [],
             countriesStatistics: [],
             deviceCategoriesStatistics: [],
+            dashboard_activities: [],
+            dashboard_activities_for_popup: [],
             startDate: moment().subtract(14, 'days').format('YYYY-MM-DD'),
             endDate: moment().subtract(1, 'days').format('YYYY-MM-DD'),
             ga_property_id: '*',
@@ -190,6 +196,7 @@ export default class IndexAnalytics extends Component {
             ],
             COLORS: ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"],
 
+            dashboard: null,
         };
 
         this.fetchStatistics = this.fetchStatistics.bind(this);
@@ -200,9 +207,41 @@ export default class IndexAnalytics extends Component {
         this.shareHandler = this.shareHandler.bind(this);
         this.activeReccurenceHandler = this.activeReccurenceHandler.bind(this);
         this.generateDateRange = this.generateDateRange.bind(this);
+        this.getDashboardActivity = this.getDashboardActivity.bind(this);
+        this.createDashboard = this.createDashboard.bind(this);
     }
     componentDidMount() {
         document.title = 'Analytic Dashboard';
+        this.getDashboardActivity();
+    }
+    getDashboardActivity() {
+        
+        HttpClient.get(`/dashboard/analytics/get-dashboard-activity`)
+        .then(response => {
+                this.setState({ isBusy: false, dashboard_activities_for_popup: response.data.dashboard_activities, dashboard_activities: response.data.dashboard_activities.map(c => { return { label: c.name, value: c.name } }) });
+                // this.setState({ isBusy: false, ga_property_id: response.data.dashboard_activity.property_id, startDate: response.data.dashboard_activity.start_date, endDate: response.data.dashboard_activity.end_date });
+                // this.fetchStatistics(response.data.dashboard_activity.property_id);
+        }, (err) => {
+            this.setState({ isBusy: false, errors: (err.response).data });
+        }).catch(err => {
+            this.setState({ isBusy: false, errors: err });
+        });
+    }
+    createDashboard() {        
+        
+        HttpClient.get(`/dashboard/analytics/create-dashboard-activity?dashboard=${this.state.dashboard}&start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${this.state.ga_property_id}`)
+        .then(response => {
+            Toast.fire({
+                icon: 'success',
+                title: "Dashboard Saved Successfully!",
+            });
+            this.setState({ isBusy: false });
+            this.getDashboardActivity();
+        }, (err) => {
+            this.setState({ isBusy: false, errors: (err.response).data });
+        }).catch(err => {
+            this.setState({ isBusy: false, errors: err });
+        });
     }
 
     shareHandler(){
@@ -394,7 +433,8 @@ export default class IndexAnalytics extends Component {
                                         components={{ IndicatorSeparator: () => null }}
                                         autoSelectFirst
                                     />
-                                </div>
+
+                                    <ErrorAlert errors={this.state.errors} />                                </div>
 
                                 {/* <FormGroup className="filter-sort position-relative">
                                     <Label
@@ -1436,8 +1476,11 @@ export default class IndexAnalytics extends Component {
                         {/* <div className="report-box"> */}
                                 <DeviceUsersGraph deviceCategoriesStatistics={this.state.deviceCategoriesStatistics} />
                         {/* </div> */}
-
+                        <UsersDaysWithAnnotationsGraph statistics={this.state.usersDaysStatistics} />
+                                        <AnnotationsTable user={this.props.user} annotations={this.state.annotations} satisticsPaddingDaysCallback={this.changeStatisticsPaddingDays} statisticsPaddingDays={this.state.statisticsPaddingDays} />
+                                        <MediaGraph statistics={this.state.mediaStatistics} />
                         {/* <div className="row ml-0 mr-0 mt-4">
+
                                             <div className="col-6 scrollable">
                                                 <table className="table table-bordered table-hover gaa-hover">
                                                     <thead><tr><th></th><th>Source</th><th>Users</th><th>Conversion Rate</th></tr></thead>
@@ -1804,10 +1847,31 @@ export default class IndexAnalytics extends Component {
                     <ShareAnalytics toggle={() => {
                         this.setState({shareAnalyticsPopup: false,});
                     }}  user={this.props.user}
-                        ga_property_id={this.state.ga_property_id}
+                        dashboard_activities={this.state.dashboard_activities_for_popup}
                         statisticsPaddingDays={this.state.statisticsPaddingDays}
-                        start_date={this.state.startDate}
-                        end_date={this.state.endDate}
+                        upgradePopup={this.props.upgradePopup}
+                    />
+                </div>
+            </AppsModal>
+            <AppsModal isOpen={this.state.shareReportIndexPopup} popupSize={'md'} toggle={() => {
+                    this.setState({shareReportIndexPopup: false,});
+                }}>
+                <div className="popupContent modal-createUser">
+                    <div className="apps-modalHead">
+                        <div className="d-flex justify-content-between align-items-center">
+                            <div className="d-flex justify-content-start align-items-center"><h2>Share Analytics</h2>
+                            </div>
+                            <span onClick={() => this.setState({shareReportIndexPopup: false,})} className="btn-close">
+                                <img className="inject-me" src="/close-icon.svg" width="26" height="26"
+                                        alt="menu icon"/>
+                            </span>
+                        </div>
+                    </div>
+
+                    <ShareReportIndex toggle={() => {
+                        this.setState({shareReportIndexPopup: false,});
+                    }}  user={this.props.user}
+                        ga_property_id={this.state.ga_property_id}
                         upgradePopup={this.props.upgradePopup}
                     />
                 </div>
@@ -1914,6 +1978,7 @@ export default class IndexAnalytics extends Component {
                     this.setState({ isBusy: false, errors: err });
                 });
             this.setState({redirectTo:`/export-statistics?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}&statistics_padding_days=${this.state.statisticsPaddingDays}`});
+            this.getDashboardActivity();
         }
     }
 
