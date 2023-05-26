@@ -66,7 +66,7 @@ export default class ShareAnalytics extends Component {
             total_credits : this.props.user.price_plan.external_email == -1 ? 0 : this.props.user.price_plan.external_email,
 
             popoverOpen: false,
-
+            selectedUsers: [],
 
         }
         this.toggle = this.toggle.bind(this);
@@ -76,6 +76,7 @@ export default class ShareAnalytics extends Component {
         this.getUsers = this.getUsers.bind(this)
         this.addEmail = this.addEmail.bind(this);
         this.deleteEmail = this.deleteEmail.bind(this);
+        this.handleImageClick = this.handleImageClick.bind(this);
     }
 
     toggle() {
@@ -106,7 +107,25 @@ export default class ShareAnalytics extends Component {
 
     changeHandler(e) {
         this.setState({form_data: {...this.state.form_data, [e.target.name]: e.target.value}});
+        console.log("change handler function   ===== ",e.target.value)
+
     }
+    handleImageClick = (user) => {
+        const { selectedUsers } = this.state;
+        const isSelected = selectedUsers.includes(user);
+    
+        if (isSelected) {
+          // User is already selected, so remove from the selection
+          this.setState({
+            selectedUsers: selectedUsers.filter((selectedUser) => selectedUser !== user),
+          });
+        } else {
+          // User is not selected, so add to the selection
+          this.setState({
+            selectedUsers: [...selectedUsers, user],
+          });
+        }
+      };
 
     getUsers() {
         HttpClient.get(`/settings/user`)
@@ -197,6 +216,8 @@ export default class ShareAnalytics extends Component {
    
     render() {
         if (this.state.redirectTo) return <Redirect to={this.state.redirectTo}/>
+            const { users } = this.props;
+            const { selectedUsers } = this.state;
         return (
             <div className="apps-bodyContent">
                 <form onSubmit={this.submitHandler} id="create-user-form">
@@ -222,40 +243,45 @@ export default class ShareAnalytics extends Component {
                             </select>
                         </div> */}
                     </div>
+                    {
+
+
+
+                    }
                         <div className="modalContentArea mb-4 mt-4">
-                            <h5 className='mb-4'>
-                                Team members 
+                            <h5 className='mb-4 team-members'>
+                                Team members {selectedUsers.length} selected
                                 {/* <span>(2selected)</span> */}
                             </h5>
-                            {/* <button type='button' className="dropdown-toggle btn-toggle no-after border-0 bg-transparent bdrs-50p p-0" data-toggle="dropdown">
-                            {
-                                this.props.user.profile_image ?
-                                    <div className='addPhoto' id='acronym-holder' style={{ backgroundPosition: 'center', backgroundSize: 'contain', backgroundImage: `url(/${this.props.user.profile_image})` }}>
-                                    </div>
-                                    :
-                                    <span className="w-2r bdrs-50p text-center gaa-bg-color m-0" id="acronym-holder" alt="">{this.props.user != undefined ? this.props.user.name.split(' ').map(n => n.substring(0, 1)).join('').toUpperCase() : null}</span>
-                            }
-                            </button> */}
-                            <div className='d-flex'>
-                                {
+                            <div   className='d-flex'>
+                              
+                                    {/* <ul className={`d-flex mb-2 mt-2  dd-tooltip p-1 list-styles ${
+                                        selectedUsers.includes(gSCS) ? 'list-stylesselectesUser' : ''}`} key={gSCS.id}> */}
+                                        <ul className='d-flex mb-2 mt-2  dd-tooltip p-1 list-styles'>
+                                              {
                                     this.state.users.map((gSCS, index,) =>
                                     
-                                    <ul className='d-flex mb-2 mt-2 list-styles dd-tooltip p-1' key={index}>
-                                        <li>
+                                        <li className={`${
+                                            selectedUsers.includes(gSCS) ? 'list-stylesselectesUser' : ''}`}>
                                             <>
                                             <span className="properties dd-tooltip m-0 p-0">{gSCS.name ? <CustomTooltip tooltipText={gSCS.name} maxLength={50}></CustomTooltip> : "Name not found"}</span>
                                             </>
                                                 {
                                                     gSCS.profile_image ?
                                                     <div className='addPhoto m-0 p-0' id='acronym-holder' style={{ backgroundPosition: 'center', backgroundSize: 'contain', backgroundImage: `url(/${gSCS.profile_image})` }}>
+                                                        <span onClick={()=>{this.handleImageClick(gSCS)}}></span>
                                                     </div>
                                                     :
-                                                    <span className="w-2r bdrs-50p text-center gaa-bg-color m-0" id="acronym-holder" alt="">{gSCS != undefined ? gSCS.name.split(' ').map(n => n.substring(0, 1)).join('').toUpperCase() : null}</span>
+                                                    <span className="w-2r bdrs-50p text-center gaa-bg-color m-0" id="acronym-holder" 
+                                                    alt="" onClick={()=>{this.handleImageClick(gSCS)}}>{gSCS != undefined ? gSCS.name.split(' ').map(n => n.substring(0, 1)).join('').toUpperCase() : null}
+                                                    
+                                                    </span>
                                                 }
                                         </li>
-                                    </ul>
+                                    
                                     )
                                 }
+                                </ul>
                             </div>
                             
                             {/* <ul className='d-flex mb-2 mt-2 gap-5 list-styles'>
@@ -269,7 +295,7 @@ export default class ShareAnalytics extends Component {
                     <div className="grid2layout">
                         
                         <div className="themeNewInputGroup">
-                        {/* <label>Add via email</label> */}
+                            {/* <label>Add via email</label> */}
 
                             <input 
                                 type="text" 
@@ -279,19 +305,28 @@ export default class ShareAnalytics extends Component {
                                 id="tracking_emails"
                                 onKeyUp={(e) => { if (e.key === "Enter") this.addEmail(e) }}
                                 />
-                            <div className="input-group-append"><a onClick={(e) => {this.addEmail(e);}} href="#"><i className="ti-plus"></i></a></div>
-                            <h5 style={{color:"#666666",fontSize:"18px",fontWeight:"500",fontFamily:'Source Sans Pro'}}>
-                                Selected <span style={{fontWeight:"200"}}>(Click to remove)</span>
-                            </h5>
+                            <div className="input-group-append">
+                                <a onClick={(e) => {this.addEmail(e);}} href="#"><i className="ti-plus"></i></a>
+                            </div>
+                            
+                            
+                        </div>
+                        
+                        
+                    </div>
+                    <div className='tagsHolder'>
+                                <h5 className='clickTo-remove'>
+                                    Selected <span className='clickTo-remove-small'>(Click to remove)</span>
+                                </h5>
 
                                     {this.state.form_data.emails.length > 0 ?
-                                        <div className="keywordTags pt-3" style={{background:"#FCFCFC",borderRadius:"16px"}}>
+                                        <div className="keywordTags pt-3 tags" style={{background:"#FCFCFC",borderRadius:"16px"}}>
                                             
                                             {this.state.form_data.emails.length > 0 ? this.state.form_data.emails.map((email, index) => {
                                                 return (
                                                 <>
                                                         
-                                                            <button type="button" className="keywordTag" 
+                                                            <button type="button" className="keywordTag tag" 
                                                                 id="Popover1"
                                                                 key={email.id != "" ? email.id : index} 
                                                                 data-email={email.email} 
@@ -328,8 +363,6 @@ export default class ShareAnalytics extends Component {
                                         </div>
                                     : null}
                         </div>
-                        
-                    </div>
                     
                     <div
                         className={`d-flex ${this.props.userStartupConfig ? 'justify-content-between align-items-center' : 'pt-3'}`}>
