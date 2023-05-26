@@ -18,7 +18,7 @@ class DescrptionModal extends React.Component {
             iconHtml: `<img src="/${(this.props.serviceName || '').toLowerCase()}-small.svg">`,
             showCloseButton: true,
             title: `Connect with ${ this.props.serviceName }`,
-            text: `Connect your ${ this.props.serviceName } account to create automatic annotations for commits`,
+            text: this.props.connectText ? this.props.connectText : `Connect your ${ this.props.serviceName } account to create automatic annotations for commits`,
             confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
             confirmButtonText: `<span class='text-white'><i class='mr-2 fa fa-${ this.props.serviceName.toLowerCase() }'> </i>${ this.props.serviceName }</span>`,
             customClass: {
