@@ -9,6 +9,7 @@ import SpinningLoader from '../../../utils/SpinningLoader'
 import {Button} from 'reactstrap';
 import CreatableSelect from "react-select/creatable";
 import GoogleAnalyticsPropertySelect from "../../../utils/GoogleAnalyticsPropertySelect";
+import {Modal, Popover, PopoverBody, PopoverHeader} from 'reactstrap';
 
 
 
@@ -62,9 +63,13 @@ export default class ShareAnalytics extends Component {
             redirectTo: null,
             ga_property_id: null,
             price_plan: this.props.user.price_plan,
-            total_credits : this.props.user.price_plan.external_email == -1 ? 0 : this.props.user.price_plan.external_email
+            total_credits : this.props.user.price_plan.external_email == -1 ? 0 : this.props.user.price_plan.external_email,
+
+            popoverOpen: false,
+
 
         }
+        this.toggle = this.toggle.bind(this);
         this.changeHandler = this.changeHandler.bind(this)
         this.submitHandler = this.submitHandler.bind(this)
         this.setDefaultState = this.setDefaultState.bind(this)
@@ -72,6 +77,12 @@ export default class ShareAnalytics extends Component {
         this.addEmail = this.addEmail.bind(this);
         this.deleteEmail = this.deleteEmail.bind(this);
     }
+
+    toggle() {
+        this.setState({
+          popoverOpen: !this.state.popoverOpen
+        });
+      }
 
     componentDidMount() {
         document.title = 'User Accounts';
@@ -131,6 +142,7 @@ export default class ShareAnalytics extends Component {
         }
     }
     deleteEmail(e) {
+        this.setState({popoverOpen:false})
         let emails_existing = this.state.form_data.emails;
         const Toast = Swal.mixin({
             toast: true,
@@ -228,14 +240,14 @@ export default class ShareAnalytics extends Component {
                                 {
                                     this.state.users.map((gSCS, index,) =>
                                     
-                                    <ul className='d-flex mb-2 mt-2 list-styles dd-tooltip' key={index}>
+                                    <ul className='d-flex mb-2 mt-2 list-styles dd-tooltip p-1' key={index}>
                                         <li>
                                             <>
-                                            <span className="properties dd-tooltip">{gSCS.name ? <CustomTooltip tooltipText={gSCS.name} maxLength={50}></CustomTooltip> : "Name not found"}</span>
+                                            <span className="properties dd-tooltip m-0 p-0">{gSCS.name ? <CustomTooltip tooltipText={gSCS.name} maxLength={50}></CustomTooltip> : "Name not found"}</span>
                                             </>
                                                 {
                                                     gSCS.profile_image ?
-                                                    <div className='addPhoto' id='acronym-holder' style={{ backgroundPosition: 'center', backgroundSize: 'contain', backgroundImage: `url(/${gSCS.profile_image})` }}>
+                                                    <div className='addPhoto m-0 p-0' id='acronym-holder' style={{ backgroundPosition: 'center', backgroundSize: 'contain', backgroundImage: `url(/${gSCS.profile_image})` }}>
                                                     </div>
                                                     :
                                                     <span className="w-2r bdrs-50p text-center gaa-bg-color m-0" id="acronym-holder" alt="">{gSCS != undefined ? gSCS.name.split(' ').map(n => n.substring(0, 1)).join('').toUpperCase() : null}</span>
@@ -268,23 +280,57 @@ export default class ShareAnalytics extends Component {
                                 onKeyUp={(e) => { if (e.key === "Enter") this.addEmail(e) }}
                                 />
                             <div className="input-group-append"><a onClick={(e) => {this.addEmail(e);}} href="#"><i className="ti-plus"></i></a></div>
+                            <h5 style={{color:"#666666",fontSize:"18px",fontWeight:"500",fontFamily:'Source Sans Pro'}}>
+                                Selected <span style={{fontWeight:"200"}}>(Click to remove)</span>
+                            </h5>
 
-                            {this.state.form_data.emails.length > 0 ?
-                                <div className="keywordTags pt-3">
-                                    {this.state.form_data.emails.length > 0 ? this.state.form_data.emails.map((email, index) => {
-                                        return (
-                                                <button type="button" className="keywordTag" key={email.id != "" ? email.id : index} data-email={email.email} data-email_id={email.id} onClick={(e) => {this.deleteEmail(e);}}>{email.email}</button>
-                                        );})
-                                        : ""
-                                    }
-                                </div>
-                            : null}
+                                    {this.state.form_data.emails.length > 0 ?
+                                        <div className="keywordTags pt-3" style={{background:"#FCFCFC",borderRadius:"16px"}}>
+                                            
+                                            {this.state.form_data.emails.length > 0 ? this.state.form_data.emails.map((email, index) => {
+                                                return (
+                                                <>
+                                                        
+                                                            <button type="button" className="keywordTag" 
+                                                                id="Popover1"
+                                                                key={email.id != "" ? email.id : index} 
+                                                                data-email={email.email} 
+                                                                data-email_id={email.id} 
+                                                                onClick={(e) => {
+                                                                    
+                                                                    // this.deleteEmail(e);
+                                                                    this.toggle
+                                                                }}>
+                                                                    {email.email}
+                                                            </button>                                                           
+
+                                                            <Popover placement="top"
+                                                                    target="Popover1"
+                                                                    isOpen={ this.state.popoverOpen}
+                                                                    toggle={this.toggle}
+                                                                >
+                                                                    <PopoverBody>
+                                                                        Are you sure you want to remove .
+                                                                    </PopoverBody>
+                                                                    <button onClick={(e) => this.deleteEmail(e)} 
+                                                                    key={email.id != "" ? email.id : index} 
+                                                                    data-email={email.email} 
+                                                                    data-email_id={email.id} 
+                                                                    > Yes</button>
+                                                                    <button onClick={() => this.setState({ popoverOpen: null})}
+                                                                    >No</button>
+                                                                </Popover>
+
+
+                                                        </> );})
+                                                : ""
+                                            }
+                                        </div>
+                                    : null}
                         </div>
                         
                     </div>
-                    <h5>
-                                    Selected <span>(Click to remove)</span>
-                                </h5>
+                    
                     <div
                         className={`d-flex ${this.props.userStartupConfig ? 'justify-content-between align-items-center' : 'pt-3'}`}>
                         <button type="submit" disabled={this.state.loading} className="btn-theme"

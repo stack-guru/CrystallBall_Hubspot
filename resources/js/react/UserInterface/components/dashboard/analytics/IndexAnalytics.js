@@ -319,7 +319,7 @@ export default class IndexAnalytics extends Component {
                                                 <div className="d-flex justify-content-between align-items-center">
                                                     <div className="d-flex justify-content-start align-items-center"><h2>Share Analytics</h2>
                                                     </div>
-                                                    <div className='d-flex align-items-center'>
+                                                    <div className='d-flex align-items-center'>                                                    
                                                             <button className="download-pdf-btn" onClick={() => {
                                                                 html2pdf(document.getElementById("dashboard-index-container"), {
                                                                     margin: 0.5,
