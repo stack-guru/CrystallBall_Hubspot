@@ -122,9 +122,10 @@ class AnnotationQueryHelper
 
     public static function googleAnalyticsPropertyWhereClause(string $googleAnalyticsPropertyId = null)
     {
-        $gAPropertyCriteria = "`uds`.`ga_property_id` IS NULL";
+        $gAPropertyCriteria = "";
         if ($googleAnalyticsPropertyId && $googleAnalyticsPropertyId !== '*') {
-            $gAPropertyCriteria = "(`uds`.`ga_property_id` = $googleAnalyticsPropertyId OR $gAPropertyCriteria)";
+            $googleAnalyticsPropertyId = (int)$googleAnalyticsPropertyId;
+            $gAPropertyCriteria = "where (`uds`.`ga_property_id` = $googleAnalyticsPropertyId)";
         }
 
         return $gAPropertyCriteria;
@@ -179,16 +180,23 @@ class AnnotationQueryHelper
     public static function googleAlgorithmQuery(array $userIdsArray)
     {
         $annotationsQuery = "";
-        $annotationsQuery .= "select 1, update_date AS show_at, NULL, category, event_name, NULL as url, CONCAT('google_algorithm_updates', '~~~~', `google_algorithm_updates`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, 'System' AS `user_name`, update_date, `uds`.`ga_property_id` AS `table_ga_property_id` from `google_algorithm_updates` LEFT JOIN `user_data_sources` AS uds ON `uds`.`ds_code` = 'google_algorithm_update_dates' AND `uds`.`user_id` IN ('" . implode("', '", $userIdsArray) . "') ";
-        $gAUConf = UserDataSource::whereIn('user_id', $userIdsArray)->where('ds_code', 'google_algorithm_update_dates')->first();
-        if ($gAUConf) {
+        $annotationsQuery .= "SELECT 1, update_date AS show_at, NULL, category, event_name, NULL as url, CONCAT('google_algorithm_updates', '~~~~', `google_algorithm_updates`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, 'System' AS `user_name`, update_date, `uds`.`ga_property_id` AS `table_ga_property_id` FROM `google_algorithm_updates` LEFT JOIN `user_data_sources` AS uds ON `uds`.`ds_code` = 'google_algorithm_update_dates' AND `uds`.`user_id` IN ('" . implode("', '", $userIdsArray) . "') ";
+
+        $gAUConfs = UserDataSource::whereIn('user_id', $userIdsArray)->where('ds_code', 'google_algorithm_update_dates')->get();
+
+        $statusConstraints = [];
+        foreach ($gAUConfs as $gAUConf) {
             if ($gAUConf->status != '' && $gAUConf->status != null) {
-                $annotationsQuery .= ' where google_algorithm_updates.status = "' . $gAUConf->status . '"';
+                array_push($statusConstraints, 'google_algorithm_updates.status = "' . $gAUConf->status . '"');
             }
+        }
+        if (!empty($statusConstraints)) {
+            $annotationsQuery .= ' WHERE ' . implode(' OR ', $statusConstraints);
         }
 
         return $annotationsQuery;
     }
+
 
     public static function webMonitorQuery(array $userIdsArray)
     {
@@ -208,25 +216,25 @@ class AnnotationQueryHelper
     public static function holidaysQuery(array $userIdsArray, string $googleAnalyticsPropertyId)
     {
         $gAPropertyCriteria = self::googleAnalyticsPropertyWhereClause($googleAnalyticsPropertyId);
-        return "select 1, holiday_date AS show_at, NULL, category, event_name, NULL as url, CONCAT('holidays', '~~~~', `uds`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, 'System' AS `user_name`, holiday_date, `uds`.`ga_property_id` AS `table_ga_property_id` from `holidays` inner join `user_data_sources` as `uds` on `uds`.`country_name` = `holidays`.`country_name` where $gAPropertyCriteria AND (`uds`.`user_id` IN ('" . implode("', '", $userIdsArray) . "') and `uds`.`ds_code` = 'holidays')";
+        return "select 1, holiday_date AS show_at, NULL, category, event_name, NULL as url, CONCAT('holidays', '~~~~', `uds`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, 'System' AS `user_name`, holiday_date, `uds`.`ga_property_id` AS `table_ga_property_id` from `holidays` inner join `user_data_sources` as `uds` on `uds`.`country_name` = `holidays`.`country_name` $gAPropertyCriteria AND (`uds`.`user_id` IN ('" . implode("', '", $userIdsArray) . "') and `uds`.`ds_code` = 'holidays')";
     }
 
     public static function retailMarketingQuery(array $userIdsArray, string $googleAnalyticsPropertyId)
     {
         $gAPropertyCriteria = self::googleAnalyticsPropertyWhereClause($googleAnalyticsPropertyId);
-        return "select 1, show_at, NULL, category, event_name, NULL as url, CONCAT('retail_marketings', '~~~~', `uds`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, 'System' AS `user_name`, show_at, `uds`.`ga_property_id` AS `table_ga_property_id` from `retail_marketings` inner join `user_data_sources` as `uds` on `uds`.`retail_marketing_id` = `retail_marketings`.id where $gAPropertyCriteria AND (`uds`.`user_id` IN ('" . implode("', '", $userIdsArray) . "') and `uds`.`ds_code` = 'retail_marketings')";
+        return "select 1, show_at, NULL, category, event_name, NULL as url, CONCAT('retail_marketings', '~~~~', `uds`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, 'System' AS `user_name`, show_at, `uds`.`ga_property_id` AS `table_ga_property_id` from `retail_marketings` inner join `user_data_sources` as `uds` on `uds`.`retail_marketing_id` = `retail_marketings`.id $gAPropertyCriteria AND (`uds`.`user_id` IN ('" . implode("', '", $userIdsArray) . "') and `uds`.`ds_code` = 'retail_marketings')";
     }
 
     public static function openWeatherMapQuery(array $userIdsArray, string $googleAnalyticsPropertyId)
     {
         $gAPropertyCriteria = self::googleAnalyticsPropertyWhereClause($googleAnalyticsPropertyId);
-        return "select 1, alert_date, NULL, open_weather_map_cities.name, description, null, CONCAT('open_weather_map_alerts', '~~~~', `uds`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, 'System' AS `user_name`, alert_date, `uds`.`ga_property_id` AS `table_ga_property_id` from `open_weather_map_alerts` inner join `user_data_sources` as `uds` on `uds`.`open_weather_map_city_id` = `open_weather_map_alerts`.open_weather_map_city_id inner join `user_data_sources` as `owmes` on `owmes`.`open_weather_map_event` = `open_weather_map_alerts`.`event` inner join `open_weather_map_cities` on `open_weather_map_cities`.id = `open_weather_map_alerts`.`open_weather_map_city_id` where $gAPropertyCriteria AND (`uds`.`user_id` IN ('" . implode("', '", $userIdsArray) . "') and `uds`.`ds_code` = 'open_weather_map_cities')";
+        return "select 1, alert_date, NULL, open_weather_map_cities.name, description, null, CONCAT('open_weather_map_alerts', '~~~~', `uds`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, 'System' AS `user_name`, alert_date, `uds`.`ga_property_id` AS `table_ga_property_id` from `open_weather_map_alerts` inner join `user_data_sources` as `uds` on `uds`.`open_weather_map_city_id` = `open_weather_map_alerts`.open_weather_map_city_id inner join `user_data_sources` as `owmes` on `owmes`.`open_weather_map_event` = `open_weather_map_alerts`.`event` inner join `open_weather_map_cities` on `open_weather_map_cities`.id = `open_weather_map_alerts`.`open_weather_map_city_id` $gAPropertyCriteria AND (`uds`.`user_id` IN ('" . implode("', '", $userIdsArray) . "') and `uds`.`ds_code` = 'open_weather_map_cities')";
     }
 
     public static function googleAlertsQuery(array $userIdsArray, string $googleAnalyticsPropertyId)
     {
         $gAPropertyCriteria = self::googleAnalyticsPropertyWhereClause($googleAnalyticsPropertyId);
-        return "select 1, alert_date, NULL, 'News Alert', title, google_alerts.url, CONCAT('google_alerts', '~~~~', `google_alerts`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, 'System' AS `user_name`, alert_date, `uds`.`ga_property_id` AS `table_ga_property_id` from `google_alerts` inner join `user_data_sources` as `uds` on `uds`.`value` = `google_alerts`.tag_name where $gAPropertyCriteria AND (`uds`.`user_id` IN ('" . implode("', '", $userIdsArray) . "') AND `uds`.`ds_code` = 'google_alert_keywords' AND DATE(google_alerts.created_at) > DATE(DATE_ADD(uds.created_at, INTERVAL 1 DAY)) )";
+        return "select 1, alert_date, NULL, 'News Alert', title, google_alerts.url, CONCAT('google_alerts', '~~~~', `google_alerts`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, 'System' AS `user_name`, alert_date, `uds`.`ga_property_id` AS `table_ga_property_id` from `google_alerts` inner join `user_data_sources` as `uds` on `uds`.`value` = `google_alerts`.tag_name $gAPropertyCriteria AND (`uds`.`user_id` IN ('" . implode("', '", $userIdsArray) . "') AND `uds`.`ds_code` = 'google_alert_keywords' AND DATE(google_alerts.created_at) > DATE(DATE_ADD(uds.created_at, INTERVAL 1 DAY)) )";
     }
 
     public static function wordPressQuery($userIdsArray)
