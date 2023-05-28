@@ -28,7 +28,7 @@ class BlueSnapService
     public function getToken()
     {
 
-        $url = $this->blueSnapDomain . '/services/2/payment-fields-tokens?challengerequested3ds=true';
+        $url = $this->blueSnapDomain . '/services/2/payment-fields-tokens';
 
         $response = Http::withBasicAuth($this->key, $this->password)
             ->post($url);
