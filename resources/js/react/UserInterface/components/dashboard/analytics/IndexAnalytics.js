@@ -434,7 +434,8 @@ export default class IndexAnalytics extends Component {
                                         autoSelectFirst
                                     />
 
-                                    <ErrorAlert errors={this.state.errors} />                                </div>
+                                    <ErrorAlert errors={this.state.errors} />                                
+                                </div>
 
                                 {/* <FormGroup className="filter-sort position-relative">
                                     <Label

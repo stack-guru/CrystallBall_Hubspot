@@ -25,11 +25,11 @@ class Facebook extends React.Component {
     render() {
         return (
             <div className="popupContent modal-facebook">
-                {(!this.props.userFacebookAccountsExists || !this.props.userServices['is_ds_facebook_tracking_enabled']) && this.state.showDescription ? 
+                {(!this.props.userFacebookAccountsExists || !this.props.userServices['is_ds_facebook_tracking_enabled']) && this.state.showDescription ?
                 <DescriptionModal
                     serviceName={"Facebook"}
                     closeModal={this.props.closeModal}
-                    description={"For every project completed or modified on Facebook, our automation tool enables you to monitor basic with basic details. Facebook Tracking watches every commit on your provided repository."}
+                    description={"Set custom thresholds for your posts, and unlock automated annotations when your engagement metrics hit the mark. Stay on top of your social performance, optimize your strategies, and make data-driven decisions effortlessly."}
                     changeModal={this.changeModal.bind(this)}
                     userAccountsExists={this.props.userFacebookAccountsExists}
                     connectText={`Connect your Facebook account to create automatic annotations for new posts; when you reach a post goal or run campaigns..`}

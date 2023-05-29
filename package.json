@@ -51,6 +51,7 @@
         "react-toastify": "^6.2.0",
         "reactour": "^1.18.0",
         "reactstrap": "^8.10.1",
-        "styled-components": "^4.4.1"
+        "styled-components": "^4.4.1",
+        "validator": "^13.9.0"
     }
 }
