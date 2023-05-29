@@ -179,7 +179,7 @@ class FacebookAutomationRepository
     }
 
 
-    public function handleFacebookAutomation($userId = null)
+    public function handleFacebookAutomation($userId = null, $confId = null, $forceSave = false)
     {
 
         // get all ga users whose fb automation is on
@@ -192,7 +192,11 @@ class FacebookAutomationRepository
         foreach ($users as $user) {
 
             // get user facebook automation configurations
-            $configuraion = FacebookTrackingConfiguration::where('user_id', $user->id)->first();
+            $configurations = FacebookTrackingConfiguration::where('user_id', $user->id)
+            ->when($confId, function ($q) use ($confId) {
+                $q->where('id', $confId);
+            })
+            ->get();
 
             // get all fb accounts
             $facebook_accounts = $user->facebook_accounts;
@@ -200,116 +204,130 @@ class FacebookAutomationRepository
             info(print_r($facebook_accounts,1));
             foreach ($facebook_accounts as $facebook_account) {
 
-                // get all fb account pages from database
-                $facebook_pages_from_database = $facebook_account->pages;
+                // Update Facebook Account Data before saving into DB
+                $this->updateFacebookAccountData($facebook_account);
 
-                // get all fb account pages from facebook
-                $facebook_pages_from_facebook = $this->facebookService->getFacebookPages($facebook_account->token);
-                info('Facebook pages from facebook :: ');
-                info(print_r($facebook_pages_from_facebook,1));
-                info('Facebook pages from database :: ');
-                info(print_r($facebook_pages_from_database,1));
+                // get all fb account pages from database based on selected configuration
+                $facebook_pages_from_database = [];
+                $facebookPagesDatabase = $facebook_account->pages;
+                foreach($configurations as $configuration) {
+                    $configurationPages = unserialize($configuration->selected_pages);
+                    foreach($configurationPages as $configurationPage) {
+                        foreach($facebookPagesDatabase as $facebookPageDatabase) {
+                            if ($configurationPage['value'] == $facebookPageDatabase->id) {
+                                $facebook_pages_from_database[] = $facebookPageDatabase;
+                            }
+                        }
+                    }
 
-                if ($facebook_pages_from_facebook){
-                    foreach ($facebook_pages_from_facebook as $facebook_page_from_facebook) {
+                    // get all fb account pages from facebook
+                    $facebook_pages_from_facebook = $this->facebookService->getFacebookPages($facebook_account->token);
+                    info('Facebook pages from facebook :: ');
+                    info(print_r($facebook_pages_from_facebook,1));
+                    info('Facebook pages from database :: ');
+                    info(print_r($facebook_pages_from_database,1));
 
-                        foreach ($facebook_pages_from_database as $facebook_page_from_database) {
+                    if ($facebook_pages_from_facebook){
+                        foreach ($facebook_pages_from_facebook as $facebook_page_from_facebook) {
 
-                            if (@$facebook_page_from_facebook['id'] == $facebook_page_from_database->facebook_page_id) {
-                                // get page posts from facebook
-                                $response = $this->facebookService->getFacebookPagePosts($facebook_account->token, $facebook_page_from_database->facebook_page_id);
-                                info('Facebook page posts from facebook :: ');
-                                info(print_r($response, 1));
-                                // get page posts from database
-                                $facebook_page_posts_from_database = $facebook_page_from_database->posts;
+                            foreach ($facebook_pages_from_database as $facebook_page_from_database) {
 
-                                if ($response['status']) {
+                                if (@$facebook_page_from_facebook['id'] == $facebook_page_from_database->facebook_page_id) {
+                                    // get page posts from facebook
+                                    $response = $this->facebookService->getFacebookPagePosts($facebook_account->token, $facebook_page_from_database->facebook_page_id);
+                                    info('Facebook page posts from facebook :: ');
+                                    info(print_r($response, 1));
+                                    // get page posts from database
+                                    $facebook_page_posts_from_database = $facebook_page_from_database->posts;
 
-                                    // check if there is a new post
-                                    if ((int)count($response['page_posts']) > (int)$facebook_page_posts_from_database->count()) {
-                                        // check configuration if it's enabled to create annotation
-                                        if ($configuraion->when_new_post_on_facebook) {
-                                            $data = @$response['page_posts'][0]['attachments']['data'][0];
-                                            $data['configuration_id'] = $configuraion->id;
-                                            $this->createAutomationAnnotation('when_new_post_on_facebook', $user, $data);
+                                    if ($response['status']) {
+
+                                        // check if there is a new post
+                                        if ((int)count($response['page_posts']) > (int)$facebook_page_posts_from_database->count() || $forceSave) {
+                                            // check configuration if it's enabled to create annotation
+                                            if ($configuration->when_new_post_on_facebook || $forceSave) {
+                                                $data = @$response['page_posts'][0]['attachments']['data'][0];
+                                                $data['configuration_id'] = $configuration->id;
+                                                $this->createAutomationAnnotation('when_new_post_on_facebook', $user, $data);
+                                            }
                                         }
-                                    }
 
-                                    // check if there is any change in post in our local db with respect to facebook response
-                                    foreach ($response['page_posts'] as $facebook_page_post_from_facebook) {
+                                        // check if there is any change in post in our local db with respect to facebook response
+                                        foreach ($response['page_posts'] as $facebook_page_post_from_facebook) {
 
-                                        foreach ($facebook_page_posts_from_database as $facebook_page_post_from_database) {
+                                            foreach ($facebook_page_posts_from_database as $facebook_page_post_from_database) {
 
-                                            if ($facebook_page_post_from_facebook['id'] == $facebook_page_post_from_database->facebook_post_id){
+                                                if ($facebook_page_post_from_facebook['id'] == $facebook_page_post_from_database->facebook_post_id){
 
-                                                $likes_fb = (int)@$facebook_page_post_from_facebook['likes']['summary']['total_count'];
-                                                $likes_db = (int)$facebook_page_post_from_database->likes_count;
+                                                    $likes_fb = (int)@$facebook_page_post_from_facebook['likes']['summary']['total_count'];
+                                                    $likes_db = (int)$facebook_page_post_from_database->likes_count;
 
-                                                $comments_fb = (int)@$facebook_page_post_from_facebook['comments']['summary']['total_count'];
-                                                $comments_db = (int)$facebook_page_post_from_database->comments_count;
+                                                    $comments_fb = (int)@$facebook_page_post_from_facebook['comments']['summary']['total_count'];
+                                                    $comments_db = (int)$facebook_page_post_from_database->comments_count;
 
-                                                $shares_fb = (int)@$facebook_page_post_from_facebook['shares']['count'];
-                                                $shares_db = (int)$facebook_page_post_from_database->shares_count;
+                                                    $shares_fb = (int)@$facebook_page_post_from_facebook['shares']['count'];
+                                                    $shares_db = (int)$facebook_page_post_from_database->shares_count;
 
-                                                $views_fb = (int)@$this->facebookService->getPagePostImpressions($facebook_page_post_from_facebook['id'], $response['page_token'])['post_impressions'];
-                                                $views_db = (int)$facebook_page_post_from_database->views_count;
+                                                    $views_fb = (int)@$this->facebookService->getPagePostImpressions($facebook_page_post_from_facebook['id'], $response['page_token'])['post_impressions'];
+                                                    $views_db = (int)$facebook_page_post_from_database->views_count;
 
-                                                if ($configuraion->is_post_likes_tracking_on){
-                                                    $when_post_reach_likes = $configuraion->when_post_reach_likes;
-                                                    if ($likes_fb > $likes_db){
-                                                        if ($likes_fb >= $when_post_reach_likes){
-                                                            $data = [
-                                                                "likes" => $likes_fb,
-                                                                "url" => @$facebook_page_post_from_facebook['attachments']['data'][0]['url'],
-                                                                'configuration_id' => $configuraion->id
-                                                            ];
-                                                            $this->createAutomationAnnotation('when_post_reach_likes', $user, $data);
+                                                    if ($configuration->is_post_likes_tracking_on){
+                                                        $when_post_reach_likes = $configuration->when_post_reach_likes;
+                                                        if ($likes_fb > $likes_db || $forceSave){
+                                                            if ($likes_fb >= $when_post_reach_likes){
+                                                                $data = [
+                                                                    "likes" => $likes_fb,
+                                                                    "url" => @$facebook_page_post_from_facebook['attachments']['data'][0]['url'],
+                                                                    'configuration_id' => $configuration->id
+                                                                ];
+                                                                $this->createAutomationAnnotation('when_post_reach_likes', $user, $data);
+                                                            }
                                                         }
                                                     }
-                                                }
 
-                                                if ($configuraion->is_post_comments_tracking_on){
-                                                    $when_post_reach_comments = $configuraion->when_post_reach_comments;
-                                                    if ($comments_fb > $comments_db){
-                                                        if ($comments_fb >= $when_post_reach_comments){
-                                                            $data = [
-                                                                "comments" => $comments_fb,
-                                                                "url" => @$facebook_page_post_from_facebook['attachments']['data'][0]['url'],
-                                                                'configuration_id' => $configuraion->id
-                                                            ];
-                                                            $this->createAutomationAnnotation('when_post_reach_comments', $user, $data);
+                                                    if ($configuration->is_post_comments_tracking_on){
+                                                        $when_post_reach_comments = $configuration->when_post_reach_comments;
+                                                        if ($comments_fb > $comments_db || $forceSave){
+                                                            if ($comments_fb >= $when_post_reach_comments){
+                                                                $data = [
+                                                                    "comments" => $comments_fb,
+                                                                    "url" => @$facebook_page_post_from_facebook['attachments']['data'][0]['url'],
+                                                                    'configuration_id' => $configuration->id
+                                                                ];
+                                                                $this->createAutomationAnnotation('when_post_reach_comments', $user, $data);
+                                                            }
                                                         }
                                                     }
-                                                }
 
-                                                if ($configuraion->is_post_views_tracking_on){
-                                                    $when_post_reach_views = $configuraion->when_post_reach_views;
-                                                    if ($views_fb > $views_db){
-                                                        if ($views_fb >= $when_post_reach_views){
-                                                            $data = [
-                                                                "views" => $views_fb,
-                                                                "url" => @$facebook_page_post_from_facebook['attachments']['data'][0]['url'],
-                                                                'configuration_id' => $configuraion->id
-                                                            ];
-                                                            $this->createAutomationAnnotation('when_post_reach_views', $user, $data);
+                                                    if ($configuration->is_post_views_tracking_on){
+                                                        $when_post_reach_views = $configuration->when_post_reach_views;
+                                                        if ($views_fb > $views_db || $forceSave){
+                                                            if ($views_fb >= $when_post_reach_views){
+                                                                $data = [
+                                                                    "views" => $views_fb,
+                                                                    "url" => @$facebook_page_post_from_facebook['attachments']['data'][0]['url'],
+                                                                    'configuration_id' => $configuration->id
+                                                                ];
+                                                                $this->createAutomationAnnotation('when_post_reach_views', $user, $data);
+                                                            }
                                                         }
                                                     }
-                                                }
 
-                                                if ($configuraion->is_post_shares_tracking_on){
-                                                    $when_post_reach_shares = $configuraion->when_post_reach_shares;
-                                                    if ($shares_fb > $shares_db){
-                                                        if ($shares_fb >= $when_post_reach_shares){
-                                                            $data = [
-                                                                "shares" => $shares_fb,
-                                                                "url" => @$facebook_page_post_from_facebook['attachments']['data'][0]['url'],
-                                                                'configuration_id' => $configuraion->id
-                                                            ];
-                                                            $this->createAutomationAnnotation('when_post_reach_shares', $user, $data);
+                                                    if ($configuration->is_post_shares_tracking_on){
+                                                        $when_post_reach_shares = $configuration->when_post_reach_shares;
+                                                        if ($shares_fb > $shares_db || $forceSave){
+                                                            if ($shares_fb >= $when_post_reach_shares){
+                                                                $data = [
+                                                                    "shares" => $shares_fb,
+                                                                    "url" => @$facebook_page_post_from_facebook['attachments']['data'][0]['url'],
+                                                                    'configuration_id' => $configuration->id
+                                                                ];
+                                                                $this->createAutomationAnnotation('when_post_reach_shares', $user, $data);
+                                                            }
                                                         }
                                                     }
-                                                }
 
+                                                }
                                             }
                                         }
                                     }
@@ -317,10 +335,7 @@ class FacebookAutomationRepository
                             }
                         }
                     }
-
                 }
-
-                $this->updateFacebookAccountData($facebook_account);
 
             }
         }
@@ -400,7 +415,7 @@ class FacebookAutomationRepository
     }
 
     public function updateFacebookAccountData($facebook_account){
-        $this->storeFacebookPages($facebook_account->token, $facebook_account->facebook_account_id);
+        $this->storeFacebookPages($facebook_account->token, $facebook_account->id);
     }
 
 }

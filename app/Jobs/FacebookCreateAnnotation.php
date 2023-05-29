@@ -14,16 +14,18 @@ class FacebookCreateAnnotation implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    private $userId;
+    private $userId, $confId, $forceSave;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($userId)    
+    public function __construct($userId, $confId, $forceSave)    
     {
         set_time_limit(8000000);
         $this->userId = $userId;
+        $this->confId = $confId;
+        $this->forceSave = $forceSave;
 
     }
 
@@ -34,6 +36,6 @@ class FacebookCreateAnnotation implements ShouldQueue
      */
     public function handle()
     {
-        (new FacebookAutomationRepository())->handleFacebookAutomation($this->userId);
+        (new FacebookAutomationRepository())->handleFacebookAutomation($this->userId, $this->confId, $this->forceSave);
     }
 }

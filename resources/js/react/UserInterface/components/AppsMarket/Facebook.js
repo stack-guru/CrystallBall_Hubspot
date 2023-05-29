@@ -32,6 +32,7 @@ class Facebook extends React.Component {
                     description={"For every project completed or modified on Facebook, our automation tool enables you to monitor basic with basic details. Facebook Tracking watches every commit on your provided repository."}
                     changeModal={this.changeModal.bind(this)}
                     userAccountsExists={this.props.userFacebookAccountsExists}
+                    connectText={`Connect your Facebook account to create automatic annotations for new posts; when you reach a post goal or run campaigns..`}
                 />
                 : <>
                 <ModalHeader

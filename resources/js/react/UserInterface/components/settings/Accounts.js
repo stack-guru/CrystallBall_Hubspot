@@ -634,13 +634,18 @@ export default class Accounts extends React.Component {
 
     handleFacebookDelete(id) {
         this.setState({isBusy: true});
+        if(confirm('Disconnecting the account, will remove and delete all the annotations related to this account, are you sure?'))
         HttpClient.delete(`/settings/facebook-account/${id}`).then(resp => {
-            Toast.fire({
-                icon: 'success',
-                title: "Account removed.",
-            });
             let facebookAccounts = this.state.facebookAccounts;
             facebookAccounts = facebookAccounts.filter(ga => ga.id != id);
+            if(this.state.facebookAccounts.length > 1) {
+                Toast.fire({
+                    icon: 'success',
+                    title: "Account removed.",
+                });
+            } else {
+                this.updateUserService('is_ds_facebook_tracking_enabled');
+            }
             this.setState({isBusy: false, facebookAccounts: facebookAccounts})
         }, (err) => {
             this.setState({isBusy: false, errors: (err.response).data});
