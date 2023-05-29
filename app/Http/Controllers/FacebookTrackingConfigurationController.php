@@ -66,7 +66,10 @@ class FacebookTrackingConfigurationController extends Controller
 
     public function runJob (Request $request){
         $configID = $request->id;
-        return (new FacebookAutomationRepository())->handleFacebookAutomation(Auth::user()->id, $configID, true);
+        FacebookCreateAnnotation::dispatch(Auth::user()->id, $configID, true);
+        return response()->json([
+            'status' => true,
+        ]);
     }
 
     /**

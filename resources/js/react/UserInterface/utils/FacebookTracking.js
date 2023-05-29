@@ -155,14 +155,15 @@ export default class FacebookTracking extends React.Component {
             ga_property_id: this.state.gaPropertyId,
         }
 
+        if (!this.state.configurations.length) {
+            this.serviceStatusHandler();
+        }
         HttpClient.post('/data-source/save-facebook-tracking-configurations', form_data).then(resp => {
-            this.setState({facebook_pages: resp.data.facebook_pages, isBusy: false, gaPropertyName: resp.data.gaPropertyName, configuration_id: true, editProperty: false});
-            if (!this.state.configurations.length) {
-                this.serviceStatusHandler();
-            }
+            this.setState({facebook_pages: resp.data.facebook_pages, isBusy: false, gaPropertyName: resp.data.gaPropertyName, editProperty: false});
+            
             this.props.loadUserDataSources();
             this.fetchConfigurations();
-            swal.fire('Success', "We will retrieve the posts/ads added to your account in the past year according to your preferences; it may take a few minutes. Subsequently, the system will perform a daily check and automatically add relevant annotations to your account.", 'info');
+            swal.fire('', "We will retrieve the posts/ads added to your account in the past year according to your preferences; it may take a few minutes. Subsequently, the system will perform a daily check and automatically add relevant annotations to your account.", '');
 
             this.runjob(resp.data.configurationId);
         }, (err) => {
@@ -264,7 +265,7 @@ export default class FacebookTracking extends React.Component {
                         <div className="col-6">
                             <div className="mt-2">
                                 <div className="d-flex align-items-center form-check themeNewCheckbox">
-                                    <input className="form-check-input" id='when_new_post_on_facebook' onChange={(e) => {
+                                    <input className="form-check-input mt-0" id='when_new_post_on_facebook' onChange={(e) => {
                                         this.setState({
                                             when_new_post_on_facebook: e.target.checked
                                         })
@@ -277,7 +278,7 @@ export default class FacebookTracking extends React.Component {
 
                             <div className="mt-2">
                                 <div className="d-flex align-items-center form-check themeNewCheckbox">
-                                    <input className="form-check-input" type="checkbox" value=""
+                                    <input className="form-check-input mt-0" type="checkbox" value=""
                                         id="is_post_likes_tracking_on_checkbox" onChange={(e) => {
                                         this.setState({
                                             is_post_likes_tracking_on: e.target.checked
@@ -301,7 +302,7 @@ export default class FacebookTracking extends React.Component {
 
                             <div className="mt-2">
                                 <div className="d-flex align-items-center form-check themeNewCheckbox">
-                                    <input className="form-check-input" type="checkbox" value=""
+                                    <input className="form-check-input mt-0" type="checkbox" value=""
                                         id="is_post_comments_tracking_on_checkbox" onChange={(e) => {
                                         this.setState({
                                             is_post_comments_tracking_on: e.target.checked
@@ -325,7 +326,7 @@ export default class FacebookTracking extends React.Component {
 
                             <div className="mt-2">
                                 <div className="d-flex align-items-center form-check themeNewCheckbox">
-                                    <input className="form-check-input" type="checkbox" value=""
+                                    <input className="form-check-input mt-0" type="checkbox" value=""
                                         id="is_post_views_tracking_on_checkbox" onChange={(e) => {
                                         this.setState({
                                             is_post_views_tracking_on: e.target.checked
@@ -351,7 +352,7 @@ export default class FacebookTracking extends React.Component {
                         <div className="col-6">
                             <div className="mt-2">
                                 <div className="d-flex align-items-center form-check themeNewCheckbox">
-                                    <input className="form-check-input" type="checkbox" value=""
+                                    <input className="form-check-input mt-0" type="checkbox" value=""
                                         id="is_post_shares_tracking_on_checkbox" onChange={(e) => {
                                         this.setState({
                                             is_post_shares_tracking_on: e.target.checked
@@ -376,7 +377,7 @@ export default class FacebookTracking extends React.Component {
 
                             <div className="mt-2">
                                 <div className="d-flex align-items-center form-check themeNewCheckbox">
-                                    <input className="form-check-input" type="checkbox" value="" id="new_ad_compaign_launched"
+                                    <input className="form-check-input mt-0" type="checkbox" value="" id="new_ad_compaign_launched"
                                         onChange={(e) => {
                                             this.setState({
                                                 when_new_ad_compaing_launched: e.target.checked
@@ -390,7 +391,7 @@ export default class FacebookTracking extends React.Component {
 
                             <div className="mt-2">
                                 <div className="d-flex align-items-center form-check themeNewCheckbox">
-                                    <input className="form-check-input" type="checkbox" value="" id="an_ad_compaign_ended"
+                                    <input className="form-check-input mt-0" type="checkbox" value="" id="an_ad_compaign_ended"
                                         onChange={(e) => {
                                             this.setState({
                                                 when_ad_compaign_ended: e.target.checked
@@ -404,7 +405,7 @@ export default class FacebookTracking extends React.Component {
 
                             <div className="mt-2">
                                 <div className="d-flex align-items-center form-check themeNewCheckbox">
-                                    <input className="form-check-input" type="checkbox" value="" id="changes_on_ad_compaign"
+                                    <input className="form-check-input mt-0" type="checkbox" value="" id="changes_on_ad_compaign"
                                         onChange={(e) => {
                                             this.setState({
                                                 when_changes_on_ad_compaign: e.target.checked
