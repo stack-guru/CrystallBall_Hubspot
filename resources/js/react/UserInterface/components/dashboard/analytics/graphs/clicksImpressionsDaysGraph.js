@@ -102,18 +102,30 @@ export default function ClicksImpressionsDaysGraph(props) {
         legend: 'none',
     };
 
-    return <div className="row ml-0 mr-0 mt-4">
-        <div className="col-12">
-            <Chart
-                width={'100%'}
-                // style={{ paddingLeft: '10px' }}
-                // height={'50'}
-                chartType="AreaChart"
-                loader={<div>Loading Chart</div>}
-                data={dataArray}
-                options={optionsArray}
-            />
-        </div>
-    </div>
+    return (
+            <div className="report-box">
+                    <div className="d-flex justify-content-between">
+                        <div><h4 className="card-heading">Click Impressions</h4>
+                        </div>
+                    </div>
+                <Chart
+                    width={'100%'}
+                    // style={{ paddingLeft: '10px' }}
+                    // height={'50'}
+                    chartType="AreaChart"
+                    loader={<div>Loading Chart</div>}
+                    data={dataArray}
+                    options={optionsArray}
+                />
+            </div>
+    )
+    
+    
+    // <div className="row ml-0 mr-0 mt-4">
+    //     <h1>ClicksImpressionsDaysGraph????????</h1>
+    //     <div className="col-12">
+        
+    //     </div>
+    // </div>
 };
 
