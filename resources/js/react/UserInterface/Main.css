@@ -5863,9 +5863,9 @@ div[data-tour-elem="controls"]
         width: 110px;
     }
 
-    .is-collapsed .sidebar .sidebar-inner .sidebar-menu > li > a .title {
-        visibility: hidden;
-    }
+    /*.is-collapsed .sidebar .sidebar-inner .sidebar-menu > li > a .title {*/
+    /*    visibility: hidden;*/
+    /*}*/
 
     .is-collapsed .sidebar:hover {
         width: 270px;
