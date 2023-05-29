@@ -90,12 +90,12 @@ class ShopifyMonitorController extends Controller
         // if($monitor) {
         //     return response()->json(['success' => false, 'message' => 'You already have this store url setup.'], 402);
         // }
-       
+
         $shopifyService = new ShopifyService();
         $products = $shopifyService->getShopifyProducts($url);
         if(!$products) {
             return response()->json(['success' => false, 'message' => 'Please provide the valid store url'], 400);
-        }        
+        }
 
         $monitor = ShopifyMonitor::where('url', $url)->where('user_id', $userID)->first();
         if(!$monitor) {
@@ -108,7 +108,7 @@ class ShopifyMonitorController extends Controller
         $monitor->save();
 
         $shopifyService = new ShopifyService();
-        $shopifyService->saveShopifyProducts(json_decode($req->events), $products, $userID);
+        $shopifyService->saveShopifyProducts(json_decode($req->events), $products, $userID, $monitor->id);
 
         return response()->json(['success' => true], 200);
 

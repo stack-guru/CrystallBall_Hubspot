@@ -14,8 +14,14 @@ class AnalyticSharedReport extends Model
         'excel_name',
         'start_date',
         'end_date',
+        'dashboard_id',
+        'recurrence',
         'property_id',
         'google_console_site_id',
         'user_id',
     ];
+    public function property()
+    {
+        return $this->belongsTo('App\Models\GoogleAnalyticsProperty','property_id');
+    }
 }
