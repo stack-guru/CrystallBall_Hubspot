@@ -49,6 +49,9 @@ import AppsMarket from './components/AppsMarket/AppsMarket'
 import AppsModal from './components/AppsMarket/AppsModal';
 import ModalHeader from './components/AppsMarket/common/ModalHeader';
 import {Modal, ModalBody} from 'reactstrap';
+import ReportingDashboard from './components/ReportingDashboard';
+// import ReportingDashboard from "./components/ReportingDashboard";
+
 
 function isFreeEmail(email = "") {
     const parts = email.split('@');
@@ -227,6 +230,9 @@ class Main extends React.Component {
                                 })} openAnnotationPopup={(mka) => {
                                     this.setState({mKeyAnnotation: mka});
                                 }} user={this.state.user} mKeyAnnotation={this.state.mKeyAnnotation}/>
+                            </Route>
+                            <Route exact path="/report-dashboard" refresh={true}>
+                                <ReportingDashboard user={this.state.user}/>
                             </Route>
                             <Route exact path="/annotation/create" refresh={true}>
                                 <AnnotationsCreate upgradePopup={(popupType) => this.setState({
