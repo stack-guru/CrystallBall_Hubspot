@@ -5856,7 +5856,7 @@ div[data-tour-elem="controls"]
 }
 
 .sidebar {
-    min-width: 110px;
+    min-width: 100px;
 }
 @media screen and (max-width: 1439px) {
     .is-collapsed .sidebar {
