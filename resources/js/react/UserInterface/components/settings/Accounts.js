@@ -625,6 +625,7 @@ export default class Accounts extends React.Component {
             let googleAccounts = this.state.googleAccounts;
             googleAccounts = googleAccounts.filter(ga => ga.id != id);
             this.setState({isBusy: false, googleAccounts: googleAccounts})
+            (this.props.reloadUser)();
         }, (err) => {
             this.setState({isBusy: false, errors: (err.response).data});
         }).catch(err => {
@@ -645,6 +646,7 @@ export default class Accounts extends React.Component {
                 });
             } else {
                 this.updateUserService('is_ds_facebook_tracking_enabled');
+                (this.props.reloadUser)();
             }
             this.setState({isBusy: false, facebookAccounts: facebookAccounts})
         }, (err) => {
