@@ -597,326 +597,359 @@ export default class IndexAnalytics extends Component {
                     </div>
 
 
-                    <div className={"col-8"}>
+                        <div className={"col-8"}>
 
-                    {/*left side div*/}
-
-
-                        {/*user's div*/}
-
-                        <UsersDaysWithAnnotationsGraph statistics={this.state.usersDaysStatistics} />
+                        {/*left side div*/}
 
 
-                        {/*Attribution source*/}
-                        <AnnotationsTable user={this.props.user} annotations={this.state.annotations} satisticsPaddingDaysCallback={this.changeStatisticsPaddingDays} statisticsPaddingDays={this.state.statisticsPaddingDays} />
+                            {/*user's div*/}
+
+                            <UsersDaysWithAnnotationsGraph statistics={this.state.usersDaysStatistics} />
 
 
-                        {/* media graphs */}
-                        <MediaGraph statistics={this.state.mediaStatistics} />
+                            {/*Attribution source*/}
+                            <AnnotationsTable user={this.props.user} annotations={this.state.annotations} satisticsPaddingDaysCallback={this.changeStatisticsPaddingDays} statisticsPaddingDays={this.state.statisticsPaddingDays} />
 
 
-                        {/* Click Impressions Graph */}
-                        <ClicksImpressionsDaysGraph statistics={this.state.clicksImpressionsDaysStatistics} />
-
-                        {/* Console Annotation Tabel */}
-                        <ConsoleAnnotationsTable user={this.props.user} annotations={this.state.console_annotations} satisticsPaddingDaysCallback={this.changeStatisticsPaddingDays} statisticsPaddingDays={this.state.statisticsPaddingDays} />
-
-                        {/* Queries Tabel */}
-                        <QueriesTable queriesStatistics={this.state.queriesStatistics} />
-
-                        {/* Page Table */}
-                        <PagesTable pagesStatistics={this.state.pagesStatistics} />
+                            {/* media graphs */}
+                            <MediaGraph statistics={this.state.mediaStatistics} />
 
 
-                        <div className="d-flex flex-column">
-                            <div className="fourGridBoxesHolder">
+                            {/* Click Impressions Graph */}
+                            <ClicksImpressionsDaysGraph statistics={this.state.clicksImpressionsDaysStatistics} />
 
-                                {/*Todays Expence div*/}
+                            {/* Console Annotation Tabel */}
+                            <ConsoleAnnotationsTable user={this.props.user} annotations={this.state.console_annotations} satisticsPaddingDaysCallback={this.changeStatisticsPaddingDays} statisticsPaddingDays={this.state.statisticsPaddingDays} />
 
-                                {/* Top Statistics  */}
-                                <TopStatistics topStatistics={this.state.topStatistics} />
+                            {/* Queries Tabel */}
+                            <QueriesTable queriesStatistics={this.state.queriesStatistics} />
 
-                                {/* Console Top Statistics */}
-                                {/* <ConsoleTopStatistics topStatistics={this.state.consoleTopStatistics} /> */}
-                                
+                            {/* Page Table */}
+                            <PagesTable pagesStatistics={this.state.pagesStatistics} />
 
-                                {/* <div className="">
-                                    <div className={"w-100 report-box"}>
-                                        <div className="d-flex justify-content-between">
-                                            <div>
-                                                <h4 className="card-heading">
-                                                    Today's Expence
-                                                </h4>
-                                                <h6>sales summery</h6>
-                                            </div>
-                                            <div className="icons">
-                                                <span>
-                                                    <img
-                                                        src="/images/svg/visitor-country.svg"
-                                                        alt="visit icon"
-                                                    />
-                                                </span>
-                                                <span>
-                                                    <img
-                                                        src="/images/svg/dashboard-list-option.svg"
-                                                        alt="list icon"
-                                                    />
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div className="fourGridBoxesHolder" style={{gap: '15px'}}>
-                                            <div className=" d-flex flex-column  w-100 box-color1">
-                                                <span className="box-icon">
-                                                    <img
-                                                        src="/images/svg/todays-expence-icon1.svg"
-                                                        alt="list icon"
-                                                    />
-                                                </span>
-                                                <h2
-                                                    className="box-headings"
-                                                >
-                                                    $1K
-                                                </h2>
-                                                <h5
-                                                    className="box-headings"
-                                                    style={{
-                                                        color: "#425166",
-                                                        fontWeight: "400",
-                                                        fontSize: "16px",
-                                                    }}
-                                                >
-                                                    Total sales
-                                                </h5>
-                                                <h5
-                                                    className="box-headings"
-                                                    style={{
-                                                        color: "#4079ED",
-                                                        fontWeight: "400",
-                                                        fontSize: "13px",
-                                                    }}
-                                                >
-                                                    +8% from yesterday
-                                                </h5>
-                                            </div>
-                                            <div className="d-flex flex-column  w-100 box-color2">
-                                                <span className="box-icon">
-                                                    <img
-                                                        src="/images/svg/todays-expence-icon2.svg"
-                                                        alt="list icon"
-                                                    />
-                                                </span>
-                                                <h2
-                                                    className="box-headings"
-                                                >
-                                                    300
-                                                </h2>
-                                                <h5
-                                                    className="box-headings"
-                                                    style={{
-                                                        color: "#425166",
-                                                        fontWeight: "400",
-                                                        fontSize: "16px",
-                                                    }}
-                                                >
-                                                    Total orders
-                                                </h5>
-                                                <h5
-                                                    className="box-headings"
-                                                    style={{
-                                                        color: "#4079ED",
-                                                        fontWeight: "400",
-                                                        fontSize: "13px",
-                                                    }}
-                                                >
-                                                    +8% from yesterd
-                                                </h5>
-                                            </div>
-                                            <div className="d-flex flex-column w-100 box-color3">
-                                                <span className="box-icon">
-                                                    <img
-                                                        src="/images/svg/todays-expence-icon3.svg"
-                                                        alt="list icon"
-                                                    />
-                                                </span>
 
-                                                <h2
-                                                    className="box-headings"
-                                                >
-                                                    5
-                                                </h2>
-                                                <h5
-                                                    className="box-headings"
-                                                    style={{
-                                                        color: "#425166",
-                                                        fontWeight: "400",
-                                                        fontSize: "16px",
-                                                    }}
-                                                >
-                                                    Total sales
-                                                </h5>
-                                                <h5
-                                                    className="box-headings"
-                                                    style={{
-                                                        color: "#4079ED",
-                                                        fontWeight: "400",
-                                                        fontSize: "13px",
-                                                    }}
-                                                >
-                                                    +8% from yesterd
-                                                </h5>
-                                            </div>
-                                            <div className="d-flex flex-column w-100 box-color4">
-                                                <span className="box-icon">
-                                                    <img
-                                                        src="/images/svg/todays-expence-icon4.svg"
-                                                        alt="list icon"
-                                                    />
-                                                </span>
+                            <div className="d-flex flex-column">
+                                <div className="fourGridBoxesHolder">
 
-                                                <h2
-                                                    className="box-headings"
-                                                >
-                                                    300
-                                                </h2>
-                                                <h5 className="box-headings"
-                                                 style={{
-                                                    color: "#425166",
-                                                    fontWeight: "400",
-                                                    fontSize: "16px",
-                                                }}
-                                                >
-                                                    Total orders
-                                                </h5>
-                                                <h5
-                                                    className="box-headings"
-                                                    style={{
-                                                        color: "#4079ED",
-                                                        fontWeight: "400",
-                                                        fontSize: "13px",
-                                                    }}
-                                                >
-                                                    +8% from yesterd
-                                                </h5>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    {/*Todays Expence div*/}
 
-                                    <div className="w-100 report-box">
-                                        <div>
-                                            <p>
-                                                Create your own moodboard <br />
-                                                and find them all at one place
-                                            </p>
-                                        </div>
-                                        <div>
-                                            <form>
-                                                <span>
-                                                    <img
-                                                        src="/images/svg/image.svg"
-                                                        alt="image icon"
-                                                    />
-                                                </span>
-                                                <input
-                                                    className="add-  "
-                                                    type="file"
-                                                    placeholder="Add image"
-                                                    id="img"
-                                                    name="img"
-                                                    accept="image/*"
-                                                />
-                                            </form>
-                                        </div>
-                                    </div>
+                                    {/* Top Statistics  */}
+                                    <TopStatistics topStatistics={this.state.topStatistics} />
 
-                                </div> */}
+                                    {/* Console Top Statistics */}
+                                    {/* <ConsoleTopStatistics topStatistics={this.state.consoleTopStatistics} /> */}
+                                    
 
-                                <div>
-                                    {/*Linkedin taffic cpc div*/}
-                                    {/* <div className="w-100 report-box">
-                                        <div className="d-flex justify-content-between mb-5">
-                                            <div><h4 className="card-heading">LinkedIn traffic CPC</h4></div>
-                                            <div>
-                                                <span>
-                                                    <img
-                                                        src="/images/svg/linkedin.svg"
-                                                        alt="linkedin icon"
-                                                    />
-                                                </span>
-                                                <span>
-                                                    <img
-                                                        src="/images/svg/dashboard-list-option.svg"
-                                                        alt="list icon"
-                                                    />
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <LineChart
-                                                width={300}
-                                                height={150}
-                                                data={this.state.data}
-                                            >
-                                                <XAxis dataKey="name" />
-                                                <YAxis />
-                                                <CartesianGrid stroke="#ccc" />
-                                                <Tooltip />
-                                                <Legend />
-                                                <Line
-                                                    type="monotone"
-                                                    dataKey="pv"
-                                                    stroke="#8884d8"
-                                                />
-                                                <Line
-                                                    type="monotone"
-                                                    dataKey="uv"
-                                                    stroke="#82ca9d"
-                                                />
-                                            </LineChart>
-                                        </div>
-                                        <div className="d-flex flex-column todayData linkedintrafic" style={{borderTop: '1px solid #E0E0E0'}}>
-                                            <div className="d-flex align-items-center justify-content-center">
-                                                <div className="d-flex flex-column pr-4">
-                                                    <h4 className="mb-0 d-flex justify-content-center align-items-center">
-                                                        <span className='pr-1'><img className='d-block' src="/images/svg/blue-dot.svg" alt="blue-dot icon" /></span>
-                                                        Last month
+                                    {/* <div className="">
+                                        <div className={"w-100 report-box"}>
+                                            <div className="d-flex justify-content-between">
+                                                <div>
+                                                    <h4 className="card-heading">
+                                                        Today's Expence
                                                     </h4>
-                                                    <h4 className='mb-0 text-center'>1234</h4>
+                                                    <h6>sales summery</h6>
                                                 </div>
-                                                <div className='divider'></div>
-                                                <div className="d-flex flex-column pl-4">
-                                                    <h4 className="mb-0 d-flex justify-content-center align-items-center">
-                                                        <span className='pr-1'><img className='d-block' src="/images/svg/green-dot.svg" alt="green-dot icon"/></span>
-                                                        This month
-                                                    </h4>
-                                                    <h4 className='mb-0 text-center'>1234</h4>
+                                                <div className="icons">
+                                                    <span>
+                                                        <img
+                                                            src="/images/svg/visitor-country.svg"
+                                                            alt="visit icon"
+                                                        />
+                                                    </span>
+                                                    <span>
+                                                        <img
+                                                            src="/images/svg/dashboard-list-option.svg"
+                                                            alt="list icon"
+                                                        />
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div className="fourGridBoxesHolder" style={{gap: '15px'}}>
+                                                <div className=" d-flex flex-column  w-100 box-color1">
+                                                    <span className="box-icon">
+                                                        <img
+                                                            src="/images/svg/todays-expence-icon1.svg"
+                                                            alt="list icon"
+                                                        />
+                                                    </span>
+                                                    <h2
+                                                        className="box-headings"
+                                                    >
+                                                        $1K
+                                                    </h2>
+                                                    <h5
+                                                        className="box-headings"
+                                                        style={{
+                                                            color: "#425166",
+                                                            fontWeight: "400",
+                                                            fontSize: "16px",
+                                                        }}
+                                                    >
+                                                        Total sales
+                                                    </h5>
+                                                    <h5
+                                                        className="box-headings"
+                                                        style={{
+                                                            color: "#4079ED",
+                                                            fontWeight: "400",
+                                                            fontSize: "13px",
+                                                        }}
+                                                    >
+                                                        +8% from yesterday
+                                                    </h5>
+                                                </div>
+                                                <div className="d-flex flex-column  w-100 box-color2">
+                                                    <span className="box-icon">
+                                                        <img
+                                                            src="/images/svg/todays-expence-icon2.svg"
+                                                            alt="list icon"
+                                                        />
+                                                    </span>
+                                                    <h2
+                                                        className="box-headings"
+                                                    >
+                                                        300
+                                                    </h2>
+                                                    <h5
+                                                        className="box-headings"
+                                                        style={{
+                                                            color: "#425166",
+                                                            fontWeight: "400",
+                                                            fontSize: "16px",
+                                                        }}
+                                                    >
+                                                        Total orders
+                                                    </h5>
+                                                    <h5
+                                                        className="box-headings"
+                                                        style={{
+                                                            color: "#4079ED",
+                                                            fontWeight: "400",
+                                                            fontSize: "13px",
+                                                        }}
+                                                    >
+                                                        +8% from yesterd
+                                                    </h5>
+                                                </div>
+                                                <div className="d-flex flex-column w-100 box-color3">
+                                                    <span className="box-icon">
+                                                        <img
+                                                            src="/images/svg/todays-expence-icon3.svg"
+                                                            alt="list icon"
+                                                        />
+                                                    </span>
+
+                                                    <h2
+                                                        className="box-headings"
+                                                    >
+                                                        5
+                                                    </h2>
+                                                    <h5
+                                                        className="box-headings"
+                                                        style={{
+                                                            color: "#425166",
+                                                            fontWeight: "400",
+                                                            fontSize: "16px",
+                                                        }}
+                                                    >
+                                                        Total sales
+                                                    </h5>
+                                                    <h5
+                                                        className="box-headings"
+                                                        style={{
+                                                            color: "#4079ED",
+                                                            fontWeight: "400",
+                                                            fontSize: "13px",
+                                                        }}
+                                                    >
+                                                        +8% from yesterd
+                                                    </h5>
+                                                </div>
+                                                <div className="d-flex flex-column w-100 box-color4">
+                                                    <span className="box-icon">
+                                                        <img
+                                                            src="/images/svg/todays-expence-icon4.svg"
+                                                            alt="list icon"
+                                                        />
+                                                    </span>
+
+                                                    <h2
+                                                        className="box-headings"
+                                                    >
+                                                        300
+                                                    </h2>
+                                                    <h5 className="box-headings"
+                                                    style={{
+                                                        color: "#425166",
+                                                        fontWeight: "400",
+                                                        fontSize: "16px",
+                                                    }}
+                                                    >
+                                                        Total orders
+                                                    </h5>
+                                                    <h5
+                                                        className="box-headings"
+                                                        style={{
+                                                            color: "#4079ED",
+                                                            fontWeight: "400",
+                                                            fontSize: "13px",
+                                                        }}
+                                                    >
+                                                        +8% from yesterd
+                                                    </h5>
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <div className="w-100 report-box">
+                                            <div>
+                                                <p>
+                                                    Create your own moodboard <br />
+                                                    and find them all at one place
+                                                </p>
+                                            </div>
+                                            <div>
+                                                <form>
+                                                    <span>
+                                                        <img
+                                                            src="/images/svg/image.svg"
+                                                            alt="image icon"
+                                                        />
+                                                    </span>
+                                                    <input
+                                                        className="add-  "
+                                                        type="file"
+                                                        placeholder="Add image"
+                                                        id="img"
+                                                        name="img"
+                                                        accept="image/*"
+                                                    />
+                                                </form>
+                                            </div>
+                                        </div>
+
                                     </div> */}
 
-
-                                    {/*Media graph div*/}
-                                    {/* <MediaGraph statistics={this.state.mediaStatistics} /> */}
-
-                                    {/* <div className="w-100 report-box">
-                                        <div className="justify-content-between d-flex mb-3">
-                                            <div>
-                                                <h3 className="card-heading">
-                                                    Media
-                                                </h3>
+                                    <div>
+                                        {/*Linkedin taffic cpc div*/}
+                                        {/* <div className="w-100 report-box">
+                                            <div className="d-flex justify-content-between mb-5">
+                                                <div><h4 className="card-heading">LinkedIn traffic CPC</h4></div>
+                                                <div>
+                                                    <span>
+                                                        <img
+                                                            src="/images/svg/linkedin.svg"
+                                                            alt="linkedin icon"
+                                                        />
+                                                    </span>
+                                                    <span>
+                                                        <img
+                                                            src="/images/svg/dashboard-list-option.svg"
+                                                            alt="list icon"
+                                                        />
+                                                    </span>
+                                                </div>
                                             </div>
                                             <div>
-                                                <span>
-                                                    <img
-                                                        src="/images/svg/dashboard-list-option.svg"
-                                                        alt="list icon"
+                                                <LineChart
+                                                    width={300}
+                                                    height={150}
+                                                    data={this.state.data}
+                                                >
+                                                    <XAxis dataKey="name" />
+                                                    <YAxis />
+                                                    <CartesianGrid stroke="#ccc" />
+                                                    <Tooltip />
+                                                    <Legend />
+                                                    <Line
+                                                        type="monotone"
+                                                        dataKey="pv"
+                                                        stroke="#8884d8"
                                                     />
-                                                </span>
+                                                    <Line
+                                                        type="monotone"
+                                                        dataKey="uv"
+                                                        stroke="#82ca9d"
+                                                    />
+                                                </LineChart>
                                             </div>
-                                        </div>
-                                        <div className="d-flex flex-column">
+                                            <div className="d-flex flex-column todayData linkedintrafic" style={{borderTop: '1px solid #E0E0E0'}}>
+                                                <div className="d-flex align-items-center justify-content-center">
+                                                    <div className="d-flex flex-column pr-4">
+                                                        <h4 className="mb-0 d-flex justify-content-center align-items-center">
+                                                            <span className='pr-1'><img className='d-block' src="/images/svg/blue-dot.svg" alt="blue-dot icon" /></span>
+                                                            Last month
+                                                        </h4>
+                                                        <h4 className='mb-0 text-center'>1234</h4>
+                                                    </div>
+                                                    <div className='divider'></div>
+                                                    <div className="d-flex flex-column pl-4">
+                                                        <h4 className="mb-0 d-flex justify-content-center align-items-center">
+                                                            <span className='pr-1'><img className='d-block' src="/images/svg/green-dot.svg" alt="green-dot icon"/></span>
+                                                            This month
+                                                        </h4>
+                                                        <h4 className='mb-0 text-center'>1234</h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> */}
+
+
+                                        {/*Media graph div*/}
+                                        {/* <MediaGraph statistics={this.state.mediaStatistics} /> */}
+
+                                        {/* <div className="w-100 report-box">
+                                            <div className="justify-content-between d-flex mb-3">
+                                                <div>
+                                                    <h3 className="card-heading">
+                                                        Media
+                                                    </h3>
+                                                </div>
+                                                <div>
+                                                    <span>
+                                                        <img
+                                                            src="/images/svg/dashboard-list-option.svg"
+                                                            alt="list icon"
+                                                        />
+                                                    </span>
+                                                </div>
+                                            </div>
                                             <div className="d-flex flex-column">
-                                                <h5 style={{color: "#333333", fontSize:"16px",fontWeight:"400"}}>Twitter</h5>
+                                                <div className="d-flex flex-column">
+                                                    <h5 style={{color: "#333333", fontSize:"16px",fontWeight:"400"}}>Twitter</h5>
+                                                    <div className="progressbar d-flex align-items-center">
+                                                        <div className="progress flex-grow-1">
+                                                            <div
+                                                                className="progress-bar"
+                                                                role="progressbar"
+                                                                style={{
+                                                                    width: `${Math.min(
+                                                                        (132645 /
+                                                                            150000) *
+                                                                            100,
+                                                                        100
+                                                                    )}%`,
+                                                                }}
+                                                                aria-valuenow={`${Math.min(
+                                                                    (132645 / 150000) *
+                                                                        100,
+                                                                    100
+                                                                )}`}
+                                                                aria-valuemin="0"
+                                                                aria-valuemax="100"
+                                                            ></div>
+                                                        </div>
+                                                        <span className="ml-2">
+                                                            {Math.min(
+                                                                (132645 / 150000) * 100,
+                                                                100
+                                                            )}
+                                                            %
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                <h5 style={{color: "#333333", fontSize:"16px",fontWeight:"400"}}>Instagram</h5>
                                                 <div className="progressbar d-flex align-items-center">
                                                     <div className="progress flex-grow-1">
                                                         <div
@@ -924,15 +957,13 @@ export default class IndexAnalytics extends Component {
                                                             role="progressbar"
                                                             style={{
                                                                 width: `${Math.min(
-                                                                    (132645 /
-                                                                        150000) *
+                                                                    (132645 / 150000) *
                                                                         100,
                                                                     100
                                                                 )}%`,
                                                             }}
                                                             aria-valuenow={`${Math.min(
-                                                                (132645 / 150000) *
-                                                                    100,
+                                                                (132645 / 150000) * 100,
                                                                 100
                                                             )}`}
                                                             aria-valuemin="0"
@@ -947,399 +978,302 @@ export default class IndexAnalytics extends Component {
                                                         %
                                                     </span>
                                                 </div>
-                                            </div>
-
-                                            <h5 style={{color: "#333333", fontSize:"16px",fontWeight:"400"}}>Instagram</h5>
-                                            <div className="progressbar d-flex align-items-center">
-                                                <div className="progress flex-grow-1">
-                                                    <div
-                                                        className="progress-bar"
-                                                        role="progressbar"
-                                                        style={{
-                                                            width: `${Math.min(
-                                                                (132645 / 150000) *
-                                                                    100,
+                                                <h5 style={{color: "#333333", fontSize:"16px",fontWeight:"400"}}>TikTok</h5>
+                                                <div className="progressbar d-flex align-items-center">
+                                                    <div className="progress flex-grow-1">
+                                                        <div
+                                                            className="progress-bar"
+                                                            role="progressbar"
+                                                            style={{
+                                                                width: `${Math.min(
+                                                                    (132645 / 150000) *
+                                                                        100,
+                                                                    100
+                                                                )}%`,
+                                                            }}
+                                                            aria-valuenow={`${Math.min(
+                                                                (132645 / 150000) * 100,
                                                                 100
-                                                            )}%`,
-                                                        }}
-                                                        aria-valuenow={`${Math.min(
+                                                            )}`}
+                                                            aria-valuemin="0"
+                                                            aria-valuemax="100"
+                                                        ></div>
+                                                    </div>
+                                                    <span className="ml-2">
+                                                        {Math.min(
                                                             (132645 / 150000) * 100,
                                                             100
-                                                        )}`}
-                                                        aria-valuemin="0"
-                                                        aria-valuemax="100"
-                                                    ></div>
+                                                        )}
+                                                        %
+                                                    </span>
                                                 </div>
-                                                <span className="ml-2">
-                                                    {Math.min(
-                                                        (132645 / 150000) * 100,
-                                                        100
-                                                    )}
-                                                    %
-                                                </span>
-                                            </div>
-                                            <h5 style={{color: "#333333", fontSize:"16px",fontWeight:"400"}}>TikTok</h5>
-                                            <div className="progressbar d-flex align-items-center">
-                                                <div className="progress flex-grow-1">
-                                                    <div
-                                                        className="progress-bar"
-                                                        role="progressbar"
-                                                        style={{
-                                                            width: `${Math.min(
-                                                                (132645 / 150000) *
-                                                                    100,
-                                                                100
-                                                            )}%`,
-                                                        }}
-                                                        aria-valuenow={`${Math.min(
+                                                <h5 style={{color: "#333333", fontSize:"16px",fontWeight:"400"}}>Facebook</h5>
+                                                <div className="progressbar d-flex align-items-center">
+                                                    <div className="d-flex flex-column">
+                                                    <span className="ml-2">
+                                                        {Math.min(
                                                             (132645 / 150000) * 100,
                                                             100
-                                                        )}`}
-                                                        aria-valuemin="0"
-                                                        aria-valuemax="100"
-                                                    ></div>
-                                                </div>
-                                                <span className="ml-2">
-                                                    {Math.min(
-                                                        (132645 / 150000) * 100,
-                                                        100
-                                                    )}
-                                                    %
-                                                </span>
-                                            </div>
-                                            <h5 style={{color: "#333333", fontSize:"16px",fontWeight:"400"}}>Facebook</h5>
-                                            <div className="progressbar d-flex align-items-center">
-                                                <div className="d-flex flex-column">
-                                                <span className="ml-2">
-                                                    {Math.min(
-                                                        (132645 / 150000) * 100,
-                                                        100
-                                                    )}
-                                                    %
-                                                </span>
-                                                <div className="progress flex-grow-1">
-                                                    <div
-                                                        className="progress-bar" role="progressbar"
-                                                        style={{
-                                                            width: `${Math.min(
-                                                                (132645 / 150000) *
-                                                                    100,
+                                                        )}
+                                                        %
+                                                    </span>
+                                                    <div className="progress flex-grow-1">
+                                                        <div
+                                                            className="progress-bar" role="progressbar"
+                                                            style={{
+                                                                width: `${Math.min(
+                                                                    (132645 / 150000) *
+                                                                        100,
+                                                                    100
+                                                                )}%`,color:"#004F9D"
+                                                            }}
+                                                            aria-valuenow={`${Math.min(
+                                                                (132645 / 150000) * 100,
                                                                 100
-                                                            )}%`,color:"#004F9D"
-                                                        }}
-                                                        aria-valuenow={`${Math.min(
-                                                            (132645 / 150000) * 100,
-                                                            100
-                                                        )}`}
-                                                        aria-valuemin="0"
-                                                        aria-valuemax="100"
-                                                    ></div>
-                                                </div>
+                                                            )}`}
+                                                            aria-valuemin="0"
+                                                            aria-valuemax="100"
+                                                        ></div>
+                                                    </div>
+
+                                                    </div>
 
                                                 </div>
-
                                             </div>
-                                        </div>
-                                        <p>Source:BestGenNewtonSite</p>
-                                    </div> */}
-                                </div>
-                            </div>
-                        </div>
-
-                        {/*youtube engagement div*/}
-                        {/* <div className="report-box">
-                            <div className="d-flex justify-content-between mb-5">
-                                <div>
-                                    <p className="card-heading">
-                                        Youtube Engagement
-                                    </p>
-                                </div>
-                                <div>
-                                    <span>
-                                        <img
-                                            src="/images/svg/youtube.svg"
-                                            alt="youtube icon"
-                                        />
-                                    </span>
-                                    <span>
-                                        <img
-                                            src="/images/svg/dashboard-list-option.svg"
-                                            alt="list icon"
-                                        />
-                                    </span>
+                                            <p>Source:BestGenNewtonSite</p>
+                                        </div> */}
+                                    </div>
                                 </div>
                             </div>
 
-                            <BarChart
-                                width={500}
-                                height={300}
-                                data={this.state.youtubeData}
-                                margin={{
-                                    top: 5,
-                                    right: 30,
-                                    left: 20,
-                                    bottom: 5,
-                                }}
-                            >
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis dataKey="name" />
-                                <YAxis />
-                                <Tooltip />
-                                <Legend />
-                                <Bar dataKey="Views" fill="#1EA8FD" barSize={10} />
-                                <Bar dataKey="Likes" fill="#00F3A3" barSize={10} />
-                                <Bar dataKey="Subscribers" fill="#FFC514" barSize={10} />
-                            </BarChart>
-                        </div> */}
-
-
-                        <div>
-                            <div className='row'>
-                                {/*Another important data div*/}
-                                {/* <div className='col-6'>
-                                    <div className="report-box">
-                                        <div className="justify-content-between d-flex mb-3">
-                                            <div>
-                                                <p className="card-heading">
-                                                    Another Data
-                                                </p>
-                                            </div>
-                                            <div>
-                                                <span>
-                                                    <img
-                                                        src="/images/svg/dashboard-list-option.svg"
-                                                        alt="list icon"
-                                                    />
-                                                </span>
-                                            </div>
-                                        </div>
-
-                                        <div className="">
-                                            <BarChart
-                                                width={350}
-                                                height={300}
-                                                data={this.state.data}
-                                                margin={{top: 20,right: 30,left: 20,bottom: 5,}}
-                                            >
-                                                <CartesianGrid strokeDasharray="3 3" />
-                                                <XAxis dataKey="name" />
-                                                <YAxis />
-                                                <Tooltip />
-                                                <Legend />
-                                                <Bar
-                                                    dataKey="pv"
-                                                    stackId="a"
-                                                    fill="#0095FF"
-                                                    barSize={12}
-                                                />
-                                                <Bar
-                                                    dataKey="uv"
-                                                    stackId="a"
-                                                    fill="#00E096"
-                                                    barSize={12}
-                                                />
-                                            </BarChart>
-                                        </div>
-                                        <div className='divider'></div>
-                                        <div className="pt-4 d-flex flex-column todayData">
-                                            <h3 className="text-center">Today</h3>
-                                            <div className="d-flex align-items-center justify-content-center">
-                                                <div className="d-flex flex-column pr-4">
-                                                    <h4 className="mb-0 d-flex justify-content-center align-items-center">
-                                                        <span className='pr-1'><img className='d-block' src="/images/svg/blue-dot.svg" alt="blue-dot icon" /></span>
-                                                        Volume
-                                                    </h4>
-                                                    <h4 className='mb-0 text-center'>1234</h4>
-                                                </div>
-                                                <div className='divider'></div>
-                                                <div className="d-flex flex-column pl-4">
-                                                    <h4 className="mb-0 d-flex justify-content-center align-items-center">
-                                                        <span className='pr-1'><img className='d-block' src="/images/svg/green-dot.svg" alt="green-dot icon"/></span>
-                                                        Services
-                                                    </h4>
-                                                    <h4 className='mb-0 text-center'>1234</h4>
-                                                </div>
-                                            </div>
-                                        </div>
+                            {/*youtube engagement div*/}
+                            {/* <div className="report-box">
+                                <div className="d-flex justify-content-between mb-5">
+                                    <div>
+                                        <p className="card-heading">
+                                            Youtube Engagement
+                                        </p>
                                     </div>
-                                </div> */}
-
-                                {/*stores status div*/}
-                                {/* <div className='col-6'>
-                                    <div className="d-flex flex-column report-box">
-                                        <div className="d-flex justify-content-between mb-5">
-                                            <div>
-                                                <p className="card-heading">
-                                                    Store status
-                                                </p>
-                                            </div>
-                                            <div>
-                                                <span>
-                                                    <img
-                                                        src="/images/svg/dashboard-list-option.svg"
-                                                        alt="list icon"
-                                                    />
-                                                </span>
-                                                <span>
-                                                    <img
-                                                        src="/images/svg/store.svg"
-                                                        alt="list icon"
-                                                    />
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div className="d-flex justify-content-between">
-                                            <div className="d-flex flex-column">
-                                                <h4>Newton' store</h4>
-                                                <h4 className="box-headings">$10.21k</h4>
-                                                <h5 style={{color:"#0BD25F"}}>+5% then prev day</h5>
-                                                <LineChart
-                                                    width={100}
-                                                    height={50}
-                                                    data={this.state.data}
-                                                >
-                                                    <Line
-                                                        type="monotone"
-                                                        dataKey="pv"
-                                                        stroke="#0BD25F"
-                                                        strokeWidth={2}
-                                                    />
-                                                </LineChart>
-                                            </div>
-                                            <div className="d-flex flex-column">
-                                                <h5 style={{color:"#666666",fontSize:"14px"}}>Orders</h5>
-                                                <span className="box-headings">231</span>
-                                                <h5 style={{color:"#666666",fontSize:"14px"}}>Average data</h5>
-                                                <span className="box-headings">231</span>
-                                                <h5 style={{color:"#666666",fontSize:"14px"}}>Total profit</h5>
-                                                <span className="box-headings">231</span>
-                                            </div>
-                                        </div>
-                                        <hr className="divider" />
-                                        <div className="d-flex justify-content-between">
-                                            <div className="d-flex flex-column">
-                                                <h6 style={{color:"#333333",fontSize:"14px"}}>Store name that's lo...</h6>
-                                                <h4 className="box-headings">$650.43</h4>
-                                                <h5 style={{color:"#F44C3D"}}>+5% then prev day</h5>
-                                                <LineChart
-                                                    width={100}
-                                                    height={50}
-                                                    data={this.state.data}
-                                                >
-                                                    <Line
-                                                        type="monotone"
-                                                        dataKey="pv"
-                                                        stroke="#F44C3D"
-                                                        strokeWidth={2}
-                                                    />
-                                                </LineChart>
-                                            </div>
-                                            <div className="d-flex flex-column">
-                                                <h5 style={{color:"#666666",fontSize:"14px"}}>Orders</h5>
-                                                <span className="box-headings">231</span>
-                                                <h5 style={{color:"#666666",fontSize:"14px"}}>Average data</h5>
-                                                <span className="box-headings">231</span>
-                                                <h5 style={{color:"#666666",fontSize:"14px"}}>Total profit</h5>
-                                                <span className="box-headings">231</span>
-                                            </div>
-                                        </div>
+                                    <div>
+                                        <span>
+                                            <img
+                                                src="/images/svg/youtube.svg"
+                                                alt="youtube icon"
+                                            />
+                                        </span>
+                                        <span>
+                                            <img
+                                                src="/images/svg/dashboard-list-option.svg"
+                                                alt="list icon"
+                                            />
+                                        </span>
                                     </div>
-                                </div> */}
+                                </div>
 
-                                {/*Another data div*/}
-                                {/* <div className='col-6'>
-                                    <div className="report-box">
-                                        <div className="d-flex justify-content-between mb-5">
-                                            <div>
-                                                <p className="card-heading">
-                                                    Another data *********
-                                                </p>
-                                            </div>
-                                            <div>
-                                                <span>
-                                                    <img
-                                                        src="/images/svg/dashboard-list-option.svg"
-                                                        alt="list icon"
-                                                    />
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div className="d-flex justify-content-between">
-                                            <PieChart width={184} height={184}>
-                                                <Pie
-                                                    data={this.state.data02}
-                                                    cx="50%"
-                                                    cy="50%"
-                                                    outerRadius={50}
-                                                    fill="#8884d8"
-                                                    dataKey="value"
-                                                >{this.state.data02.map(
-                                                    (entry, index) => (
-                                                        <Cell
-                                                            key={`cell-${index}`}
-                                                            fill={
-                                                                this.state.COLORS[
-                                                                    index %
-                                                                        this.state
-                                                                            .COLORS
-                                                                            .length
-                                                                ]
-                                                            }
+                                <BarChart
+                                    width={500}
+                                    height={300}
+                                    data={this.state.youtubeData}
+                                    margin={{
+                                        top: 5,
+                                        right: 30,
+                                        left: 20,
+                                        bottom: 5,
+                                    }}
+                                >
+                                    <CartesianGrid strokeDasharray="3 3" />
+                                    <XAxis dataKey="name" />
+                                    <YAxis />
+                                    <Tooltip />
+                                    <Legend />
+                                    <Bar dataKey="Views" fill="#1EA8FD" barSize={10} />
+                                    <Bar dataKey="Likes" fill="#00F3A3" barSize={10} />
+                                    <Bar dataKey="Subscribers" fill="#FFC514" barSize={10} />
+                                </BarChart>
+                            </div> */}
+
+
+                            <div>
+                                <div className='row'>
+                                    {/*Another important data div*/}
+                                    {/* <div className='col-6'>
+                                        <div className="report-box">
+                                            <div className="justify-content-between d-flex mb-3">
+                                                <div>
+                                                    <p className="card-heading">
+                                                        Another Data
+                                                    </p>
+                                                </div>
+                                                <div>
+                                                    <span>
+                                                        <img
+                                                            src="/images/svg/dashboard-list-option.svg"
+                                                            alt="list icon"
                                                         />
-                                                    ))}
-                                                </Pie>
-                                            </PieChart>
-                                            <div className="d-flex flex-column dotList">
-                                                <span className="d-flex align-items-center pb-4">
-                                                    <span className="mr-1"><img className='d-block' src="/images/svg/green-dot.svg" alt="green-dot icon"/></span>
-                                                    <h5 className='mb-0'>Desktop</h5>
-                                                </span>
-                                                <span className="d-flex align-items-center pb-4">
-                                                    <span className="mr-1"><img className='d-block' src="/images/svg/yellow-dot.svg" alt="yellow-dot icon"/></span>
-                                                    <h5 className='mb-0'>Mobile</h5>
-                                                </span>
-                                                <span className="d-flex align-items-center pb-4">
-                                                    <span className="mr-1"><img className='d-block' src="/images/svg/red-dot.svg" alt="red-dot icon"/></span>
-                                                    <h5 className='mb-0'>Tablet</h5>
-                                                </span>
-                                                <span className="d-flex align-items-center pb-4">
-                                                    <span className="mr-1"><img className='d-block' src="/images/svg/unknown-dot.svg" alt="red-dot icon" /></span>
-                                                    <h5 className='mb-0'>Unknown</h5>
-                                                </span>
+                                                    </span>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div> */}
 
-                                {/*Another data dive */}
-                                {/* <div className='col-6'>
-                                    <div className="report-box">
-                                        <div className="d-flex justify-content-between mb-5">
-                                            <div>
-                                                <p className="card-heading">
-                                                    Another data *********
-                                                </p>
-                                            </div>
-                                            <div>
-                                                <span>
-                                                    <img
-                                                        src="/images/svg/dashboard-list-option.svg"
-                                                        alt="list icon"
+                                            <div className="">
+                                                <BarChart
+                                                    width={350}
+                                                    height={300}
+                                                    data={this.state.data}
+                                                    margin={{top: 20,right: 30,left: 20,bottom: 5,}}
+                                                >
+                                                    <CartesianGrid strokeDasharray="3 3" />
+                                                    <XAxis dataKey="name" />
+                                                    <YAxis />
+                                                    <Tooltip />
+                                                    <Legend />
+                                                    <Bar
+                                                        dataKey="pv"
+                                                        stackId="a"
+                                                        fill="#0095FF"
+                                                        barSize={12}
                                                     />
-                                                </span>
+                                                    <Bar
+                                                        dataKey="uv"
+                                                        stackId="a"
+                                                        fill="#00E096"
+                                                        barSize={12}
+                                                    />
+                                                </BarChart>
+                                            </div>
+                                            <div className='divider'></div>
+                                            <div className="pt-4 d-flex flex-column todayData">
+                                                <h3 className="text-center">Today</h3>
+                                                <div className="d-flex align-items-center justify-content-center">
+                                                    <div className="d-flex flex-column pr-4">
+                                                        <h4 className="mb-0 d-flex justify-content-center align-items-center">
+                                                            <span className='pr-1'><img className='d-block' src="/images/svg/blue-dot.svg" alt="blue-dot icon" /></span>
+                                                            Volume
+                                                        </h4>
+                                                        <h4 className='mb-0 text-center'>1234</h4>
+                                                    </div>
+                                                    <div className='divider'></div>
+                                                    <div className="d-flex flex-column pl-4">
+                                                        <h4 className="mb-0 d-flex justify-content-center align-items-center">
+                                                            <span className='pr-1'><img className='d-block' src="/images/svg/green-dot.svg" alt="green-dot icon"/></span>
+                                                            Services
+                                                        </h4>
+                                                        <h4 className='mb-0 text-center'>1234</h4>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div className="d-flex justify-content-between align-items-center">
-                                            <PieChart width={184} height={184}>
-                                                <Pie
-                                                    data={this.state.data02}
-                                                    cx="50%"
-                                                    cy="50%"
-                                                    outerRadius={50}
-                                                    fill="#8884d8"
-                                                    dataKey="value"
-                                                >
-                                                    {this.state.data02.map(
+                                    </div> */}
+
+                                    {/*stores status div*/}
+                                    {/* <div className='col-6'>
+                                        <div className="d-flex flex-column report-box">
+                                            <div className="d-flex justify-content-between mb-5">
+                                                <div>
+                                                    <p className="card-heading">
+                                                        Store status
+                                                    </p>
+                                                </div>
+                                                <div>
+                                                    <span>
+                                                        <img
+                                                            src="/images/svg/dashboard-list-option.svg"
+                                                            alt="list icon"
+                                                        />
+                                                    </span>
+                                                    <span>
+                                                        <img
+                                                            src="/images/svg/store.svg"
+                                                            alt="list icon"
+                                                        />
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div className="d-flex justify-content-between">
+                                                <div className="d-flex flex-column">
+                                                    <h4>Newton' store</h4>
+                                                    <h4 className="box-headings">$10.21k</h4>
+                                                    <h5 style={{color:"#0BD25F"}}>+5% then prev day</h5>
+                                                    <LineChart
+                                                        width={100}
+                                                        height={50}
+                                                        data={this.state.data}
+                                                    >
+                                                        <Line
+                                                            type="monotone"
+                                                            dataKey="pv"
+                                                            stroke="#0BD25F"
+                                                            strokeWidth={2}
+                                                        />
+                                                    </LineChart>
+                                                </div>
+                                                <div className="d-flex flex-column">
+                                                    <h5 style={{color:"#666666",fontSize:"14px"}}>Orders</h5>
+                                                    <span className="box-headings">231</span>
+                                                    <h5 style={{color:"#666666",fontSize:"14px"}}>Average data</h5>
+                                                    <span className="box-headings">231</span>
+                                                    <h5 style={{color:"#666666",fontSize:"14px"}}>Total profit</h5>
+                                                    <span className="box-headings">231</span>
+                                                </div>
+                                            </div>
+                                            <hr className="divider" />
+                                            <div className="d-flex justify-content-between">
+                                                <div className="d-flex flex-column">
+                                                    <h6 style={{color:"#333333",fontSize:"14px"}}>Store name that's lo...</h6>
+                                                    <h4 className="box-headings">$650.43</h4>
+                                                    <h5 style={{color:"#F44C3D"}}>+5% then prev day</h5>
+                                                    <LineChart
+                                                        width={100}
+                                                        height={50}
+                                                        data={this.state.data}
+                                                    >
+                                                        <Line
+                                                            type="monotone"
+                                                            dataKey="pv"
+                                                            stroke="#F44C3D"
+                                                            strokeWidth={2}
+                                                        />
+                                                    </LineChart>
+                                                </div>
+                                                <div className="d-flex flex-column">
+                                                    <h5 style={{color:"#666666",fontSize:"14px"}}>Orders</h5>
+                                                    <span className="box-headings">231</span>
+                                                    <h5 style={{color:"#666666",fontSize:"14px"}}>Average data</h5>
+                                                    <span className="box-headings">231</span>
+                                                    <h5 style={{color:"#666666",fontSize:"14px"}}>Total profit</h5>
+                                                    <span className="box-headings">231</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> */}
+
+                                    {/*Another data div*/}
+                                    {/* <div className='col-6'>
+                                        <div className="report-box">
+                                            <div className="d-flex justify-content-between mb-5">
+                                                <div>
+                                                    <p className="card-heading">
+                                                        Another data *********
+                                                    </p>
+                                                </div>
+                                                <div>
+                                                    <span>
+                                                        <img
+                                                            src="/images/svg/dashboard-list-option.svg"
+                                                            alt="list icon"
+                                                        />
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div className="d-flex justify-content-between">
+                                                <PieChart width={184} height={184}>
+                                                    <Pie
+                                                        data={this.state.data02}
+                                                        cx="50%"
+                                                        cy="50%"
+                                                        outerRadius={50}
+                                                        fill="#8884d8"
+                                                        dataKey="value"
+                                                    >{this.state.data02.map(
                                                         (entry, index) => (
                                                             <Cell
                                                                 key={`cell-${index}`}
@@ -1352,35 +1286,101 @@ export default class IndexAnalytics extends Component {
                                                                     ]
                                                                 }
                                                             />
-                                                        )
-                                                    )}
-                                                </Pie>
-                                            </PieChart>
-                                            <div className="d-flex flex-column dotList">
-                                                <span className="d-flex align-items-center pb-4">
-                                                    <span className="mr-1"><img className='d-block' src="/images/svg/green-dot.svg" alt="green-dot icon"/></span>
-                                                    <h5 className='mb-0'>Desktop</h5>
-                                                </span>
-                                                <span className="d-flex align-items-center pb-4">
-                                                    <span className="mr-1"><img className='d-block' src="/images/svg/yellow-dot.svg" alt="yellow-dot icon"/></span>
-                                                    <h5 className='mb-0'>Mobile</h5>
-                                                </span>
-                                                <span className="d-flex align-items-center pb-4">
-                                                    <span className="mr-1"><img className='d-block' src="/images/svg/red-dot.svg" alt="red-dot icon"/></span>
-                                                    <h5 className='mb-0'>Tablet</h5>
-                                                </span>
-                                                <span className="d-flex align-items-center pb-4">
-                                                    <span className="mr-1"><img className='d-block' src="/images/svg/unknown-dot.svg" alt="red-dot icon" /></span>
-                                                    <h5 className='mb-0'>Unknown</h5>
-                                                </span>
+                                                        ))}
+                                                    </Pie>
+                                                </PieChart>
+                                                <div className="d-flex flex-column dotList">
+                                                    <span className="d-flex align-items-center pb-4">
+                                                        <span className="mr-1"><img className='d-block' src="/images/svg/green-dot.svg" alt="green-dot icon"/></span>
+                                                        <h5 className='mb-0'>Desktop</h5>
+                                                    </span>
+                                                    <span className="d-flex align-items-center pb-4">
+                                                        <span className="mr-1"><img className='d-block' src="/images/svg/yellow-dot.svg" alt="yellow-dot icon"/></span>
+                                                        <h5 className='mb-0'>Mobile</h5>
+                                                    </span>
+                                                    <span className="d-flex align-items-center pb-4">
+                                                        <span className="mr-1"><img className='d-block' src="/images/svg/red-dot.svg" alt="red-dot icon"/></span>
+                                                        <h5 className='mb-0'>Tablet</h5>
+                                                    </span>
+                                                    <span className="d-flex align-items-center pb-4">
+                                                        <span className="mr-1"><img className='d-block' src="/images/svg/unknown-dot.svg" alt="red-dot icon" /></span>
+                                                        <h5 className='mb-0'>Unknown</h5>
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div> */}
+                                    </div> */}
+
+                                    {/*Another data dive */}
+                                    {/* <div className='col-6'>
+                                        <div className="report-box">
+                                            <div className="d-flex justify-content-between mb-5">
+                                                <div>
+                                                    <p className="card-heading">
+                                                        Another data *********
+                                                    </p>
+                                                </div>
+                                                <div>
+                                                    <span>
+                                                        <img
+                                                            src="/images/svg/dashboard-list-option.svg"
+                                                            alt="list icon"
+                                                        />
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div className="d-flex justify-content-between align-items-center">
+                                                <PieChart width={184} height={184}>
+                                                    <Pie
+                                                        data={this.state.data02}
+                                                        cx="50%"
+                                                        cy="50%"
+                                                        outerRadius={50}
+                                                        fill="#8884d8"
+                                                        dataKey="value"
+                                                    >
+                                                        {this.state.data02.map(
+                                                            (entry, index) => (
+                                                                <Cell
+                                                                    key={`cell-${index}`}
+                                                                    fill={
+                                                                        this.state.COLORS[
+                                                                            index %
+                                                                                this.state
+                                                                                    .COLORS
+                                                                                    .length
+                                                                        ]
+                                                                    }
+                                                                />
+                                                            )
+                                                        )}
+                                                    </Pie>
+                                                </PieChart>
+                                                <div className="d-flex flex-column dotList">
+                                                    <span className="d-flex align-items-center pb-4">
+                                                        <span className="mr-1"><img className='d-block' src="/images/svg/green-dot.svg" alt="green-dot icon"/></span>
+                                                        <h5 className='mb-0'>Desktop</h5>
+                                                    </span>
+                                                    <span className="d-flex align-items-center pb-4">
+                                                        <span className="mr-1"><img className='d-block' src="/images/svg/yellow-dot.svg" alt="yellow-dot icon"/></span>
+                                                        <h5 className='mb-0'>Mobile</h5>
+                                                    </span>
+                                                    <span className="d-flex align-items-center pb-4">
+                                                        <span className="mr-1"><img className='d-block' src="/images/svg/red-dot.svg" alt="red-dot icon"/></span>
+                                                        <h5 className='mb-0'>Tablet</h5>
+                                                    </span>
+                                                    <span className="d-flex align-items-center pb-4">
+                                                        <span className="mr-1"><img className='d-block' src="/images/svg/unknown-dot.svg" alt="red-dot icon" /></span>
+                                                        <h5 className='mb-0'>Unknown</h5>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> */}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className={"col-4"}>
+                        <div className={"col-4"}>
 
                         {/*right side div*/}
 
@@ -1474,11 +1474,17 @@ export default class IndexAnalytics extends Component {
                         </div>
 
                         {/* <div className="report-box"> */}
-                                <DeviceUsersGraph deviceCategoriesStatistics={this.state.deviceCategoriesStatistics} />
+
+
+
+                                {/* <DeviceUsersGraph deviceCategoriesStatistics={this.state.deviceCategoriesStatistics} /> */}
                         {/* </div> */}
-                        <UsersDaysWithAnnotationsGraph statistics={this.state.usersDaysStatistics} />
-                                        <AnnotationsTable user={this.props.user} annotations={this.state.annotations} satisticsPaddingDaysCallback={this.changeStatisticsPaddingDays} statisticsPaddingDays={this.state.statisticsPaddingDays} />
-                                        <MediaGraph statistics={this.state.mediaStatistics} />
+
+
+
+                        {/* <UsersDaysWithAnnotationsGraph statistics={this.state.usersDaysStatistics} /> */}
+                        {/* <AnnotationsTable user={this.props.user} annotations={this.state.annotations} satisticsPaddingDaysCallback={this.changeStatisticsPaddingDays} statisticsPaddingDays={this.state.statisticsPaddingDays} /> */}
+                        {/* <MediaGraph statistics={this.state.mediaStatistics} /> */}
                         {/* <div className="row ml-0 mr-0 mt-4">
 
                                             <div className="col-6 scrollable">
