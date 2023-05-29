@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import Toast from "../../../utils/Toast";
 import {Redirect} from 'react-router-dom'
+import validator from 'validator'
 
 import ErrorAlert from '../../../utils/ErrorAlert'
 import HttpClient from '../../../utils/HttpClient'
@@ -57,6 +58,7 @@ export default class ShareAnalytics extends Component {
                 recurrence: null,
                 emails: [],
                 statistics_padding_days: this.props.statisticsPaddingDays,
+                validEmail:"",
                 // start_date: this.props.start_date,
                 // end_date: this.props.end_date,
             },
@@ -78,13 +80,10 @@ export default class ShareAnalytics extends Component {
         this.addEmail = this.addEmail.bind(this);
         this.deleteEmail = this.deleteEmail.bind(this);
         this.handleImageClick = this.handleImageClick.bind(this);
+        this.emailValidation = this.emailValidation.bind(this);
     }
 
-    toggle() {
-        this.setState({
-          popoverOpen: !this.state.popoverOpen
-        });
-      }
+
 
     componentDidMount() {
         document.title = 'User Accounts';
@@ -143,8 +142,27 @@ export default class ShareAnalytics extends Component {
                 this.setState({errors: err});
             });
     }
-    addEmail(e) {
-        if (document.getElementById("tracking_emails").value) {
+
+    toggle() {
+        this.setState({
+          popoverOpen: !this.state.popoverOpen
+        });
+      }
+    emailValidation(e){
+
+        var email = e.target.value
+        
+        this.setState({validEmail:email})
+            // if (validator.isEmail(email)) {
+            // setEmailError('Valid Email :)')
+            // } else {
+            // setEmailError('Enter valid Email!')
+            // }
+
+    }
+    addEmail(e) {     
+            
+        if (validator.isEmail(this.state.validEmail) && document.getElementById("tracking_emails").value) {
             if (
                 this.state.total_credits >=  this.state.form_data.emails.length
             ) {
@@ -159,6 +177,14 @@ export default class ShareAnalytics extends Component {
             else {
                     this.props.upgradePopup('increase-limits');
                 }
+        }
+        else{
+            // if (validator.isEmail(email)) {
+            // setEmailError('Valid Email :)')
+            // } else {
+            // setEmailError('Enter valid Email!')
+            // }
+            window.alert("Please enter valid email");
         }
     }
     deleteEmail(e) {
@@ -297,6 +323,7 @@ export default class ShareAnalytics extends Component {
                                 name="emails" 
                                 id="tracking_emails"
                                 onKeyUp={(e) => { if (e.key === "Enter") this.addEmail(e) }}
+                                onChange={(e) => {this.emailValidation(e);}}
                                 />
                             <div className="input-group-append">
                                 <a onClick={(e) => {this.addEmail(e);}} href="#"><i className="ti-plus"></i></a>
