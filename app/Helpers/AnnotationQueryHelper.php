@@ -206,10 +206,10 @@ class AnnotationQueryHelper
     public static function shopifyQuery(array $userIdsArray)
     {
         return "SELECT 1, published_at AS show_at, NULL, category, title AS event_name, NULL AS url, CONCAT('shopify_annotations', '~~~~', `shopify_annotations`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, body_html AS description, `users`.`name` AS `user_name`, NULL AS show_at, `shopify_monitors`.`ga_property_id` AS `table_ga_property_id`
-            FROM `shopify_annotations`
-            LEFT JOIN `shopify_monitors` ON `shopify_monitors`.`user_id` = `shopify_annotations`.`user_id` AND `shopify_monitors`.`url` LIKE CONCAT('%', REPLACE(`shopify_annotations`.`vendor`, ' ', ''), '%')
-            LEFT JOIN `users` ON `shopify_annotations`.`user_id` = `users`.`id`
-            WHERE `shopify_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+        FROM `shopify_annotations`
+        LEFT JOIN `shopify_monitors` ON `shopify_annotations`.`monitor_id` = `shopify_monitors`.`id`
+        LEFT JOIN `users` ON `shopify_annotations`.`user_id` = `users`.`id`
+        WHERE `shopify_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
     }
 
     public static function holidaysQuery(array $userIdsArray, string $googleAnalyticsPropertyId)
