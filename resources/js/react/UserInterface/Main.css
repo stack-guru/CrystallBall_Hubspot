@@ -6652,3 +6652,15 @@ color: white;
 background: #FCFCFC;
 border-radius: 16px;
 }
+#facebook_page > div:first-child {
+    height: 44px !important;
+    border-radius: 10px !important;
+}
+
+.w-86px {
+    width: 86px !important;
+}
+
+.visibility-hidden {
+    visibility: hidden;
+}
