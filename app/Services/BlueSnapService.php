@@ -31,7 +31,7 @@ class BlueSnapService
         $url = $this->blueSnapDomain . '/services/2/payment-fields-tokens';
 
         $response = Http::withBasicAuth($this->key, $this->password)
-            ->post($url);
+            ->post($url . '?challengerequested3ds=true');
 
         $tokenURL = $response->header('location');
 
