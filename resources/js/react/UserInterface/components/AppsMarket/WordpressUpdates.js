@@ -70,7 +70,7 @@ class WordpressUpdates extends React.Component {
                                                         "wordpress_updates"
                                                     );
                                                     this.props.updateGAPropertyId(null)
-                                                    
+
                                                 }
                                             }}
                                                    checked={
@@ -88,67 +88,80 @@ class WordpressUpdates extends React.Component {
                                     <div className="d-flex align-items-center hide-icon">
                                         {
                                             !this.props.userDataSources.wordpress_updates
-                                            .length ?? 
+                                                .length ??
                                             <span className="betweentext">for</span>
                                         }
                                         {
                                             (this.props.userDataSources.wordpress_updates
-                                            .length > 0  && this.state.editProperty) || 
+                                                .length > 0 && this.state.editProperty) ||
                                             !this.props.userDataSources.wordpress_updates
-                                            .length ?
-                                            <>
-                                            <GoogleAnalyticsPropertySelect
-                                                className="themeNewselect"
-                                                name="ga_property_id"
-                                                id="ga_property_id"
-                                                currentPricePlan={this.props.user.price_plan}
-                                                value={this.props.gaPropertyId}
-                                                onChangeCallback={(gAP) => {
-                                                    this.props.updateGAPropertyId(gAP.target.value || null)
+                                                .length ?
+                                                <>
+                                                    <GoogleAnalyticsPropertySelect
+                                                        className="themeNewselect"
+                                                        name="ga_property_id"
+                                                        id="ga_property_id"
+                                                        currentPricePlan={this.props.user.price_plan}
+                                                        value={this.props.gaPropertyId}
+                                                        onChangeCallback={(gAP) => {
+                                                            this.props.updateGAPropertyId(gAP.target.value || null)
 
-                                                    if (this.props.userDataSources
-                                                            .wordpress_updates &&
-                                                        this.props.userDataSources.wordpress_updates
-                                                            .length > 0) {
-                                                        this.setState({editProperty: false})
-                                                        this.props.userDataSourceUpdateHandler(
-                                                            this.props.userDataSources.wordpress_updates[0].id,
-                                                            gAP.target.value
-                                                        );
-                                                    } else {
-                                                        Toast.fire({
-                                                            icon: 'success',
-                                                            title: "Successfully saved wordpress updates settings.",
-                                                        });
+                                                            if (this.props.userDataSources
+                                                                    .wordpress_updates &&
+                                                                this.props.userDataSources.wordpress_updates
+                                                                    .length > 0) {
+                                                                this.setState({editProperty: false})
+                                                                this.props.userDataSourceUpdateHandler(
+                                                                    this.props.userDataSources.wordpress_updates[0].id,
+                                                                    gAP.target.value
+                                                                );
+                                                            } else {
+                                                                Toast.fire({
+                                                                    icon: 'success',
+                                                                    title: "Successfully saved wordpress updates settings.",
+                                                                });
 
+                                                            }
+                                                        }}
+                                                        placeholder="Select GA Properties"
+                                                        isClearable={true}
+                                                    />
+                                                    {this.state.editProperty ?
+                                                        <i className="ml-2 icon fa"
+                                                           onClick={() => this.setState({editProperty: false})}>
+                                                            <img className="w-14px" src='/close-icon.svg'/>
+                                                        </i>
+                                                        : ""
                                                     }
-                                                }}
-                                                placeholder="Select GA Properties"
-                                                isClearable={true}
-                                            />
-                                            { this.state.editProperty ?
-                                                <i className="ml-2 icon fa" onClick={() => this.setState({ editProperty: false })}>
-                                                    <img className="w-14px" src='/close-icon.svg' />
-                                                </i>
+                                                </>
                                                 : ""
-                                            }
-                                            </>
-                                        : ""
                                         }
 
                                         {
                                             this.props.userDataSources.wordpress_updates
-                                            .length && !this.state.editProperty
-                                            ? 
-                                            <h4 className='text-capitalize mb-0'>
-                                                <span>{!gaPropertyName ? 'All Properties' : gaPropertyName}</span> 
-                                                <i className="ml-2 icon fa" onClick={() => this.setState({ editProperty: true })}>
-                                                    <img className="w-20px" src='/icon-edit.svg' />
-                                                </i>
-                                            </h4>
-                                            : ''
+                                                .length && !this.state.editProperty
+                                                ?
+                                                <h4 className='text-capitalize mb-0'>
+                                                    <span>{!gaPropertyName ? 'All Properties' : gaPropertyName}</span>
+                                                    <i className="ml-2 icon fa"
+                                                       onClick={() => this.setState({editProperty: true})}>
+                                                        <img className="w-20px" src='/icon-edit.svg'/>
+                                                    </i>
+                                                </h4>
+                                                : ''
                                         }
                                     </div>
+                                </div>
+                                <div className='d-flex justify-content-end pt-3'>
+                                    <button onClick={(e) => {
+                                        e.preventDefault();
+
+                                        this.props.userDataSourceUpdateHandler(
+                                            this.props.userDataSources.wordpress_updates[0].id,
+                                            this.props.gaPropertyId
+                                        );
+                                    }} className="btn-theme">Add
+                                    </button>
                                 </div>
                             </div>
 
