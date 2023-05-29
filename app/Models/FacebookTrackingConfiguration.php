@@ -10,4 +10,9 @@ class FacebookTrackingConfiguration extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function annotations()
+    {
+        return $this->hasMany('App\Models\FacebookTrackingAnnotation');
+    }
 }

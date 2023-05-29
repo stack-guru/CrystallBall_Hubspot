@@ -179,7 +179,7 @@ export default class IndexPricingPlans extends React.Component {
                                                 </h3>
                                             </div> :  <div>
                                                 <h3 className="price-plan-discount-strick">
-                                                    <label><sup>{" "}</sup></label>
+                                                    <label className={"visibility-hidden"} ><sup>$</sup> 29/m</label>
                                                 </h3>
                                             </div>}
                                             <h3>{userRegistrationOffer ? <><sup>$</sup>{pricePlan.price}</> : <>
