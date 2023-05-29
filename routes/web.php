@@ -125,6 +125,8 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
     Route::post('annotation/saveCsv', [App\Http\Controllers\AnnotationController::class, 'saveCSV']);
 
     Route::view('data-source', 'ui/app');
+    Route::view('report-dashboard', 'ui/app');
+
     Route::view('integrations', 'ui/app');
     Route::view('my-integrations', 'ui/app');
     Route::view('api-key', 'ui/app');
