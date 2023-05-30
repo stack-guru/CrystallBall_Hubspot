@@ -73,6 +73,11 @@ class CheckUserUsageHelper
             if($user->is_ds_apple_podcast_annotation_enabled)
                 $names[] = "Apple";
         }
+        if($pricePlan->youtube_credits_count == -1 || $pricePlan->youtube_credits_count == null)
+        {
+            if($user->is_ds_youtube_tracking_enabled)
+                $names[] = "Youtube";
+        }
         return $names;
     }
     public static function checkExtraUser($user,$pricePlan)
