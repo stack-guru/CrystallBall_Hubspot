@@ -57,6 +57,7 @@ class PricePlanRequest extends FormRequest
             'bitbucket_credits_count' => 'required',
             'github_credits_count' => 'required',
             'apple_podcast_monitor_count' => 'required',
+            'youtube_credits_count' => 'required',
             'aws_credits_count' => 'required',
             'linkedin_credits_count' => 'required',
             'twitter_credits_count' => 'required',

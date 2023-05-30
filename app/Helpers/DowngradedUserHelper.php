@@ -67,6 +67,8 @@ class DowngradedUserHelper
             $user->is_ds_shopify_annotation_enabled = false;
         if($pricePlan->apple_podcast_monitor_count == -1 || $pricePlan->apple_podcast_monitor_count == null)
             $user->is_ds_apple_podcast_annotation_enabled = false;
+        if($pricePlan->youtube_credits_count == -1 || $pricePlan->youtube_credits_count == null)
+            $user->is_ds_youtube_tracking_enabled = false;
         $user->save();
 
     }
