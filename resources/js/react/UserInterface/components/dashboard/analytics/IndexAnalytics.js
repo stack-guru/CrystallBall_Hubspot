@@ -555,8 +555,8 @@ export default class IndexAnalytics extends Component {
                                 {/* <button className="filter-btn">All</button> */}
 
                                 <Button id="PopoverClick" type="button" className="custom-btn">Custom
-                                <img className="pl-2" src="/images/svg/custom-date.svg"
-                                 alt="custom-date icon" />
+                                    <img className="pl-2" src="/images/svg/custom-date.svg"
+                                    alt="custom-date icon" />
                                 </Button>
                                     <UncontrolledPopover
                                         placement="bottom"
@@ -1470,6 +1470,7 @@ export default class IndexAnalytics extends Component {
 
                                 </table>
                             </div>
+                            
 
                         </div>
 

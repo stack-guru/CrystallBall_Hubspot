@@ -7,10 +7,10 @@ import ErrorAlert from '../../../utils/ErrorAlert'
 import HttpClient from '../../../utils/HttpClient'
 import UserTeamNameSelect from "../../../utils/UserTeamNameSelect";
 import SpinningLoader from '../../../utils/SpinningLoader'
-import {Button} from 'reactstrap';
 import CreatableSelect from "react-select/creatable";
 import GoogleAnalyticsPropertySelect from "../../../utils/GoogleAnalyticsPropertySelect";
-import {Modal, Popover, PopoverBody, PopoverHeader} from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter,UncontrolledPopover,PopoverHeader,PopoverBody } from "reactstrap";
+
 
 
 
@@ -383,13 +383,60 @@ export default class ShareAnalytics extends Component {
                                         </div>
                                     : null}
                         </div>
+                        <div className="modal-footer justify-content-between">
+                                <button className="m-0 btn btn-outline btn-sm btnCornerRounded share-btn">Preview</button>
+                                <div className="d-flex justify-content-center m-0 ">
+                                    <button
+                                        type="button"
+                                        id="UncontrolledPopover"
+                                        className="btn mr-3 recurrence-text"                                    
+                                    >
+                                        <img src="/images/svg/recurrence-gray.svg" alt="active icon" className="mr-2 recurrence-color" />
+                                        Set recurrence
+                                    </button>
+                                    <UncontrolledPopover
+                                        placement="top"
+                                        target="UncontrolledPopover"
+                                        className='acctive-recurrence-popover'
+                                    >
+                                       
+                                        <PopoverBody>
+                                            <button className=' share-report-interval'>
+                                                send daily                                                                          
+                                            </button>
+                                            <button className='share-report-interval'>
+                                                send weekly
+                                            </button>
+                                            <button className='share-report-interval'>                      
+                                                send monthly                            
+                                            </button>
+                                        </PopoverBody>
+                                    </UncontrolledPopover>
+
+                                    <button type="submit" disabled={this.state.loading} 
+                                        className="btn btn-outline btn-sm btnCornerRounded share-btn share-preview-btn"
+                                        title="submit">{this.state.loading ?
+                                            <SpinningLoader/> : "Share Report"}
+                                    </button>
+                                    {/* <button
+                                        type="button"
+                                        className="btn btn-outline btn-sm btnCornerRounded share-btn share-preview-btn "
+                                        onClick={this.handleShareSuccess}
+                                    >
+                                        Share
+                                    </button> */}
+                                </div>
+                            </div>
                     
-                    <div
-                        className={`d-flex ${this.props.userStartupConfig ? 'justify-content-between align-items-center' : 'pt-3'}`}>
-                        <button type="submit" disabled={this.state.loading} className="btn-theme"
+                    <div className={`d-flex ${this.props.userStartupConfig ? 'justify-content-between align-items-center' : 'pt-3'}`}>
+                  
+                        {/* <button type="submit" disabled={this.state.loading} className="btn-theme"
                                 title="submit">{this.state.loading ?
-                            <SpinningLoader/> : "Share Report"}</button>
+                            <SpinningLoader/> : "Share Report"}
+                        </button> */}
+                        
                     </div>
+
                 </form>
             </div>
         )
