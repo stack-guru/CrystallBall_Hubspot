@@ -31,10 +31,10 @@ export default class FacebookTracking extends React.Component {
             is_post_shares_tracking_on: true,
             configuration_id: null,
 
-            when_post_reach_likes: 1000,
-            when_post_reach_comments: 1000,
-            when_post_reach_shares: 1000,
-            when_post_reach_views: 1000,
+            when_post_reach_likes: 1,
+            when_post_reach_comments: 1,
+            when_post_reach_shares: 1,
+            when_post_reach_views: 1,
             configurations: [],
             activeDeletePopover: null
         };
@@ -44,6 +44,7 @@ export default class FacebookTracking extends React.Component {
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
         this.fetchConfigurations = this.fetchConfigurations.bind(this);
         this.deleteSelected = this.deleteSelected.bind(this);
+        this.serviceStatusHandler = this.serviceStatusHandler.bind(this);
     }
 
     deleteSelected = (payload) => {
@@ -81,7 +82,7 @@ export default class FacebookTracking extends React.Component {
             iconHtml: `<img src="/${(this.props.serviceName || '').toLowerCase()}-small.svg">`,
             showCloseButton: true,
             title: `Connect with ${ this.props.serviceName }`,
-            text: `Connect your ${ this.props.serviceName } account to create automatic annotations for commits`,
+            text: `Connect your ${ this.props.serviceName } account to create automatic annotations for new posts; when you reach a post goal or run campaigns..`,
             confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
             confirmButtonText: `<span class='text-white'><i class='mr-2 fa fa-${ this.props.serviceName.toLowerCase() }'> </i>${ this.props.serviceName }</span>`,
             customClass: {
@@ -111,24 +112,6 @@ export default class FacebookTracking extends React.Component {
         HttpClient.get('/data-source/get-facebook-tracking-configurations').then(resp => {
             this.setState({
                 configurations: resp.data.configurations
-                // selected_facebook_pages: resp.data.selected_pages,
-                // when_ad_compaign_ended: resp.data.when_ad_compaign_ended,
-                // when_changes_on_ad_compaign: resp.data.when_changes_on_ad_compaign,
-                // when_new_ad_compaing_launched: resp.data.when_new_ad_compaign_launched,
-                // when_new_post_on_facebook: resp.data.when_new_post_on_facebook,
-                // when_post_reach_comments: resp.data.when_post_reach_comments,
-                // when_post_reach_likes: resp.data.when_post_reach_likes,
-                // when_post_reach_shares: resp.data.when_post_reach_shares,
-                // when_post_reach_views: resp.data.when_post_reach_views,
-
-                // is_post_likes_tracking_on: resp.data.is_post_likes_tracking_on,
-                // is_post_comments_tracking_on: resp.data.is_post_comments_tracking_on,
-                // is_post_views_tracking_on: resp.data.is_post_views_tracking_on,
-                // is_post_shares_tracking_on: resp.data.is_post_shares_tracking_on,
-                // gaPropertyId: resp.data.ga_property_id,
-                // gaPropertyName: resp.data.gaPropertyName,
-                // configuration_id: resp.data.configuration_id
-
             });
             document.getElementById('when_new_post_on_facebook').checked = true;
             document.getElementById('new_ad_compaign_launched').checked = true;
@@ -172,16 +155,17 @@ export default class FacebookTracking extends React.Component {
             ga_property_id: this.state.gaPropertyId,
         }
 
+        if (!this.state.configurations.length) {
+            this.serviceStatusHandler();
+        }
         HttpClient.post('/data-source/save-facebook-tracking-configurations', form_data).then(resp => {
-            this.setState({facebook_pages: resp.data.facebook_pages, isBusy: false, gaPropertyName: resp.data.gaPropertyName, configuration_id: true, editProperty: false});
-            if (!this.state.configurations.length) {
-                this.props.serviceStatusHandler({ target: { name: 'is_ds_facebook_tracking_enabled', value: true, checked: true }})
-            }
+            this.setState({facebook_pages: resp.data.facebook_pages, isBusy: false, gaPropertyName: resp.data.gaPropertyName, editProperty: false});
+            
             this.props.loadUserDataSources();
             this.fetchConfigurations();
-            swal.fire('Success', "We will retrieve the posts/ads added to your account in the past year according to your preferences; it may take a few minutes. Subsequently, the system will perform a daily check and automatically add relevant annotations to your account.", 'info');
+            swal.fire('', "We will retrieve the posts/ads added to your account in the past year according to your preferences; it may take a few minutes. Subsequently, the system will perform a daily check and automatically add relevant annotations to your account.", '');
 
-            this.runjob();
+            this.runjob(resp.data.configurationId);
         }, (err) => {
             Toast.fire({
                 icon: 'error',
@@ -195,9 +179,13 @@ export default class FacebookTracking extends React.Component {
         });
     }
 
-    runjob() {
-        HttpClient.post('/data-source/run-facebook-job').then(resp => {
+    runjob(id) {
+        HttpClient.post('/data-source/run-facebook-job', {id}).then(resp => {
         })
+    }
+
+    async serviceStatusHandler () {
+        await this.props.serviceStatusHandler({ target: { name: 'is_ds_facebook_tracking_enabled', value: true, checked: true }})
     }
 
     changePageHandler(val) {
@@ -277,7 +265,7 @@ export default class FacebookTracking extends React.Component {
                         <div className="col-6">
                             <div className="mt-2">
                                 <div className="d-flex align-items-center form-check themeNewCheckbox">
-                                    <input className="form-check-input" id='when_new_post_on_facebook' onChange={(e) => {
+                                    <input className="form-check-input mt-0" id='when_new_post_on_facebook' onChange={(e) => {
                                         this.setState({
                                             when_new_post_on_facebook: e.target.checked
                                         })
@@ -290,7 +278,7 @@ export default class FacebookTracking extends React.Component {
 
                             <div className="mt-2">
                                 <div className="d-flex align-items-center form-check themeNewCheckbox">
-                                    <input className="form-check-input" type="checkbox" value=""
+                                    <input className="form-check-input mt-0" type="checkbox" value=""
                                         id="is_post_likes_tracking_on_checkbox" onChange={(e) => {
                                         this.setState({
                                             is_post_likes_tracking_on: e.target.checked
@@ -314,7 +302,7 @@ export default class FacebookTracking extends React.Component {
 
                             <div className="mt-2">
                                 <div className="d-flex align-items-center form-check themeNewCheckbox">
-                                    <input className="form-check-input" type="checkbox" value=""
+                                    <input className="form-check-input mt-0" type="checkbox" value=""
                                         id="is_post_comments_tracking_on_checkbox" onChange={(e) => {
                                         this.setState({
                                             is_post_comments_tracking_on: e.target.checked
@@ -338,7 +326,7 @@ export default class FacebookTracking extends React.Component {
 
                             <div className="mt-2">
                                 <div className="d-flex align-items-center form-check themeNewCheckbox">
-                                    <input className="form-check-input" type="checkbox" value=""
+                                    <input className="form-check-input mt-0" type="checkbox" value=""
                                         id="is_post_views_tracking_on_checkbox" onChange={(e) => {
                                         this.setState({
                                             is_post_views_tracking_on: e.target.checked
@@ -364,7 +352,7 @@ export default class FacebookTracking extends React.Component {
                         <div className="col-6">
                             <div className="mt-2">
                                 <div className="d-flex align-items-center form-check themeNewCheckbox">
-                                    <input className="form-check-input" type="checkbox" value=""
+                                    <input className="form-check-input mt-0" type="checkbox" value=""
                                         id="is_post_shares_tracking_on_checkbox" onChange={(e) => {
                                         this.setState({
                                             is_post_shares_tracking_on: e.target.checked
@@ -389,7 +377,7 @@ export default class FacebookTracking extends React.Component {
 
                             <div className="mt-2">
                                 <div className="d-flex align-items-center form-check themeNewCheckbox">
-                                    <input className="form-check-input" type="checkbox" value="" id="new_ad_compaign_launched"
+                                    <input className="form-check-input mt-0" type="checkbox" value="" id="new_ad_compaign_launched"
                                         onChange={(e) => {
                                             this.setState({
                                                 when_new_ad_compaing_launched: e.target.checked
@@ -403,7 +391,7 @@ export default class FacebookTracking extends React.Component {
 
                             <div className="mt-2">
                                 <div className="d-flex align-items-center form-check themeNewCheckbox">
-                                    <input className="form-check-input" type="checkbox" value="" id="an_ad_compaign_ended"
+                                    <input className="form-check-input mt-0" type="checkbox" value="" id="an_ad_compaign_ended"
                                         onChange={(e) => {
                                             this.setState({
                                                 when_ad_compaign_ended: e.target.checked
@@ -417,7 +405,7 @@ export default class FacebookTracking extends React.Component {
 
                             <div className="mt-2">
                                 <div className="d-flex align-items-center form-check themeNewCheckbox">
-                                    <input className="form-check-input" type="checkbox" value="" id="changes_on_ad_compaign"
+                                    <input className="form-check-input mt-0" type="checkbox" value="" id="changes_on_ad_compaign"
                                         onChange={(e) => {
                                             this.setState({
                                                 when_changes_on_ad_compaign: e.target.checked
@@ -479,7 +467,7 @@ export default class FacebookTracking extends React.Component {
                                         }
                                     >
                                         <PopoverBody web_monitor_id={gAK.id}>
-                                            Are you sure you want to remove "
+                                            Are you sure you want to remove, it will delete all the annotations related to this."
                                             {gAK.gaPropertyName}"?.
                                         </PopoverBody>
                                         <button

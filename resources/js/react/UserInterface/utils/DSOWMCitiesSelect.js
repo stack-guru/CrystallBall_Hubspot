@@ -115,7 +115,7 @@ export default class DSOWMCitiesSelect extends React.Component {
     }
 
     selectedCountryChanged(data) {
-        this.setState({ searchCountry: data.value });
+        this.setState({ searchCountry: data });
         HttpClient.get(
             `data-source/weather-alert/city?country_code=${data.value}`
         )

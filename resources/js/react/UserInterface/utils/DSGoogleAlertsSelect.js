@@ -18,15 +18,17 @@ export default class DSGoogleAlertsSelect extends React.Component {
     }
 
     addKeyword(e) {
-        this.setState({keyword: ""});
+        e.preventDefault();
         this.props.onCheckCallback({
             code: "google_alert_keywords",
             name: "GoogleAlertKeyword",
             country_name: null,
             retail_marketing_id: null,
             open_weather_map_event: null,
-            value: e.target.getAttribute("value"),
+            value: this.state.keyword,
         });
+
+        this.setState({keyword: ""});
     }
 
     deleteKeyword(e) {
@@ -84,6 +86,12 @@ export default class DSGoogleAlertsSelect extends React.Component {
                             isClearable={true}
                             onDeleteCallback={this.props.onUncheckCallback}
                         />
+                    </div>
+                    <div className='d-flex justify-content-end pt-3'>
+                        <button onClick={(e) => {
+                            this.addKeyword(e);
+                        }} className="btn-theme">Add
+                        </button>
                     </div>
                 </div>
                 <div className="gray-box">
