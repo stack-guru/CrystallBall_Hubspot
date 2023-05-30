@@ -17,7 +17,49 @@ import { Chart } from "react-google-charts";
 //     Area,
 // } from "recharts";
 
+
+
+  import { Line } from 'react-chartjs-2';
+
+
+
 export default function UsersDaysWithAnnotationsGraph(props) {
+
+
+    const options = {
+        scales: {
+          y: {
+            beginAtZero: true,
+          },
+        },
+        elements: {
+            area: {
+              background: {
+                orientation: 'vertical',
+                from: "rgba(30, 168, 253, 0.3)", // Start color
+                to: "rgba(30, 168, 253, 0)", // End color
+              },
+            },
+          },
+      };
+      const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+
+      const data = {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        datasets: [
+          {
+            label: 'Data',
+            data: [12, 19, 3, 5, 2, 3, 8],
+            fill: true,
+
+            borderColor: 'rgba(30, 168, 253, 1)', // Line color
+            tension: 0.4,
+            
+          },
+        ],
+      };
+
+
 
     // const dates = props.statistics.map(s => moment(s.statistics_date).format("DD MMM"));
     // const months = props.statistics.map(s => moment(s.statistics_date).format("MMM"));
@@ -74,33 +116,57 @@ export default function UsersDaysWithAnnotationsGraph(props) {
                 fontSize: 8,
                 opacity: 0.8
             },
-            boxStyle: {
-                // Color of the box outline.
-                stroke: '#017ED7',
-                // Thickness of the box outline.
-                strokeWidth: 1,
-                // x-radius of the corner curvature.
-                rx: 0,
-                // y-radius of the corner curvature.
-                ry: 0,
-                // Attributes for linear gradient fill.
-                gradient: {
-                    // Start color for gradient.
-                    color1: '#fbf6a7',
-                    // Finish color for gradient.
-                    color2: '#33b679',
-                    // Where on the boundary to start and
-                    // end the color1/color2 gradient,
-                    // relative to the upper left corner
-                    // of the boundary.
-                    x1: '0%', y1: '0%',
-                    x2: '100%', y2: '100%',
-                    // If true, the boundary for x1,
-                    // y1, x2, and y2 is the box. If
-                    // false, it's the entire chart.
-                    useObjectBoundingBoxUnits: true
-                }
-            }
+            // boxStyle: {
+            //     stroke: '#FE4C3C',
+            //     strokeWidth: 3,
+            //     rx: 0,
+            //     ry: 0,
+            //     gradient: {
+            //       color1: 'rgba(30, 168, 253, 0.3)',
+            //       color2: 'rgba(30, 168, 253, 0)',
+            //       x1: '0%',
+            //       y1: '0%',
+            //       x2: '100%',
+            //       y2: '100%',
+            //       useObjectBoundingBoxUnits: true
+            //     }
+            //   },
+            //   chartArea: {
+
+            //     backgroundColor: {
+            //     fill: 'linear-gradient(180deg, rgba(30, 168, 253, 0.3) 0%, rgba(30, 168, 253, 0) 100%)',
+            //     opacity: 1
+            //         },
+            //   },
+              backgroundColor:"00cc00"
+            // boxStyle: {
+            //     // Color of the box outline.
+            //     stroke: '#017ED7',
+            //     // Thickness of the box outline.
+            //     strokeWidth: 1,
+            //     // x-radius of the corner curvature.
+            //     rx: 0,
+            //     // y-radius of the corner curvature.
+            //     ry: 0,
+            //     // Attributes for linear gradient fill.
+            //     gradient: {
+
+            //         // Start color for gradient.
+            //         color1: '#fbf6a7',
+            //         // Finish color for gradient.
+            //         color2: '#33b679',
+            //         // Where on the boundary to start and
+            //         // end the color1/color2 gradient,
+            //         // relative to the upper left corner
+            //         // of the boundary.
+            //         x1: '0%', y1: '0%',
+            //         x2: '100%', y2: '100%',
+            //         // If true, the boundary for x1,
+            //         // y1, x2, and y2 is the box. If
+            //         // false, it's the entire chart.
+            //         useObjectBoundingBoxUnits: true
+            //     }
+            // }
         },
         legend: 'none',
     };
@@ -184,7 +250,8 @@ export default function UsersDaysWithAnnotationsGraph(props) {
                     <div><h4 className="card-heading">Users</h4>
                     </div>
                 </div>
-                <Chart
+                <Line options={options} data={data} />;
+                {/* <Chart
                     width={'100%'}
                     // style={{ paddingLeft: '10px' }}
                     // height={'50'}
@@ -192,7 +259,7 @@ export default function UsersDaysWithAnnotationsGraph(props) {
                     loader={<div>Loading Chart</div>}
                     data={dataArray}
                     options={optionsArray}
-                />
+                /> */}
             </div>
         </>
     )
