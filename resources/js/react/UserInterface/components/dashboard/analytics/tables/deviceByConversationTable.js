@@ -4,11 +4,11 @@ import { Doughnut } from 'react-chartjs-2';
 
 export default function DeviceByConversationTable(props) {
 
-    const dataLabels = props.sourcesStatistics.map(s => s.device.toUpperCase());
-    const noOfClicks = props.sourcesStatistics.map(s => s.sum_clicks_count);
-    const noOfImpressions = props.sourcesStatistics.map(s => s.sum_impressions_count);
+    const dataLabels = props.sourcesStatistics.map(s => s.conversionRate.toUpperCase());
+    const noOfClicks = props.sourcesStatistics.map(s => s.sum_conversions_count);
+    const noOfImpressions = props.sourcesStatistics.map(s => s.sum_users_count);
     const COLORS =  ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
-    console.log("devicebyconversation   ===== ",sourcesStatistics.sum_users_count,sourcesStatistics.source_name,sourcesStatistics.sum_conversions_count);
+    // console.log("devicebyconversation   ===== ",sourcesStatistics.sum_users_count,sourcesStatistics.source_name,sourcesStatistics.sum_conversions_count);
 
     return (
         <> 
@@ -24,11 +24,11 @@ export default function DeviceByConversationTable(props) {
                                             Devivce By Conversation
                                         </h4>
                                     </div>
-                                    <div>
+                                    {/* <div>
                                         <span>
                                             <img src="/images/svg/dashboard-list-option.svg" alt="list icon" />
                                         </span>
-                                    </div>
+                                    </div> */}
                                 </div>
                                 <table className="table border">
                                     <thead>

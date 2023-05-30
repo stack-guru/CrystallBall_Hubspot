@@ -1432,7 +1432,7 @@ export default class IndexAnalytics extends Component {
 
 
                         {/*Device by Conversation div*/}
-                        {/* <DeviceByConversationTable devicesStatistics={this.state.devicesStatistics} /> */}
+                        {/* <DeviceByConversationTable sourcesStatistics={this.state.sourcesStatistics} /> */}
                         <div className=" report-box">
                             <div>
                                 <div className="d-flex justify-content-between mb-5">
@@ -1447,7 +1447,7 @@ export default class IndexAnalytics extends Component {
                                         </span>
                                     </div>
                                 </div>
-                                <table className="table border">
+                                <table className="table border dashboard-analytics">
                                     <thead>
                                         <tr>
                                             <td>Source</td>
@@ -1476,10 +1476,7 @@ export default class IndexAnalytics extends Component {
                         </div>
 
                         {/* <div className="report-box"> */}
-
-
-
-                                {/* <DeviceUsersGraph deviceCategoriesStatistics={this.state.deviceCategoriesStatistics} /> */}
+                            <DeviceUsersGraph deviceCategoriesStatistics={this.state.deviceCategoriesStatistics} />
                         {/* </div> */}
 
 
@@ -1646,7 +1643,7 @@ export default class IndexAnalytics extends Component {
 
 
 
-            {/* <>
+            <>
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -1884,7 +1881,7 @@ export default class IndexAnalytics extends Component {
                     />
                 </div>
             </AppsModal>
-            </> */}
+            </>
         </React.Fragment>;
     }
 

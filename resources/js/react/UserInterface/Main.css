@@ -743,7 +743,7 @@ tbody td {
 .table tbody td {
     color: #002e60;
 }
-.table{
+.report-box .table{
     max-height: 500px;
     overflow-y: scroll;
 }

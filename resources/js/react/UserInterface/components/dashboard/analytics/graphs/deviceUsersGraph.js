@@ -201,7 +201,10 @@ export default function DeviceUsersGraph(props) {
                                             </Pie>
                                         </PieChart> */}
                                     </div>
-                                    <div className="d-flex flex-column">
+
+
+                                    
+                                    {/* <div className="d-flex flex-column">
                                         <span className="d-flex">
                                             <span className="">
                                                 <img src="/images/svg/green-dot.svg" alt="green-dot icon" />
@@ -221,7 +224,7 @@ export default function DeviceUsersGraph(props) {
                                             </span>
                                             <h5>Conv.Rate</h5>
                                         </span>
-                                    </div>
+                                    </div> */}
                                 </div>
                 </div>
 
