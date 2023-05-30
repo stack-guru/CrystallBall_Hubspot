@@ -743,6 +743,10 @@ tbody td {
 .table tbody td {
     color: #002e60;
 }
+.report-box .table{
+    max-height: 500px;
+    overflow-y: scroll;
+}
 
 .gaa-text-secondary {
     color: #3d4142;
@@ -5856,16 +5860,16 @@ div[data-tour-elem="controls"]
 }
 
 .sidebar {
-    min-width: 110px;
+    min-width: 90px;
 }
 @media screen and (max-width: 1439px) {
     .is-collapsed .sidebar {
-        width: 110px;
+        width: 90px;
     }
 
-    .is-collapsed .sidebar .sidebar-inner .sidebar-menu > li > a .title {
-        visibility: hidden;
-    }
+    /*.is-collapsed .sidebar .sidebar-inner .sidebar-menu > li > a .title {*/
+    /*    visibility: hidden;*/
+    /*}*/
 
     .is-collapsed .sidebar:hover {
         width: 270px;
@@ -5874,7 +5878,7 @@ div[data-tour-elem="controls"]
 
 @media screen and (min-width: 1440px) {
     .is-collapsed .sidebar {
-        width: 110px;
+        width: 90px;
     }
     .is-collapsed .sidebar:hover {
         width: 270px;
@@ -6824,8 +6828,4 @@ div[data-tour-elem="controls"]
 
 .visibility-hidden {
     visibility: hidden;
-}
-
-.ga-account-select-holder > div > div > div:first-child {
-    width: calc(100% - 40px) !important;
 }

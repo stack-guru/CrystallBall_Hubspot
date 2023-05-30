@@ -556,8 +556,8 @@ export default class IndexAnalytics extends Component {
                                 {/* <button className="filter-btn">All</button> */}
 
                                 <Button id="PopoverClick" type="button" className="custom-btn">Custom
-                                <img className="pl-2" src="/images/svg/custom-date.svg"
-                                 alt="custom-date icon" />
+                                    <img className="pl-2" src="/images/svg/custom-date.svg"
+                                    alt="custom-date icon" />
                                 </Button>
                                     <UncontrolledPopover
                                         placement="bottom"
@@ -1432,7 +1432,7 @@ export default class IndexAnalytics extends Component {
 
 
                         {/*Device by Conversation div*/}
-                        {/* <DeviceByConversationTable devicesStatistics={this.state.devicesStatistics} /> */}
+                        {/* <DeviceByConversationTable sourcesStatistics={this.state.sourcesStatistics} /> */}
                         <div className=" report-box">
                             <div>
                                 <div className="d-flex justify-content-between mb-5">
@@ -1447,7 +1447,7 @@ export default class IndexAnalytics extends Component {
                                         </span>
                                     </div>
                                 </div>
-                                <table className="table border">
+                                <table className="table border dashboard-analytics">
                                     <thead>
                                         <tr>
                                             <td>Source</td>
@@ -1471,14 +1471,12 @@ export default class IndexAnalytics extends Component {
 
                                 </table>
                             </div>
+                            
 
                         </div>
 
                         {/* <div className="report-box"> */}
-
-
-
-                                {/* <DeviceUsersGraph deviceCategoriesStatistics={this.state.deviceCategoriesStatistics} /> */}
+                            <DeviceUsersGraph deviceCategoriesStatistics={this.state.deviceCategoriesStatistics} />
                         {/* </div> */}
 
 
@@ -1645,7 +1643,7 @@ export default class IndexAnalytics extends Component {
 
 
 
-            {/* <>
+            <>
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -1883,7 +1881,7 @@ export default class IndexAnalytics extends Component {
                     />
                 </div>
             </AppsModal>
-            </> */}
+            </>
         </React.Fragment>;
     }
 

@@ -44,7 +44,7 @@ export default function DeviceClicksImpressionsGraph(props) {
                     </div> */}
                 </div>
                 <div>
-                    <table className="table border">
+                    <table className="table border dashboard-analytics">
                         <thead>
                             <tr>
                                 <th>Device</th>
