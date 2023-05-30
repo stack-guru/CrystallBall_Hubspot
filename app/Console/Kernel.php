@@ -61,6 +61,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('gaa:generate-wordpress-update-notification')->daily();
         $schedule->command('gaa:shopify-annotation')->daily();
         $schedule->command('gaa:apple-podcast-annotation')->daily();
+        $schedule->command('gaa:youtube-annotation')->daily();
         // Everyday non critical
         $schedule->command('gaa:fetch-google-analytics-metrics-and-dimensions')->daily();
         $schedule->command('gaa:fetch-google-search-console-sites-statistics')->daily();
@@ -72,7 +73,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('gaa:fetch-wesbite-ranking-dfs')->daily();
 
         $schedule->command('gaa:execute-facebook-automation')->daily();
-        // $schedule->command('gaa:execute-instagram-automation')->daily();
+        $schedule->command('gaa:execute-instagram-automation')->daily();
 
         // send an email daily to admin with user stats
         $schedule->command('gaa:send-admin-user-stats')->daily();

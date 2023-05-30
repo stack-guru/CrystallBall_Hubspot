@@ -4,11 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Helper\Helper;
 use App\Models\UserFacebookAccount;
+use App\Models\FacebookTrackingConfiguration;
+use App\Models\FacebookTrackingAnnotation;
+use App\Models\UserFacebookPage;
+use App\Models\UserFacebookPagePost;
 use App\Repositories\FacebookAutomationRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Facades\Auth;
 
 class FacebookAutomationController extends Controller
 {
@@ -38,6 +43,24 @@ class FacebookAutomationController extends Controller
 
     public function destroy(UserFacebookAccount $facebookAccount)
     {
+        $facebookAccountPages = $facebookAccount->pages;
+        $configurations = FacebookTrackingConfiguration::where('user_id', Auth::user()->id)->get();
+
+        foreach($facebookAccountPages as $faPage) {
+            foreach($configurations as $configuration) {
+                $selectedPages = unserialize($configuration->selected_pages);
+                foreach($selectedPages as $selectedPage) {
+                    if($selectedPage['value'] == $faPage->id) {
+                        FacebookTrackingAnnotation::where('configuration_id', $configuration->id)->delete();
+                        $configuration->delete();
+                    }
+                }
+            }
+            foreach($faPage->posts as $post) {
+                UserFacebookPagePost::where('id', $post->id)->delete();
+            }
+            UserFacebookPage::where('id', $faPage->id)->delete();
+        }
         return ['success' => $facebookAccount->delete()];
     }
 
@@ -79,7 +102,7 @@ class FacebookAutomationController extends Controller
                 (new InstagramAccountController())->setupInstagramAccount($user->token);
                 
                 
-                return redirect()->to('data-source')->with('Account connected. You can enable the automation now.');
+                return redirect()->to("/data-source?show_facebook_popup=1&alertMessage=Account connected. You can enable the automation now.");
 
             }
             else{

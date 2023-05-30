@@ -177,6 +177,9 @@ return [
     'apple_podcast' => [
         'data_api_url' => env('APPLE_PODCAST_DATA_API_URL'),
     ],
+    'youtube_monitor' => [
+        'data_api_url' => env('YOUTUBE_DATA_API_URL'),
+    ],
     'wappalyzer' => [
         'data_api_url' => env('WAPPLAYZER_DATA_API_URL','UX3cAmxgPY8MhOMAhPtac6EjuoKeEmlH89SYpxD4'),
     ],

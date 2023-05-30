@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AnnotationRequest;
 use App\Models\Annotation;
 use App\Models\ApplePodcastAnnotation;
+use App\Models\YoutubeAnnotation;
 use App\Models\GoogleAdsAnnotation;
 use App\Models\GithubCommitAnnotation;
 use App\Models\BitbucketCommitAnnotation;
@@ -760,6 +761,12 @@ class AnnotationController extends Controller
             $annotation->delete();
         } else if ($request->table_name == 'apple_podcast_annotations') {
             $annotation = ApplePodcastAnnotation::find($request->annotation_id);
+            if (!in_array($annotation->user_id, $userIdsArray)) {
+                abort(404, "Unable to find annotation with the given id.");
+            }
+            $annotation->delete();
+        } else if ($request->table_name == 'youtube_annotations') {
+            $annotation = YoutubeAnnotation::find($request->annotation_id);
             if (!in_array($annotation->user_id, $userIdsArray)) {
                 abort(404, "Unable to find annotation with the given id.");
             }

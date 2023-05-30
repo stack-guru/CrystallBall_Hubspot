@@ -214,6 +214,13 @@ class HomeController extends Controller
                     $user->last_activated_any_data_source_at = Carbon::now();
                 }
             }
+            if ($request->has('is_ds_youtube_tracking_enabled')) {
+                $user->is_ds_youtube_tracking_enabled = $request->is_ds_youtube_tracking_enabled;
+                if ($request->is_ds_youtube_tracking_enabled) {
+                    $this->checkPricePlanLimit($user);
+                    $user->last_activated_any_data_source_at = Carbon::now();
+                }
+            }
 
             if ($request->has('is_ds_shopify_annotation_enabled')) {
                 $user->is_ds_shopify_annotation_enabled = $request->is_ds_shopify_annotation_enabled;

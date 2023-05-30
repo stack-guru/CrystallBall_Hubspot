@@ -6,11 +6,13 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use App\Models\ShopifyAnnotation;
 
-class ShopifyService {
+class ShopifyService
+{
     //Shopify API
-    public function saveShopifyProducts($events, $products, $userID){
+    public function saveShopifyProducts($events, $products, $userID, $monitorID)
+    {
         $productIDs = [];
-        foreach($products as $product) {
+        foreach ($products as $product) {
             $productId = $product['id'];
             $productIDs[] = $productId;
             $annotation = ShopifyAnnotation::where('product_id', $productId)->first();
@@ -23,12 +25,13 @@ class ShopifyService {
                 $annotation->user_id = $userID;
                 $annotation->published_at = $product['published_at'];
                 $annotation->product_type = $product['product_type'];
-            } 
+            }
             if ($update) {
                 $annotation->category = "Updated Product";
             }
             $saveRecord = $new || ($update && $annotation->shopify_updated_at !== $product['updated_at']);
             if ($saveRecord) {
+                $annotation->monitor_id = $monitorID;
                 $annotation->title = $product['title'];
                 $annotation->handle = $product['handle'];
                 $annotation->body_html = $product['body_html'];
@@ -38,16 +41,17 @@ class ShopifyService {
             }
         }
 
-        if( in_array('Removed Product', $events) ) {
+        if (in_array('Removed Product', $events)) {
             $allExistingAnnotations = ShopifyAnnotation::whereNotIn('product_id', $productIDs)->get();
-            foreach($allExistingAnnotations as $pro) {
+            foreach ($allExistingAnnotations as $pro) {
                 $pro->category = "Removed Product";
                 $pro->save();
             }
         }
     }
 
-    public function getShopifyProducts($url){
+    public function getShopifyProducts($url)
+    {
         try {
             $response = Http::get($url . '/products.json');
             return $response['products'];

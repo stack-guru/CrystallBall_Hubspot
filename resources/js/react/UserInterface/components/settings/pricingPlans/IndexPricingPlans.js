@@ -166,10 +166,9 @@ export default class IndexPricingPlans extends React.Component {
                                             <p>{pricePlan.short_description.length > 35 ? <>{pricePlan.short_description}</> : pricePlan.short_description.length == 0 ? <></> : <>{pricePlan.short_description}</>}</p>
                                             {pricePlan.yearly_discount_percent ?
                                                 <div className="price-plan-discount-text">
-                                                    <label className="px-3">{this.state.planDuration == 12 && pricePlan.short_description !== "For Freelancers" ?
+                                                    <label  className={`px-3 ${(this.state.planDuration == 12 && pricePlan.short_description !== "For Freelancers") || (pricePlan.short_description === "For Freelancers") ? '' :'visibility-hidden'}`}>{this.state.planDuration == 12 && pricePlan.short_description !== "For Freelancers" ?
                                                         <>{Number(pricePlan.yearly_discount_percent)}% OFF</> :
-                                                        pricePlan.short_description === "For Freelancers" ? <>Limited
-                                                            time offer</> : null
+                                                        pricePlan.short_description === "For Freelancers" ? <>Limited time offer</> : <>XYZ</>
                                                     }</label></div> : <div className="price-plan-discount-text">
                                                     <label className="px-3">{" "}</label>
                                                 </div>}
@@ -179,7 +178,7 @@ export default class IndexPricingPlans extends React.Component {
                                                 </h3>
                                             </div> :  <div>
                                                 <h3 className="price-plan-discount-strick">
-                                                    <label><sup>{" "}</sup></label>
+                                                    <label className={"visibility-hidden"} ><sup>$</sup> 29/m</label>
                                                 </h3>
                                             </div>}
                                             <h3>{userRegistrationOffer ? <><sup>$</sup>{pricePlan.price}</> : <>
@@ -277,6 +276,7 @@ export default class IndexPricingPlans extends React.Component {
                                         (pricePlan.owm_city_count == -1 || pricePlan.owm_city_count == null) &&
                                         (pricePlan.google_alert_keyword_count == -1 || pricePlan.google_alert_keyword_count == null) &&
                                         (pricePlan.apple_podcast_monitor_count == -1 || pricePlan.apple_podcast_monitor_count == null) &&
+                                        (pricePlan.youtube_credits_count == -1 || pricePlan.youtube_credits_count == null) &&
                                         (pricePlan.bitbucket_credits_count == -1 || pricePlan.bitbucket_credits_count == null) &&
                                         (pricePlan.aws_credits_count == -1 || pricePlan.aws_credits_count == null) &&
                                         (pricePlan.github_credits_count == -1 || pricePlan.github_credits_count == null) &&
@@ -310,6 +310,11 @@ export default class IndexPricingPlans extends React.Component {
                                                         <li className='d-flex align-items-center'><i><img
                                                             src={'/tick-green.svg'}/></i>
                                                             <span>Apple Poadcast: {pricePlan.apple_podcast_monitor_count == 0 ? 'Unlimited' : pricePlan.apple_podcast_monitor_count}</span>
+                                                        </li>}
+                                                    {pricePlan.youtube_credits_count == -1 || pricePlan.youtube_credits_count == null ? null :
+                                                        <li className='d-flex align-items-center'><i><img
+                                                            src={'/tick-green.svg'}/></i>
+                                                            <span>Youtube Monitors: {pricePlan.youtube_credits_count == 0 ? 'Unlimited' : pricePlan.youtube_credits_count}</span>
                                                         </li>}
                                                     {pricePlan.bitbucket_credits_count == -1 || pricePlan.bitbucket_credits_count == null ? null :
                                                         <li className='d-flex align-items-center'><i><img

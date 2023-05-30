@@ -48,6 +48,7 @@ Route::post('facebookAdsWebhook', [FacebookAutomationController::class, 'faceboo
 Route::get('requestInvitation', [App\Http\Controllers\Auth\RegisterController::class, 'requestInvitation'])->name('request.invite');
 Route::view('invite-sent', 'auth.invite-sent');
 
+Route::get('shared_report/download/{id}', [App\Http\Controllers\Auth\RegisterController::class, 'downloadReport'])->name('shared_report.download');
 Route::get('logs4727299@oolkidd9929', [\Rap2hpoutre\LaravelLogViewer\LogViewerController::class, 'index']);
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
@@ -124,6 +125,8 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
     Route::post('annotation/saveCsv', [App\Http\Controllers\AnnotationController::class, 'saveCSV']);
 
     Route::view('data-source', 'ui/app');
+    Route::view('report-dashboard', 'ui/app');
+
     Route::view('integrations', 'ui/app');
     Route::view('my-integrations', 'ui/app');
     Route::view('api-key', 'ui/app');
@@ -170,7 +173,10 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
                 Route::get('device-categories', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'deviceCategoriesIndex']);
                 Route::get('device-by-impression', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'devicesIndexByImpression']);
                 Route::get('countries', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'countriesIndex']);
-                Route::post('share-report', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'shareReport']);
+                Route::get('share-report', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'shareReport']);
+                Route::get('get-shared-reports', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'getSharedReports']);
+                Route::get('get-dashboard-activity', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'getDashboardActivity']);
+                Route::get('create-dashboard-activity', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'createDashboardActivity']);
             });
 
             Route::group(['prefix' => 'search-console'], function () {
@@ -248,7 +254,9 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
             Route::get('get-twitter-tracking-configurations', [TwitterTrackingConfigurationController::class, 'get']);
 
             Route::post('save-instagram-tracking-configurations', [InstagramTrackingConfigurationController::class, 'save']);
+            Route::post('run-instagram-job', [InstagramTrackingConfigurationController::class, 'runJob']);
             Route::get('get-instagram-tracking-configurations', [InstagramTrackingConfigurationController::class, 'get']);
+            Route::delete('remove-instagram-tracking-configuration/{instagram_tracking_configuration}', [InstagramTrackingConfigurationController::class, 'destroy']);
 
             Route::get('get-facebook-page-list', [App\Http\Controllers\UserFacebookPageController::class, 'index']);
 
@@ -266,11 +274,13 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
             // github repositories
             Route::get('get-github-repositories', [GithubAutomationController::class, 'getRepositories']);
             Route::post('apple_podcast_url', [App\Http\Controllers\ApplePodcastMonitorController::class, 'applePodcastUrl']);
+            Route::post('youtube_url', [App\Http\Controllers\YoutubeMonitorController::class, 'youtubeUrl']);
 
             Route::post('shopify_url', [App\Http\Controllers\ShopifyMonitorController::class, 'saveShopifyProducts']);
             Route::get('getShopifyProducts', [App\Http\Controllers\ShopifyMonitorController::class, 'getShopifyProducts']);
             Route::resource('shopify-monitor', App\Http\Controllers\ShopifyMonitorController::class)->only(['index', 'store', 'update', 'destroy']);
             Route::resource('apple-podcast-monitor', App\Http\Controllers\ApplePodcastMonitorController::class)->only(['index', 'store', 'update', 'destroy']);
+            Route::resource('youtube-monitor', App\Http\Controllers\YoutubeMonitorController::class)->only(['index', 'store', 'update', 'destroy']);
         });
 
         Route::group(['prefix' => 'settings'], function () {

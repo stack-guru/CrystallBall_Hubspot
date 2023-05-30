@@ -32,7 +32,8 @@ class AnnotationQueryHelper
         string $showBitBucketTrackings = 'true',
         string $showGitHubTrackings = 'true',
         string $showApplePodcasts = 'true',
-        string $showShopify = 'true'
+        string $showShopify = 'true',
+        string $showYoutube = 'true'
     ) {
         $annotationsQuery = "";
         // SELECT annotations from annotations table
@@ -112,10 +113,15 @@ class AnnotationQueryHelper
             $annotationsQuery .= " union ";
             $annotationsQuery .= self::applePodcastQuery($userIdsArray);
         }
-        // Add apple podcast annotations if it is enabled in user data source
+        // Add Shopify annotations if it is enabled in user data source
         if ($user->is_ds_shopify_annotation_enabled && $showShopify == 'true') {
             $annotationsQuery .= " union ";
             $annotationsQuery .= self::shopifyQuery($userIdsArray);
+        }
+        // Add Youtube Monitors annotations if it is enabled in user data source
+        if ($user->is_ds_youtube_tracking_enabled && $showYoutube == 'true') {
+            $annotationsQuery .= " union ";
+            $annotationsQuery .= self::youtubeQuery($userIdsArray);
         }
         return $annotationsQuery;
     }
@@ -205,12 +211,11 @@ class AnnotationQueryHelper
 
     public static function shopifyQuery(array $userIdsArray)
     {
-        return "select 1, published_at AS show_at, NULL, category, title AS event_name, NULL AS url, CONCAT('shopify_annotations', '~~~~', `shopify_annotations`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, body_html AS description, `users`.`name` AS `user_name`, NULL AS show_at, `shopify_monitors`.`ga_property_id` AS `table_ga_property_id`
-        from `shopify_annotations`
-        LEFT JOIN `shopify_monitors` ON `shopify_monitors`.`url` LIKE CONCAT('%', REPLACE(`shopify_annotations`.`vendor`, ' ', ''), '%')
+        return "SELECT 1, published_at AS show_at, NULL, category, title AS event_name, NULL AS url, CONCAT('shopify_annotations', '~~~~', `shopify_annotations`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, body_html AS description, `users`.`name` AS `user_name`, NULL AS show_at, `shopify_monitors`.`ga_property_id` AS `table_ga_property_id`
+        FROM `shopify_annotations`
+        LEFT JOIN `shopify_monitors` ON `shopify_annotations`.`monitor_id` = `shopify_monitors`.`id`
         LEFT JOIN `users` ON `shopify_annotations`.`user_id` = `users`.`id`
         WHERE `shopify_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
-//        AND JSON_CONTAINS(`shopify_monitors`.`events`, JSON_QUOTE(`shopify_annotations`.`category`))";
     }
 
     public static function holidaysQuery(array $userIdsArray, string $googleAnalyticsPropertyId)
@@ -286,5 +291,10 @@ class AnnotationQueryHelper
     public static function applePodcastQuery(array $userIdsArray)
     {
         return "select 1, podcast_date, NULL, category, event, apple_podcast_annotations.url, CONCAT('apple_podcast_annotations', '~~~~', `apple_podcast_annotations`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, `users`.`name` AS `user_name`, podcast_date, `apple_podcast_monitors`.`ga_property_id` AS `table_ga_property_id` from `apple_podcast_annotations` LEFT JOIN `apple_podcast_monitors` ON `apple_podcast_annotations`.`url` = `apple_podcast_monitors`.`url` LEFT JOIN `users` ON `apple_podcast_annotations`.`user_id` = `users`.`id` WHERE `apple_podcast_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+    }
+
+    public static function youtubeQuery(array $userIdsArray)
+    {
+        return "select 1, date, NULL, category, event, youtube_annotations.url, CONCAT('youtube_annotations', '~~~~', `youtube_annotations`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, `users`.`name` AS `user_name`, date, `youtube_monitors`.`ga_property_id` AS `table_ga_property_id` from `youtube_annotations` LEFT JOIN `youtube_monitors` ON `youtube_annotations`.`monitor_id` = `youtube_monitors`.`id` LEFT JOIN `users` ON `youtube_annotations`.`user_id` = `users`.`id` WHERE `youtube_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
     }
 }

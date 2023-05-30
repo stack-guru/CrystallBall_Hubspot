@@ -30,7 +30,7 @@
                         </div>
                         <div class="form-group">
                             <label for="pricePlanExpiryDate">Price Plan Expiry Date</label>
-                            <input  class="form-control" type="date" name="price_plan_expiry_date" id="pricePlanExpiryDate" value="{{ $user->price_plan_expiry_date }}" >
+                            <input  class="form-control" type="date" name="price_plan_expiry_date" id="pricePlanExpiryDate" value="{{ $user->price_plan_expiry_date->format('Y-m-d') }}" >
                         </div>
                         <div class="form-group">
                             <label>Is billing enabled?</label>
