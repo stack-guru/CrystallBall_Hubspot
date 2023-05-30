@@ -5856,11 +5856,11 @@ div[data-tour-elem="controls"]
 }
 
 .sidebar {
-    min-width: 100px;
+    min-width: 90px;
 }
 @media screen and (max-width: 1439px) {
     .is-collapsed .sidebar {
-        width: 100px;
+        width: 90px;
     }
 
     /*.is-collapsed .sidebar .sidebar-inner .sidebar-menu > li > a .title {*/
@@ -5874,7 +5874,7 @@ div[data-tour-elem="controls"]
 
 @media screen and (min-width: 1440px) {
     .is-collapsed .sidebar {
-        width: 100px;
+        width: 90px;
     }
     .is-collapsed .sidebar:hover {
         width: 270px;
