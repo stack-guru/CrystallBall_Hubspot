@@ -4324,6 +4324,7 @@ div[data-tour-elem="controls"]
     justify-content: center;
 }
 
+
 .btns {
     top: 0;
     right: 0;
@@ -5860,16 +5861,16 @@ div[data-tour-elem="controls"]
 }
 
 .sidebar {
-    min-width: 90px;
+    min-width: 110px;
 }
 @media screen and (max-width: 1439px) {
     .is-collapsed .sidebar {
-        width: 90px;
+        width: 110px;
     }
 
-    /*.is-collapsed .sidebar .sidebar-inner .sidebar-menu > li > a .title {*/
-    /*    visibility: hidden;*/
-    /*}*/
+    .is-collapsed .sidebar .sidebar-inner .sidebar-menu > li > a .title {
+        visibility: hidden;
+    }
 
     .is-collapsed .sidebar:hover {
         width: 270px;
@@ -5878,7 +5879,7 @@ div[data-tour-elem="controls"]
 
 @media screen and (min-width: 1440px) {
     .is-collapsed .sidebar {
-        width: 90px;
+        width: 110px;
     }
     .is-collapsed .sidebar:hover {
         width: 270px;
@@ -6000,7 +6001,7 @@ div[data-tour-elem="controls"]
     padding: 5px;
     position: absolute;
     z-index: 1;
-    bottom: 70%;
+    bottom: 100%;
     left: 50%;
     margin-left: -50px;
     opacity: 0;
@@ -6828,4 +6829,43 @@ div[data-tour-elem="controls"]
 
 .visibility-hidden {
     visibility: hidden;
+}
+.acctive-recurrence-popover  .popover-inner {
+    max-width: 280px;
+    /* align-items: flex-start; */
+    /* padding: 8px 12px;
+    gap: 10px; */
+}
+.acctive-recurrence-popover .popover{
+    max-width: 150;
+}
+
+/* .acctive-recurrence-popover  .popover-inner .button:nth-last-child(2){
+    color: #666666;
+    background: none;
+    margin-left: 20px;
+}
+.acctive-recurrence-popover  .popover-inner .button:last-child{
+    color: #666666;
+    background: none;
+    margin-left: 20px;
+}
+.acctive-recurrence-popover  .popover-inner.button:first-child {
+    color: #666666;
+    background: none;
+    margin-left: 20px;
+} */
+.acctive-recurrence-popover  .popover-inner .share-report-interval{
+    border: none;
+    background: none;
+    color: #828282;
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    text-align: center;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    margin-left: 30px;
+    gap: 10px;
+    padding: 8px 12px;
 }
