@@ -312,7 +312,7 @@ export default class IndexAnalytics extends Component {
 
     render() {
 
-        if (!this.props.user.google_accounts_count) return <NoGoogleAccountConnectedPage />
+        if (!this.props.user.google_accounts_count) return <NoGoogleAccountConnectedPage user={this.state.user}/>
         return <React.Fragment>
             {/* here me start */}
             <>
