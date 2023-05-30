@@ -23,6 +23,18 @@ import { Chart } from "react-google-charts";
 
 
 
+  const gradientBackgroundPlugin = {
+    id: 'gradientBackground',
+    beforeDraw: (chart) => {
+      const ctx = chart.canvas.getContext('2d');
+      const gradient = ctx.createLinearGradient(0, 0, 0, chart.chartArea.bottom);
+      gradient.addColorStop(0, 'rgba(30, 168, 253, 0.3)'); // Start color
+      gradient.addColorStop(1, 'rgba(255, 0, 0, 0)'); // End color
+      ctx.fillStyle = gradient;
+      ctx.fillRect(chart.chartArea.left, chart.chartArea.top, chart.chartArea.right - chart.chartArea.left, chart.chartArea.bottom - chart.chartArea.top);
+    },
+  };
+
 export default function UsersDaysWithAnnotationsGraph(props) {
 
 
@@ -32,30 +44,29 @@ export default function UsersDaysWithAnnotationsGraph(props) {
             beginAtZero: true,
           },
         },
-        elements: {
-            area: {
-              background: {
-                orientation: 'vertical',
-                from: "rgba(30, 168, 253, 0.3)", // Start color
-                to: "rgba(30, 168, 253, 0)", // End color
-              },
+        plugins: {
+            legend: {
+              display: false,
             },
+            customPlugins: [gradientBackgroundPlugin], // Add the custom plugin
           },
+
       };
       const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
 
       const data = {
         labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
         datasets: [
-          {
-            label: 'Data',
-            data: [12, 19, 3, 5, 2, 3, 8],
-            fill: true,
-
-            borderColor: 'rgba(30, 168, 253, 1)', // Line color
-            tension: 0.4,
-            
-          },
+            {
+                
+                label: 'Data',
+                data: [12,8,34,2,1],
+                fill: true,
+                backgroundColor: 'rgba(30, 168, 253, 0.1)', // Start color of the gradient
+                borderColor: 'rgba(30, 168, 253, 1)', // Line color
+                tension: 0.4,
+              },
+   
         ],
       };
 
@@ -116,57 +127,45 @@ export default function UsersDaysWithAnnotationsGraph(props) {
                 fontSize: 8,
                 opacity: 0.8
             },
-            // boxStyle: {
-            //     stroke: '#FE4C3C',
-            //     strokeWidth: 3,
-            //     rx: 0,
-            //     ry: 0,
-            //     gradient: {
-            //       color1: 'rgba(30, 168, 253, 0.3)',
-            //       color2: 'rgba(30, 168, 253, 0)',
-            //       x1: '0%',
-            //       y1: '0%',
-            //       x2: '100%',
-            //       y2: '100%',
-            //       useObjectBoundingBoxUnits: true
-            //     }
-            //   },
-            //   chartArea: {
+           
+              chartArea: {
 
-            //     backgroundColor: {
-            //     fill: 'linear-gradient(180deg, rgba(30, 168, 253, 0.3) 0%, rgba(30, 168, 253, 0) 100%)',
-            //     opacity: 1
-            //         },
-            //   },
-              backgroundColor:"00cc00"
-            // boxStyle: {
-            //     // Color of the box outline.
-            //     stroke: '#017ED7',
-            //     // Thickness of the box outline.
-            //     strokeWidth: 1,
-            //     // x-radius of the corner curvature.
-            //     rx: 0,
-            //     // y-radius of the corner curvature.
-            //     ry: 0,
-            //     // Attributes for linear gradient fill.
-            //     gradient: {
+                backgroundColor: {
+                fill: 'rgba(30, 168, 253, 0.1)',
+                opacity: 0.2,
+                    },
+              },
+            //   backgroundColor: '#f1f8e9',
 
-            //         // Start color for gradient.
-            //         color1: '#fbf6a7',
-            //         // Finish color for gradient.
-            //         color2: '#33b679',
-            //         // Where on the boundary to start and
-            //         // end the color1/color2 gradient,
-            //         // relative to the upper left corner
-            //         // of the boundary.
-            //         x1: '0%', y1: '0%',
-            //         x2: '100%', y2: '100%',
-            //         // If true, the boundary for x1,
-            //         // y1, x2, and y2 is the box. If
-            //         // false, it's the entire chart.
-            //         useObjectBoundingBoxUnits: true
-            //     }
-            // }
+            //   backgroundColor:"rgba(30, 168, 253, 0.1)"
+            boxStyle: {
+                // Color of the box outline.
+                stroke: 'rgba(30, 168, 253, 0.3)',
+                // Thickness of the box outline.
+                strokeWidth: 1,
+                // x-radius of the corner curvature.
+                rx: 0,
+                // y-radius of the corner curvature.
+                ry: 0,
+                // Attributes for linear gradient fill.
+                gradient: {
+
+                    // Start color for gradient.
+                    color1: 'rgba(30, 168, 253, 0.3)',
+                    // Finish color for gradient.
+                    color2: 'rgba(30, 168, 253, 0.1)',
+                    // Where on the boundary to start and
+                    // end the color1/color2 gradient,
+                    // relative to the upper left corner
+                    // of the boundary.
+                    x1: '0%', y1: '0%',
+                    x2: '100%', y2: '100%',
+                    // If true, the boundary for x1,
+                    // y1, x2, and y2 is the box. If
+                    // false, it's the entire chart.
+                    useObjectBoundingBoxUnits: true
+                }
+            }
         },
         legend: 'none',
     };
@@ -179,7 +178,7 @@ export default function UsersDaysWithAnnotationsGraph(props) {
                 // bold: true,
                 // italic: true,
                 // The color of the text.
-                color: '#828282',
+                color: 'rgba(30, 168, 253, 0.1',
                 // The color of the text outline.
                 // auraColor: '#d799ae',
                 // The transparency of the text.
@@ -190,6 +189,7 @@ export default function UsersDaysWithAnnotationsGraph(props) {
 
     return (
         <>
+        
              {/*user's div*/}
                        
                         {/* <div className="report-box">                           
@@ -250,8 +250,8 @@ export default function UsersDaysWithAnnotationsGraph(props) {
                     <div><h4 className="card-heading">Users</h4>
                     </div>
                 </div>
-                <Line options={options} data={data} />;
-                {/* <Chart
+                {/* <Line options={options} data={data} />; */}
+                <Chart
                     width={'100%'}
                     // style={{ paddingLeft: '10px' }}
                     // height={'50'}
@@ -259,7 +259,7 @@ export default function UsersDaysWithAnnotationsGraph(props) {
                     loader={<div>Loading Chart</div>}
                     data={dataArray}
                     options={optionsArray}
-                /> */}
+                />
             </div>
         </>
     )
