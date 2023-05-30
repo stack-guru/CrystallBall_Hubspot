@@ -6825,3 +6825,7 @@ div[data-tour-elem="controls"]
 .visibility-hidden {
     visibility: hidden;
 }
+
+.ga-account-select-holder > div > div > div:first-child {
+    width: calc(100% - 40px) !important;
+}

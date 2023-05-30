@@ -254,7 +254,9 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
             Route::get('get-twitter-tracking-configurations', [TwitterTrackingConfigurationController::class, 'get']);
 
             Route::post('save-instagram-tracking-configurations', [InstagramTrackingConfigurationController::class, 'save']);
+            Route::post('run-instagram-job', [InstagramTrackingConfigurationController::class, 'runJob']);
             Route::get('get-instagram-tracking-configurations', [InstagramTrackingConfigurationController::class, 'get']);
+            Route::delete('remove-instagram-tracking-configuration/{instagram_tracking_configuration}', [InstagramTrackingConfigurationController::class, 'destroy']);
 
             Route::get('get-facebook-page-list', [App\Http\Controllers\UserFacebookPageController::class, 'index']);
 

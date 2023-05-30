@@ -8,6 +8,7 @@ use App\Helpers\GitHubCommitHelper;
 use App\Http\Requests\StoreKeywordsRequest;
 use App\Http\Requests\UserDataSourceRequest;
 use App\Models\FacebookTrackingConfiguration;
+use App\Models\InstagramTrackingConfiguration;
 use App\Models\Keyword;
 use App\Models\KeywordConfiguration;
 use App\Models\KeywordMeta;
@@ -56,7 +57,7 @@ class UserDataSourceController extends Controller
                 'github_tracking' => $this->userDataSourceQuery(['value'], 'github_tracking', true),
                 'facebook_tracking' => FacebookTrackingConfiguration::select('id')->where('user_id', Auth::user()->id)->get(),
                 'twitter_tracking' => $this->userDataSourceQuery(['value'], 'twitter_tracking', true),
-                'instagram_tracking' => $this->userDataSourceQuery(['value'], 'instagram_tracking', true),
+                'instagram_tracking' => InstagramTrackingConfiguration::select('id')->where('user_id', Auth::user()->id)->get(),
                 'shopify_annotation' => $this->userDataSourceQuery(['shopify_annotation_id'], 'shopify_annotation'),
             ],
         ];

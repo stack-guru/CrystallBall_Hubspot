@@ -102,7 +102,7 @@ class FacebookAutomationController extends Controller
                 (new InstagramAccountController())->setupInstagramAccount($user->token);
                 
                 
-                return redirect()->to('data-source')->with('Account connected. You can enable the automation now.');
+                return redirect()->to("/data-source?show_facebook_popup=1&alertMessage=Account connected. You can enable the automation now.");
 
             }
             else{

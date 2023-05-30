@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\GoogleAnalyticsProperty;
 use App\Models\InstagramTrackingConfiguration;
+use App\Models\InstagramTrackingAnnotation;
+use App\Jobs\InstagramCreateAnnotation;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,31 +22,45 @@ class InstagramTrackingConfigurationController extends Controller
             // 'selected_facebook_pages' => 'required',
         ]);
 
-        InstagramTrackingConfiguration::updateOrCreate(
-            [
-                'user_id' => Auth::user()->id,
-            ],
-            [
-                'when_new_post_on_instagram' => (boolean)$request->when_new_post_on_instagram,
+        $userId = Auth::user()->id;
+        $exists = InstagramTrackingConfiguration::where('user_id', $userId)->where('ga_property_id', (int)$request->ga_property_id)->first();
+        if ($exists) {
+            return response()->json([
+                'message' => 'Already Exist',
+            ], 422);
+        }
 
-                'when_post_reach_likes' => (int)$request->when_post_reach_likes,
-                'when_post_reach_comments' => (int)$request->when_post_reach_comments,
-                'when_post_reach_shares' => (int)$request->when_post_reach_shares,
-                'when_post_reach_views' => (int)$request->when_post_reach_views,
+        $configuration = new InstagramTrackingConfiguration();
 
-                'is_post_likes_tracking_on' => (int)$request->is_post_likes_tracking_on,
-                'is_post_comments_tracking_on' => (int)$request->is_post_comments_tracking_on,
-                'is_post_views_tracking_on' => (int)$request->is_post_views_tracking_on,
-                'is_post_shares_tracking_on' => (int)$request->is_post_shares_tracking_on,
-                'ga_property_id' => (int)$request->ga_property_id,
+        $configuration->user_id = $userId;
+        $configuration->when_new_post_on_instagram = (boolean)$request->when_new_post_on_instagram;
 
-            ]
-        );
+        $configuration->when_post_reach_likes = (int)$request->when_post_reach_likes;
+        $configuration->when_post_reach_comments = (int)$request->when_post_reach_comments;
+        $configuration->when_post_reach_shares = (int)$request->when_post_reach_shares;
+        $configuration->when_post_reach_views = (int)$request->when_post_reach_views;
+
+        $configuration->is_post_likes_tracking_on = (int)$request->is_post_likes_tracking_on;
+        $configuration->is_post_comments_tracking_on = (int)$request->is_post_comments_tracking_on;
+        $configuration->is_post_views_tracking_on = (int)$request->is_post_views_tracking_on;
+        $configuration->is_post_shares_tracking_on = (int)$request->is_post_shares_tracking_on;
+        $configuration->ga_property_id = (int)$request->ga_property_id;
+
+        $configuration->save();
 
         $gaProperty = GoogleAnalyticsProperty::find((int)$request->ga_property_id);
         return response()->json([
             'message' => 'Settings Updated',
-            'gaPropertyName' => $gaProperty ? $gaProperty->name : ''
+            'gaPropertyName' => $gaProperty ? $gaProperty->name : '',
+            'configurationId' => $configuration->id
+        ]);
+    }
+
+    public function runJob (Request $request){
+        $configID = $request->id;
+        InstagramCreateAnnotation::dispatch(Auth::user()->id, $configID, true);
+        return response()->json([
+            'status' => true,
         ]);
     }
 
@@ -54,42 +70,19 @@ class InstagramTrackingConfigurationController extends Controller
      */
     public function get(): JsonResponse
     {
-        $InstagramTrackingConfiguration = InstagramTrackingConfiguration::where('user_id', Auth::user()->id)->first();
-        if ($InstagramTrackingConfiguration){
-            return response()->json([
-                'configuration_id' => $InstagramTrackingConfiguration->ga_property_id || false,
-                'when_new_post_on_instagram' => (bool)$InstagramTrackingConfiguration->when_new_post_on_instagram,
 
-                'when_post_reach_likes' => (int)$InstagramTrackingConfiguration->when_post_reach_likes,
-                'when_post_reach_comments' => (int)$InstagramTrackingConfiguration->when_post_reach_comments,
-                'when_post_reach_shares' => (int)$InstagramTrackingConfiguration->when_post_reach_shares,
-                'when_post_reach_views' => (int)$InstagramTrackingConfiguration->when_post_reach_views,
+        $configurations = InstagramTrackingConfiguration::select('instagram_tracking_configurations.*', 'google_analytics_properties.name AS gaPropertyName')
+        ->where('instagram_tracking_configurations.user_id', Auth::user()->id)
+        ->leftjoin('google_analytics_properties', 'ga_property_id', 'google_analytics_properties.id')->get();
 
-                'is_post_likes_tracking_on' => (int)$InstagramTrackingConfiguration->is_post_likes_tracking_on,
-                'is_post_comments_tracking_on' => (int)$InstagramTrackingConfiguration->is_post_comments_tracking_on,
-                'is_post_views_tracking_on' => (int)$InstagramTrackingConfiguration->is_post_views_tracking_on,
-                'is_post_shares_tracking_on' => (int)$InstagramTrackingConfiguration->is_post_shares_tracking_on,
+        return response()->json(
+            compact('configurations')
+        );
+    }
 
-                'ga_property_id' => (int)$InstagramTrackingConfiguration->ga_property_id,
-                'gaPropertyName' => $InstagramTrackingConfiguration->ga_property_id ? GoogleAnalyticsProperty::find((int)$InstagramTrackingConfiguration->ga_property_id)->name : "",
-            ]);
-        }
-        else{
-            return response()->json([
-                'configuration_id' => null,
-                'when_new_post_on_instagram' => true,
-
-                'is_post_likes_tracking_on' => true,
-                'is_post_comments_tracking_on' => true,
-                'is_post_views_tracking_on' => true,
-                'is_post_shares_tracking_on' => true,
-
-                'when_post_reach_likes' => 1000,
-                'when_post_reach_comments' => 1000,
-                'when_post_reach_shares' => 1000,
-                'when_post_reach_views' => 1000,
-                'ga_property_id' => null,
-            ]);
-        }
+    public function destroy(InstagramTrackingConfiguration $instagramTrackingConfiguration)
+    {
+        InstagramTrackingAnnotation::where('configuration_id', $instagramTrackingConfiguration->id)->delete();
+        return ['success' => $instagramTrackingConfiguration->delete()];
     }
 }
