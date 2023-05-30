@@ -345,12 +345,13 @@ class FacebookAutomationRepository
     {
         switch ($type){
             case 'when_new_post_on_facebook':
-                $description = "A new post on facebook page. </br> View post:  </br>" . @$data['url'];
+                $description = "A new post on facebook page.";
                 FacebookTrackingAnnotation::create([
                     'user_id' => $user->id,
                     'category' => 'Facebook',
                     'event_type' => 'Alert',
                     'event_name' => 'New Post',
+                    'url' => @$data['url'],
                     'title' => $data['description'] ?? "",
                     'description' => $data['title'] ?? $description,
                     'show_at' => today(),
@@ -358,12 +359,13 @@ class FacebookAutomationRepository
                 ]);
                 break;
             case 'when_post_reach_likes':
-                $description = "A post on facebook reached ".@$data['likes']." likes. </br> View post:  </br>" . @$data['url'];
+                $description = "A post on facebook reached ".@$data['likes']." likes.";
                 FacebookTrackingAnnotation::create([
                     'user_id' => $user->id,
                     'category' => 'Facebook',
                     'event_type' => 'Alert',
                     'event_name' => 'Likes Reached',
+                    'url' => @$data['url'],
                     'title' => $data['description'] ?? "",
                     'description' => $data['title'] ?? $description,
                     'configuration_id' => $data['configuration_id'],
@@ -371,12 +373,13 @@ class FacebookAutomationRepository
                 ]);
                 break;
             case 'when_post_reach_comments':
-                $description = "A post on facebook reached ".@$data['comments']." comments. </br> View post:  </br>" . @$data['url'];
+                $description = "A post on facebook reached ".@$data['comments']." comments.";
                 FacebookTrackingAnnotation::create([
                     'user_id' => $user->id,
                     'category' => 'Facebook',
                     'event_type' => 'Alert',
                     'event_name' => 'Comments Reached',
+                    'url' => @$data['url'],
                     'title' => $data['description'] ?? "",
                     'description' => $data['title'] ?? $description,
                     'configuration_id' => $data['configuration_id'],
@@ -384,12 +387,13 @@ class FacebookAutomationRepository
                 ]);
                 break;
             case 'when_post_reach_views':
-                $description = "A post on facebook reached ".@$data['views']." views. </br> View post:  </br>" . @$data['url'];
+                $description = "A post on facebook reached ".@$data['views']." views.";
                 FacebookTrackingAnnotation::create([
                     'user_id' => $user->id,
                     'category' => 'Facebook',
                     'event_type' => 'Alert',
                     'event_name' => 'Views Reached',
+                    'url' => @$data['url'],
                     'title' => $data['description'] ?? "",
                     'description' => $data['title'] ?? $description,
                     'configuration_id' => $data['configuration_id'],
@@ -397,12 +401,13 @@ class FacebookAutomationRepository
                 ]);
                 break;
             case 'when_post_reach_shares':
-                $description = "A post on facebook reached ".@$data['shares']." shares. </br> View post:  </br>" . @$data['url'];
+                $description = "A post on facebook reached ".@$data['shares']." shares.";
                 FacebookTrackingAnnotation::create([
                     'user_id' => $user->id,
                     'category' => 'Facebook',
                     'event_type' => 'Alert',
                     'event_name' => 'Shares Reached',
+                    'url' => @$data['url'],
                     'title' => $data['description'] ?? "",
                     'description' => $data['title'] ?? $description,
                     'configuration_id' => $data['configuration_id'],
