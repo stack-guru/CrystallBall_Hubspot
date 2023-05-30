@@ -2,9 +2,9 @@
 
 namespace App\Helpers;
 
+use App\Models\User;
 use App\Models\UserDataSource;
 use Illuminate\Support\Carbon;
-use App\Models\User;
 
 class AnnotationQueryHelper
 {
@@ -159,7 +159,7 @@ class AnnotationQueryHelper
             $annotationsQuery .= " AND (LOCATE('" . $gaPropertyId . "', CONCAT(`annotation_ga_properties`.`google_analytics_property_id`, '~~~~', `google_analytics_properties`.`name`)) > 0 OR CONCAT(`annotation_ga_properties`.`google_analytics_property_id`, '~~~~', `google_analytics_properties`.`name`) IS NULL)";
         } else if($googleAnalyticsPropertyId && $googleAnalyticsPropertyId == '*' && $user->assigned_properties_id) {
             $gaPropertyId = $user->assigned_properties_id;
-            $annotationsQuery .= " AND (LOCATE('" . $gaPropertyId . "', CONCAT((SELECT GROUP_CONCAT(`annotation_ga_properties`.`google_analytics_property_id`) FROM `annotation_ga_properties` WHERE `annotation_ga_properties`.`annotation_id` = `annotations`.`id` GROUP BY `annotation_ga_properties`.`annotation_id`), '~~~~', (SELECT GROUP_CONCAT(`google_analytics_properties`.`name`) FROM `annotation_ga_properties` LEFT JOIN `google_analytics_properties` ON `annotation_ga_properties`.`google_analytics_property_id` = `google_analytics_properties`.`id` WHERE `annotation_ga_properties`.`annotation_id` = `annotations`.`id` GROUP BY `annotation_ga_properties`.`annotation_id`))) > 0 OR CONCAT((SELECT GROUP_CONCAT(`annotation_ga_properties`.`google_analytics_property_id`) FROM `annotation_ga_properties` WHERE `annotation_ga_properties`.`annotation_id` = `annotations`.`id` GROUP BY `annotation_ga_properties`.`annotation_id`), '~~~~', (SELECT GROUP_CONCAT(`google_analytics_properties`.`name`) FROM `annotation_ga_properties` LEFT JOIN `google_analytics_properties` ON `annotation_ga_properties`.`google_analytics_property_id` = `google_analytics_properties`.`id` WHERE `annotation_ga_properties`.`annotation_id` = `annotations`.`id` GROUP BY `annotation_ga_properties`.`annotation_id`)) IS NULL)";
+            $annotationsQuery .= " AND (FIND_IN_SET(`annotation_ga_properties`.`google_analytics_property_id`, '" . $gaPropertyId . "') > 0 OR FIND_IN_SET(`google_analytics_properties`.`name`, '" . $gaPropertyId . "') > 0 OR CONCAT(`annotation_ga_properties`.`google_analytics_property_id`, '~~~~', `google_analytics_properties`.`name`) IS NULL)";
         }
         if ($user->is_ds_web_monitors_enabled && $showWebMonitoring == 'false') {
             $annotationsQuery .= " AND annotations.category <> 'Website Monitoring'";
