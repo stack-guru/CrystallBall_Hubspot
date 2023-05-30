@@ -21,7 +21,7 @@ export default function consoleAnnotationsTable(props) {
                             </span>
                         </div> */}
                     </div>
-                    <table className="table border mb-0">
+                    <table className="table border mb-0 dashboard-analytics">
                         <thead>
                             <tr>
                                 <th style={{ border: 'none' }}></th>

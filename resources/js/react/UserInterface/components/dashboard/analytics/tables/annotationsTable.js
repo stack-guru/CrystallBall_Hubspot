@@ -1,8 +1,15 @@
-import React, { Component } from 'react'
+import React, { Component,useState } from 'react'
 import { timezoneToDateFormat } from '../../../../utils/TimezoneTodateFormat';
 
 export default function AnnotationsTable(props) {
-    
+
+    const [visibleEntries,setVisibleEntries]= useState(10);
+
+    const data = props.annotations;
+
+   function habdleScroll(){
+
+   }
     
     return (
             <>
@@ -23,7 +30,7 @@ export default function AnnotationsTable(props) {
                                     </span>
                                 </div> */}
                             </div>
-                            <table className="table border mb-0">
+                            <table className="table border mb-0 dashboard-analytics">
                                 <thead>
                                     <tr>
                                         
@@ -106,7 +113,7 @@ export default function AnnotationsTable(props) {
                                 </tbody> */}
                                 <tbody id="annotation-table-body" >
                                         {
-                                            props.annotations.map(anno => {
+                                            data.map(anno => {
                                                 const conversionRate = anno.sum_conversions_count && anno.sum_users_count ? ((anno.sum_conversions_count / anno.sum_users_count) * 100).toFixed(2) : 0;
                                                 return (
                                                     <tr key={anno.id}>
