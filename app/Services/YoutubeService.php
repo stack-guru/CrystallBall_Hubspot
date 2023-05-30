@@ -15,14 +15,14 @@ use App\Models\Admin;
 use Error;
 
 class YoutubeService {
-    private $scrappingServerUrl;
+    private $youtubeUrl;
     /**
      * Initialize the library in your constructor using
      * your environment, api key, and password
      */
     public function __construct()
     {
-        $this->scrappingServerUrl = config('services.youtube_monitor.data_api_url');
+        $this->youtubeUrl = config('services.youtube_monitor.data_api_url');
     }
 
     //Youtube Scrapping API
@@ -33,13 +33,14 @@ class YoutubeService {
                 'monitorUrl' => $url
             ];
 
-            $response = Http::post($this->scrappingServerUrl . '/youtube-monitors', $reqBody);
+            $response = Http::post($this->youtubeUrl . '/youtube-monitors', $reqBody);
+            return ['ToDo: ', $response];
 
             if (!$response->successful()) {
                 throw new Error('Error while scrapping data');
             }
 
-            // $result = $response['episodesResult'];
+            $result = $response['data'];
             $length = count($result);
             for ($i = 0; $i < $length; $i++) {
                 $exist = YoutubeAnnotation::where('url', $result[$i]['url'])->first();

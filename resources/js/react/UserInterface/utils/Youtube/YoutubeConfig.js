@@ -62,7 +62,7 @@ const YoutubeConfig = (props) => {
         try {
             setSearchResult([]);
             setNoResult("");
-            const url = `https://itunes.youtube.com/search?term=${encodeURIComponent(inputVale)}`;
+            const url = `https://www.googleapis.com/youtube/v3/videos?id=${encodeURIComponent(inputVale)}&key=301040226881-p1utco823400k3u9cbc0io6qtme3i3m8.apps.googleusercontent.com&part=snippet,contentDetails,statistics,status`;
             const result = await axios.get(url);
 
             let sr = [];
