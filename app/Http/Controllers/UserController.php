@@ -45,7 +45,11 @@ class UserController extends Controller
     {
         $this->authorize('viewAny', User::class);
         $user = Auth::user();
-        $users = $user->user_id ? $user->user->users : $user->users;
+        if (!$user) {
+            abort(404, "Unable to find user with the given id.");
+        }
+
+        $users = $user->user_id && $user->user ? $user->user->users : $user->users;
 
         // Append Google Analytics properties for each user
         foreach ($users as $user) {
