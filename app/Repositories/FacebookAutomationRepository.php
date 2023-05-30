@@ -245,7 +245,7 @@ class FacebookAutomationRepository
                                         // check if there is a new post
                                         if ((int)count($response['page_posts']) > (int)$facebook_page_posts_from_database->count() || $forceSave) {
                                             // check configuration if it's enabled to create annotation
-                                            if ($configuration->when_new_post_on_facebook || $forceSave) {
+                                            if ($configuration->when_new_post_on_facebook) {
                                                 $data = @$response['page_posts'][0]['attachments']['data'][0];
                                                 $data['configuration_id'] = $configuration->id;
                                                 $this->createAutomationAnnotation('when_new_post_on_facebook', $user, $data);
