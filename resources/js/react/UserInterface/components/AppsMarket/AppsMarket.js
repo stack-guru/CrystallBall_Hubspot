@@ -131,6 +131,11 @@ class AppsMarket extends React.Component {
                 dsKey: "is_ds_instagram_tracking_enabled",
             });
         }
+        if (urlSearchParams.has('show_facebook_popup')) {
+            this.setState({
+                dsKey: "is_ds_facebook_tracking_enabled",
+            });
+        }
         let alertMessage = new URLSearchParams(window.location.search).get(
             "alertMessage"
         );
@@ -487,17 +492,17 @@ class AppsMarket extends React.Component {
                 width: 140,
                 height: 19,
             },
-            // {
-            //     id: "27",
-            //     background: "radial-gradient(126.96% 126.96% at 6.47% 97.81%, #FA8F21 9%, #D82D7E 78%)",
-            //     dsKey: "is_ds_instagram_tracking_enabled",
-            //     connected: this.state.userServices["is_ds_instagram_tracking_enabled"],
-            //     premium: false,
-            //     brandName: "Instagram",
-            //     brandLogo: "/instagram.svg",
-            //     width: 142,
-            //     height: 32,
-            // },
+            {
+                id: "27",
+                background: "radial-gradient(126.96% 126.96% at 6.47% 97.81%, #FA8F21 9%, #D82D7E 78%)",
+                dsKey: "is_ds_instagram_tracking_enabled",
+                connected: this.state.userServices["is_ds_instagram_tracking_enabled"],
+                premium: false,
+                brandName: "Instagram",
+                brandLogo: "/instagram.svg",
+                width: 142,
+                height: 32,
+            },
             // {
             //     id: "28",
             //     background: "#1DA1F2",
@@ -955,18 +960,18 @@ class AppsMarket extends React.Component {
                                 //     width: 140,
                                 //     height: 19,
                                 // },
-                                {
-                                    id: "08",
-                                    background: "radial-gradient(126.96% 126.96% at 6.47% 97.81%, #FA8F21 9%, #D82D7E 78%)",
-                                    dsKey: "",
-                                    enabled: false,
-                                    premium: false,
-                                    commingSoon: true,
-                                    brandName: "Instagram",
-                                    brandLogo: "/instagram.svg",
-                                    width: 142,
-                                    height: 32,
-                                },
+                                // {
+                                //     id: "08",
+                                //     background: "radial-gradient(126.96% 126.96% at 6.47% 97.81%, #FA8F21 9%, #D82D7E 78%)",
+                                //     dsKey: "",
+                                //     enabled: false,
+                                //     premium: false,
+                                //     commingSoon: true,
+                                //     brandName: "Instagram",
+                                //     brandLogo: "/instagram.svg",
+                                //     width: 142,
+                                //     height: 32,
+                                // },
                                 {
                                     id: "29",
                                     background: "#0A0A0A",
