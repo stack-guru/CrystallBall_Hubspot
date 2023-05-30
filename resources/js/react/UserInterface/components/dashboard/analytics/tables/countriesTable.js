@@ -22,7 +22,7 @@ const CountriesTable = props => (
                 </div>
             </div>
 
-            <table className="table border">
+            <table className="table border dashboard-analytics">
             <thead>
                 <tr>
                     <th>Country</th>

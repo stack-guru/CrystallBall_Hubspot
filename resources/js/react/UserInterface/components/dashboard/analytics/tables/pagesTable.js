@@ -18,7 +18,7 @@ const PagesTable = props =>(
                         </span>
                     </div> */}
                 </div>
-                <table className="table border mb-0">
+                <table className="table border mb-0 dashboard-analytics">
                     <thead>
                         <tr>
                         <th>Page</th>

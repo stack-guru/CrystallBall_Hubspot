@@ -17,7 +17,60 @@ import { Chart } from "react-google-charts";
 //     Area,
 // } from "recharts";
 
+
+
+  import { Line } from 'react-chartjs-2';
+
+
+
+  const gradientBackgroundPlugin = {
+    id: 'gradientBackground',
+    beforeDraw: (chart) => {
+      const ctx = chart.canvas.getContext('2d');
+      const gradient = ctx.createLinearGradient(0, 0, 0, chart.chartArea.bottom);
+      gradient.addColorStop(0, 'rgba(30, 168, 253, 0.3)'); // Start color
+      gradient.addColorStop(1, 'rgba(255, 0, 0, 0)'); // End color
+      ctx.fillStyle = gradient;
+      ctx.fillRect(chart.chartArea.left, chart.chartArea.top, chart.chartArea.right - chart.chartArea.left, chart.chartArea.bottom - chart.chartArea.top);
+    },
+  };
+
 export default function UsersDaysWithAnnotationsGraph(props) {
+
+
+    const options = {
+        scales: {
+          y: {
+            beginAtZero: true,
+          },
+        },
+        plugins: {
+            legend: {
+              display: false,
+            },
+            customPlugins: [gradientBackgroundPlugin], // Add the custom plugin
+          },
+
+      };
+      const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+
+      const data = {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        datasets: [
+            {
+                
+                label: 'Data',
+                data: [12,8,34,2,1],
+                fill: true,
+                backgroundColor: 'rgba(30, 168, 253, 0.1)', // Start color of the gradient
+                borderColor: 'rgba(30, 168, 253, 1)', // Line color
+                tension: 0.4,
+              },
+   
+        ],
+      };
+
+
 
     // const dates = props.statistics.map(s => moment(s.statistics_date).format("DD MMM"));
     // const months = props.statistics.map(s => moment(s.statistics_date).format("MMM"));
@@ -74,9 +127,20 @@ export default function UsersDaysWithAnnotationsGraph(props) {
                 fontSize: 8,
                 opacity: 0.8
             },
+           
+              chartArea: {
+
+                backgroundColor: {
+                fill: 'rgba(30, 168, 253, 0.1)',
+                opacity: 0.2,
+                    },
+              },
+            //   backgroundColor: '#f1f8e9',
+
+            //   backgroundColor:"rgba(30, 168, 253, 0.1)"
             boxStyle: {
                 // Color of the box outline.
-                stroke: '#017ED7',
+                stroke: 'rgba(30, 168, 253, 0.3)',
                 // Thickness of the box outline.
                 strokeWidth: 1,
                 // x-radius of the corner curvature.
@@ -85,10 +149,11 @@ export default function UsersDaysWithAnnotationsGraph(props) {
                 ry: 0,
                 // Attributes for linear gradient fill.
                 gradient: {
+
                     // Start color for gradient.
-                    color1: '#fbf6a7',
+                    color1: 'rgba(30, 168, 253, 0.3)',
                     // Finish color for gradient.
-                    color2: '#33b679',
+                    color2: 'rgba(30, 168, 253, 0.1)',
                     // Where on the boundary to start and
                     // end the color1/color2 gradient,
                     // relative to the upper left corner
@@ -113,7 +178,7 @@ export default function UsersDaysWithAnnotationsGraph(props) {
                 // bold: true,
                 // italic: true,
                 // The color of the text.
-                color: '#828282',
+                color: 'rgba(30, 168, 253, 0.1',
                 // The color of the text outline.
                 // auraColor: '#d799ae',
                 // The transparency of the text.
@@ -124,6 +189,7 @@ export default function UsersDaysWithAnnotationsGraph(props) {
 
     return (
         <>
+        
              {/*user's div*/}
                        
                         {/* <div className="report-box">                           
@@ -184,6 +250,7 @@ export default function UsersDaysWithAnnotationsGraph(props) {
                     <div><h4 className="card-heading">Users</h4>
                     </div>
                 </div>
+                {/* <Line options={options} data={data} />; */}
                 <Chart
                     width={'100%'}
                     // style={{ paddingLeft: '10px' }}
