@@ -6000,7 +6000,7 @@ div[data-tour-elem="controls"]
     padding: 5px;
     position: absolute;
     z-index: 1;
-    bottom: 100%;
+    bottom: 70%;
     left: 50%;
     margin-left: -50px;
     opacity: 0;
