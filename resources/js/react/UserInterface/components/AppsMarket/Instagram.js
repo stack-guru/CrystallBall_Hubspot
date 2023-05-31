@@ -40,13 +40,14 @@ class Instagram extends React.Component {
                     userServices={this.props.userServices}
                     serviceStatusHandler={this.props.serviceStatusHandler}
                     closeModal={this.props.closeModal}
-                    serviceName={"instagram Tracking"}
+                    serviceName={"Instagram Tracking"}
                     colorKeyName={"instagram_tracking"}
                     dsKeyName={"is_ds_instagram_tracking_enabled"}
                     creditString={`${ this.props.userDataSources.instagram_tracking?.length } / ${ !this.props.user.price_plan.instagram_credits_count ? 0 : this.props.user.price_plan.instagram_credits_count}`}
                 />
 
                 <InstagramTracking
+                    serviceName={"Instagram"}
                     updateUserService={this.props.updateUserService}
                     updateTrackingStatus={this.updateTrackingStatus.bind(this)}
                     used_credits={this.props.userDataSources.instagram_tracking?.length}
@@ -59,6 +60,8 @@ class Instagram extends React.Component {
                     user={this.props.user}
                     loadUserDataSources={this.props.loadUserDataSources}
                     updateGAPropertyId={this.props.updateGAPropertyId}
+                    serviceStatusHandler={this.props.serviceStatusHandler}
+                    sectionToggler={this.props.closeModal}
                 />
                 </>}
             </div>

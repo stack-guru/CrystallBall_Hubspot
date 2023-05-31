@@ -88,6 +88,10 @@
                             <input type="number" min="-1" name="apple_podcast_monitor_count" value="{{old('apple_podcast_monitor_count', $pricePlan->apple_podcast_monitor_count)}}" id="apple_podcast_monitor_count" class="form-control" />
                         </div>
                         <div class="form-group">
+                            <label for="youtube_credits_count">Youtube Credits count <sub>(0 means unlimited, -1 means not allowed)</sub></label>
+                            <input type="number" min="-1" name="youtube_credits_count" value="{{old('youtube_credits_count', $pricePlan->youtube_credits_count)}}" id="youtube_credits_count" class="form-control" />
+                        </div>
+                        <div class="form-group">
                             <label for="aws_credits_count">AWS Credits count <sub>(0 means unlimited, -1 means not allowed)</sub></label>
                             <input type="number" min="-1" name="aws_credits_count" value="{{old('aws_credits_count', $pricePlan->aws_credits_count)}}" id="aws_credits_count" class="form-control" />
                         </div>

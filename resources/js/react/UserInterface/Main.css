@@ -5861,15 +5861,11 @@ div[data-tour-elem="controls"]
 }
 
 .sidebar {
-    min-width: 110px;
+    min-width: 90px;
 }
 @media screen and (max-width: 1439px) {
     .is-collapsed .sidebar {
-        width: 110px;
-    }
-
-    .is-collapsed .sidebar .sidebar-inner .sidebar-menu > li > a .title {
-        visibility: hidden;
+        width: 90px;
     }
 
     .is-collapsed .sidebar:hover {
@@ -5879,7 +5875,7 @@ div[data-tour-elem="controls"]
 
 @media screen and (min-width: 1440px) {
     .is-collapsed .sidebar {
-        width: 110px;
+        width: 90px;
     }
     .is-collapsed .sidebar:hover {
         width: 270px;
@@ -5994,18 +5990,20 @@ div[data-tour-elem="controls"]
 .dd-tooltip-text {
     visibility: hidden;
     width: max-content;
-    background-color: #555;
-    color: #fff;
+    background: #FFFFFF;
+    font-family: 'Source Sans Pro';
+    color: #666666;
     text-align: center;
     border-radius: 6px;
     padding: 5px;
     position: absolute;
     z-index: 1;
-    bottom: 100%;
-    left: 50%;
+    /*bottom: 100%;*/
+    /*left: 50%;*/
     margin-left: -50px;
     opacity: 0;
     transition: opacity 0.3s;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.16);
 }
 
 .dd-tooltip:hover .dd-tooltip-text {
@@ -6795,7 +6793,7 @@ div[data-tour-elem="controls"]
 }
 
 
-/* .dd-tooltip.list-styles li {
+.dd-tooltip.list-styles li {
     width: 50px;
     height: 50px;
     font-size: 20px;
@@ -6810,7 +6808,7 @@ div[data-tour-elem="controls"]
 
 .dd-tooltip.list-styles li.list-stylesselectesUser {
     border: 3px solid #0BD25F;
-} */
+}
 
 .tagsHolder {
     padding: 24px 16px;
@@ -6829,10 +6827,14 @@ div[data-tour-elem="controls"]
 
 .visibility-hidden {
     visibility: hidden;
-} 
+}
 .acctive-recurrence-popover  .popover-inner {
     max-width: 280px;
 } 
+    /* align-items: flex-start; */
+    /* padding: 8px 12px;
+    gap: 10px; */
+/* } */
 .acctive-recurrence-popover .popover{
     max-width: 150;
 }

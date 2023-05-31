@@ -276,6 +276,7 @@ export default class IndexPricingPlans extends React.Component {
                                         (pricePlan.owm_city_count == -1 || pricePlan.owm_city_count == null) &&
                                         (pricePlan.google_alert_keyword_count == -1 || pricePlan.google_alert_keyword_count == null) &&
                                         (pricePlan.apple_podcast_monitor_count == -1 || pricePlan.apple_podcast_monitor_count == null) &&
+                                        (pricePlan.youtube_credits_count == -1 || pricePlan.youtube_credits_count == null) &&
                                         (pricePlan.bitbucket_credits_count == -1 || pricePlan.bitbucket_credits_count == null) &&
                                         (pricePlan.aws_credits_count == -1 || pricePlan.aws_credits_count == null) &&
                                         (pricePlan.github_credits_count == -1 || pricePlan.github_credits_count == null) &&
@@ -309,6 +310,11 @@ export default class IndexPricingPlans extends React.Component {
                                                         <li className='d-flex align-items-center'><i><img
                                                             src={'/tick-green.svg'}/></i>
                                                             <span>Apple Poadcast: {pricePlan.apple_podcast_monitor_count == 0 ? 'Unlimited' : pricePlan.apple_podcast_monitor_count}</span>
+                                                        </li>}
+                                                    {pricePlan.youtube_credits_count == -1 || pricePlan.youtube_credits_count == null ? null :
+                                                        <li className='d-flex align-items-center'><i><img
+                                                            src={'/tick-green.svg'}/></i>
+                                                            <span>Youtube Monitors: {pricePlan.youtube_credits_count == 0 ? 'Unlimited' : pricePlan.youtube_credits_count}</span>
                                                         </li>}
                                                     {pricePlan.bitbucket_credits_count == -1 || pricePlan.bitbucket_credits_count == null ? null :
                                                         <li className='d-flex align-items-center'><i><img

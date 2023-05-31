@@ -254,7 +254,9 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
             Route::get('get-twitter-tracking-configurations', [TwitterTrackingConfigurationController::class, 'get']);
 
             Route::post('save-instagram-tracking-configurations', [InstagramTrackingConfigurationController::class, 'save']);
+            Route::post('run-instagram-job', [InstagramTrackingConfigurationController::class, 'runJob']);
             Route::get('get-instagram-tracking-configurations', [InstagramTrackingConfigurationController::class, 'get']);
+            Route::delete('remove-instagram-tracking-configuration/{instagram_tracking_configuration}', [InstagramTrackingConfigurationController::class, 'destroy']);
 
             Route::get('get-facebook-page-list', [App\Http\Controllers\UserFacebookPageController::class, 'index']);
 
@@ -272,11 +274,13 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
             // github repositories
             Route::get('get-github-repositories', [GithubAutomationController::class, 'getRepositories']);
             Route::post('apple_podcast_url', [App\Http\Controllers\ApplePodcastMonitorController::class, 'applePodcastUrl']);
+            Route::post('youtube_url', [App\Http\Controllers\YoutubeMonitorController::class, 'youtubeUrl']);
 
             Route::post('shopify_url', [App\Http\Controllers\ShopifyMonitorController::class, 'saveShopifyProducts']);
             Route::get('getShopifyProducts', [App\Http\Controllers\ShopifyMonitorController::class, 'getShopifyProducts']);
             Route::resource('shopify-monitor', App\Http\Controllers\ShopifyMonitorController::class)->only(['index', 'store', 'update', 'destroy']);
             Route::resource('apple-podcast-monitor', App\Http\Controllers\ApplePodcastMonitorController::class)->only(['index', 'store', 'update', 'destroy']);
+            Route::resource('youtube-monitor', App\Http\Controllers\YoutubeMonitorController::class)->only(['index', 'store', 'update', 'destroy']);
         });
 
         Route::group(['prefix' => 'settings'], function () {
