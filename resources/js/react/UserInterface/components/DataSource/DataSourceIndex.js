@@ -3298,7 +3298,7 @@ export default class DataSourceIndex extends React.Component {
                         },
                         showCloseButton: true,
                         title: "Connect with Instagram",
-                        text: "Connect your Instagram account to create automatic annotations for new posts; when you reach a post goal or run campaigns..",
+                        text: "Connect your Instagram account to create automatic annotations for new posts; when you reach a post goal or run campaigns.",
                         confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
                         confirmButtonText: "<a href='/socialite/facebook' class='text-white'><i class='mr-2 fa fa-instagram'> </i>" + "Connect Instagram Account</a>",
                     })
@@ -3319,7 +3319,7 @@ export default class DataSourceIndex extends React.Component {
                         },
                         showCloseButton: true,
                         title: "Connect with Facebook",
-                        text: "Connect your Facebook account to create automatic annotations for new posts; when you reach a post goal or run campaigns..",
+                        text: "Connect your Facebook account to create automatic annotations for new posts; when you reach a post goal or run campaigns.",
                         confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
                         confirmButtonText: "<a href='/socialite/facebook' class='text-white'><i class='mr-2 fa fa-facebook'> </i>" + "Connect Facebook Account</a>",
                     })

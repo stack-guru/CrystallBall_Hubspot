@@ -1,8 +1,9 @@
 import React from "react";
-import InstagramTracking from "../../utils/InstagramTracking";
+import UserAnnotationColorPicker from "../../helpers/UserAnnotationColorPickerComponent";
+import FacebookTracking from "../../utils/FacebookTracking";
 import ModalHeader from "./common/ModalHeader";
-import DescriptionModal from "./common/DescriptionModal";
-class Instagram extends React.Component {
+import DescriptionModalForGTM from "./common/DescriptionModalForGTM";
+class GoogleTagManager extends React.Component {
 
     constructor(props) {
         super(props)
@@ -23,14 +24,16 @@ class Instagram extends React.Component {
 
     render() {
         return (
-            <div className="popupContent modal-instagram">
-                {(!this.props.userInstagramAccountsExists || !this.props.userServices['is_ds_instagram_tracking_enabled']) && this.state.showDescription ? 
-                <DescriptionModal
-                    serviceName={"Instagram"}
+            <div className="popupContent modal-google-tag-manager">
+                {(!this.props.userFacebookAccountsExists || !this.props.userServices['is_ds_google_tag_manager_enabled']) && this.state.showDescription ?
+                <DescriptionModalForGTM
+                    name={"GTM"}
+                    serviceName={"Google Tag Manager"}
                     closeModal={this.props.closeModal}
-                    description={"Set custom thresholds for your posts, and unlock automated annotations when your engagement metrics hit the mark. Stay on top of your social performance, optimize your strategies, and make data-driven decisions effortlessly."}
+                    description={"Set custom versions for your accounts and unlock automated annotations when your engagement metrics hit the mark. Stay on top of your social performance, optimize your strategies, and make data-driven decisions effortlessly."}
                     changeModal={this.changeModal.bind(this)}
-                    userAccountsExists={this.props.userInstagramAccountsExists}
+                    userAccountsExists={this.props.userFacebookAccountsExists}
+                    connectText={`Connect your Google Tag Manager account to create automatic annotations for new verisons; when you reach a post goal or run campaigns..`}
                 />
                 : <>
                 <ModalHeader
@@ -40,20 +43,18 @@ class Instagram extends React.Component {
                     userServices={this.props.userServices}
                     serviceStatusHandler={this.props.serviceStatusHandler}
                     closeModal={this.props.closeModal}
-                    serviceName={"Instagram Tracking"}
-                    colorKeyName={"instagram_tracking"}
-                    dsKeyName={"is_ds_instagram_tracking_enabled"}
-                    creditString={`${ this.props.userDataSources.instagram_tracking?.length } / ${ !this.props.user.price_plan.instagram_credits_count ? 0 : this.props.user.price_plan.instagram_credits_count}`}
+                    serviceName={"Facebook Tracking"}
+                    colorKeyName={"facebook_tracking"}
+                    dsKeyName={"is_ds_facebook_tracking_enabled"}
+                    creditString={`${ this.props.userDataSources.facebook_tracking?.length } / ${ !this.props.user.price_plan.facebook_credits_count ? 0 : this.props.user.price_plan.facebook_credits_count}`}
                 />
 
-                <InstagramTracking
-                    serviceName={"Instagram"}
+                <FacebookTracking
+                    serviceName={"Facebook"}
                     updateUserService={this.props.updateUserService}
                     updateTrackingStatus={this.updateTrackingStatus.bind(this)}
-                    used_credits={this.props.userDataSources.instagram_tracking?.length}
-                    total_credits={this.props.user.price_plan.instagram_credits_count}
-                    ds_data={this.props.userDataSources.instagram_tracking}
                     onCheckCallback={this.props.userDataSourceAddHandler}
+                    sectionToggler={this.props.closeModal}
                     onUncheckCallback={this.props.userDataSourceDeleteHandler}
                     ga_property_id={this.props.ga_property_id}
                     reloadWebMonitors={this.props.reloadWebMonitors}
@@ -61,7 +62,6 @@ class Instagram extends React.Component {
                     loadUserDataSources={this.props.loadUserDataSources}
                     updateGAPropertyId={this.props.updateGAPropertyId}
                     serviceStatusHandler={this.props.serviceStatusHandler}
-                    sectionToggler={this.props.closeModal}
                 />
                 </>}
             </div>
@@ -69,4 +69,4 @@ class Instagram extends React.Component {
     }
 }
 
-export default Instagram;
+export default GoogleTagManager;

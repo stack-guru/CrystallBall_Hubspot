@@ -81,7 +81,7 @@ export default class FacebookTracking extends React.Component {
             iconHtml: `<img src="/${(this.props.serviceName || '').toLowerCase()}-small.svg">`,
             showCloseButton: true,
             title: `Connect with ${ this.props.serviceName }`,
-            text: `Connect your ${ this.props.serviceName } account to create automatic annotations for new posts; when you reach a post goal or run campaigns..`,
+            text: `Connect your ${ this.props.serviceName } account to create automatic annotations for new posts; when you reach a post goal or run campaigns.`,
             confirmButtonClass: "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
             confirmButtonText: `<span class='text-white'><i class='mr-2 fa fa-${ this.props.serviceName.toLowerCase() }'> </i>${ this.props.serviceName }</span>`,
             customClass: {
@@ -154,9 +154,7 @@ export default class FacebookTracking extends React.Component {
             ga_property_id: this.state.gaPropertyId,
         }
 
-        if (!this.state.configurations.length) {
-            this.props.serviceStatusHandler({ target: { name: 'is_ds_facebook_tracking_enabled', value: true, checked: true }})
-        }
+        
         if (this.props.user.price_plan.name !== 'Trial Ended')
         HttpClient.post('/data-source/save-facebook-tracking-configurations', form_data).then(resp => {
             this.setState({facebook_pages: resp.data.facebook_pages, isBusy: false, gaPropertyName: resp.data.gaPropertyName, editProperty: false});
@@ -164,7 +162,9 @@ export default class FacebookTracking extends React.Component {
             this.props.loadUserDataSources();
             this.fetchConfigurations();
             swal.fire('', "We will retrieve the posts/ads added to your account in the past year according to your preferences; it may take a few minutes. Subsequently, the system will perform a daily check and automatically add relevant annotations to your account.", '');
-
+            if (!this.state.configurations.length) {
+                this.props.serviceStatusHandler({ target: { name: 'is_ds_facebook_tracking_enabled', value: true, checked: true }})
+            }
             this.runjob(resp.data.configurationId);
         }, (err) => {
             Toast.fire({
