@@ -2,7 +2,7 @@ import React from "react";
 import {Redirect} from "react-router-dom";
 import HttpClient from "../../utils/HttpClient";
 
-import {Container, Row, Col, FormGroup, Input, Label} from "reactstrap";
+import {Container, FormGroup, Input, Label} from "reactstrap";
 import AppsModal from "./AppsModal";
 import WebsiteMonitoring from "./WebsiteMonitoring";
 import NewsAlerts from "./NewsAlerts";
