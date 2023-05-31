@@ -47,14 +47,16 @@ class ShopifyAnnotationCommand extends Command
         $sMonitors = ShopifyMonitor::get();
         $shopifyService = new ShopifyService();
         foreach($sMonitors as $monitor) {
-            $products    = $shopifyService->getShopifyProducts($monitor->url);
-            if (!$products) {
-                Log::channel('shopify')->debug('Url is not loaded!');
-                return false;
+            if ($monitor->events) {
+                $products    = $shopifyService->getShopifyProducts($monitor->url);
+                if (!$products) {
+                    Log::channel('shopify')->debug('Url is not loaded!');
+                    return false;
+                }
+                $shopifyData = $shopifyService->saveShopifyProducts(json_decode($monitor->events), $products, $monitor->user_id, $monitor->id);
+                $monitor->last_synced_at = Carbon::now();
+                $monitor->save();
             }
-            $shopifyData = $shopifyService->saveShopifyProducts(json_decode($monitor->events), $products, $monitor->user_id, $monitor->id);
-            $monitor->last_synced_at = Carbon::now();
-            $monitor->save();
         }
     }
 }
