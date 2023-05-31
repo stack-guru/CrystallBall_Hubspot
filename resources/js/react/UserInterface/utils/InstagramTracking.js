@@ -362,7 +362,7 @@ export default class InstagramTracking extends React.Component {
                                         key={gAK.id}
                                         user_data_source_id={gAK.id}
                                     >
-                                        {gAK.gaPropertyName}
+                                        {gAK.gaPropertyName ? gAK.gaPropertyName : "All Properties"}
                                     </button>
 
                                     <Popover

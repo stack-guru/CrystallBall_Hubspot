@@ -513,8 +513,9 @@ class AppsMarket extends React.Component {
                 dsKey: "is_ds_facebook_tracking_enabled",
                 connected: this.state.userServices["is_ds_facebook_tracking_enabled"],
                 premium: false,
+                beta: true,
                 brandName: "Facebook Ads",
-                brandLogo: "/facebookAds.svg",
+                brandLogo: "/facebook.svg",
                 width: 140,
                 height: 19,
             },
@@ -524,9 +525,8 @@ class AppsMarket extends React.Component {
                 dsKey: "is_ds_instagram_tracking_enabled",
                 connected: this.state.userServices["is_ds_instagram_tracking_enabled"],
                 premium: false,
+                beta: true,
                 brandName: "Instagram",
-                brandLogo: "/instagram.svg",
-                width: 142,
                 height: 32,
             },
             {
@@ -2028,7 +2028,7 @@ class AppsMarket extends React.Component {
                             break;
 
                         default:
-                            if (resp.data.user_services[e.target.name] == 1) {
+                            if (resp.data.user_services[e.target.name] == 1 && e.target.name !== 'is_ds_facebook_tracking_enabled') {
                                 Toast.fire({
                                     icon: 'success',
                                     title: "Service activated successfully."
@@ -2311,7 +2311,7 @@ class AppsMarket extends React.Component {
                             },
                             showCloseButton: true,
                             title: "Connect with Instagram",
-                            text: "Connect your Instagram account to create automatic annotations for new posts; when you reach a post goal or run campaigns..",
+                            text: "Connect your Instagram account to create automatic annotations for new posts; when you reach a post goal or run campaigns.",
                             confirmButtonClass:
                                 "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
                             confirmButtonText:
@@ -2340,7 +2340,7 @@ class AppsMarket extends React.Component {
                             },
                             showCloseButton: true,
                             title: "Connect with Facebook",
-                            text: "Connect your Facebook account to create automatic annotations for new posts; when you reach a post goal or run campaigns..",
+                            text: "Connect your Facebook account to create automatic annotations for new posts; when you reach a post goal or run campaigns.",
                             confirmButtonClass:
                                 "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
                             confirmButtonText:
@@ -2434,7 +2434,7 @@ class AppsMarket extends React.Component {
                             },
                             showCloseButton: true,
                             title: "Connect with Twitter",
-                            text: "Connect your Twitter account to create automatic annotations for new posts; when you reach a post goal or run campaigns..",
+                            text: "Connect your Twitter account to create automatic annotations for new posts; when you reach a post goal or run campaigns.",
                             confirmButtonClass:
                                 "rounded-pill btn btn-primary bg-primary px-4 font-weight-bold",
                             confirmButtonText:

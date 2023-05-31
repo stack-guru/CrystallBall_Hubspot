@@ -314,6 +314,9 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
             Route::get('facebook-accounts', [App\Http\Controllers\FacebookAutomationController::class, 'UIindex']);
             Route::delete('facebook-account/{facebook_account}', [App\Http\Controllers\FacebookAutomationController::class, 'destroy']);
 
+            Route::get('instagram-accounts', [App\Http\Controllers\InstagramAutomationController::class, 'UIindex']);
+            Route::delete('instagram-account/{instagram_account}', [App\Http\Controllers\InstagramAutomationController::class, 'destroy']);
+
             Route::resource('google-analytics-account', App\Http\Controllers\GoogleAnalyticsAccountController::class)->only(['index', 'destroy']);
             Route::post('google-analytics-account/google-account/{google_account}', [App\Http\Controllers\GoogleAnalyticsAccountController::class, 'fetch']);
             Route::post('google-analytics-property/destroy', [App\Http\Controllers\GoogleAnalyticsAccountController::class, 'deleteProperty']);

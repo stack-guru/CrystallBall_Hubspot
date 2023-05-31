@@ -28,7 +28,7 @@ class Instagram extends React.Component {
                 <DescriptionModal
                     serviceName={"Instagram"}
                     closeModal={this.props.closeModal}
-                    description={"For every project completed or modified on instagram, our automation tool enables you to monitor basic with basic details. instagram Tracking watches every commit on your provided repository."}
+                    description={"Set custom thresholds for your posts, and unlock automated annotations when your engagement metrics hit the mark. Stay on top of your social performance, optimize your strategies, and make data-driven decisions effortlessly."}
                     changeModal={this.changeModal.bind(this)}
                     userAccountsExists={this.props.userInstagramAccountsExists}
                 />
