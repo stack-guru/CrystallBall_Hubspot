@@ -4,7 +4,6 @@ namespace App\Helpers;
 
 use App\Models\User;
 use App\Models\UserDataSource;
-use Illuminate\Support\Carbon;
 
 class AnnotationQueryHelper
 {
@@ -245,10 +244,10 @@ class AnnotationQueryHelper
     public static function wordPressQuery($userIdsArray)
     {
         $annotationsQuery = "";
-        $annotationsQuery .= "select 1, update_date, NULL, category, event_name, wordpress_updates.url, CONCAT('wordpress_updates', '~~~~', `wordpress_updates`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, 'System' AS `user_name`, update_date, `uds`.`ga_property_id` AS `table_ga_property_id` from `wordpress_updates` LEFT JOIN `user_data_sources` AS uds ON `uds`.`ds_code` = 'wordpress_updates' AND `uds`.`value` = 'last year' AND `uds`.`user_id` IN ('" . implode("', '", $userIdsArray) . "') ";
-        if (UserDataSource::ofCurrentUser()->where('ds_code', 'wordpress_updates')->where('value', 'last year')->count()) {
-            $annotationsQuery .= " where (update_date BETWEEN " . Carbon::now()->subYear()->format('Y-m-d') . " AND " . Carbon::now()->format('Y-m-d') . " )";
-        }
+        $annotationsQuery .= "select 1, update_date, NULL, category, event_name, wordpress_updates.url, CONCAT('wordpress_updates', '~~~~', `uds`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, 'System' AS `user_name`, update_date, `uds`.`ga_property_id` AS `table_ga_property_id` from `wordpress_updates` LEFT JOIN `user_data_sources` AS uds ON `uds`.`ds_code` = 'wordpress_updates' AND `uds`.`user_id` IN ('" . implode("', '", $userIdsArray) . "') ";
+//        if (UserDataSource::ofCurrentUser()->where('ds_code', 'wordpress_updates')->where('value', 'last year')->count()) {
+//            $annotationsQuery .= " where (update_date BETWEEN " . Carbon::now()->subYear()->format('Y-m-d') . " AND " . Carbon::now()->format('Y-m-d') . " )";
+//        }
 
         return $annotationsQuery;
     }
