@@ -148,3 +148,152 @@ export default function MediaGraph(props) {
         </>
     )
 }
+
+
+// {
+
+//     {/* <div className="w-100 report-box">
+//                                             <div className="justify-content-between d-flex mb-3">
+//                                                 <div>
+//                                                     <h3 className="card-heading">
+//                                                         Media
+//                                                     </h3>
+//                                                 </div>
+//                                                 <div>
+//                                                     <span>
+//                                                         <img
+//                                                             src="/images/svg/dashboard-list-option.svg"
+//                                                             alt="list icon"
+//                                                         />
+//                                                     </span>
+//                                                 </div>
+//                                             </div>
+//                                             <div className="d-flex flex-column">
+//                                                 <div className="d-flex flex-column">
+//                                                     <h5 style={{color: "#333333", fontSize:"16px",fontWeight:"400"}}>Twitter</h5>
+//                                                     <div className="progressbar d-flex align-items-center">
+//                                                         <div className="progress flex-grow-1">
+//                                                             <div
+//                                                                 className="progress-bar"
+//                                                                 role="progressbar"
+//                                                                 style={{
+//                                                                     width: `${Math.min(
+//                                                                         (132645 /
+//                                                                             150000) *
+//                                                                             100,
+//                                                                         100
+//                                                                     )}%`,
+//                                                                 }}
+//                                                                 aria-valuenow={`${Math.min(
+//                                                                     (132645 / 150000) *
+//                                                                         100,
+//                                                                     100
+//                                                                 )}`}
+//                                                                 aria-valuemin="0"
+//                                                                 aria-valuemax="100"
+//                                                             ></div>
+//                                                         </div>
+//                                                         <span className="ml-2">
+//                                                             {Math.min(
+//                                                                 (132645 / 150000) * 100,
+//                                                                 100
+//                                                             )}
+//                                                             %
+//                                                         </span>
+//                                                     </div>
+//                                                 </div>
+
+//                                                 <h5 style={{color: "#333333", fontSize:"16px",fontWeight:"400"}}>Instagram</h5>
+//                                                 <div className="progressbar d-flex align-items-center">
+//                                                     <div className="progress flex-grow-1">
+//                                                         <div
+//                                                             className="progress-bar"
+//                                                             role="progressbar"
+//                                                             style={{
+//                                                                 width: `${Math.min(
+//                                                                     (132645 / 150000) *
+//                                                                         100,
+//                                                                     100
+//                                                                 )}%`,
+//                                                             }}
+//                                                             aria-valuenow={`${Math.min(
+//                                                                 (132645 / 150000) * 100,
+//                                                                 100
+//                                                             )}`}
+//                                                             aria-valuemin="0"
+//                                                             aria-valuemax="100"
+//                                                         ></div>
+//                                                     </div>
+//                                                     <span className="ml-2">
+//                                                         {Math.min(
+//                                                             (132645 / 150000) * 100,
+//                                                             100
+//                                                         )}
+//                                                         %
+//                                                     </span>
+//                                                 </div>
+//                                                 <h5 style={{color: "#333333", fontSize:"16px",fontWeight:"400"}}>TikTok</h5>
+//                                                 <div className="progressbar d-flex align-items-center">
+//                                                     <div className="progress flex-grow-1">
+//                                                         <div
+//                                                             className="progress-bar"
+//                                                             role="progressbar"
+//                                                             style={{
+//                                                                 width: `${Math.min(
+//                                                                     (132645 / 150000) *
+//                                                                         100,
+//                                                                     100
+//                                                                 )}%`,
+//                                                             }}
+//                                                             aria-valuenow={`${Math.min(
+//                                                                 (132645 / 150000) * 100,
+//                                                                 100
+//                                                             )}`}
+//                                                             aria-valuemin="0"
+//                                                             aria-valuemax="100"
+//                                                         ></div>
+//                                                     </div>
+//                                                     <span className="ml-2">
+//                                                         {Math.min(
+//                                                             (132645 / 150000) * 100,
+//                                                             100
+//                                                         )}
+//                                                         %
+//                                                     </span>
+//                                                 </div>
+//                                                 <h5 style={{color: "#333333", fontSize:"16px",fontWeight:"400"}}>Facebook</h5>
+//                                                 <div className="progressbar d-flex align-items-center">
+//                                                     <div className="d-flex flex-column">
+//                                                     <span className="ml-2">
+//                                                         {Math.min(
+//                                                             (132645 / 150000) * 100,
+//                                                             100
+//                                                         )}
+//                                                         %
+//                                                     </span>
+//                                                     <div className="progress flex-grow-1">
+//                                                         <div
+//                                                             className="progress-bar" role="progressbar"
+//                                                             style={{
+//                                                                 width: `${Math.min(
+//                                                                     (132645 / 150000) *
+//                                                                         100,
+//                                                                     100
+//                                                                 )}%`,color:"#004F9D"
+//                                                             }}
+//                                                             aria-valuenow={`${Math.min(
+//                                                                 (132645 / 150000) * 100,
+//                                                                 100
+//                                                             )}`}
+//                                                             aria-valuemin="0"
+//                                                             aria-valuemax="100"
+//                                                         ></div>
+//                                                     </div>
+
+//                                                     </div>
+
+//                                                 </div>
+//                                             </div>
+//                                             <p>Source:BestGenNewtonSite</p>
+//                                         </div> */}
+// }
