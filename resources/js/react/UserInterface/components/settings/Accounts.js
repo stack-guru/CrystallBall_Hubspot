@@ -655,48 +655,73 @@ export default class Accounts extends React.Component {
 
     handleFacebookDelete(id) {
         this.setState({isBusy: true});
-        if(confirm('Disconnecting the account, will remove and delete all the annotations related to this account, are you sure?'))
-        HttpClient.delete(`/settings/facebook-account/${id}`).then(resp => {
-            let facebookAccounts = this.state.facebookAccounts;
-            facebookAccounts = facebookAccounts.filter(ga => ga.id != id);
-            if(this.state.facebookAccounts.length > 1) {
-                Toast.fire({
-                    icon: 'success',
-                    title: "Account removed.",
+
+        swal.fire({
+            showCloseButton: true,
+            showConfirmButton: true,
+            title: `Warning!`,
+            text: `Disconnecting the account, will remove and delete all the annotations related to this account, are you sure?`,
+            confirmButtonText: `<span class='text-white'>Delete</span>`,
+
+        }).then( result => {
+            if( result.isConfirmed ) {
+                HttpClient.delete(`/settings/facebook-account/${id}`).then(resp => {
+                    let facebookAccounts = this.state.facebookAccounts;
+                    facebookAccounts = facebookAccounts.filter(ga => ga.id != id);
+                    if(this.state.facebookAccounts.length > 1) {
+                        Toast.fire({
+                            icon: 'success',
+                            title: "Account removed.",
+                        });
+                    } else {
+                        this.updateUserService('is_ds_facebook_tracking_enabled');
+                        (this.props.reloadUser)();
+                    }
+                    this.setState({isBusy: false, facebookAccounts: facebookAccounts})
+                }, (err) => {
+                    this.setState({isBusy: false, errors: (err.response).data});
+                }).catch(err => {
+                    this.setState({isBusy: false, errors: err});
                 });
-            } else {
-                this.updateUserService('is_ds_facebook_tracking_enabled');
-                (this.props.reloadUser)();
             }
-            this.setState({isBusy: false, facebookAccounts: facebookAccounts})
-        }, (err) => {
-            this.setState({isBusy: false, errors: (err.response).data});
-        }).catch(err => {
-            this.setState({isBusy: false, errors: err});
         });
     }
 
     handleInstagramDelete(id) {
         this.setState({isBusy: true});
-        if(confirm('Disconnecting the account, will remove and delete all the annotations related to this account, are you sure?'))
-        HttpClient.delete(`/settings/instagram-account/${id}`).then(resp => {
-            let instagramAccounts = this.state.instagramAccounts;
-            instagramAccounts = instagramAccounts.filter(ga => ga.id != id);
-            if(this.state.instagramAccounts.length > 1) {
-                Toast.fire({
-                    icon: 'success',
-                    title: "Account removed.",
+
+        swal.fire({
+            showCloseButton: true,
+            showConfirmButton: true,
+            title: `Warning!`,
+            text: `Disconnecting the account, will remove and delete all the annotations related to this account, are you sure?`,
+            confirmButtonText: `<span class='text-white'>Delete</span>`,
+
+        }).then( result => {
+            if( result.isConfirmed ) {
+
+                HttpClient.delete(`/settings/instagram-account/${id}`).then(resp => {
+                    let instagramAccounts = this.state.instagramAccounts;
+                    instagramAccounts = instagramAccounts.filter(ga => ga.id != id);
+                    if(this.state.instagramAccounts.length > 1) {
+                        Toast.fire({
+                            icon: 'success',
+                            title: "Account removed.",
+                        });
+                    } else {
+                        this.updateUserService('is_ds_instagram_tracking_enabled');
+                        (this.props.reloadUser)();
+                    }
+                    this.setState({isBusy: false, instagramAccounts: instagramAccounts})
+                }, (err) => {
+                    this.setState({isBusy: false, errors: (err.response).data});
+                }).catch(err => {
+                    this.setState({isBusy: false, errors: err});
                 });
-            } else {
-                this.updateUserService('is_ds_instagram_tracking_enabled');
-                (this.props.reloadUser)();
+
             }
-            this.setState({isBusy: false, instagramAccounts: instagramAccounts})
-        }, (err) => {
-            this.setState({isBusy: false, errors: (err.response).data});
-        }).catch(err => {
-            this.setState({isBusy: false, errors: err});
         });
+        
     }
 
     fetchGAAccounts(id) {
