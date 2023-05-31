@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\InstagramAccount;
+use App\Models\InstagramTrackingConfiguration;
+use App\Models\InstagramTrackingAnnotation;
+use App\Models\InstagramPost;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -13,6 +16,16 @@ class InstagramAutomationController extends Controller
     public function setupInstagramAutomation()
     {
         
+    }
+
+    public function UIindex()
+    {
+        $user = \auth()->user();
+        $user_instagram_accounts = $user->instagram_accounts;
+
+        return response()->json([
+            'instagram_accounts' => $user_instagram_accounts,
+        ]);
     }
 
     public function redirectInstagram()
@@ -55,6 +68,18 @@ class InstagramAutomationController extends Controller
         return response()->json([
             'exists' => $exists
         ]);
+    }
+
+
+    public function destroy(InstagramAccount $instagramAccount)
+    {
+        $configurations = InstagramTrackingConfiguration::where('user_id', Auth::user()->id)->get();
+        foreach($configurations as $configuration) {
+            InstagramTrackingAnnotation::where('configuration_id', $configuration->id)->delete();
+            $configuration->delete();
+        }
+        InstagramPost::where('instagram_account_id', $instagramAccount->id)->delete();
+        return ['success' => $instagramAccount->delete()];
     }
     
 }

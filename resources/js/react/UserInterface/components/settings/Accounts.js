@@ -24,6 +24,7 @@ export default class Accounts extends React.Component {
             isBusy: false,
             googleAccounts: [],
             facebookAccounts: [],
+            instagramAccounts: [],
             googleAnalyticsAccounts: [],
             googleAnalyticsProperties: [],
             googleSearchConsoleSites: [],
@@ -34,6 +35,7 @@ export default class Accounts extends React.Component {
 
         this.handleDelete = this.handleDelete.bind(this);
         this.handleFacebookDelete = this.handleFacebookDelete.bind(this);
+        this.handleInstagramDelete = this.handleInstagramDelete.bind(this);
         this.fetchGAAccounts = this.fetchGAAccounts.bind(this);
         this.getGAAccounts = this.getGAAccounts.bind(this);
         this.getGoogleAccounts = this.getGoogleAccounts.bind(this);
@@ -90,6 +92,7 @@ export default class Accounts extends React.Component {
         }
         this.getGoogleAccounts();
         this.getFacebookAccounts();
+        this.getInstagramAccounts();
         this.getGAAccounts();
         this.getGAProperties();
         this.getGSCSites();
@@ -283,24 +286,28 @@ export default class Accounts extends React.Component {
                                     </div>
                                 })
                             }
-                            {/* {
-                                this.state.user.is_ds_facebook_tracking_enabled ?
-                                    <div className='account'>
-                                        <figure><img className='socialImage' src='/images/icons/facebook.png'
+
+{
+                                this.state.instagramAccounts.map(instagramAccount => {
+                                    // className: reconnect
+                                    return <div className='account'>
+                                        <figure><img className='socialImage' src='/images/icons/instagram.png'
                                                      alt='user image'/></figure>
                                         <div className='nameAndEmail'>
-                                            <h4>Facebook</h4>
-                                            <span>{this.state.user.email}</span>
+                                            <h4>{instagramAccount.name}</h4>
+                                            <span>{instagramAccount.email}</span>
                                         </div>
                                         <div className='btns'>
                                             <button className='btn-change'>Change</button>
                                             <button className='btn-disconnect'
-                                                    onClick={() => this.updateUserService('is_ds_facebook_tracking_enabled')}
+                                                    onClick={() => this.handleInstagramDelete(instagramAccount.id)}
                                             >Disconnect
                                             </button>
                                         </div>
                                     </div>
-                                    : ''} */}
+                                })
+                            }
+                            
                         </div>
                     </section>
                     {/*<section className='accountsHolder'>
@@ -614,6 +621,19 @@ export default class Accounts extends React.Component {
             this.setState({isBusy: false, errors: err});
         });
     }
+    
+    getInstagramAccounts() {
+        this.setState({isBusy: true})
+        HttpClient.get('/settings/instagram-accounts').then(resp => {
+            this.setState({instagramAccounts: resp.data.instagram_accounts, isBusy: false});
+        }, (err) => {
+
+            this.setState({isBusy: false, errors: (err.response).data});
+        }).catch(err => {
+
+            this.setState({isBusy: false, errors: err});
+        });
+    }
 
     handleDelete(id) {
         this.setState({isBusy: true});
@@ -649,6 +669,29 @@ export default class Accounts extends React.Component {
                 (this.props.reloadUser)();
             }
             this.setState({isBusy: false, facebookAccounts: facebookAccounts})
+        }, (err) => {
+            this.setState({isBusy: false, errors: (err.response).data});
+        }).catch(err => {
+            this.setState({isBusy: false, errors: err});
+        });
+    }
+
+    handleInstagramDelete(id) {
+        this.setState({isBusy: true});
+        if(confirm('Disconnecting the account, will remove and delete all the annotations related to this account, are you sure?'))
+        HttpClient.delete(`/settings/instagram-account/${id}`).then(resp => {
+            let instagramAccounts = this.state.instagramAccounts;
+            instagramAccounts = instagramAccounts.filter(ga => ga.id != id);
+            if(this.state.instagramAccounts.length > 1) {
+                Toast.fire({
+                    icon: 'success',
+                    title: "Account removed.",
+                });
+            } else {
+                this.updateUserService('is_ds_instagram_tracking_enabled');
+                (this.props.reloadUser)();
+            }
+            this.setState({isBusy: false, instagramAccounts: instagramAccounts})
         }, (err) => {
             this.setState({isBusy: false, errors: (err.response).data});
         }).catch(err => {
