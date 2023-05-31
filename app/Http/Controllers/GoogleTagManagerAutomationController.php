@@ -14,7 +14,7 @@ class GoogleTagManagerAutomationController extends Controller
         $client->setClientId(config('services.gtm.client_id'));
         $client->setClientSecret(config('services.gtm.client_secret'));
         $client->setRedirectUri(config('services.gtm.redirect_url'));
-        $client->addScope(Google_Service_TagManager::TAGMANAGER_READONLY);
+        $client->addScope('https://www.googleapis.com/auth/tagmanager.readonly');
 
         $authUrl = $client->createAuthUrl();
         return redirect()->away($authUrl);
@@ -30,15 +30,14 @@ class GoogleTagManagerAutomationController extends Controller
             $client->setClientId(config('services.gtm.client_id'));
             $client->setClientSecret(config('services.gtm.client_secret'));
             $client->setRedirectUri(config('services.gtm.redirect_url'));
-            $client->addScope(Google_Service_TagManager::TAGMANAGER_READONLY);
-    
+            $client->addScope('https://www.googleapis.com/auth/tagmanager.readonly');
+            dd(request());
             if (request()->has('code')) {
                 $token = $client->fetchAccessTokenWithAuthCode(request()->get('code'));
                 $client->setAccessToken($token);
     
                 $service = new Google_Service_TagManager($client);
                 $accounts = $service->accounts->listAccounts();
-                dd($accounts);
                 // You can retrieve the account ID from $accounts object
     
                 // Example code to display the account IDs
