@@ -260,7 +260,7 @@ class AnnotationQueryHelper
 
     public static function facebookTrackingQuery(array $userIdsArray)
     {
-        return "select 1, facebook_tracking_annotations.created_at, NULL, category, event_name, facebook_tracking_annotations.url, CONCAT('facebook_tracking_annotations', '~~~~', `facebook_tracking_annotations`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, `users`.`name` AS `user_name`, facebook_tracking_annotations.created_at, `ftc`.`ga_property_id` AS `table_ga_property_id` from `facebook_tracking_annotations` LEFT JOIN `facebook_tracking_configurations` AS ftc ON `ftc`.`id` = `facebook_tracking_annotations`.`configuration_id` LEFT JOIN `users` ON `facebook_tracking_annotations`.`user_id` = `users`.`id` WHERE `facebook_tracking_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
+        return "select 1, facebook_tracking_annotations.show_at, NULL, category, event_name, facebook_tracking_annotations.url, CONCAT('facebook_tracking_annotations', '~~~~', `facebook_tracking_annotations`.`id`,  '~~~~', 'System', '~~~~', 'System') AS `added_by`, description, `users`.`name` AS `user_name`, facebook_tracking_annotations.created_at, `ftc`.`ga_property_id` AS `table_ga_property_id` from `facebook_tracking_annotations` LEFT JOIN `facebook_tracking_configurations` AS ftc ON `ftc`.`id` = `facebook_tracking_annotations`.`configuration_id` LEFT JOIN `users` ON `facebook_tracking_annotations`.`user_id` = `users`.`id` WHERE `facebook_tracking_annotations`.`user_id` IN ('" . implode("', '", $userIdsArray) . "')";
     }
 
     public static function instagramTrackingQuery(array $userIdsArray)

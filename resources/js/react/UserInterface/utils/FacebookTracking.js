@@ -454,7 +454,7 @@ export default class FacebookTracking extends React.Component {
                                                 style={{background: "#2d9cdb"}}
                                                 className="dot"
                                             ></span>
-                                            {gAK.gaPropertyName}
+                                            {gAK.gaPropertyName ? gAK.gaPropertyName : "All Properties"}
                                         </CustomTooltip>
                                     </button>
 
