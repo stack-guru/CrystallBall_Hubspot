@@ -527,6 +527,7 @@ class AppsMarket extends React.Component {
                 premium: false,
                 beta: true,
                 brandName: "Instagram",
+                brandLogo: "/instagram.svg",
                 height: 32,
             },
             {
