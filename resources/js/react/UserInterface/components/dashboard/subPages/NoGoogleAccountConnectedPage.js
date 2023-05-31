@@ -24,15 +24,15 @@ export default class NoGoogleAccountConnectedPage extends Component {
                                 <div>
                                     <h1 className='welcome-color'>welcome {this.props.user.name}</h1>
                                 </div>
-
-                                <div className='btn-goToPropertyLogin '>
+                                {/* btn-goToPropertyLogin */}
+                                <div className=' propertyLoginBox'>
                                     <div>
-                                        <h3>Connect to Google Analytics</h3>                                                                                
+                                        <h3 className='propertyLoginText'>Connect to Google Analytics</h3>                                                                                
                                     </div>
                                     <div>
-                                        <p>to get data on your visitors’ behavior and know how to optimize for better results</p>
+                                        <p className='propertyLoginText'>to get data on your visitors’ behavior and know how to optimize for better results</p>
                                     </div>
-                                    <div className='align-items-center justify-content-center'>
+                                    <div className='align-items-center justify-content-center '>
                                         <img className='analytice-logo ' src="/images/analytics-logo.svg" width="100" height="90" />
                                         <a
                                             onClick={(e) => { this.setState({ isPermissionPopupOpened: true }) }}

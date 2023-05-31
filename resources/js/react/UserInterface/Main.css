@@ -5863,33 +5863,7 @@ div[data-tour-elem="controls"]
 
 .sidebar {
     min-width: 90px;
-    overflow: hidden;
 }
-
-@media screen and (min-width: 992px) and (max-width: 1439px) {
-    .sidebar {
-        width: 90px;
-    }
-
-    .btn-addAnnotation span {
-        display: none;
-    }
-    .btn-addAnnotation {
-        width: auto;
-        border-radius: 25px;
-    }
-
-    .sidebar:hover .btn-addAnnotation span {
-        display: block;
-    }
-
-    .sidebar:hover .btn-addAnnotation {
-        display: block;
-        width: auto;
-        border-radius: 12px;
-    }
-}
-
 @media screen and (max-width: 1439px) {
     .is-collapsed .sidebar {
         width: 90px;
@@ -5904,7 +5878,6 @@ div[data-tour-elem="controls"]
     .is-collapsed .sidebar {
         width: 90px;
     }
-
     .is-collapsed .sidebar:hover {
         width: 270px;
     }
@@ -6859,30 +6832,14 @@ div[data-tour-elem="controls"]
 
 .acctive-recurrence-popover .popover-inner {
     max-width: 280px;
+}
     /* align-items: flex-start; */
     /* padding: 8px 12px;
     gap: 10px; */
-}
-
+/* } */
 .acctive-recurrence-popover .popover {
     max-width: 150;
 }
-
-/* .acctive-recurrence-popover  .popover-inner .button:nth-last-child(2){
-    color: #666666;
-    background: none;
-    margin-left: 20px;
-}
-.acctive-recurrence-popover  .popover-inner .button:last-child{
-    color: #666666;
-    background: none;
-    margin-left: 20px;
-}
-.acctive-recurrence-popover  .popover-inner.button:first-child {
-    color: #666666;
-    background: none;
-    margin-left: 20px;
-} */
 .acctive-recurrence-popover .popover-inner .share-report-interval {
     border: none;
     background: none;
@@ -6896,4 +6853,46 @@ div[data-tour-elem="controls"]
     margin-left: 30px;
     gap: 10px;
     padding: 8px 12px;
+}
+.btn-goToPropertyLogin{
+    width: 700px;
+    height: 350px;
+    display: flex;
+    margin: 40px auto;
+    padding: 32px 24px;
+    align-items: center;
+    border-radius: 12px;
+    background: #f0f6ff;
+    flex-direction: column;
+    justify-content: center;
+}
+.analytice-logo{
+    margin-left: 4rem;
+}
+.propertyLoginBox {
+    width: 1100px;
+    /* height: 350px; */
+    display: flex;
+    margin: 40px auto;
+    padding: 32px 24px;
+    align-items: center;
+    border-radius: 12px;
+    /* background: #f0f6ff; */
+    flex-direction: column;
+    justify-content: center;
+    /* padding: 24px 16px; */
+    background: #FCFCFC;
+    border-radius: 16px;
+}
+.propertyLoginText {
+    display: flex;
+    color: #666;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;
+    text-align: center;
+    /* padding: 32px 24px; */
+    border-radius: 24px;
+    background: #fcfcfc;
+    flex-direction: column;
 }
