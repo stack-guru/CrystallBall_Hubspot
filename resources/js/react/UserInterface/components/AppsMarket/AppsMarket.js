@@ -2,7 +2,7 @@ import React from "react";
 import {Redirect} from "react-router-dom";
 import HttpClient from "../../utils/HttpClient";
 
-import {Container, Row, Col, FormGroup, Input, Label} from "reactstrap";
+import {Container, FormGroup, Input, Label} from "reactstrap";
 import AppsModal from "./AppsModal";
 import WebsiteMonitoring from "./WebsiteMonitoring";
 import NewsAlerts from "./NewsAlerts";
@@ -519,16 +519,16 @@ class AppsMarket extends React.Component {
                 width: 140,
                 height: 19,
             },
-            {
-                id: "27",
-                background: "radial-gradient(126.96% 126.96% at 6.47% 97.81%, #FA8F21 9%, #D82D7E 78%)",
-                dsKey: "is_ds_instagram_tracking_enabled",
-                connected: this.state.userServices["is_ds_instagram_tracking_enabled"],
-                premium: false,
-                beta: true,
-                brandName: "Instagram",
-                height: 32,
-            },
+            // {
+            //     id: "27",
+            //     background: "radial-gradient(126.96% 126.96% at 6.47% 97.81%, #FA8F21 9%, #D82D7E 78%)",
+            //     dsKey: "is_ds_instagram_tracking_enabled",
+            //     connected: this.state.userServices["is_ds_instagram_tracking_enabled"],
+            //     premium: false,
+            //     beta: true,
+            //     brandName: "Instagram",
+            //     height: 32,
+            // },
             {
                 id: "28",
                 background: "null",
