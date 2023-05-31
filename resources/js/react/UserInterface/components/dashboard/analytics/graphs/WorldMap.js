@@ -163,3 +163,77 @@ const MapChart = (props) => {
 };
 
 export default MapChart;
+
+
+{/* <div className="report-box">
+                            <div className="justify-content-between d-flex">
+                                <div className="d-flex flex-column">
+                                    <h3 className="card-heading">
+                                        Visitors by country
+                                    </h3>
+                                    <h6>Traffic analyze</h6>
+                                </div>
+
+                                <div className="flex">
+                                    <span>
+                                        <img
+                                            src="/images/svg/visitor-country.svg"
+                                            alt="option icon"
+                                        />
+                                    </span>
+                                    <span>
+                                        <img
+                                            src="/images/svg/dashboard-list-option.svg"
+                                            alt="list icon"
+                                        />
+                                    </span>
+                                </div>
+                            </div>
+                            <div className="mb-3">
+                                 <img
+                                        src="/images/svg/map.svg"
+                                        alt="map Image"
+                                    />
+                                </div>
+                            <h4 className="card-heading">Top countries</h4>
+
+                            <div className="d-flex flex-row">
+                                <span className="pr-2 d-flex align-items-center">
+                                        <span style={{'width': '1rem', 'display':'block', 'marginRight':'8px'}}>
+                                        <img
+                                            style={{'width': '100%', 'height':'auto',}}
+                                            src="/images/svg/usa.svg"
+                                            alt="usa icon"
+                                        />
+                                        </span>
+                                        <h5 className="country-name">United states</h5>
+                                </span>
+                                <h5 className="ml-5">123456</h5>
+                            </div>
+                            <div className="d-flex flex-row">
+                            <span className="pr-2 d-flex align-items-center">
+                                        <span style={{'width': '1rem', 'display':'block', 'marginRight':'8px'}}>
+                                        <img
+                                            style={{'width': '100%', 'height':'auto',}}
+                                            src="/images/svg/germany.svg"
+                                            alt="usa icon"
+                                        />
+                                        </span>
+                                        <h5 className="country-name">Germany</h5>
+                                </span>
+                                <h5 className="ml-5">123456</h5>
+                            </div>
+                            <div className="d-flex flex-row">
+                            <span className="pr-2 d-flex align-items-center">
+                                        <span style={{'width': '1rem', 'display':'block', 'marginRight':'8px'}}>
+                                        <img
+                                            style={{'width': '100%', 'height':'auto',}}
+                                            src="/images/svg/canada.svg"
+                                            alt="usa icon"
+                                        />
+                                        </span>
+                                        <h5 className="country-name">Canada</h5>
+                                </span>
+                                <h5 className="ml-5">123456</h5>
+                            </div>
+                        </div> */}

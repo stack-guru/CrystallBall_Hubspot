@@ -25,7 +25,7 @@ const YoutubeConfig = (props) => {
     const [searchResult, setSearchResult] = useState([]);
     const [noResult, setNoResult] = useState("");
     const [gaPropertyId, setGaPropertyId] = useState("");
-    const [inputVale, setInputVale] = useState("");
+    const [inputValue, setInputValue] = useState("");
     const [activeDeletePopover, setActiveDeletePopover] = useState("");
 
     const deleteMonito = async (payload) => {
@@ -62,27 +62,30 @@ const YoutubeConfig = (props) => {
         try {
             setSearchResult([]);
             setNoResult("");
-            const url = `https://www.googleapis.com/youtube/v3/videos?id=${encodeURIComponent(inputVale)}&key=301040226881-p1utco823400k3u9cbc0io6qtme3i3m8.apps.googleusercontent.com&part=snippet,contentDetails,statistics,status`;
-            const result = await axios.get(url);
+            const formData = {
+                search: encodeURIComponent(inputValue),
+            }
 
-            let sr = [];
-            for (const item of result.data?.results) {
-                sr.push({
-                    previewImage: item.artworkUrl600 || item.artworkUrl100,
-                    collectionName: item.collectionName,
-                    collectionId: item.collectionId,
-                    feedUrl: item.feedUrl,
-                    collectionViewUrl: item.collectionViewUrl,
-                    trackCount: item.trackCount,
-                    gaPropertyId: props.gaPropertyId || null,
+            HttpClient.post("/data-source/get_youtube_data", formData)
+            .then(
+                () => {
+                    setSearchResult(response.data.resp)
+                },
+                (err) => {
+                    Toast.fire({
+                        icon: 'error',
+                        title: "Error while adding Youtube Monitor.",
+                    });
+                }
+            )
+            .catch((err) => {
+                Toast.fire({
+                    icon: 'error',
+                    title: "Error while adding Youtube Monitor.",
                 });
-            }
-            setSearchResult(sr);
-            if (sr.length === 0) {
-                setNoResult(
-                    "No results, try another search of enter a Monitor URL"
-                );
-            }
+            });
+            
+            
         } catch (error) {
             console.debug(`file: YoutubeConfig.js error`, error);
         }
@@ -165,7 +168,15 @@ const YoutubeConfig = (props) => {
 
                 <div className="d-flex align-items-center mb-3">
                     <div className="input-group">
-                        <input type="text" className="form-control search-input" placeholder="Search or Enter the Monitor URL" value={inputVale} id="youtubeMonitorURL" name="youtubeMonitorURL" onChange={(e) => setInputVale(e.target.value.toLowerCase())} onKeyUp={(e) => { if (e.keyCode === 13) { e.persist(); getMetaData(e); } }} />
+                        <input type="text" 
+                        className="form-control search-input" 
+                        placeholder="Search or Enter the Monitor URL" 
+                        value={inputValue} id="youtubeMonitorURL" 
+                        name="youtubeMonitorURL" 
+                        onChange={(e) => setInputValue(e.target.value.toLowerCase())} 
+                        onKeyUp={(e) => { if (e.keyCode === 13) { 
+                            e.persist(); getMetaData(e); 
+                        } }} />
                         <div className="input-group-append">
                             <i className="ti-plus"></i>
                         </div>

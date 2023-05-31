@@ -111,4 +111,26 @@ class YoutubeMonitorController extends Controller
         return $data;
     }
 
+
+    public function getYoutubeData (Request $req) {
+
+        $url = "https://www.googleapis.com/youtube/v3/videos?id=" $req->search "&key={YOUR_API_KEY}&part=snippet,contentDetails,statistics,status"
+        // let sr = [];
+        //     for (const item of result.data?.results) {
+        //         sr.push({
+        //             previewImage: item.artworkUrl600 || item.artworkUrl100,
+        //             collectionName: item.collectionName,
+        //             collectionId: item.collectionId,
+        //             feedUrl: item.feedUrl,
+        //             collectionViewUrl: item.collectionViewUrl,
+        //             trackCount: item.trackCount,
+        //             gaPropertyId: props.gaPropertyId || null,
+        //         });
+        //     }
+
+
+        return ['success' => true, $data]
+
+    }
+
 }
