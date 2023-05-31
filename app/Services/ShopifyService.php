@@ -2,9 +2,9 @@
 
 namespace App\Services;
 
+use App\Models\ShopifyAnnotation;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
-use App\Models\ShopifyAnnotation;
 
 class ShopifyService
 {
@@ -15,7 +15,8 @@ class ShopifyService
         foreach ($products as $product) {
             $productId = $product['id'];
             $productIDs[] = $productId;
-            $annotation = ShopifyAnnotation::where('product_id', $productId)->first();
+            $annotation = ShopifyAnnotation::where('product_id', $productId)
+                ->where('monitor_id', $monitorID)->first();
             $new = !$annotation && in_array('New Product', $events);
             $update = $annotation && in_array('Updated Product', $events);
             if ($new) {
