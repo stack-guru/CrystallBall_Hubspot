@@ -5863,7 +5863,33 @@ div[data-tour-elem="controls"]
 
 .sidebar {
     min-width: 90px;
+    overflow: hidden;
 }
+
+@media screen and (min-width: 992px) and (max-width: 1439px) {
+    .sidebar {
+        width: 90px;
+    }
+
+    .btn-addAnnotation span {
+        display: none;
+    }
+    .btn-addAnnotation {
+        width: auto;
+        border-radius: 25px;
+    }
+
+    .sidebar:hover .btn-addAnnotation span {
+        display: block;
+    }
+
+    .sidebar:hover .btn-addAnnotation {
+        display: block;
+        width: auto;
+        border-radius: 12px;
+    }
+}
+
 @media screen and (max-width: 1439px) {
     .is-collapsed .sidebar {
         width: 90px;
@@ -6895,4 +6921,9 @@ div[data-tour-elem="controls"]
     border-radius: 24px;
     background: #fcfcfc;
     flex-direction: column;
+}
+
+.btn-apps-beta {
+    top: 5px;
+    right: 1rem;
 }
