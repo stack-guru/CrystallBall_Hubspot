@@ -6829,3 +6829,8 @@ div[data-tour-elem="controls"]
 .visibility-hidden {
     visibility: hidden;
 }
+
+.btn-apps-beta {
+    top: 5px;
+    right: 1rem;
+}

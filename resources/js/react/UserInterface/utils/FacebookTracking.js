@@ -44,7 +44,6 @@ export default class FacebookTracking extends React.Component {
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
         this.fetchConfigurations = this.fetchConfigurations.bind(this);
         this.deleteSelected = this.deleteSelected.bind(this);
-        this.serviceStatusHandler = this.serviceStatusHandler.bind(this);
     }
 
     deleteSelected = (payload) => {
@@ -156,8 +155,9 @@ export default class FacebookTracking extends React.Component {
         }
 
         if (!this.state.configurations.length) {
-            this.serviceStatusHandler();
+            this.props.serviceStatusHandler({ target: { name: 'is_ds_facebook_tracking_enabled', value: true, checked: true }})
         }
+        if (this.props.user.price_plan.name !== 'Trial Ended')
         HttpClient.post('/data-source/save-facebook-tracking-configurations', form_data).then(resp => {
             this.setState({facebook_pages: resp.data.facebook_pages, isBusy: false, gaPropertyName: resp.data.gaPropertyName, editProperty: false});
             
@@ -182,10 +182,6 @@ export default class FacebookTracking extends React.Component {
     runjob(id) {
         HttpClient.post('/data-source/run-facebook-job', {id}).then(resp => {
         })
-    }
-
-    async serviceStatusHandler () {
-        await this.props.serviceStatusHandler({ target: { name: 'is_ds_facebook_tracking_enabled', value: true, checked: true }})
     }
 
     changePageHandler(val) {
