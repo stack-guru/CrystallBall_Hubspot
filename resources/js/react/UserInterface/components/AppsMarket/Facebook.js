@@ -32,7 +32,7 @@ class Facebook extends React.Component {
                     description={"Set custom thresholds for your posts, and unlock automated annotations when your engagement metrics hit the mark. Stay on top of your social performance, optimize your strategies, and make data-driven decisions effortlessly."}
                     changeModal={this.changeModal.bind(this)}
                     userAccountsExists={this.props.userFacebookAccountsExists}
-                    connectText={`Connect your Facebook account to create automatic annotations for new posts; when you reach a post goal or run campaigns..`}
+                    connectText={`Connect your Facebook account to create automatic annotations for new posts; when you reach a post goal or run campaigns.`}
                 />
                 : <>
                 <ModalHeader
