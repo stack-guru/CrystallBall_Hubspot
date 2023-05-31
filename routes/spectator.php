@@ -9,6 +9,7 @@ Route::resource('plan-notifications', App\Http\Controllers\Spectator\PlanNotific
 
 Route::get('auto-payment-log', [App\Http\Controllers\Spectator\AutoPaymentLogController::class, 'index'])->name('auto-payment-log.index');
 Route::resource('coupon', App\Http\Controllers\Spectator\CouponController::class);
+Route::get('payment-detail', [App\Http\Controllers\Spectator\PaymentDetailController::class, 'index'])->name('payment-detail.index');
 
 Route::group(['prefix' => 'reports', 'as' => 'reports.'], function () {
     Route::get('user-active-report', [App\Http\Controllers\Spectator\ReportsController::class, 'showUserActiveReport'])->name('user-active-report.show');

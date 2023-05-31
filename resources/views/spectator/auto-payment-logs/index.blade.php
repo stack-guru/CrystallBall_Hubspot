@@ -8,6 +8,7 @@
             <div class="card">
                 <div class="card-header">Auto Payment Logs</div>
                 <div class="card-body">
+                    
                     <table aria-label="Auto Payment Logs" class="table table-hover table-bordered ">
                         <thead>
                             <tr>
@@ -27,7 +28,7 @@
                             @forelse($autoPaymentLogs as $autoPaymentLog)
                             <tr>
                                 <td>{{$autoPaymentLog->paymentDetail->bluesnap_vaulted_shopper_id}}</td>
-                                <td>{{$autoPaymentLog->user->name}}</td>
+                                <td>{{@$autoPaymentLog->user->name}}</td>
                                 <td>{{$autoPaymentLog->paymentDetail->first_name}} {{$autoPaymentLog->paymentDetail->last_name}}</td>
                                 <td>{{@$autoPaymentLog->pricePlanSubscription->transaction_id}}</td>
                                 <td>{{$autoPaymentLog->pricePlan->name}}</td>
