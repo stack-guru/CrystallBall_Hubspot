@@ -3,13 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ShopifyMonitorRequest;
-use Illuminate\Http\Request;
-use App\Models\ShopifyAnnotation;
 use App\Models\ShopifyMonitor;
 use App\Services\ShopifyService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
-use Goutte\Client;
 
 
 class ShopifyMonitorController extends Controller
@@ -97,13 +94,18 @@ class ShopifyMonitorController extends Controller
             return response()->json(['success' => false, 'message' => 'Please provide the valid store url'], 400);
         }
 
-        $monitor = ShopifyMonitor::where('url', $url)->where('user_id', $userID)->first();
+        $gaPropertyID = $req->gaPropertyId;
+
+        $monitor = ShopifyMonitor::where('url', $url)
+            ->where('user_id', $userID)
+            ->where('ga_property_id', $gaPropertyID)
+            ->first();
         if(!$monitor) {
             $monitor = new ShopifyMonitor();
             $monitor->url = $url;
             $monitor->user_id = $userID;
         }
-        $monitor->ga_property_id = $req->gaPropertyId;
+        $monitor->ga_property_id = $gaPropertyID;
         $monitor->events = $req->events;
         $monitor->save();
 

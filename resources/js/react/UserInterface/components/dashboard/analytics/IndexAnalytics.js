@@ -312,7 +312,7 @@ export default class IndexAnalytics extends Component {
 
     render() {
 
-        if (!this.props.user.google_accounts_count) return <NoGoogleAccountConnectedPage />
+        if (!this.props.user.google_accounts_count) return <NoGoogleAccountConnectedPage user={this.state.user}/>
         return <React.Fragment>
             {/* here me start */}
             <>
@@ -521,30 +521,6 @@ export default class IndexAnalytics extends Component {
                             </div>
                             <div className="filterBtnGroup d-flex align-items-center">
                                
-                                {/* <div className='d-flex'>
-                                <DefinedRange
-                                    moveRangeOnFirstSelection={false}
-                                    editableDateInputs={true}
-                                    inp
-                                    ranges={[{
-                                        startDate: new Date(this.state.startDate),
-                                        endDate: new Date(this.state.endDate),
-                                        key: 'selection',
-                                    }]}
-                                    onChange={(ranges) => {
-                                        this.setState({
-                                            startDate: moment(ranges.selection.startDate).format("YYYY-MM-DD"),
-                                            endDate: moment(ranges.selection.endDate).format("YYYY-MM-DD"),
-                                            showDateRangeSelect: moment(ranges.selection.startDate).format("YYYY-MM-DD") == moment(ranges.selection.endDate).format("YYYY-MM-DD")
-                                        }, () => {
-                                            if (moment(ranges.selection.startDate).format("YYYY-MM-DD") !== moment(ranges.selection.endDate).format("YYYY-MM-DD")) {
-                                                this.fetchStatistics(this.state.ga_property_id)
-                                            }
-                                        });
-                                    }}
-                                />
-                                </div> */}
-
                                 <button className="filter-btn" onClick={() => this.generateDateRange('today')}>Today</button>
                                 <button className="filter-btn" onClick={() => this.generateDateRange('1 week')}>1w </button>
                                 <button className="filter-btn" onClick={() => this.generateDateRange('2 weeks')}>2w</button>
@@ -552,8 +528,6 @@ export default class IndexAnalytics extends Component {
                                 <button className="filter-btn" onClick={() => this.generateDateRange('6 months')}>6m</button>
                                 <button className="filter-btn" onClick={() => this.generateDateRange('1 year')}>Year</button>
                                 <button className="filter-btn" onClick={() => this.generateDateRange('all')}>All</button>
-
-                                {/* <button className="filter-btn">All</button> */}
 
                                 <Button id="PopoverClick" type="button" className="custom-btn">Custom
                                     <img className="pl-2" src="/images/svg/custom-date.svg"
@@ -641,195 +615,7 @@ export default class IndexAnalytics extends Component {
                                     {/* <ConsoleTopStatistics topStatistics={this.state.consoleTopStatistics} /> */}
                                     
 
-                                    {/* <div className="">
-                                        <div className={"w-100 report-box"}>
-                                            <div className="d-flex justify-content-between">
-                                                <div>
-                                                    <h4 className="card-heading">
-                                                        Today's Expence
-                                                    </h4>
-                                                    <h6>sales summery</h6>
-                                                </div>
-                                                <div className="icons">
-                                                    <span>
-                                                        <img
-                                                            src="/images/svg/visitor-country.svg"
-                                                            alt="visit icon"
-                                                        />
-                                                    </span>
-                                                    <span>
-                                                        <img
-                                                            src="/images/svg/dashboard-list-option.svg"
-                                                            alt="list icon"
-                                                        />
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div className="fourGridBoxesHolder" style={{gap: '15px'}}>
-                                                <div className=" d-flex flex-column  w-100 box-color1">
-                                                    <span className="box-icon">
-                                                        <img
-                                                            src="/images/svg/todays-expence-icon1.svg"
-                                                            alt="list icon"
-                                                        />
-                                                    </span>
-                                                    <h2
-                                                        className="box-headings"
-                                                    >
-                                                        $1K
-                                                    </h2>
-                                                    <h5
-                                                        className="box-headings"
-                                                        style={{
-                                                            color: "#425166",
-                                                            fontWeight: "400",
-                                                            fontSize: "16px",
-                                                        }}
-                                                    >
-                                                        Total sales
-                                                    </h5>
-                                                    <h5
-                                                        className="box-headings"
-                                                        style={{
-                                                            color: "#4079ED",
-                                                            fontWeight: "400",
-                                                            fontSize: "13px",
-                                                        }}
-                                                    >
-                                                        +8% from yesterday
-                                                    </h5>
-                                                </div>
-                                                <div className="d-flex flex-column  w-100 box-color2">
-                                                    <span className="box-icon">
-                                                        <img
-                                                            src="/images/svg/todays-expence-icon2.svg"
-                                                            alt="list icon"
-                                                        />
-                                                    </span>
-                                                    <h2
-                                                        className="box-headings"
-                                                    >
-                                                        300
-                                                    </h2>
-                                                    <h5
-                                                        className="box-headings"
-                                                        style={{
-                                                            color: "#425166",
-                                                            fontWeight: "400",
-                                                            fontSize: "16px",
-                                                        }}
-                                                    >
-                                                        Total orders
-                                                    </h5>
-                                                    <h5
-                                                        className="box-headings"
-                                                        style={{
-                                                            color: "#4079ED",
-                                                            fontWeight: "400",
-                                                            fontSize: "13px",
-                                                        }}
-                                                    >
-                                                        +8% from yesterd
-                                                    </h5>
-                                                </div>
-                                                <div className="d-flex flex-column w-100 box-color3">
-                                                    <span className="box-icon">
-                                                        <img
-                                                            src="/images/svg/todays-expence-icon3.svg"
-                                                            alt="list icon"
-                                                        />
-                                                    </span>
-
-                                                    <h2
-                                                        className="box-headings"
-                                                    >
-                                                        5
-                                                    </h2>
-                                                    <h5
-                                                        className="box-headings"
-                                                        style={{
-                                                            color: "#425166",
-                                                            fontWeight: "400",
-                                                            fontSize: "16px",
-                                                        }}
-                                                    >
-                                                        Total sales
-                                                    </h5>
-                                                    <h5
-                                                        className="box-headings"
-                                                        style={{
-                                                            color: "#4079ED",
-                                                            fontWeight: "400",
-                                                            fontSize: "13px",
-                                                        }}
-                                                    >
-                                                        +8% from yesterd
-                                                    </h5>
-                                                </div>
-                                                <div className="d-flex flex-column w-100 box-color4">
-                                                    <span className="box-icon">
-                                                        <img
-                                                            src="/images/svg/todays-expence-icon4.svg"
-                                                            alt="list icon"
-                                                        />
-                                                    </span>
-
-                                                    <h2
-                                                        className="box-headings"
-                                                    >
-                                                        300
-                                                    </h2>
-                                                    <h5 className="box-headings"
-                                                    style={{
-                                                        color: "#425166",
-                                                        fontWeight: "400",
-                                                        fontSize: "16px",
-                                                    }}
-                                                    >
-                                                        Total orders
-                                                    </h5>
-                                                    <h5
-                                                        className="box-headings"
-                                                        style={{
-                                                            color: "#4079ED",
-                                                            fontWeight: "400",
-                                                            fontSize: "13px",
-                                                        }}
-                                                    >
-                                                        +8% from yesterd
-                                                    </h5>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="w-100 report-box">
-                                            <div>
-                                                <p>
-                                                    Create your own moodboard <br />
-                                                    and find them all at one place
-                                                </p>
-                                            </div>
-                                            <div>
-                                                <form>
-                                                    <span>
-                                                        <img
-                                                            src="/images/svg/image.svg"
-                                                            alt="image icon"
-                                                        />
-                                                    </span>
-                                                    <input
-                                                        className="add-  "
-                                                        type="file"
-                                                        placeholder="Add image"
-                                                        id="img"
-                                                        name="img"
-                                                        accept="image/*"
-                                                    />
-                                                </form>
-                                            </div>
-                                        </div>
-
-                                    </div> */}
+                                    
 
                                     <div>
                                         {/*Linkedin taffic cpc div*/}
@@ -899,150 +685,7 @@ export default class IndexAnalytics extends Component {
                                         {/*Media graph div*/}
                                         {/* <MediaGraph statistics={this.state.mediaStatistics} /> */}
 
-                                        {/* <div className="w-100 report-box">
-                                            <div className="justify-content-between d-flex mb-3">
-                                                <div>
-                                                    <h3 className="card-heading">
-                                                        Media
-                                                    </h3>
-                                                </div>
-                                                <div>
-                                                    <span>
-                                                        <img
-                                                            src="/images/svg/dashboard-list-option.svg"
-                                                            alt="list icon"
-                                                        />
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div className="d-flex flex-column">
-                                                <div className="d-flex flex-column">
-                                                    <h5 style={{color: "#333333", fontSize:"16px",fontWeight:"400"}}>Twitter</h5>
-                                                    <div className="progressbar d-flex align-items-center">
-                                                        <div className="progress flex-grow-1">
-                                                            <div
-                                                                className="progress-bar"
-                                                                role="progressbar"
-                                                                style={{
-                                                                    width: `${Math.min(
-                                                                        (132645 /
-                                                                            150000) *
-                                                                            100,
-                                                                        100
-                                                                    )}%`,
-                                                                }}
-                                                                aria-valuenow={`${Math.min(
-                                                                    (132645 / 150000) *
-                                                                        100,
-                                                                    100
-                                                                )}`}
-                                                                aria-valuemin="0"
-                                                                aria-valuemax="100"
-                                                            ></div>
-                                                        </div>
-                                                        <span className="ml-2">
-                                                            {Math.min(
-                                                                (132645 / 150000) * 100,
-                                                                100
-                                                            )}
-                                                            %
-                                                        </span>
-                                                    </div>
-                                                </div>
-
-                                                <h5 style={{color: "#333333", fontSize:"16px",fontWeight:"400"}}>Instagram</h5>
-                                                <div className="progressbar d-flex align-items-center">
-                                                    <div className="progress flex-grow-1">
-                                                        <div
-                                                            className="progress-bar"
-                                                            role="progressbar"
-                                                            style={{
-                                                                width: `${Math.min(
-                                                                    (132645 / 150000) *
-                                                                        100,
-                                                                    100
-                                                                )}%`,
-                                                            }}
-                                                            aria-valuenow={`${Math.min(
-                                                                (132645 / 150000) * 100,
-                                                                100
-                                                            )}`}
-                                                            aria-valuemin="0"
-                                                            aria-valuemax="100"
-                                                        ></div>
-                                                    </div>
-                                                    <span className="ml-2">
-                                                        {Math.min(
-                                                            (132645 / 150000) * 100,
-                                                            100
-                                                        )}
-                                                        %
-                                                    </span>
-                                                </div>
-                                                <h5 style={{color: "#333333", fontSize:"16px",fontWeight:"400"}}>TikTok</h5>
-                                                <div className="progressbar d-flex align-items-center">
-                                                    <div className="progress flex-grow-1">
-                                                        <div
-                                                            className="progress-bar"
-                                                            role="progressbar"
-                                                            style={{
-                                                                width: `${Math.min(
-                                                                    (132645 / 150000) *
-                                                                        100,
-                                                                    100
-                                                                )}%`,
-                                                            }}
-                                                            aria-valuenow={`${Math.min(
-                                                                (132645 / 150000) * 100,
-                                                                100
-                                                            )}`}
-                                                            aria-valuemin="0"
-                                                            aria-valuemax="100"
-                                                        ></div>
-                                                    </div>
-                                                    <span className="ml-2">
-                                                        {Math.min(
-                                                            (132645 / 150000) * 100,
-                                                            100
-                                                        )}
-                                                        %
-                                                    </span>
-                                                </div>
-                                                <h5 style={{color: "#333333", fontSize:"16px",fontWeight:"400"}}>Facebook</h5>
-                                                <div className="progressbar d-flex align-items-center">
-                                                    <div className="d-flex flex-column">
-                                                    <span className="ml-2">
-                                                        {Math.min(
-                                                            (132645 / 150000) * 100,
-                                                            100
-                                                        )}
-                                                        %
-                                                    </span>
-                                                    <div className="progress flex-grow-1">
-                                                        <div
-                                                            className="progress-bar" role="progressbar"
-                                                            style={{
-                                                                width: `${Math.min(
-                                                                    (132645 / 150000) *
-                                                                        100,
-                                                                    100
-                                                                )}%`,color:"#004F9D"
-                                                            }}
-                                                            aria-valuenow={`${Math.min(
-                                                                (132645 / 150000) * 100,
-                                                                100
-                                                            )}`}
-                                                            aria-valuemin="0"
-                                                            aria-valuemax="100"
-                                                        ></div>
-                                                    </div>
-
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                            <p>Source:BestGenNewtonSite</p>
-                                        </div> */}
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -1513,78 +1156,7 @@ export default class IndexAnalytics extends Component {
                         {/*Visitor by Country */}
 
                         <MapChart countriesStatistics={this.state.countriesStatistics} />
-                        {/* <div className="report-box">
-                            <div className="justify-content-between d-flex">
-                                <div className="d-flex flex-column">
-                                    <h3 className="card-heading">
-                                        Visitors by country
-                                    </h3>
-                                    <h6>Traffic analyze</h6>
-                                </div>
-
-                                <div className="flex">
-                                    <span>
-                                        <img
-                                            src="/images/svg/visitor-country.svg"
-                                            alt="option icon"
-                                        />
-                                    </span>
-                                    <span>
-                                        <img
-                                            src="/images/svg/dashboard-list-option.svg"
-                                            alt="list icon"
-                                        />
-                                    </span>
-                                </div>
-                            </div>
-                            <div className="mb-3">
-                                 <img
-                                        src="/images/svg/map.svg"
-                                        alt="map Image"
-                                    />
-                                </div>
-                            <h4 className="card-heading">Top countries</h4>
-
-                            <div className="d-flex flex-row">
-                                <span className="pr-2 d-flex align-items-center">
-                                        <span style={{'width': '1rem', 'display':'block', 'marginRight':'8px'}}>
-                                        <img
-                                            style={{'width': '100%', 'height':'auto',}}
-                                            src="/images/svg/usa.svg"
-                                            alt="usa icon"
-                                        />
-                                        </span>
-                                        <h5 className="country-name">United states</h5>
-                                </span>
-                                <h5 className="ml-5">123456</h5>
-                            </div>
-                            <div className="d-flex flex-row">
-                            <span className="pr-2 d-flex align-items-center">
-                                        <span style={{'width': '1rem', 'display':'block', 'marginRight':'8px'}}>
-                                        <img
-                                            style={{'width': '100%', 'height':'auto',}}
-                                            src="/images/svg/germany.svg"
-                                            alt="usa icon"
-                                        />
-                                        </span>
-                                        <h5 className="country-name">Germany</h5>
-                                </span>
-                                <h5 className="ml-5">123456</h5>
-                            </div>
-                            <div className="d-flex flex-row">
-                            <span className="pr-2 d-flex align-items-center">
-                                        <span style={{'width': '1rem', 'display':'block', 'marginRight':'8px'}}>
-                                        <img
-                                            style={{'width': '100%', 'height':'auto',}}
-                                            src="/images/svg/canada.svg"
-                                            alt="usa icon"
-                                        />
-                                        </span>
-                                        <h5 className="country-name">Canada</h5>
-                                </span>
-                                <h5 className="ml-5">123456</h5>
-                            </div>
-                        </div> */}
+                        
 
                         {/* Country Table */}
                         <CountriesTable countriesStatistics={this.state.countriesStatistics} />
@@ -1643,7 +1215,7 @@ export default class IndexAnalytics extends Component {
 
 
 
-            <>
+            {/* <>
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -1881,7 +1453,7 @@ export default class IndexAnalytics extends Component {
                     />
                 </div>
             </AppsModal>
-            </>
+            </> */}
         </React.Fragment>;
     }
 

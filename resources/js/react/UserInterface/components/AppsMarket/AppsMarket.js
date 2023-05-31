@@ -488,8 +488,9 @@ class AppsMarket extends React.Component {
                 dsKey: "is_ds_facebook_tracking_enabled",
                 connected: this.state.userServices["is_ds_facebook_tracking_enabled"],
                 premium: false,
+                beta: true,
                 brandName: "Facebook Ads",
-                brandLogo: "/facebookAds.svg",
+                brandLogo: "/facebook.svg",
                 width: 140,
                 height: 19,
             },
@@ -499,6 +500,7 @@ class AppsMarket extends React.Component {
                 dsKey: "is_ds_instagram_tracking_enabled",
                 connected: this.state.userServices["is_ds_instagram_tracking_enabled"],
                 premium: false,
+                beta: true,
                 brandName: "Instagram",
                 brandLogo: "/instagram.svg",
                 width: 142,
@@ -922,7 +924,7 @@ class AppsMarket extends React.Component {
                                         });
                                     }
                                 }}
-                                className="item"
+                                className="item position-relative"
                                 key={itemKey}
                                 style={{
                                     background: item.background || "#fff",
@@ -939,6 +941,11 @@ class AppsMarket extends React.Component {
                                     <span className="btn-premium">
                                         <i className="fa fa-diamond"></i>
                                         <span>Premium</span>
+                                    </span>
+                                ) : null}
+                                 {item.beta ? (
+                                    <span className="btn-apps-beta text-light position-absolute">
+                                        <span>BETA</span>
                                     </span>
                                 ) : null}
                             </div>
@@ -972,18 +979,18 @@ class AppsMarket extends React.Component {
                                 //     width: 140,
                                 //     height: 19,
                                 // },
-                                // {
-                                //     id: "08",
-                                //     background: "radial-gradient(126.96% 126.96% at 6.47% 97.81%, #FA8F21 9%, #D82D7E 78%)",
-                                //     dsKey: "",
-                                //     enabled: false,
-                                //     premium: false,
-                                //     commingSoon: true,
-                                //     brandName: "Instagram",
-                                //     brandLogo: "/instagram.svg",
-                                //     width: 142,
-                                //     height: 32,
-                                // },
+                                {
+                                    id: "08",
+                                    background: "radial-gradient(126.96% 126.96% at 6.47% 97.81%, #FA8F21 9%, #D82D7E 78%)",
+                                    dsKey: "",
+                                    enabled: false,
+                                    premium: false,
+                                    commingSoon: true,
+                                    brandName: "Instagram",
+                                    brandLogo: "/instagram.svg",
+                                    width: 142,
+                                    height: 32,
+                                },
                                 {
                                     id: "29",
                                     background: "#0A0A0A",

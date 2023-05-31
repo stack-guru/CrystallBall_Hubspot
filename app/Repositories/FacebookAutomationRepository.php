@@ -11,6 +11,7 @@ use App\Models\UserFacebookPagePost;
 use App\Services\FacebookService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Carbon;
 
 class FacebookAutomationRepository
 {
@@ -248,6 +249,12 @@ class FacebookAutomationRepository
                                             if ($configuration->when_new_post_on_facebook) {
                                                 $data = @$response['page_posts'][0]['attachments']['data'][0];
                                                 $data['configuration_id'] = $configuration->id;
+
+                                                $message = @$response['page_posts'][0]['message'];
+                                                $title = strlen($message) > 95 ? substr($message,0,95).'...' : $message;
+                                                $data['title'] = $title ? $title : "New Post";
+                                                $data['created_time'] = @Carbon::parse(@$response['page_posts'][0]['created_time']);
+                                                $data['url'] = "https://www.facebook.com/" . @$response['page_posts'][0]['id'];
                                                 $this->createAutomationAnnotation('when_new_post_on_facebook', $user, $data);
                                             }
                                         }
@@ -271,14 +278,21 @@ class FacebookAutomationRepository
                                                     $views_fb = (int)@$this->facebookService->getPagePostImpressions($facebook_page_post_from_facebook['id'], $response['page_token'])['post_impressions'];
                                                     $views_db = (int)$facebook_page_post_from_database->views_count;
 
+                                                    $message = @$facebook_page_post_from_facebook['message'];
+                                                    $title = strlen($message) > 95 ? substr($message,0,95).'...' : $message;
+                                                    $createdTime = @Carbon::parse(@$facebook_page_post_from_facebook['created_time']);
+                                                    $url = "https://www.facebook.com/" . @$facebook_page_post_from_facebook['id'];
+
                                                     if ($configuration->is_post_likes_tracking_on){
                                                         $when_post_reach_likes = $configuration->when_post_reach_likes;
                                                         if ($likes_fb > $likes_db || $forceSave){
                                                             if ($likes_fb >= $when_post_reach_likes){
                                                                 $data = [
                                                                     "likes" => $likes_fb,
-                                                                    "url" => @$facebook_page_post_from_facebook['attachments']['data'][0]['url'],
-                                                                    'configuration_id' => $configuration->id
+                                                                    "url" => $url,
+                                                                    'configuration_id' => $configuration->id,
+                                                                    'title' => $title ? $title : 'Likes Reached',
+                                                                    'created_time' => $createdTime
                                                                 ];
                                                                 $this->createAutomationAnnotation('when_post_reach_likes', $user, $data);
                                                             }
@@ -291,8 +305,10 @@ class FacebookAutomationRepository
                                                             if ($comments_fb >= $when_post_reach_comments){
                                                                 $data = [
                                                                     "comments" => $comments_fb,
-                                                                    "url" => @$facebook_page_post_from_facebook['attachments']['data'][0]['url'],
-                                                                    'configuration_id' => $configuration->id
+                                                                    "url" => $url,
+                                                                    'configuration_id' => $configuration->id,
+                                                                    'title' => $title ? $title : 'Comments Reached',
+                                                                    'created_time' => $createdTime
                                                                 ];
                                                                 $this->createAutomationAnnotation('when_post_reach_comments', $user, $data);
                                                             }
@@ -305,8 +321,10 @@ class FacebookAutomationRepository
                                                             if ($views_fb >= $when_post_reach_views){
                                                                 $data = [
                                                                     "views" => $views_fb,
-                                                                    "url" => @$facebook_page_post_from_facebook['attachments']['data'][0]['url'],
-                                                                    'configuration_id' => $configuration->id
+                                                                    "url" => $url,
+                                                                    'configuration_id' => $configuration->id,
+                                                                    'title' => $title ? $title : 'Views Reached',
+                                                                    'created_time' => $createdTime
                                                                 ];
                                                                 $this->createAutomationAnnotation('when_post_reach_views', $user, $data);
                                                             }
@@ -319,8 +337,10 @@ class FacebookAutomationRepository
                                                             if ($shares_fb >= $when_post_reach_shares){
                                                                 $data = [
                                                                     "shares" => $shares_fb,
-                                                                    "url" => @$facebook_page_post_from_facebook['attachments']['data'][0]['url'],
-                                                                    'configuration_id' => $configuration->id
+                                                                    "url" => $url,
+                                                                    'configuration_id' => $configuration->id,
+                                                                    'title' => $title ? $title : 'Shares Reached',
+                                                                    'created_time' => $createdTime
                                                                 ];
                                                                 $this->createAutomationAnnotation('when_post_reach_shares', $user, $data);
                                                             }
@@ -350,11 +370,10 @@ class FacebookAutomationRepository
                     'user_id' => $user->id,
                     'category' => 'Facebook',
                     'event_type' => 'Alert',
-                    'event_name' => 'New Post',
+                    'event_name' => @$data['title'],
                     'url' => @$data['url'],
-                    'title' => $data['description'] ?? "",
-                    'description' => $data['title'] ?? $description,
-                    'show_at' => today(),
+                    'description' => $description,
+                    'show_at' => $data['created_time'],
                     'configuration_id' => $data['configuration_id'],
                 ]);
                 break;
@@ -364,12 +383,11 @@ class FacebookAutomationRepository
                     'user_id' => $user->id,
                     'category' => 'Facebook',
                     'event_type' => 'Alert',
-                    'event_name' => 'Likes Reached',
+                    'event_name' => @$data['title'],
                     'url' => @$data['url'],
-                    'title' => $data['description'] ?? "",
-                    'description' => $data['title'] ?? $description,
+                    'description' => $description,
+                    'show_at' => $data['created_time'],
                     'configuration_id' => $data['configuration_id'],
-                    'show_at' => today()
                 ]);
                 break;
             case 'when_post_reach_comments':
@@ -378,12 +396,11 @@ class FacebookAutomationRepository
                     'user_id' => $user->id,
                     'category' => 'Facebook',
                     'event_type' => 'Alert',
-                    'event_name' => 'Comments Reached',
+                    'event_name' => @$data['title'],
                     'url' => @$data['url'],
-                    'title' => $data['description'] ?? "",
-                    'description' => $data['title'] ?? $description,
+                    'description' => $description,
                     'configuration_id' => $data['configuration_id'],
-                    'show_at' => today()
+                    'show_at' => $data['created_time'],
                 ]);
                 break;
             case 'when_post_reach_views':
@@ -392,12 +409,11 @@ class FacebookAutomationRepository
                     'user_id' => $user->id,
                     'category' => 'Facebook',
                     'event_type' => 'Alert',
-                    'event_name' => 'Views Reached',
+                    'event_name' => @$data['title'],
                     'url' => @$data['url'],
-                    'title' => $data['description'] ?? "",
-                    'description' => $data['title'] ?? $description,
+                    'description' => $description,
                     'configuration_id' => $data['configuration_id'],
-                    'show_at' => today()
+                    'show_at' => $data['created_time'],
                 ]);
                 break;
             case 'when_post_reach_shares':
@@ -406,12 +422,11 @@ class FacebookAutomationRepository
                     'user_id' => $user->id,
                     'category' => 'Facebook',
                     'event_type' => 'Alert',
-                    'event_name' => 'Shares Reached',
+                    'event_name' => @$data['title'],
                     'url' => @$data['url'],
-                    'title' => $data['description'] ?? "",
-                    'description' => $data['title'] ?? $description,
+                    'description' => $description,
                     'configuration_id' => $data['configuration_id'],
-                    'show_at' => today()
+                    'show_at' => $data['created_time'],
                 ]);
                 break;
             default:
