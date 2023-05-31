@@ -11,6 +11,7 @@ class WordpressUpdates extends React.Component {
         this.state = {
             isRead: false,
             editProperty: false,
+            last_year_only: false,
             activeDeletePopover: {}
         }
     }
@@ -55,6 +56,7 @@ class WordpressUpdates extends React.Component {
                                             className='themeNewCheckbox d-flex align-items-center justify-content-start'
                                             for='last_year_only'>
                                             <input type="checkbox" id='last_year_only' onChange={(e) => {
+                                                this.setState({last_year_only: e.target.checked})
                                                 // if (e.target.checked) {
                                                 // this.props.userDataSourceAddHandler({
                                                 //     code: "wordpress_updates",
@@ -73,12 +75,9 @@ class WordpressUpdates extends React.Component {
                                                 //
                                                 // }
                                             }}
-                                                // checked={
-                                                //     this.props.userDataSources
-                                                //         .wordpress_updates &&
-                                                //     this.props.userDataSources.wordpress_updates
-                                                //         .length > 0
-                                                // }
+                                                checked={
+                                                    this.state.last_year_only
+                                                }
                                                    name="last_year_only"
                                             />
                                             <span>Show last year only</span>
@@ -161,7 +160,7 @@ class WordpressUpdates extends React.Component {
                                             name: "WordpressUpdate",
                                             country_name: null,
                                             retail_marketing_id: null,
-                                            value: "last year",
+                                            value: this.state.last_year_only ? "last year": null,
                                         });
 
                                     }} className="btn-theme">Add
@@ -189,7 +188,7 @@ class WordpressUpdates extends React.Component {
                                                     user_data_source_id={gAK.id}
                                                 >
                                                     <CustomTooltip
-                                                        tooltipText={`${gAK.ga_property_name || "All Properties"} - ${gAK.ds_name}`}
+                                                        tooltipText={`${gAK.ga_property_name || "All Properties"} - ${gAK.ds_name} - ${gAK.value || "All Times"}`}
                                                         maxLength={50}>
                                         <span
                                             style={{background: "#2d9cdb"}}
