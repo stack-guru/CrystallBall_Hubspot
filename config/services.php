@@ -184,4 +184,9 @@ return [
         'data_api_url' => env('WAPPLAYZER_DATA_API_URL','UX3cAmxgPY8MhOMAhPtac6EjuoKeEmlH89SYpxD4'),
     ],
 
+    'gtm' => [
+        'client_id' => env('GTM_CLIENT_ID'),
+        'client_secret' => env('GTM_CLIENT_SECRET'),
+        'redirect_url' => env('GTM_REDIRECT_URL'),
+    ],
 ];

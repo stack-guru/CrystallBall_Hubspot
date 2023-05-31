@@ -21,6 +21,7 @@ import Github from "./Github";
 import Apple from "./Apple";
 import Youtube from "./Youtube";
 import Twitter from "./Twitter";
+import GoogleTagManager from "./GoogleTagManager";
 import Slider from "react-slick";
 import Toast from "../../utils/Toast";
 
@@ -506,6 +507,39 @@ class AppsMarket extends React.Component {
             //     width: 142,
             //     height: 32,
             // },
+            {
+                id: "26",
+                background: "#004F9D",
+                dsKey: "is_ds_facebook_tracking_enabled",
+                connected: this.state.userServices["is_ds_facebook_tracking_enabled"],
+                premium: false,
+                brandName: "Facebook Ads",
+                brandLogo: "/facebookAds.svg",
+                width: 140,
+                height: 19,
+            },
+            {
+                id: "27",
+                background: "radial-gradient(126.96% 126.96% at 6.47% 97.81%, #FA8F21 9%, #D82D7E 78%)",
+                dsKey: "is_ds_instagram_tracking_enabled",
+                connected: this.state.userServices["is_ds_instagram_tracking_enabled"],
+                premium: false,
+                brandName: "Instagram",
+                brandLogo: "/instagram.svg",
+                width: 142,
+                height: 32,
+            },
+            {
+                id: "28",
+                background: "null",
+                dsKey: "is_ds_google_tag_manager_enabled",
+                connected: this.state.userServices["is_ds_google_tag_manager_enabled"],
+                premium: false,
+                brandName: "Google Tag Manager",
+                brandLogo: "/googleTagManager.svg",
+                width: 110,
+                height: 64,
+            },
             // {
             //     id: "23",
             //     background: "null",
@@ -1002,18 +1036,6 @@ class AppsMarket extends React.Component {
                                     brandLogo: "/tiktok.svg",
                                     width: 110,
                                     height: 32,
-                                },
-                                {
-                                    id: "26",
-                                    background: "null",
-                                    dsKey: "",
-                                    enabled: false,
-                                    premium: false,
-                                    commingSoon: true,
-                                    brandName: "Google Tag Manager",
-                                    brandLogo: "/googleTagManager.svg",
-                                    width: 110,
-                                    height: 64,
                                 },
                                 {
                                     id: "23",
@@ -1738,6 +1760,37 @@ class AppsMarket extends React.Component {
                         ) : this.state.dsKey ===
                         "is_ds_instagram_tracking_enabled" ? (
                             <Instagram
+                                {...this.state}
+                                {...this.props}
+                                closeModal={() => {
+                                    this.setState({
+                                        dsKey: "",
+                                        dsKeySkip: ""
+                                    });
+                                }}
+                                updateUserAnnotationColors={
+                                    this.updateUserAnnotationColors
+                                }
+                                serviceStatusHandler={this.serviceStatusHandler}
+                                changeShownHint={this.changeShownHint}
+                                sectionToggler={this.sectionToggler}
+                                userDataSourceAddHandler={
+                                    this.userDataSourceAddHandler
+                                }
+                                userDataSourceDeleteHandler={
+                                    this.userDataSourceDeleteHandler
+                                }
+                                reloadWebMonitors={this.reloadWebMonitors}
+                                loadUserDataSources={this.loadUserDataSources}
+                                updateGAPropertyId={(value) => {
+                                    this.setState({
+                                        ga_property_id: value,
+                                    });
+                                }}
+                            />
+                        )  : this.state.dsKey ===
+                        "is_ds_google_tag_manager_enabled" ? (
+                            <GoogleTagManager
                                 {...this.state}
                                 {...this.props}
                                 closeModal={() => {
