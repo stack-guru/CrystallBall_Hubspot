@@ -155,13 +155,19 @@ class WordpressUpdates extends React.Component {
                                     <button onClick={(e) => {
                                         e.preventDefault();
 
-                                        this.props.userDataSourceAddHandler({
-                                            code: "wordpress_updates",
-                                            name: "WordpressUpdate",
-                                            country_name: null,
-                                            retail_marketing_id: null,
-                                            value: this.state.last_year_only ? "last year": null,
-                                        });
+                                        if(this.props.user.price_plan.has_data_sources ) {
+                                            this.props.userDataSourceAddHandler({
+                                                code: "wordpress_updates",
+                                                name: "WordpressUpdate",
+                                                country_name: null,
+                                                retail_marketing_id: null,
+                                                value: this.state.last_year_only ? "last year": null,
+                                            });
+                                        } else {
+                                            this.props.upgradePopup('integrations')
+                                        }
+
+
 
                                     }} className="btn-theme">Add
                                     </button>
@@ -188,7 +194,7 @@ class WordpressUpdates extends React.Component {
                                                     user_data_source_id={gAK.id}
                                                 >
                                                     <CustomTooltip
-                                                        tooltipText={`${gAK.ga_property_name || "All Properties"} - ${gAK.ds_name} - ${gAK.value || "All Times"}`}
+                                                        tooltipText={`${gAK.ga_property_name || "All Properties"} - ${gAK.value || "All Times"}`}
                                                         maxLength={50}>
                                         <span
                                             style={{background: "#2d9cdb"}}
