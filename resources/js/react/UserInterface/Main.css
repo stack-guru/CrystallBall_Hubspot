@@ -743,7 +743,8 @@ tbody td {
 .table tbody td {
     color: #002e60;
 }
-.report-box .table{
+
+.report-box .table {
     max-height: 500px;
     overflow-y: scroll;
 }
@@ -5862,7 +5863,33 @@ div[data-tour-elem="controls"]
 
 .sidebar {
     min-width: 90px;
+    overflow: hidden;
 }
+
+@media screen and (min-width: 992px) and (max-width: 1439px) {
+    .sidebar {
+        width: 90px;
+    }
+
+    .btn-addAnnotation span {
+        display: none;
+    }
+    .btn-addAnnotation {
+        width: auto;
+        border-radius: 25px;
+    }
+
+    .sidebar:hover .btn-addAnnotation span {
+        display: block;
+    }
+
+    .sidebar:hover .btn-addAnnotation {
+        display: block;
+        width: auto;
+        border-radius: 12px;
+    }
+}
+
 @media screen and (max-width: 1439px) {
     .is-collapsed .sidebar {
         width: 90px;
@@ -5877,6 +5904,7 @@ div[data-tour-elem="controls"]
     .is-collapsed .sidebar {
         width: 90px;
     }
+
     .is-collapsed .sidebar:hover {
         width: 270px;
     }
@@ -6828,13 +6856,15 @@ div[data-tour-elem="controls"]
 .visibility-hidden {
     visibility: hidden;
 }
-.acctive-recurrence-popover  .popover-inner {
+
+.acctive-recurrence-popover .popover-inner {
     max-width: 280px;
     /* align-items: flex-start; */
     /* padding: 8px 12px;
     gap: 10px; */
 }
-.acctive-recurrence-popover .popover{
+
+.acctive-recurrence-popover .popover {
     max-width: 150;
 }
 
@@ -6853,7 +6883,7 @@ div[data-tour-elem="controls"]
     background: none;
     margin-left: 20px;
 } */
-.acctive-recurrence-popover  .popover-inner .share-report-interval{
+.acctive-recurrence-popover .popover-inner .share-report-interval {
     border: none;
     background: none;
     color: #828282;
