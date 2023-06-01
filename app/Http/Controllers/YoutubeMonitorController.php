@@ -8,6 +8,7 @@ use App\Models\YoutubeAnnotation;
 use App\Models\YoutubeMonitor;
 use App\Services\YoutubeService;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 use Goutte\Client;
 
@@ -114,7 +115,11 @@ class YoutubeMonitorController extends Controller
 
     public function getYoutubeData (Request $req) {
 
-        $url = "https://www.googleapis.com/youtube/v3/videos?id=" $req->search "&key={YOUR_API_KEY}&part=snippet,contentDetails,statistics,status"
+        $apiKey = config('services.youtube_monitor.data_api_key');
+        $url = "https://www.googleapis.com/youtube/v3/videos?id=" . $req->search . "&key=" . $apiKey . "&part=snippet,contentDetails,statistics,status";
+
+        $response = Http::get($url);
+
         // let sr = [];
         //     for (const item of result.data?.results) {
         //         sr.push({
@@ -128,8 +133,7 @@ class YoutubeMonitorController extends Controller
         //         });
         //     }
 
-
-        return ['success' => true, $data]
+        return ['success' => true, 'response' => $response];
 
     }
 

@@ -27,7 +27,7 @@ class Youtube extends React.Component {
 
     getExistingMonitors = async () => {
         HttpClient.get(
-            `/data-source/youtube-monitor?ga_property_id=${this.props.ga_property_id}`
+            `/data-source/youtube-monitor`
         )
             .then(
                 (result) => {
