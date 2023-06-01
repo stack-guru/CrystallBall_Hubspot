@@ -18,8 +18,8 @@ class Wordpress extends React.Component {
             userAnnotationColors: {},
             events: [
                 'Wordpress Updates',
-                'Pages Created', 
-                'Pages Updated', 
+                'Pages Created',
+                'Pages Updated',
                 'Pages Deleted',
                 'Posts Created',
                 'Posts Updated',
@@ -98,17 +98,17 @@ class Wordpress extends React.Component {
                 />
 
                 <div className="apps-bodyContent">
-                    <div className="white-box">
+                    <div className="">
                         <div className="contentBox">
                             <p className="mb-0">1. Install our plugin from <a href="https://wordpress.org/plugins/crystal-ball-insight/" target="_blank">Plugins</a> market</p>
                         </div>
                         <div className="contentBox">
-                            <p className="mb-0">Select events</p>
+                            <p className="mb-0">2. Select events</p>
 
-                            <div className="checkboxes">
+                            <div className="checkboxes fb-event-options mt-3">
                                 {this.state.events?.map((event) => {
                                     return (
-                                        <label className="themeNewCheckbox d-flex align-items-center justify-content-start textDark" key={event}>
+                                        <label className="themeNewCheckbox textDark d-flex align-items-center" key={event}>
                                             <input value={event} type="checkbox" defaultChecked={true} name='event-row' />
                                             <span>{event}</span>
                                         </label>
@@ -118,7 +118,7 @@ class Wordpress extends React.Component {
 
                         </div>
                         <div className="contentBox d-flex flex-column">
-                            <p className="mb-3">2. Create API Key</p>
+                            <p className="mb-3">3. Create API Key</p>
                             <IndexAPIKey upgradePopup={this.props.upgradePopup} currentPricePlan={this.props.currentPricePlan} formOnly={true} />
                             {/* <form className='apiKeyForm d-block' onSubmit={this.handleSubmit} encType="multipart/form-data" id="support-form-container">
                                 <h3>Generate token</h3>
@@ -159,7 +159,7 @@ class Wordpress extends React.Component {
 
                         </div>
                         <div className="contentBox">
-                            <p className="mb-0">3. Insert API Key in the plugin’s Settings page, and you’re done!</p>
+                            <p className="mb-0">4. Insert API Key in the plugin’s Settings page, and you’re done!</p>
                         </div>
                         {/* <div className="checkBoxList">
                             <label className='themeNewCheckbox d-flex align-items-center justify-content-start' for='last_year_only'>
