@@ -1,23 +1,10 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, {useState} from "react";
 import Toast from "../../utils/Toast";
 import HttpClient from "../HttpClient";
 import "./ShopifyStoreConfig.css";
 import {CustomTooltip} from "../../components/annotations/IndexAnnotation";
 
-import {
-    Button,
-    Form,
-    FormGroup,
-    Input,
-    Card,
-    CardImg,
-    CardTitle,
-    CardSubtitle,
-    Table,
-    Popover,
-    PopoverBody,
-} from "reactstrap";
+import {Popover, PopoverBody,} from "reactstrap";
 import GoogleAnalyticsPropertySelect from "../GoogleAnalyticsPropertySelect";
 
 const ShopifyStoreConfig = (props) => {
@@ -138,10 +125,10 @@ const ShopifyStoreConfig = (props) => {
                     />
                 </div>
 
-                <div className="checkboxes mt-3">
+                <div className="checkboxes mt-3 d-flex ">
                     {products?.map((product) => {
                         return (
-                            <label className="themeNewCheckbox d-flex align-items-center justify-content-start textDark" key={product}>
+                            <label className="themeNewCheckbox textDark" key={product}>
                                 <input value={product} type="checkbox" defaultChecked={true} name='product-row' />
                                 <span>{product}</span>
                             </label>

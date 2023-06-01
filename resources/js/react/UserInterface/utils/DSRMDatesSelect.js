@@ -1,7 +1,6 @@
 import React from "react";
 import HttpClient from "../utils/HttpClient";
 import GoogleAnalyticsPropertySelect from "../utils/GoogleAnalyticsPropertySelect";
-import Toast from "./Toast";
 import {CustomTooltip} from "../components/annotations/IndexAnnotation";
 
 export default class DSRMDatesSelect extends React.Component {
@@ -143,11 +142,10 @@ export default class DSRMDatesSelect extends React.Component {
 
         return (
             <div className="apps-bodyContent rmd-content">
-                <h4>Select Dates for Retail Marketing</h4>
                 <div className="d-flex align-items-center mb-3">
                     <div className="w-100 pr-2">
                         <div className="input-group search-input-box">
-                            <input type="text" className="form-control search-input" placeholder="Search"
+                            <input type="text" className="form-control search-input" placeholder="Search Dates for Retail Marketing"
                                    value={this.state.searchText} name="searchText"
                                    onChange={(e) => this.setState({[e.target.name]: e.target.value,})}/>
                             <div className="input-group-append"><i className="ti-search"></i></div>

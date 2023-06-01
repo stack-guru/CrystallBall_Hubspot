@@ -6927,3 +6927,8 @@ div[data-tour-elem="controls"]
     top: 5px;
     right: 1rem;
 }
+
+.fb-event-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
