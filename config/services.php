@@ -179,6 +179,8 @@ return [
     ],
     'youtube_monitor' => [
         'data_api_url' => env('YOUTUBE_DATA_API_URL'),
+        // 'data_api_key' => env('YOUTUBE_DATA_API_KEY'),
+        'data_api_key' => env('GOOGLE_CLIENT_ID')
     ],
     'wappalyzer' => [
         'data_api_url' => env('WAPPLAYZER_DATA_API_URL','UX3cAmxgPY8MhOMAhPtac6EjuoKeEmlH89SYpxD4'),
