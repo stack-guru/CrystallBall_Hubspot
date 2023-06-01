@@ -13,6 +13,7 @@
         "facebook/graph-sdk": "^5.7",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
+        "google/apiclient": "^2.14",
         "graham-campbell/bitbucket": "^8.0",
         "graham-campbell/github": "^10.6",
         "guzzlehttp/guzzle": "~6.0",

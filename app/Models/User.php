@@ -66,6 +66,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'is_ds_twitter_tracking_enabled',
         'is_ds_anomolies_detection_enabled',
         'is_ds_budget_tracking_enabled',
+        'is_ds_google_tag_manager_enabled',
 
         'user_level',
         'department',

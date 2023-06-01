@@ -175,6 +175,10 @@ class UserController extends Controller
         if ($parentUser->is_ds_facebook_tracking_enabled) {
             $user->is_ds_facebook_tracking_enabled = 1;
         }
+        
+        if ($parentUser->is_ds_google_tag_manager_enabled) {
+            $user->is_ds_google_tag_manager_enabled = 1;
+        }
 
         if ($parentUser->is_ds_instagram_tracking_enabled) {
             $user->is_ds_instagram_tracking_enabled = 1;
