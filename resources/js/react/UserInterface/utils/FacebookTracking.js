@@ -444,13 +444,13 @@ export default class FacebookTracking extends React.Component {
                                         key={gAK.id}
                                         user_data_source_id={gAK.id}
                                     >
-                                        <CustomTooltip tooltipText={`${gAK.selected_pages_array.map(pg => pg.label)}`}
+                                        <CustomTooltip tooltipText={`${gAK.gaPropertyName ? gAK.gaPropertyName : "All Properties"}`}
                                                         maxLength={50}>
                                             <span
                                                 style={{background: "#2d9cdb"}}
                                                 className="dot"
                                             ></span>
-                                            {gAK.gaPropertyName ? gAK.gaPropertyName : "All Properties"}
+                                            {gAK.selected_pages_array.map(pg => pg.label)}
                                         </CustomTooltip>
                                     </button>
 
