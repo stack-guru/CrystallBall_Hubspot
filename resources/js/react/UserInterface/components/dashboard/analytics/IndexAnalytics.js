@@ -1498,7 +1498,7 @@ export default class IndexAnalytics extends Component {
                 });
             HttpClient.get(`/dashboard/analytics/device-by-impression?start_date=${this.state.startDate}&end_date=${this.state.endDate}&ga_property_id=${gaPropertyId}`)
             .then(response => {
-                if(response.upgradePopup)
+                if(response.data.upgradePopup == true)
                 {
                     this.props.upgradePopup('console-modal');
                 }
