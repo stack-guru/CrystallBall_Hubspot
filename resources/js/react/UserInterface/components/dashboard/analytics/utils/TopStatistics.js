@@ -83,7 +83,7 @@ export default function TopStatistics(props) {
                             <span className="box-icon"> <img src="/images/svg/todays-expence-icon1.svg" alt="list icon" />
                             </span>
                             <h2 className="box-headings"
-                            > {props.topStatistics.min_position_rank}
+                            > {props.consoleTopStatistics.min_position_rank}
                             </h2>
                             <h5 className="box-headings" style={{ color: "#425166", fontWeight: "400", fontSize: "16px", }}
                             >  Min Position Rank
@@ -96,7 +96,7 @@ export default function TopStatistics(props) {
                             <span className="box-icon"> <img src="/images/svg/todays-expence-icon2.svg" alt="list icon" />
                             </span>
                             <h2 className="box-headings"
-                            > {props.topStatistics.sum_impressions_count}
+                            > {props.consoleTopStatistics.sum_impressions_count}
                             </h2>
                             <h5 className="box-headings" style={{ color: "#425166", fontWeight: "400", fontSize: "16px", }}
                             > Total Impressions
@@ -110,7 +110,7 @@ export default function TopStatistics(props) {
                             </span>
 
                             <h2 className="box-headings"
-                            > {props.topStatistics.sum_clicks_count}
+                            > {props.consoleTopStatistics.sum_clicks_count}
                             </h2>
                             <h5 className="box-headings" style={{ color: "#425166", fontWeight: "400", fontSize: "16px", }}
                             > Total Clicks
@@ -124,7 +124,7 @@ export default function TopStatistics(props) {
                             </span>
 
                             <h2 className="box-headings"
-                            > {props.topStatistics.max_ctr_count}
+                            > {props.consoleTopStatistics.max_ctr_count}
                             </h2>
                             <h5 className="box-headings" style={{ color: "#425166", fontWeight: "400", fontSize: "16px",
                             }}
