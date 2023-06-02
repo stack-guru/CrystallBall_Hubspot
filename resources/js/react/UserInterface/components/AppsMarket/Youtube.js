@@ -1,10 +1,6 @@
 import React from "react";
-import UserAnnotationColorPicker from "../../helpers/UserAnnotationColorPickerComponent";
-import { YoutubeConfig } from "../../utils/Youtube";
 import ModalHeader from "./common/ModalHeader";
 import DescrptionModalNormal from "./common/DescriptionModalNormal";
-import HttpClient from "../../utils/HttpClient";
-import Toast from "../../utils/Toast";
 import YoutubeTracking from "../../utils/YoutubeTracking";
 
 class Youtube extends React.Component {
