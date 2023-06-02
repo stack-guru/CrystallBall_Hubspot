@@ -32,7 +32,7 @@ class YoutubeMonitorController extends Controller
 
         if (!@explode('@', $request->url)[1]) {
             return response()->json([
-                'message' => 'Url is not valid',
+                'message' => 'The provided url is not correct!',
             ], 422);
         }
         
@@ -44,10 +44,9 @@ class YoutubeMonitorController extends Controller
         }
 
         $channelName = explode('@', $request->url)[1];
-        if (!$this->youtubeService->isValidUrl($channelName)) {
-            return response()->json([
-                'message' => 'The provided url is not correct!',
-            ], 400);
+        $response = $this->youtubeService->isValidUrl($channelName);
+        if ($response !== true) {
+            return response()->json($response, 400);
         }
 
         $configuration = new YoutubeMonitor();

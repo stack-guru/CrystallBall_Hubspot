@@ -23,13 +23,12 @@ class YouTubeService
 
     public function isValidUrl($channelName)
     {
-        try {
-            $channelDetail = Http::get("$this->baseUrl/search?part=id&q=@$channelName&type=channel&key=$this->apiKey");
-            return $channelDetail['items'];
-        } catch (ConnectionException $e) {
-            dd($e);
-            return false;
+        $response = Http::get("$this->baseUrl/search?part=id&q=@$channelName&type=channel&key=$this->apiKey");
+        if ($response->failed()) {
+            $error = $response->body();
+            return ['success' => false, 'message' => $error];
         }
+        return true;
     }
 
     public function storeVideosData($user, $channelName, $configuration)
