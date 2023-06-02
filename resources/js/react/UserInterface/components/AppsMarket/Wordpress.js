@@ -79,7 +79,7 @@ class Wordpress extends React.Component {
                 <DescrptionModalNormal
                     changeModal = {this.changeModal.bind(this)}
                     serviceName={"Wordpress"}
-                    description={"Get our WP plugin installed and monitor the impact of every change on your site. View how your technical, product development, marketing, and content efforts are pulling in new deals."}
+                    description={"Supercharge your WordPress site with our plugin and track the impact of each change. Gain insights into the effectiveness of your technical, product development, marketing, and content strategies, driving new business opportunities."}
                     userServices={this.props.userServices}
                     closeModal={this.props.closeModal}
 

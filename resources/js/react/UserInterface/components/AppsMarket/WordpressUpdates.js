@@ -29,7 +29,7 @@ class WordpressUpdates extends React.Component {
                     <DescrptionModalNormal
                         changeModal={this.changeModal.bind(this)}
                         serviceName={"Wordpress Updates"}
-                        description={"WordPress Core Updates Our automated annotation feature will inform you when a new version, Security, or Maintenance Release of WordPress is available."}
+                        description={"Stay in the loop with our automated annotation feature that notifies you about new versions, security patches, and maintenance releases of WordPress. Never miss an important update again."}
                         userServices={this.props.userServices}
                         closeModal={this.props.closeModal}
 

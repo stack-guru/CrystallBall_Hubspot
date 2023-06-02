@@ -29,7 +29,7 @@ class Facebook extends React.Component {
                 <DescriptionModal
                     serviceName={"Facebook"}
                     closeModal={this.props.closeModal}
-                    description={"Set custom thresholds for your posts, and unlock automated annotations when your engagement metrics hit the mark. Stay on top of your social performance, optimize your strategies, and make data-driven decisions effortlessly."}
+                    description={"With our automation tool, track and optimize your Facebook post/Ads performance effortlessly. Set custom thresholds for engagement metrics and unlock automated annotations when goals are met. Gain valuable insights, improve social strategies, and make data-driven decisions for better traffic and leads."}
                     changeModal={this.changeModal.bind(this)}
                     userAccountsExists={this.props.userFacebookAccountsExists}
                     connectText={`Connect your Facebook account to create automatic annotations for new posts; when you reach a post goal or run campaigns.`}

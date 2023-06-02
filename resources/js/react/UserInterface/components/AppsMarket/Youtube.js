@@ -58,8 +58,7 @@ class Youtube extends React.Component {
                 <DescrptionModalNormal
                     changeModal = {this.changeModal.bind(this)}
                     serviceName={"Youtube"}
-                    description={`Staying on top of the latest content and tracking changes to Youtube Monitors can be a challenge\n
-                    Simply search for a channel or add a URL, and we'll automatically create annotations in your GA4 environment every time there is a new episode. This means you'll have a clear picture of what's new and how it's impacting your audience, all in one place.`}
+                    description={`Get real-time insights into your YouTube channel's performance with automated annotations. Track views and likes to understand the impact of your content and audience growth. Stay informed, optimize your strategies, and drive more engagement with ease.`}
                     userServices={this.props.userServices}
                     closeModal={this.props.closeModal}
 

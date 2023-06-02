@@ -57,7 +57,7 @@ class Shopify extends React.Component {
                     <DescrptionModalNormal
                         changeModal={this.changeModal.bind(this)}
                         serviceName={"Shopify"}
-                        description={`Automated annotations will track updates to product pricing, descriptions, providing insights into the impact of these changes on sales and revenue. No manual work required, just an effortless way to understand your store's activity and improve your business. The system will search for new/updates products once a day at midnight.`}
+                        description={`Automated annotations will track updates to product pricing and descriptions, providing insights into the impact of these changes on sales and revenue. No manual work is required, just an effortless way to understand your store's activity and improve your business. The system will search for new/updated products once a day at midnight.`}
                         userServices={this.props.userServices}
                         closeModal={this.props.closeModal}
 
