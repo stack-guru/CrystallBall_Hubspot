@@ -4,6 +4,7 @@ namespace App\Services;
 use Illuminate\Support\Facades\Http;
 use App\Models\YoutubeAnnotation;
 use Illuminate\Support\Carbon;
+use Illuminate\Http\Client\ConnectionException;
 
 class YouTubeService
 {
@@ -22,8 +23,13 @@ class YouTubeService
 
     public function isValidUrl($channelName)
     {
-        $channelDetail = Http::get("$this->baseUrl/search?part=id&q=@$channelName&type=channel&key=$this->apiKey");
-        return @$channelDetail['items'] ? count($channelDetail['items']) : 0;
+        try {
+            $channelDetail = Http::get("$this->baseUrl/search?part=id&q=@$channelName&type=channel&key=$this->apiKey");
+            return $channelDetail['items'];
+        } catch (ConnectionException $e) {
+            dd($e);
+            return false;
+        }
     }
 
     public function storeVideosData($user, $channelName, $configuration)
@@ -151,3 +157,6 @@ class YouTubeService
 // https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=UCuFwzKrS0wE43CSkyaHBGiQ&key=AIzaSyB10laKwXsUbVgcQI0UNvThpkdhKWwEsXY
 
 // https://www.googleapis.com/youtube/v3/videos?part=statistics&id=h8L2JfZuIxE&key=AIzaSyADs-h4iu9hBZCFbT9iI6s17y-3uxJQFqI
+
+
+https://www.googleapis.com/youtube/v3/search?part=id&q=@111111111111111111111&type=channel&key=AIzaSyB10laKwXsUbVgcQI0UNvThpkdhKWwEsXY
