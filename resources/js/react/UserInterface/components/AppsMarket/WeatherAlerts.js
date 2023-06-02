@@ -28,7 +28,7 @@ class WeatherAlerts extends React.Component {
                 <DescrptionModalNormal
                     changeModal = {this.changeModal.bind(this)}
                     serviceName={"Weather Alerts"}
-                    description={"Weather disrupts the operating and financial performance of 70% of businesses worldwide. Add automated annotations for the location you operate"}
+                    description={"Harness the power of automated weather alerts to gain valuable insights into the impact of weather on your business operations and performance. By setting up annotations for your operating location, you can effectively monitor how weather conditions influence various aspects of your business, including website traffic and sales."}
                     userServices={this.props.userServices}
                     closeModal={this.props.closeModal}
 

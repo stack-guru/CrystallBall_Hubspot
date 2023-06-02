@@ -28,7 +28,7 @@ class WebsiteMonitoring extends React.Component {
                 <DescrptionModalNormal
                     changeModal = {this.changeModal.bind(this)}
                     serviceName={"Website Monitoring"}
-                    description={"Downtime happens even to the best of us. But it’s important to know it before customers are affected and also keep annotations on your reports. Add your website URL; we will monitor it every 1 minute."}
+                    description={"Ensure your website's uptime and stay ahead of any potential issues by adding automated annotations. Simply provide your website URL, and our monitoring system will closely monitor it, checking every minute."}
                     userServices={this.props.userServices}
                     closeModal={this.props.closeModal}
 

@@ -33,7 +33,7 @@ class RankTracking extends React.Component {
                 <DescrptionModalNormal
                     changeModal = {this.changeModal.bind(this)}
                     serviceName={"Rank Tracking"}
-                    description={"Track daily changes of your target keywords in your target area for your business or competitors."}
+                    description={"Effortlessly monitor the daily fluctuations of your target keywords in your desired location across multiple search engines. Whether it's tracking your business or keeping an eye on your competitors, stay informed about the ranking changes in the search engine results pages (SERP) across various search engines."}
                     userServices={this.props.userServices}
                     closeModal={this.props.closeModal}
 

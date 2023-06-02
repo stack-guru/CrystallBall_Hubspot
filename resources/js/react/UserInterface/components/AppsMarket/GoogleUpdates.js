@@ -23,7 +23,7 @@ class GoogleUpdates extends React.Component {
                 <DescrptionModalNormal
                     changeModal = {this.changeModal.bind(this)}
                     serviceName={"Google Algorithm Updates"}
-                    description={"Most of these Google updates are so slight that they go completely unnoticed. However, on occasion, the search engine rolls out major algorithmic updates that significantly impact the Search Engine Results Pages."}
+                    description={"Stay ahead of the game with our automated annotation feature for Google updates. From subtle changes to major algorithmic updates, we'll keep you informed about the latest developments that impact the Search Engine Results Pages (SERPs). Don't miss a beat in the ever-evolving world of Google."}
                     userServices={this.props.userServices}
                     closeModal={this.props.closeModal}
                 /> :

@@ -27,7 +27,7 @@ class Holidays extends React.Component {
                 <DescrptionModalNormal
                     changeModal = {this.changeModal.bind(this)}
                     serviceName={"Holidays"}
-                    description={"How Christmas Day affect your sells? Add automatic annotations for the Holidays of any country."}
+                    description={"Gain valuable insights into the impact of holidays on your sales by adding automated annotations. Easily track and analyze how holidays like Christmas Day affect your business. Simply enable automatic annotations for holidays in any country and stay informed about the seasonal trends that impact your sales."}
                     userServices={this.props.userServices}
                     closeModal={this.props.closeModal}
 

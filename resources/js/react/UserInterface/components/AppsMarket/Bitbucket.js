@@ -30,7 +30,7 @@ class Bitbucket extends React.Component {
                 <DescrptionModal
                 serviceName={"Bitbucket"}
                 closeModal={this.props.closeModal}
-                description={"Here is a supercool tool for developers. Learn changes on your repositories with every commit in real-time and share with your team. Switch on the Bitbucket Tracking tool and add your Bitbucket account."}
+                description={"Track and monitor your Bitbucket projects effortlessly with our automation tool. Stay updated on every project completion or modification with basic details. Bitbucket Tracking watches every commit made to your specified repository, ensuring you never miss a beat."}
                 changeModal={this.changeModal.bind(this)}
                 userAccountsExists={this.props.userBitbucketAccountsExists}
                 />

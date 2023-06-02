@@ -30,7 +30,7 @@ class GoogleTagManager extends React.Component {
                     name={"GTM"}
                     serviceName={"Google Tag Manager"}
                     closeModal={this.props.closeModal}
-                    description={"Set custom versions for your accounts and unlock automated annotations when your engagement metrics hit the mark. Stay on top of your social performance, optimize your strategies, and make data-driven decisions effortlessly."}
+                    description={"Effortlessly track your GTM updates. Our system instantly adds annotations for each new tag you publish, keeping your analytics organized and up-to-date."}
                     changeModal={this.changeModal.bind(this)}
                     userAccountsExists={this.props.userFacebookAccountsExists}
                     connectText={`Connect your Google Tag Manager account to create automatic annotations for new verisons; when you reach a post goal or run campaigns..`}
