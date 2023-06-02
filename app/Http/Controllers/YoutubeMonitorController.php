@@ -29,6 +29,13 @@ class YoutubeMonitorController extends Controller
                 'message' => 'Url is not provided',
             ], 422);
         }
+
+        if (!@explode('@', $request->url)[1]) {
+            return response()->json([
+                'message' => 'The provided url is not correct!',
+            ], 422);
+        }
+        
         $exists = YoutubeMonitor::where('user_id', $userId)->where('url', $request->url)->where('ga_property_id', (int)$request->ga_property_id)->first();
         if ($exists) {
             return response()->json([
@@ -37,10 +44,9 @@ class YoutubeMonitorController extends Controller
         }
 
         $channelName = explode('@', $request->url)[1];
-        if (!$this->youtubeService->isValidUrl($channelName)) {
-            return response()->json([
-                'message' => 'The provided url is not correct!',
-            ], 400);
+        $response = $this->youtubeService->isValidUrl($channelName);
+        if ($response !== true) {
+            return response()->json($response, 400);
         }
 
         $configuration = new YoutubeMonitor();
