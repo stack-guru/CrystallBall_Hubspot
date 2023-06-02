@@ -1,71 +1,151 @@
 <?php
 
 namespace App\Services;
-
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Carbon;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
-
 use App\Models\YoutubeAnnotation;
-use Illuminate\Support\Facades\Auth;
-use App\Mail\AdminFailedYoutubeScriptMail;
-use Goutte\Client;
-use App\Models\Admin;
-use Error;
+use Illuminate\Support\Carbon;
 
-class YoutubeService {
-    private $youtubeUrl;
+class YouTubeService
+{
+
+    private $apiKey;
+    private $baseUrl;
+
     /**
-     * Initialize the library in your constructor using
-     * your environment, api key, and password
+     * @throws FacebookSDKException
      */
     public function __construct()
     {
-        $this->youtubeUrl = config('services.youtube_monitor.data_api_url');
+        $this->apiKey = config('services.youtube.api_key');
+        $this->baseUrl = "https://www.googleapis.com/youtube/v3";
     }
 
-    //Youtube Scrapping API
-    public function saveYoutubeAnnotations($feedUrl, $url, $userID){
-        try {
+    public function isValidUrl($channelName)
+    {
+        $channelDetail = Http::get("$this->baseUrl/search?part=id&q=@$channelName&type=channel&key=$this->apiKey");
+        return @$channelDetail['items'] ? count($channelDetail['items']) : 0;
+    }
 
-            $reqBody = [
-                'monitorUrl' => $url
-            ];
+    public function storeVideosData($user, $channelName, $configuration)
+    {
+        $channelDetail = Http::get("$this->baseUrl/search?part=id&q=@$channelName&type=channel&key=$this->apiKey");
+        foreach(@$channelDetail['items'] as $item) {
+            $channelId = @$item['id']['channelId'];
+            if($channelId)
+                $this->getVideosByChannelId($user, $channelId, $configuration);
+        }
+    }
 
-            $response = Http::post($this->youtubeUrl . '/youtube-monitors', $reqBody);
-            return ['ToDo: ', $response];
+    public function getVideosByChannelId($user, $channelId, $configuration)
+    {
+        $channel = Http::get("$this->baseUrl/search?part=snippet&channelId=$channelId&key=$this->apiKey");
+        foreach(@$channel['items'] as $item) {
+            $videoId = @$item['id']['videoId'];
+            if($videoId)
+                $this->getVideosData($user, $videoId, $configuration);
+        }
+    }
 
-            if (!$response->successful()) {
-                throw new Error('Error while scrapping data');
-            }
+    public function getVideosData($user, $videoId, $configuration)
+    {
 
-            $result = $response['data'];
-            $length = count($result);
-            for ($i = 0; $i < $length; $i++) {
-                $exist = YoutubeAnnotation::where('url', $result[$i]['url'])->first();
+        $videos = Http::get("$this->baseUrl/videos?part=snippet,statistics&id=$videoId&key=$this->apiKey");
+
+        foreach($videos['items'] as $item) {
+
+            $statistics = $item['statistics'];
+            $viewCount = @$statistics['viewCount'];
+            $likeCount = @$statistics['likeCount'];
+            $commentCount = @$statistics['commentCount'];
+
+            $snippet = @$item['snippet'];
+            $title = @$snippet['title'];
+            $description = @$snippet['description'];
+            $publishedAt = @Carbon::parse(@$snippet['publishedAt']);
+
+            if($configuration->old_videos_uploaded) {
+                $exist = YoutubeAnnotation::where('user_id', $user->id)
+                    ->where('monitor_id', $configuration->id)
+                    ->where('url', "https://www.youtube.com/watch?v=" . $videoId)
+                    ->where('description', "A new video on youtube channel.")
+                    ->where('date', '<', Carbon::now())
+                    ->first();
                 if (!$exist) {
-                    $annotation = new YoutubeAnnotation();
-                    $annotation->user_id = $userID;
-                    $annotation->category = "Youtube Monitor";
-                    $annotation->event = $result[$i]['title'];
-                    $annotation->description = $result[$i]['description'];
-                    $annotation->url = $result[$i]['url'];
-                    $annotation->date = $result[$i]['date'];
-                    $annotation->save();
+                    $this->saveAnnotation($user, $videoId, $title, "A new video on youtube channel.", $publishedAt, $configuration->id);
                 }
             }
-            return true;
-        } catch (\Exception $e) {
-            Log::channel('YoutubeMonitor Error')->debug($e);
-            $admin = Admin::first();
-            $message = "Youtube Monitor script is crashed. Please have a look into the code to fix!";
-            Mail::to($admin)->send(new AdminFailedYoutubeScriptMail($admin, $e));
-            Log::error($e);
-            return $e;
+
+            if($configuration->new_videos_uploaded) {
+                $exist = YoutubeAnnotation::where('user_id', $user->id)
+                    ->where('monitor_id', $configuration->id)
+                    ->where('url', "https://www.youtube.com/watch?v=" . $videoId)
+                    ->where('description', "A new video on youtube channel.")
+                    ->where('date', Carbon::today()->format('H:i:m'))
+                    ->first();
+                if (!$exist) {
+                    $this->saveAnnotation($user, $videoId, $title, "A new video on youtube channel.", $publishedAt, $configuration->id);
+                }
+            }
+
+            if($configuration->is_video_likes_tracking_on) {
+                if ( $likeCount >= $configuration->when_video_reach_likes ) {
+                    $desc = "A post on youtube reached ".$likeCount." likes.";
+                    $this->saveAnnotation($user, $videoId, $title, $desc, $publishedAt, $configuration->id);
+                }
+            }
+
+            if($configuration->is_video_comments_tracking_on) {
+                if ( $commentCount >= $configuration->when_video_reach_comments ) {
+                    $desc = "A post on youtube reached ".$commentCount." comments.";
+                    $this->saveAnnotation($user, $videoId, $title, $desc, $publishedAt, $configuration->id);
+                }
+            }
+
+            if($configuration->is_video_views_tracking_on) {
+                if ( $viewCount >= $configuration->when_video_reach_views ) {
+                    $desc = "A post on youtube reached ".$viewCount." views.";
+                    $this->saveAnnotation($user, $videoId, $title, $desc, $publishedAt, $configuration->id);
+                }
+            }
+
         }
 
-    
+        return true;
     }
 
+    public function saveAnnotation ($user, $videoId, $title, $desc, $publishedAt, $configurationId) {
+        $match = ['monitor_id' => $configurationId, 'description' => $desc, 'url' => "https://www.youtube.com/watch?v=" . $videoId];
+        YoutubeAnnotation::updateOrCreate($match, [
+            'user_id' => $user->id,
+            'category' => 'Youtube',
+            'event' => $title,
+            'url' => "https://www.youtube.com/watch?v=" . $videoId,
+            'description' => $desc,
+            'monitor_id' => $configurationId,
+            'date' => $publishedAt,
+        ]);
+        // dd(123);
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+// https://www.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&forUsername=@muhammadalimirzaspeeches&key=301040226881-5mfhtgh35fqkpnu9lfk97qtgc883stdd.apps.googleusercontent.com
+
+// https://www.googleapis.com/youtube/v3/channels?part=id&forUsername=@CrystalBallinsight&key=AIzaSyB10laKwXsUbVgcQI0UNvThpkdhKWwEsXY
+
+
+// https://www.googleapis.com/youtube/v3/search?part=id&maxResults=1&q=@CrystalBallinsight&type=channel&key=AIzaSyB10laKwXsUbVgcQI0UNvThpkdhKWwEsXY
+
+
+// https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=UCuFwzKrS0wE43CSkyaHBGiQ&key=AIzaSyB10laKwXsUbVgcQI0UNvThpkdhKWwEsXY
+
+// https://www.googleapis.com/youtube/v3/videos?part=statistics&id=h8L2JfZuIxE&key=AIzaSyADs-h4iu9hBZCFbT9iI6s17y-3uxJQFqI

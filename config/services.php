@@ -177,10 +177,11 @@ return [
     'apple_podcast' => [
         'data_api_url' => env('APPLE_PODCAST_DATA_API_URL'),
     ],
-    'youtube_monitor' => [
-        'data_api_url' => env('YOUTUBE_DATA_API_URL'),
-        // 'data_api_key' => env('YOUTUBE_DATA_API_KEY'),
-        'data_api_key' => env('GOOGLE_CLIENT_ID')
+    'youtube' => [
+        'api_key' => env('YOUTUBE_API_KEY'),
+        // 'client_id' => env('YOUTUBE_CLIENT_ID'),
+        // 'client_secret' => env('YOUTUBE_CLIENT_SECRET'),
+        // 'callback' => env('YOUTUBE_CALLBACK'),
     ],
     'wappalyzer' => [
         'data_api_url' => env('WAPPLAYZER_DATA_API_URL','UX3cAmxgPY8MhOMAhPtac6EjuoKeEmlH89SYpxD4'),

@@ -13,8 +13,9 @@ class YoutubeAnnotation extends Model
         "user_id",
         "category",
         "event",
-        "description",
         "url",
+        "description",
+        "monitor_id",
         "date"
     ];
 

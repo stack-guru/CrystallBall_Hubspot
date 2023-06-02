@@ -172,7 +172,7 @@ export default class FacebookTracking extends React.Component {
                             value: true,
                             checked: true
                         }
-                    })
+                    }, true)
                 }
                 this.runjob(resp.data.configurationId);
             }, (err) => {
@@ -495,7 +495,7 @@ export default class FacebookTracking extends React.Component {
                                                             value: false,
                                                             checked: false
                                                         }
-                                                    })
+                                                    }, true)
                                                     this.props.sectionToggler();
                                                 }
                                             }}

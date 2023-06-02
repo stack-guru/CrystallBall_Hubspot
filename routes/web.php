@@ -14,6 +14,8 @@ use App\Http\Controllers\KeywordTrackingController;
 use App\Http\Controllers\TwitterController;
 use App\Http\Controllers\TwitterTrackingConfigurationController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\YoutubeController;
+use App\Http\Controllers\YoutubeMonitorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -278,14 +280,17 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
             // github repositories
             Route::get('get-github-repositories', [GithubAutomationController::class, 'getRepositories']);
             Route::post('apple_podcast_url', [App\Http\Controllers\ApplePodcastMonitorController::class, 'applePodcastUrl']);
-            Route::post('youtube_url', [App\Http\Controllers\YoutubeMonitorController::class, 'youtubeUrl']);
-            Route::post('get_youtube_data', [App\Http\Controllers\YoutubeMonitorController::class, 'getYoutubeData']);
+
+            Route::post('save-youtube-monitor', [YoutubeMonitorController::class, 'save']);
+            Route::post('run-youtube-job', [YoutubeMonitorController::class, 'runJob']);
+            Route::get('get-youtube-monitor', [YoutubeMonitorController::class, 'get']);
+            Route::delete('remove-youtube-monitor/{youtube_monitor}', [YoutubeMonitorController::class, 'destroy']);
+
 
             Route::post('shopify_url', [App\Http\Controllers\ShopifyMonitorController::class, 'saveShopifyProducts']);
             Route::get('getShopifyProducts', [App\Http\Controllers\ShopifyMonitorController::class, 'getShopifyProducts']);
             Route::resource('shopify-monitor', App\Http\Controllers\ShopifyMonitorController::class)->only(['index', 'store', 'update', 'destroy']);
             Route::resource('apple-podcast-monitor', App\Http\Controllers\ApplePodcastMonitorController::class)->only(['index', 'store', 'update', 'destroy']);
-            Route::resource('youtube-monitor', App\Http\Controllers\YoutubeMonitorController::class)->only(['index', 'store', 'update', 'destroy']);
         });
 
         Route::group(['prefix' => 'settings'], function () {

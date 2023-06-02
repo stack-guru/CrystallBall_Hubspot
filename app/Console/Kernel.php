@@ -61,7 +61,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('gaa:generate-wordpress-update-notification')->daily();
         $schedule->command('gaa:shopify-annotation')->daily();
         $schedule->command('gaa:apple-podcast-annotation')->daily();
-        $schedule->command('gaa:youtube-annotation')->daily();
+        $schedule->command('gaa:execute-youtube-automation')->daily();
         // Everyday non critical
         $schedule->command('gaa:fetch-google-analytics-metrics-and-dimensions')->daily();
         $schedule->command('gaa:fetch-google-search-console-sites-statistics')->daily();

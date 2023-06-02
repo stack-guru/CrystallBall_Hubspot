@@ -5,6 +5,7 @@ import ModalHeader from "./common/ModalHeader";
 import DescrptionModalNormal from "./common/DescriptionModalNormal";
 import HttpClient from "../../utils/HttpClient";
 import Toast from "../../utils/Toast";
+import YoutubeTracking from "../../utils/YoutubeTracking";
 
 class Youtube extends React.Component {
     constructor(props) {
@@ -14,7 +15,6 @@ class Youtube extends React.Component {
             youtubeMonitor: [],
             isActiveTracking: false
         }
-        this.getExistingMonitors = this.getExistingMonitors.bind(this)
     }
 
     changeModal() {
@@ -25,32 +25,6 @@ class Youtube extends React.Component {
         this.setState({ isActiveTracking: status })
     }
 
-    getExistingMonitors = async () => {
-        HttpClient.get(
-            `/data-source/youtube-monitor`
-        )
-            .then(
-                (result) => {
-                    this.setState({youtubeMonitor: result.data.youtube_monitors })
-                },
-                (err) => {
-                    Toast.fire({
-                        icon: 'error',
-                        title: "Error while getting exists Youtube Monitor.",
-                    });
-                }
-            )
-            .catch((err) => {
-                Toast.fire({
-                    icon: 'error',
-                    title: "Error while getting exists Youtube Monitor.",
-                });
-            });
-    };
-
-    componentDidMount() {
-        this.getExistingMonitors();
-    }
     render() {
         return (
             <div className='popupContent modal-apple'>
@@ -72,14 +46,15 @@ class Youtube extends React.Component {
                     userServices={this.props.userServices}
                     serviceStatusHandler={this.props.serviceStatusHandler}
                     closeModal={this.props.closeModal}
-
                     serviceName={"Youtube"}
-                    colorKeyName={"youtube"}
+                    colorKeyName={"youtube_tracking"}
                     dsKeyName={"is_ds_youtube_tracking_enabled"}
+
+                    // get monitors data to update
                     creditString={`${ this.state.youtubeMonitor?.length } / ${ (this.props.user.price_plan.youtube_credits_count * 1) == -1 ? 0 : this.props.user.price_plan.youtube_credits_count}`}
                 />
 
-                <YoutubeConfig
+                <YoutubeTracking
                     user={this.props.user}
                     updateUserService={this.props.updateUserService}
                     onUncheckCallback={this.props.userDataSourceDeleteHandler}
@@ -87,9 +62,11 @@ class Youtube extends React.Component {
                     upgradePopup={this.props.upgradePopup}
                     limitReached={(this.state.youtubeMonitor?.length >= (this.props.user.price_plan.youtube_credits_count * 1)) && (this.props.user.price_plan.youtube_credits_count * 1) > 0}
                     existingMonitor={this.state.youtubeMonitor}
-                    getExistingMonitors={this.getExistingMonitors}
                     updateGAPropertyId={this.props.updateGAPropertyId}
-                    gaPropertyId={this.props.ga_property_id}/>
+                    gaPropertyId={this.props.ga_property_id}
+                    serviceStatusHandler={this.props.serviceStatusHandler}
+                    loadUserDataSources={this.props.loadUserDataSources}
+                />
                 </>
                 }
             </div>

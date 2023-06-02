@@ -1977,7 +1977,7 @@ class AppsMarket extends React.Component {
             });
     }
 
-    updateUserService(e) {
+    updateUserService(e, hidePopup = false) {
         HttpClient.post("/userService", {
             [e.target.name]: e.target.checked ? 1 : 0,
         })
@@ -2029,7 +2029,7 @@ class AppsMarket extends React.Component {
                             break;
 
                         default:
-                            if (resp.data.user_services[e.target.name] == 1 && e.target.name !== 'is_ds_facebook_tracking_enabled') {
+                            if (resp.data.user_services[e.target.name] == 1 && !hidePopup) {
                                 Toast.fire({
                                     icon: 'success',
                                     title: "Service activated successfully."
@@ -2102,7 +2102,7 @@ class AppsMarket extends React.Component {
         this.props.upgradePopup('rank-tracking')
     }
 
-    serviceStatusHandler(e) {
+    serviceStatusHandler(e, hidePopup = false) {
         if (this.props.user.price_plan.name == 'Trial Ended') {
             if (e.target.name === 'is_ds_keyword_tracking_enabled') {
                 this.props.upgradePopup('rank-tracking-access')
@@ -2290,7 +2290,7 @@ class AppsMarket extends React.Component {
                     e.target.checked
                 ) {
                     this.sectionToggler("youtube_tracking");
-                    this.updateUserService(e);
+                    this.updateUserService(e, hidePopup);
                 } else if (
                     e.target.name == "is_ds_youtube_tracking_enabled" &&
                     !e.target.checked
@@ -2304,7 +2304,7 @@ class AppsMarket extends React.Component {
                 ) {
                     if (this.state.userInstagramAccountsExists) {
                         this.sectionToggler("instagram_tracking");
-                        this.updateUserService(e, this);
+                        this.updateUserService(e);
                     } else {
                         swal.fire({
                             customClass: {
@@ -2325,7 +2325,7 @@ class AppsMarket extends React.Component {
                     !e.target.checked
                 ) {
                     this.sectionToggler(null);
-                    this.updateUserService(e);
+                    this.updateUserService(e, false);
                 }
                 if (
                     e.target.name == "is_ds_facebook_tracking_enabled" &&
@@ -2333,7 +2333,7 @@ class AppsMarket extends React.Component {
                 ) {
                     if (this.state.userFacebookAccountsExists) {
                         this.sectionToggler("facebook_tracking");
-                        this.updateUserService(e, this);
+                        this.updateUserService(e);
                     } else {
                         swal.fire({
                             customClass: {
@@ -2363,7 +2363,7 @@ class AppsMarket extends React.Component {
                 ) {
                     if (this.state.userBitbucketAccountsExists) {
                         this.sectionToggler("bitbucket_tracking");
-                        this.updateUserService(e, this);
+                        this.updateUserService(e);
                     } else {
                         swal.fire({
                             iconHtml: '<img src="/bitbucket-small.svg">',
@@ -2395,7 +2395,7 @@ class AppsMarket extends React.Component {
                 ) {
                     if (this.state.userGithubAccountsExists) {
                         this.sectionToggler("github_tracking");
-                        this.updateUserService(e, this);
+                        this.updateUserService(e);
                     } else {
                         swal.fire({
                             iconHtml: '<img src="/github-small.svg">',
@@ -2427,7 +2427,7 @@ class AppsMarket extends React.Component {
                 ) {
                     if (this.state.userTwitterAccountsExists) {
                         this.sectionToggler("twitter_tracking");
-                        this.updateUserService(e, this);
+                        this.updateUserService(e);
                     } else {
                         swal.fire({
                             customClass: {
