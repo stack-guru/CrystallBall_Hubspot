@@ -17,7 +17,7 @@ class YouTubeService
      */
     public function __construct()
     {
-        $this->apiKey = config('services.youtube.api_key');
+        $this->apiKey = config('services.youtube.api_key') ? config('services.youtube.api_key') : "AIzaSyADs-h4iu9hBZCFbT9iI6s17y-3uxJQFqI";
         $this->baseUrl = "https://www.googleapis.com/youtube/v3";
     }
 
