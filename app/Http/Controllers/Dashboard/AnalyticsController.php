@@ -14,7 +14,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Carbon;
 use App\Helpers\AnnotationQueryHelper;
 use App\Exports\AnalyticFullExport;
+use App\Http\Controllers\GoogleAnalyticsPropertyController;
 use App\Models\AnalyticDashboadActivity;
+use App\Models\GoogleAccount;
 use App\Models\GoogleSearchConsoleSite;
 use App\Models\GoogleSearchConsoleStatistics;
 use App\Models\User;
@@ -447,5 +449,34 @@ class AnalyticsController extends Controller
             'user_id' => Auth::user()->id,
         ]);
         return ['success' => true];
+    }
+    public function getAnalyticProperty(Request $request)
+    {   
+        $user = Auth::user();
+        $userIdsArray = $user->getAllGroupUserIdsArray();
+
+        if (!GoogleAccount::whereIn('user_id', $userIdsArray)->count()) {
+            abort(400, "Please connect Google Analytics account before you use Google Analytics Properties.");
+        }
+        $uniqueGoogleAnalyticsProperties = (new GoogleAnalyticsPropertyController())->getUniqueGoogleAnalyticsPropertiesByUser($user,$request->keyword);
+        $properties = [];
+        foreach($uniqueGoogleAnalyticsProperties as $uniqueGoogleAnalyticsProperty)
+        {
+            $console_statistic = 0;
+            $analytic_statistic = GoogleAnalyticsMetricDimension::where("ga_property_id",$uniqueGoogleAnalyticsProperty->id)
+                                    ->whereBetween('statistics_date',[$request->start_date,$request->end_date])
+                                    ->count();
+            if($uniqueGoogleAnalyticsProperty->google_search_console_site_id)
+            {
+                $console_statistic = GoogleSearchConsoleStatistics::where("google_search_console_site_id",$uniqueGoogleAnalyticsProperty->google_search_console_site_id)
+                                    ->whereBetween('statistics_date',[$request->start_date,$request->end_date])->count();
+            }
+            if($analytic_statistic > 0 || $console_statistic > 0)
+            {
+                $properties[] =  $uniqueGoogleAnalyticsProperty;
+            }
+        }
+        $analyticsProperties = collect($properties);
+        return ['google_analytics_properties' => $analyticsProperties];
     }
 }

@@ -38,7 +38,7 @@ export default class GoogleAnalyticsPropertySelect extends Component {
     }
 
     searchGoogleAnalyticsProperties(keyword, callback) {
-        HttpClient.get('settings/google-analytics-property?keyword=' + keyword)
+        HttpClient.get('dashboard/analytics/google-analytics-property?keyword=' + keyword + '&start_date=' +this.props.start_date + '&end_date=' +this.props.end_date )
             .then((response) => {
                 let gaps = response.data.google_analytics_properties;
                 let options = gaps.map(gap => { return { value: gap.id, label: gap.name + ' ' + gap.google_analytics_account.name }; });

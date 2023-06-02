@@ -183,6 +183,7 @@ Route::group(['middleware' => ['only.non.empty.password', 'auth', 'verified']], 
                 Route::get('get-shared-reports', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'getSharedReports']);
                 Route::get('get-dashboard-activity', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'getDashboardActivity']);
                 Route::get('create-dashboard-activity', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'createDashboardActivity']);
+                Route::get('google-analytics-property', [App\Http\Controllers\Dashboard\AnalyticsController::class, 'getAnalyticProperty']);
             });
 
             Route::group(['prefix' => 'search-console'], function () {

@@ -15,6 +15,7 @@ export default class ConsoleSiteModal extends Component {
             googleSearchConsoleSites: [],
             user: props.user,
             isPermissionPopupOpened: false,
+            isOpen: props.isOpen,
         };
         this.toggleModal = this.toggleModal.bind(this);
         this.getGAProperties = this.getGAProperties.bind(this);
@@ -28,6 +29,7 @@ export default class ConsoleSiteModal extends Component {
 
 
     toggleModal() {
+        this.setState({isOpen: !this.state.isOpen});
         removeStateFromLocalStorage("ConsoleSiteModal");
         this.props.togglePopup('');
     }
@@ -146,7 +148,7 @@ export default class ConsoleSiteModal extends Component {
         //     </ModalBody>
         // </div>];
         return (
-            <Modal className={`apps-modal lg`} isOpen={this.props.isOpen} >
+            <Modal className={`apps-modal lg`} isOpen={this.state.isOpen} >
                 <ModalBody>
                     <div className='titleAndCloseButton d-flex justify-content-between align-items-center'>
                         <h2>Connect GA & Search Console</h2>
