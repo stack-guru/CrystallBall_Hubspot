@@ -46,7 +46,7 @@ class YoutubeMonitorController extends Controller
         $channelName = explode('@', $request->url)[1];
         $response = $this->youtubeService->isValidUrl($channelName);
         if ($response !== true) {
-            return response()->json(config('services.youtube.api_key'), 400);
+            return response()->json($response, 400);
         }
 
         $configuration = new YoutubeMonitor();
