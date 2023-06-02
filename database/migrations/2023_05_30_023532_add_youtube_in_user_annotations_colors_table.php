@@ -14,7 +14,7 @@ class AddYoutubeInUserAnnotationsColorsTable extends Migration
     public function up()
     {
         Schema::table('user_annotation_colors', function (Blueprint $table) {
-            $table->string('youtube_tracking', 10)->nullable()->default('#FFC514');
+            $table->string('youtube_tracking', 10)->nullable()->default('#fe4c3c');
         });
     }
 

@@ -29,10 +29,12 @@ class YouTubeService
     public function storeVideosData($user, $channelName, $configuration)
     {
         $channelDetail = Http::get("$this->baseUrl/search?part=id&q=@$channelName&type=channel&key=$this->apiKey");
-        foreach(@$channelDetail['items'] as $item) {
-            $channelId = @$item['id']['channelId'];
-            if($channelId)
-                $this->getVideosByChannelId($user, $channelId, $configuration);
+        if (@$channelDetail['items']) {
+            foreach($channelDetail['items'] as $item) {
+                $channelId = @$item['id']['channelId'];
+                if($channelId)
+                    $this->getVideosByChannelId($user, $channelId, $configuration);
+            }
         }
     }
 

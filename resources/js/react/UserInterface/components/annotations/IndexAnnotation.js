@@ -668,6 +668,9 @@ class IndexAnnotations extends React.Component {
                                         } else if (dataSource === 'System' && tableName === 'twitter_tracking_annotations') {
                                             borderLeftColor = this.state.userAnnotationColors.twitter_tracking;
                                             selectedIcon = '/twitter_tracking_annotations.svg';
+                                        } else if (dataSource === 'System' && tableName === 'youtube_annotations') {
+                                            borderLeftColor = this.state.userAnnotationColors.youtube_tracking;
+                                            selectedIcon = '/youtube-small.svg';
                                         } else if (dataSource === 'System' && tableName === 'bitbucket_commit_annotations') {
                                             borderLeftColor = this.state.userAnnotationColors.bitbucket_tracking;
                                             selectedIcon = '/bitbucket_commit_annotations.svg';

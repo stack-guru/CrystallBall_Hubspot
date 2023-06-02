@@ -32,5 +32,6 @@ class UserAnnotationColor extends Model
         'wordpress',
         'shopify',
         'apple_podcast',
+        'youtube_tracking',
     ];
 }

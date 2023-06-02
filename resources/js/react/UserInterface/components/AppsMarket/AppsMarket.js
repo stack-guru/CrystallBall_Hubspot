@@ -1678,23 +1678,9 @@ class AppsMarket extends React.Component {
                                 updateUserAnnotationColors={
                                     this.updateUserAnnotationColors
                                 }
-                                updateUserService={this.updateUserService}
                                 serviceStatusHandler={this.serviceStatusHandler}
-                                changeShownHint={this.changeShownHint}
                                 sectionToggler={this.sectionToggler}
-                                userDataSourceAddHandler={
-                                    this.userDataSourceAddHandler
-                                }
-                                userDataSourceDeleteHandler={
-                                    this.userDataSourceDeleteHandler
-                                }
-                                reloadWebMonitors={this.reloadWebMonitors}
                                 loadUserDataSources={this.loadUserDataSources}
-                                updateGAPropertyId={(value) => {
-                                    this.setState({
-                                        ga_property_id: value,
-                                    });
-                                }}
                             />
                         ) : this.state.dsKey ===
                         "is_ds_twitter_tracking_enabled" ? (

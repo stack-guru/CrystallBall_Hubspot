@@ -45,23 +45,15 @@ class Youtube extends React.Component {
                     serviceName={"Youtube"}
                     colorKeyName={"youtube_tracking"}
                     dsKeyName={"is_ds_youtube_tracking_enabled"}
-
-                    // get monitors data to update
-                    creditString={`${ this.state.youtubeMonitor?.length } / ${ (this.props.user.price_plan.youtube_credits_count * 1) == -1 ? 0 : this.props.user.price_plan.youtube_credits_count}`}
+                    creditString={`${ this.props.userDataSources.youtube_tracking?.length } / ${ !this.props.user.price_plan.youtube_credits_count ? 0 : this.props.user.price_plan.youtube_credits_count}`}
                 />
 
                 <YoutubeTracking
                     user={this.props.user}
-                    updateUserService={this.props.updateUserService}
-                    onUncheckCallback={this.props.userDataSourceDeleteHandler}
                     updateTrackingStatus={this.updateTrackingStatus.bind(this)}
-                    upgradePopup={this.props.upgradePopup}
-                    limitReached={(this.state.youtubeMonitor?.length >= (this.props.user.price_plan.youtube_credits_count * 1)) && (this.props.user.price_plan.youtube_credits_count * 1) > 0}
-                    existingMonitor={this.state.youtubeMonitor}
-                    updateGAPropertyId={this.props.updateGAPropertyId}
-                    gaPropertyId={this.props.ga_property_id}
                     serviceStatusHandler={this.props.serviceStatusHandler}
                     loadUserDataSources={this.props.loadUserDataSources}
+                    sectionToggler={this.props.closeModal}
                 />
                 </>
                 }

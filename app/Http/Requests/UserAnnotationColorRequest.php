@@ -44,6 +44,7 @@ class UserAnnotationColorRequest extends FormRequest
             'wordpress'                => 'nullable|string|max:10',
             'shopify'                  => 'nullable|string|max:10',
             'apple_podcast'            => 'nullable|string|max:10',
+            'youtube_tracking'         => 'nullable|string|max:10',
         ];
     }
 }

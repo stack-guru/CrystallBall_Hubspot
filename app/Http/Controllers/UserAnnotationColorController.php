@@ -59,7 +59,7 @@ class UserAnnotationColorController extends Controller
         !str_contains($userAnnotationColor->wordpress, '#') ? $userAnnotationColor->wordpress = "#1976FE" : '';
         !str_contains($userAnnotationColor->shopify, '#') ? $userAnnotationColor->shopify = "#00BB4F" : '';
         !str_contains($userAnnotationColor->apple_podcast, '#') ? $userAnnotationColor->apple_podcast = "#A00CE6" : '';
-        !str_contains($userAnnotationColor->youtube_tracking, '#') ? $userAnnotationColor->youtube_tracking = "#FFC514" : '';
+        !str_contains($userAnnotationColor->youtube_tracking, '#') ? $userAnnotationColor->youtube_tracking = "#fe4c3c" : '';
         $userAnnotationColor->save();
 
         return $userAnnotationColor;
