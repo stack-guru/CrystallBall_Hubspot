@@ -611,7 +611,7 @@ export default class IndexAnalytics extends Component {
                                     {/*Todays Expence div*/}
 
                                     {/* Top Statistics  */}
-                                    <TopStatistics topStatistics={this.state.topStatistics} />
+                                    <TopStatistics topStatistics={this.state.topStatistics} consoleTopStatistics={this.state.consoleTopStatistics}/>
 
                                     {/* Console Top Statistics */}
                                     {/* <ConsoleTopStatistics topStatistics={this.state.consoleTopStatistics} /> */}
