@@ -29,7 +29,7 @@ class Github extends React.Component {
                 <DescriptionModal
                     serviceName={"Github"}
                     closeModal={this.props.closeModal}
-                    description={"For every project completed or modified on Github, our automation tool enables you to monitor basic with basic details. Github Tracking watches every commit on your provided repository."}
+                    description={"Track and monitor your Github projects effortlessly with our automation tool. Stay updated on every project completion or modification with basic details. Github Tracking watches every commit made to your specified repository, ensuring you never miss a beat."}
                     changeModal={this.changeModal.bind(this)}
                     userAccountsExists={this.props.userGithubAccountsExists}
                 />

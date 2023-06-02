@@ -28,7 +28,7 @@ class RetailMarketingDates extends React.Component {
                 <DescrptionModalNormal
                     changeModal = {this.changeModal.bind(this)}
                     serviceName={"Retail Marketing Dates"}
-                    description={"If you run an ecommerce business, you know the drill: Having a promotional calendar for marketing and shopping events is key to deliver on your sales targets. Add automated annotations to see how affected your site."}
+                    description={"Streamline your retail marketing strategy with automated annotations for important dates and shopping events. Easily track the impact on your website and measure success in meeting your sales targets. Stay organized and make informed decisions to drive your e-commerce business forward."}
                     userServices={this.props.userServices}
                     closeModal={this.props.closeModal}
 
