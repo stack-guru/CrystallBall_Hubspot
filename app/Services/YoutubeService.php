@@ -87,7 +87,7 @@ class YouTubeService
                     ->where('monitor_id', $configuration->id)
                     ->where('url', "https://www.youtube.com/watch?v=" . $videoId)
                     ->where('description', "A new video on youtube channel.")
-                    ->where('date', Carbon::today()->format('H:i:m'))
+                    ->where('date', Carbon::today()->format('Y-m-d'))
                     ->first();
                 if (!$exist) {
                     $this->saveAnnotation($user, $videoId, $title, "A new video on youtube channel.", $publishedAt, $configuration->id);
