@@ -14,7 +14,7 @@ class AddPaymentDetailIdToPricePlanSubscriptionsTable extends Migration
     public function up()
     {
         Schema::table('price_plan_subscriptions', function (Blueprint $table) {
-            $table->foreignId("payment_detail_id")->constrained()->required();
+            $table->foreignId("payment_detail_id")->default('default-value')->constrained()->required();
             
         });
     }

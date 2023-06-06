@@ -14,7 +14,7 @@ class AddExpiresAtColumnToCouponsTable extends Migration
     public function up()
     {
         Schema::table('coupons', function (Blueprint $table) {
-            $table->date('expires_at')->required();
+            $table->date('expires_at')->default('default-value')->required();
         });
     }
 

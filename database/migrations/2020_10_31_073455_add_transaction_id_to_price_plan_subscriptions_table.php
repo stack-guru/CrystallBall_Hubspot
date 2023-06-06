@@ -14,7 +14,7 @@ class AddTransactionIdToPricePlanSubscriptionsTable extends Migration
     public function up()
     {
         Schema::table('price_plan_subscriptions', function (Blueprint $table) {
-            $table->string('transaction_id', 100)->required();
+            $table->string('transaction_id', 100)->default('default-value')->required();
 
             $table->bigInteger('price_plan_id')->nullable()->unsigned();
             $table->foreign('price_plan_id')->references('id')->on('price_plans')->onDelete('SET NULL');
